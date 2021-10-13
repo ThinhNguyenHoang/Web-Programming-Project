@@ -7,12 +7,16 @@ import {store} from "./redux/store";
 import {Provider} from "react-redux";
 import CustomThemeProvider from "./theme";
 import './locales/i18n';
+import {BrowserRouter} from "react-router-dom";
+import {RouterConfig} from "./routes/RouterConfig";
 
 ReactDOM.render(
   <React.StrictMode>
       <CustomThemeProvider>
           <Provider store={store}>
-              <App />
+              <BrowserRouter>
+                  <RouterConfig/>
+              </BrowserRouter>
           </Provider>
       </CustomThemeProvider>
   </React.StrictMode>,
