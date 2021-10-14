@@ -1,0 +1,20 @@
+Title: Implementing lecturer module for front end 
+Details:
++ Added a tab on the Sidebar for Lecturer Management
++ Site for editing and creating a Lecturer
++ Reducers, Saga, and Services for pulling lecturer's data from the backend
+
+Unexpected Results:
++ The client does crash if the front end throw an error (A notificatin will quickly appear --> Crash)
+    - Cause: The source delegating the error thowing from service --> saga --> handleApiError (This function return new error of type LogicError) is called inside catch block of saga --> No handler for the error --> Crash
+    - Measures taken: I don't know if the client is supposed to crash by the source structure provided (I think it is) --> I let the client crash.
+
+PS: Mọi người viết Tiếng anh hay tiếng việt cũng được nhưng cố gắng đảm bảo cấu trúc: 
+	+ Title: Mô tả chung là commit này làm gì 
+	+ Details: Mô tả chi tiết commit này đã làm được những gì 
+	+ Unexpected Results: (Chạy ổn hết không bị gì thì khỏi ghi phần này) 
+		- Có gì bug mà không tự sửa được / Không rõ cách làm 
+		- Mô tả bug: 
+			- Nguyên nhân tự đoán
+			- Đã thử làm gì để debug nhưng không được 
+		- Chạy bị crash hoặc ra kết quả không mong muốn 
