@@ -9,6 +9,7 @@ class FoodController extends BaseController
         $strErrorDesc = '';
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         $arrQueryStringParams = $this->getQueryStringParams();
+
         if (strtoupper($requestMethod) == 'GET') {
             try {
                 $food = new Food();
