@@ -1,17 +1,23 @@
 import {Switch, Route, Redirect} from "react-router-dom";
-import ROUTING_CONSTANTS from "./constants";
-// const ROUTING_CONSTANTS = {
-//     ROOT: "/",
-//     LOGIN: "/login",
-//     REGISTER: "/register",
-//     // Trang chủ
-//     HOMEPAGE: "/homepage",
-//     PAGE1: "/page1",
-//     ABOUT_US: "/about",
-//     NEWS: "/news",
-//     ITEM_CART: "/cart",
-//     RECOMMENDATION: "/recommendations",
-// }
+import Login from "../pages/Login";
+import App from "../App";
+import Register from "../pages/Register";
+
+
+
+const baseUrl = process.env.FAKE_SERVER_HOST;
+export const ROUTING_CONSTANTS = {
+    ROOT: "/",
+    LOGIN: "/login",
+    REGISTER: "/register",
+    // Trang chủ
+    HOMEPAGE: "/homepage",
+    PAGE1: "/page1",
+    ABOUT_US: "/about",
+    NEWS: "/news",
+    ITEM_CART: "/cart",
+    RECOMMENDATION: "/recommendations",
+}
 
 /*
     * Từng component dưới này phải được thay bằng một page ở pages
@@ -44,7 +50,13 @@ export const RouterConfig = () => {
                 <Redirect to={ROUTING_CONSTANTS.HOMEPAGE}/>
             </Route>
             <Route exact path={ROUTING_CONSTANTS.HOMEPAGE}>
-                <Home/>
+                <App/>
+            </Route>
+            <Route exact path={ROUTING_CONSTANTS.LOGIN}>
+                <Login/>
+            </Route>
+            <Route exact path={ROUTING_CONSTANTS.REGISTER}>
+                <Register/>
             </Route>
             <Route exact path={ROUTING_CONSTANTS.ABOUT_US}>
                 <AboutUs/>
