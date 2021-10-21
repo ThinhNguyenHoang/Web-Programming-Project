@@ -8,15 +8,12 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import FoodCard from '../components/FoodCard';
 import Nofication from '../components/Nofication';
-import fimg from "../assets/images/foodimg.png"
+import fimg from "../assets/images/foodimg.png";
+import { store } from '../redux/store';
+import foodCardlst from '../redux/slices/foodCardlst/foodCardlst';
 
-const initfood={
-    fimg:fimg,
-    foodname:"Food Name",
-    foodtype:"Category",
-    fooddescrip:"Fry your onion, peppers and garlic in olive oil until nicely translucent.\nMake a well in your veg and add your chicken.Add your seasoning and salt.",
-    price:"300K"
-}
+const foodstate=store.getState().foodCardlst;
+const foodlst=foodstate.foodShow;
 
 function News (){
     let history = useHistory();
@@ -34,11 +31,11 @@ function News (){
             <Box sx={{
                 display: `flex`,
                 flexDirection: `row`,mx:"auto"}}>
-                    <ButtonBase>
-                        <ArrowBackIosIcon fontSize="large"/>
+                    <ButtonBase onClick={ () => store.dispatch(foodCardlst.actions.backList())}>
+                        <ArrowBackIosIcon fontSize="large" />
                     </ButtonBase>
-                    {[initfood,initfood,initfood].map(FoodCard)}
-                    <ButtonBase>
+                    {foodlst.map(food => <FoodCard foodinfo={food} key={food.foodname}/>)}
+                    <ButtonBase onClick={ () => store.dispatch(foodCardlst.actions.nextList())}>
                         <ArrowForwardIosIcon fontSize="large"/>
                     </ButtonBase>
                     
@@ -56,12 +53,12 @@ function News (){
             <Box sx={{
                 display: `flex`,
                 flexDirection: `row`,mx:"auto"}}>
-                    <ButtonBase>
+                    <ButtonBase >
                         <ArrowBackIosIcon fontSize="large"/>
                     </ButtonBase>
-                    {[initfood,initfood,initfood].map(FoodCard)}
+                    {foodlst.map(FoodCard)}
 
-                    <ButtonBase>
+                    <ButtonBase  >
                         <ArrowForwardIosIcon fontSize="large"/>
                     </ButtonBase>
                 

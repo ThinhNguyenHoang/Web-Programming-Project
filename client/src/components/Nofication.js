@@ -19,7 +19,8 @@ function Nofication ({nofInfo=initnof}){
     <Box container  sx={{ boxShadow:1,m:1,borderRadius:"10px",maxWidth:935 }} >
         <Grid container spacing={2}>
             <Grid item>
-            <CardMedia title="nofication" image={nofInfo.nofimg} sx={{width: 128 ,height: 128,borderBottomLeftRadius:"10px",borderTopLeftRadius:"10px"}}/>
+            
+                <CardMedia title="nofication" image={nofInfo.nofimg} sx={{width: 128 ,height: 128,borderBottomLeftRadius:"10px",borderTopLeftRadius:"10px"}}/>
             </Grid>
             <Grid item xs={12} sm container>
                 <Grid item xs container direction="column" spacing={2}>

@@ -15,6 +15,8 @@ const initfood={
 }
 
 
+
+
 function FoodCard ({foodinfo=initfood}) {
     return (
         <Card sx={{m:1,maxWidth:300}}>
