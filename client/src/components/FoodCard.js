@@ -21,7 +21,7 @@ function FoodCard ({foodinfo=initfood}) {
             <CardMedia
                 component="img"
                 height="194"
-                image={foodinfo.foodimg}
+                image={foodinfo.fimg}
                 alt={foodinfo.foodname}/>
             <CardHeader
               subheader={foodinfo.foodtype}

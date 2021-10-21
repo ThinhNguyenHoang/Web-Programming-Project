@@ -8,7 +8,15 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import FoodCard from '../components/FoodCard';
 import Nofication from '../components/Nofication';
+import fimg from "../assets/images/foodimg.png"
 
+const initfood={
+    fimg:fimg,
+    foodname:"Food Name",
+    foodtype:"Category",
+    fooddescrip:"Fry your onion, peppers and garlic in olive oil until nicely translucent.\nMake a well in your veg and add your chicken.Add your seasoning and salt.",
+    price:"300K"
+}
 
 function News (){
     let history = useHistory();
@@ -29,10 +37,7 @@ function News (){
                     <ButtonBase>
                         <ArrowBackIosIcon fontSize="large"/>
                     </ButtonBase>
-                    
-                    <FoodCard/>
-                    <FoodCard/>
-                    <FoodCard/>
+                    {[initfood,initfood,initfood].map(FoodCard)}
                     <ButtonBase>
                         <ArrowForwardIosIcon fontSize="large"/>
                     </ButtonBase>
@@ -54,9 +59,8 @@ function News (){
                     <ButtonBase>
                         <ArrowBackIosIcon fontSize="large"/>
                     </ButtonBase>
-                    <FoodCard/>
-                    <FoodCard/>
-                    <FoodCard/>
+                    {[initfood,initfood,initfood].map(FoodCard)}
+
                     <ButtonBase>
                         <ArrowForwardIosIcon fontSize="large"/>
                     </ButtonBase>
