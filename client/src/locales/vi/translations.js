@@ -28,6 +28,12 @@ export const TRANSLATIONS_VI = {
     [base_keys.form.login]:"Đăng nhập",
     [base_keys.form.register]:"Đăng ký",
     [base_keys.form.back_home]:"Về trang chủ",
+    //News
+    [base_keys.form.news]:"Tin tức",
+    [base_keys.form.sale_off]:"Ưu đãi",
+    [base_keys.form.combo]:"Combo",
+    [base_keys.form.nofication]:"Thông báo",
+
     // * Below is for testing purpose only
     [base_keys.test.welcome]: "Chào mừng tới page welcome của React - Thinh",
     [base_keys.test.learn_react]: "Học React Ngay",

@@ -2,6 +2,7 @@ import {Switch, Route, Redirect} from "react-router-dom";
 import Login from "../pages/Login";
 import App from "../App";
 import Register from "../pages/Register";
+import News from "../pages/News"
 
 
 
@@ -35,9 +36,9 @@ function AboutUs() {
     return null;
 }
 
-function News() {
-    return null;
-}
+// function News() {
+//     return null;
+// }
 
 function Recommendations() {
     return null;

@@ -39,6 +39,11 @@ export const base_keys = {
         login: "login",
         register: "register",
         back_home: "back_home",
+        //News
+        news:"news",
+        sale_off:"sale_off",
+        combo:"combo",
+        nofication:"nofication"
     }
     ,
     // Language Translation
