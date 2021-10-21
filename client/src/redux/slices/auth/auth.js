@@ -35,7 +35,9 @@ const initialValue = {
     }
 }
 
+
 const login_actions = generateSagaLifecycleNames("login");
+
 const register_actions = generateSagaLifecycleNames("register");
 
 const auth = createSlice({
