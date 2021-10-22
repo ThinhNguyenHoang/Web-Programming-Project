@@ -4,6 +4,9 @@ class FoodController extends BaseController
     /**
      * "/food/list" Endpoint - Get list of foods
      */
+    public function handleRequest($request){
+
+    }
     public function listAction()
     {
         $strErrorDesc = '';

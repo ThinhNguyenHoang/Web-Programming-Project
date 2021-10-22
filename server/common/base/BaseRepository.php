@@ -1,14 +1,19 @@
 <?php
-class Database
+class BaseRepository
 {
     protected $conn = null;
 
+    /**
+     * @throws Exception
+     */
     public function __construct()
     {
-        try {
-            $this->conn = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE_NAME);
-        } catch (Exception $e) {
-            throw new Exception("Cannot connect to mysql: " . $e->getMessage());
+        $this->conn = ConnectionSingleton::getConnection();
+        if (!$this->conn) {
+            echo "Something wrong with the mySQL Connection";
+        }
+        else{
+            echo "Connected to MySQL. Everything good.";
         }
     }
 
@@ -18,7 +23,6 @@ class Database
             $stmt = $this->executeStatement($query, $params);
             $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             $stmt->close();
-
             return $result;
         } catch (Exception $e) {
             throw new Exception($e->getMessage());

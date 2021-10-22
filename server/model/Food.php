@@ -1,6 +1,6 @@
 <?php
-require_once PROJECT_ROOT_PATH . "/Model/Database.php";
-class Food extends Database
+require_once PROJECT_ROOT_PATH . "/Model/BaseRepository.php";
+class Food extends BaseRepository
 {
     public function getFood($limit)
     {

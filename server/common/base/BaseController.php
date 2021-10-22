@@ -2,6 +2,10 @@
 class BaseController
 {
     /**
+     *  Handle the request respective to the controler:
+     */
+
+    /**
      * __call magic method.
      */
     public function __call($name, $arguments)
@@ -52,4 +56,6 @@ class BaseController
         echo $data;
         exit;
     }
+
+
 }
