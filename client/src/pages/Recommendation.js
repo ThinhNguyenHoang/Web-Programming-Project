@@ -7,7 +7,6 @@ import ButtonBase from '@mui/material/ButtonBase';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import FoodCard from '../components/FoodCard';
-import Nofication from '../components/Nofication';
 import fimg from "../assets/images/foodimg.png";
 
 const initfood={
@@ -18,7 +17,7 @@ const initfood={
     price:"300K"
 }
 
-function News (){
+function Recommendation (){
     let history = useHistory();
     const {t, i18n} = useTranslation();
     return (
@@ -28,8 +27,13 @@ function News (){
             flexDirection: `column`}}>
             <Box sx={{
                 display: `flex`,
-                flexDirection: `row`,my:2,ml:"5%"}}>
-                <Typography variant="h5">{t(base_keys.form.sale_off)}</Typography>
+                flexDirection: `row`,my:2,mx:"auto",ml:"19.5%"}}>
+                <Typography variant="h3">{t(base_keys.form.trending)}</Typography>
+            </Box>
+            <Box sx={{
+                display: `flex`,
+                flexDirection: `row`,mx:"auto",ml:"19.5%"}}>
+                <Typography variant="body1">{t(base_keys.form.trending_description)}</Typography>
             </Box>
             <Box sx={{
                 display: `flex`,
@@ -41,8 +45,6 @@ function News (){
                     <ButtonBase>
                         <ArrowForwardIosIcon fontSize="large"/>
                     </ButtonBase>
-                    
-                
             </Box>
         </Box>
         <Box sx={{
@@ -50,8 +52,13 @@ function News (){
             flexDirection: `column`}}>
             <Box sx={{
                 display: `flex`,
-                flexDirection: `row`,my:2,ml:"5%"}}>
-                <Typography variant="h5">{t(base_keys.form.combo)}</Typography>
+                flexDirection: `row`,my:2,ml:"19.5%"}}>
+                <Typography variant="h3">{t(base_keys.form.everybodyeating)}</Typography>
+            </Box>
+            <Box sx={{
+                display: `flex`,
+                flexDirection: `row`,mx:"auto",ml:"19.5%"}}>
+                <Typography variant="body1">{t(base_keys.form.everybodyeating_description)}</Typography>
             </Box>
             <Box sx={{
                 display: `flex`,
@@ -64,7 +71,6 @@ function News (){
                     <ButtonBase>
                         <ArrowForwardIosIcon fontSize="large"/>
                     </ButtonBase>
-                
             </Box>
         </Box>
         <Box sx={{
@@ -72,27 +78,28 @@ function News (){
             flexDirection: `column`}}>
             <Box sx={{
                 display: `flex`,
-                flexDirection: `row`,my:2}}>
-                <Typography sx={{flexGrow: `1`,ml:"5%"}} variant="h5">{t(base_keys.form.nofication)}</Typography>
-                <Box sx={{mr:"15%"}}>
-                    <ButtonBase >
-                        <ArrowBackIosIcon />
-                    </ButtonBase>
-                    <ButtonBase >
-                        <ArrowForwardIosIcon />
-                    </ButtonBase>
-                </Box>
+                flexDirection: `row`,my:2,ml:"19.5%"}}>
+                <Typography variant="h3">{t(base_keys.form.goodforhealth)}</Typography>
             </Box>
             <Box sx={{
                 display: `flex`,
-                flexDirection: `column`,mx:"auto"}}>
-                <Nofication/>
-                <Nofication/>
-                <Nofication/>
+                flexDirection: `row`,mx:"auto",ml:"19.5%"}}>
+                <Typography variant="body1">{t(base_keys.form.goodforhealth_description)}</Typography>
+            </Box>
+            <Box sx={{
+                display: `flex`,
+                flexDirection: `row`,mx:"auto"}}>
+                    <ButtonBase>
+                        <ArrowBackIosIcon fontSize="large"/>
+                    </ButtonBase>
+                    {[initfood,initfood,initfood].map(FoodCard)}
+                    <ButtonBase>
+                        <ArrowForwardIosIcon fontSize="large"/>
+                    </ButtonBase>
             </Box>
         </Box>
         </div>
     );
 }
 
-export default News;
+export default Recommendation;

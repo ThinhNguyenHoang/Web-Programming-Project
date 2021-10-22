@@ -35,8 +35,6 @@ function FoodCard ({foodinfo=initfood}) {
                 <Button size="small">Wishlist</Button>
                 <Button size="small">{foodinfo.price}</Button>
             </CardActions>
-            
-
         </Card>
     );
 }

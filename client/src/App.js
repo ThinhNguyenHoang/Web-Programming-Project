@@ -28,6 +28,8 @@ function App() {
     ///////////////test
     const navigateToNewsPage = () => history.push(ROUTING_CONSTANTS.NEWS);
     ///////////////test
+    const navigateToRecommendationPage = () => history.push(ROUTING_CONSTANTS.RECOMMENDATION);
+    const navigateToCart = () => history.push(ROUTING_CONSTANTS.CART);
 
 
     return (
@@ -88,6 +90,14 @@ function App() {
                         Tin tức
                     </Button>
                     {/* //////////////test */}
+                    <Button value={`vi`} variant={`contained`} color={`error`}
+                        onClick={navigateToRecommendationPage}>
+                        Đề xuất
+                    </Button>
+                    <Button value={`vi`} variant={`contained`} color={`error`}
+                        onClick={navigateToCart}>
+                        Giỏ hàng
+                    </Button>
                 </Grid>
             </header>
         </div>

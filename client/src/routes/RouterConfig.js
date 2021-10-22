@@ -2,7 +2,9 @@ import {Switch, Route, Redirect} from "react-router-dom";
 import Login from "../pages/Login";
 import App from "../App";
 import Register from "../pages/Register";
-import News from "../pages/News"
+import News from "../pages/News";
+import Recommendation from "../pages/Recommendation";
+import Cart from "../pages/Cart";
 
 
 
@@ -16,8 +18,8 @@ export const ROUTING_CONSTANTS = {
     PAGE1: "/page1",
     ABOUT_US: "/about",
     NEWS: "/news",
-    ITEM_CART: "/cart",
-    RECOMMENDATION: "/recommendations",
+    RECOMMENDATION: "/recommendation",
+    CART: "/cart",
 }
 
 /*
@@ -44,6 +46,7 @@ function Recommendations() {
     return null;
 }
 
+
 export const RouterConfig = () => {
     return (
         <Switch>
@@ -66,7 +69,10 @@ export const RouterConfig = () => {
                 <News/>
             </Route>
             <Route exact path={ROUTING_CONSTANTS.RECOMMENDATION}>
-                <Recommendations/>
+                <Recommendation/>
+            </Route>
+            <Route exact path={ROUTING_CONSTANTS.CART}>
+                <Cart/>
             </Route>
         </Switch>
     )

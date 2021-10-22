@@ -33,7 +33,22 @@ export const TRANSLATIONS_VI = {
     [base_keys.form.sale_off]:"Ưu đãi",
     [base_keys.form.combo]:"Combo",
     [base_keys.form.nofication]:"Thông báo",
-
+    //Recommendation
+    [base_keys.form.recommendation]:"Đề xuất cho bạn",
+    [base_keys.form.trending]: "Xu hướng",
+    [base_keys.form.everybodyeating]:"Mọi người ăn gì?",
+    [base_keys.form.goodforhealth]:"Tốt cho sức khỏe",
+    [base_keys.form.trending_description]:"Muốn bắt kịp xu hướng? Hãy chọn món ngay",
+    [base_keys.form.everybodyeating_description]: "Bạn bè mình đã ăn gì nhỉ?",
+    [base_keys.form.goodforhealth_description]:"Các món ăn được đề xuất bởi các chuyên gia dinh dưỡng",
+    //Cart
+    [base_keys.form.cart]: "Giỏ hàng",
+    [base_keys.form.foodname]: "MÓN ĂN",
+    [base_keys.form.price]: "ĐƠN GIÁ",
+    [base_keys.form.amount]: "SỐ LƯỢNG",
+    [base_keys.form.total_food_price]: "TỔNG TIỀN",
+    [base_keys.form.total]: "Tổng tiền:",
+    [base_keys.form.pay]: "THANH TOÁN",
     // * Below is for testing purpose only
     [base_keys.test.welcome]: "Chào mừng tới page welcome của React - Thinh",
     [base_keys.test.learn_react]: "Học React Ngay",

@@ -42,6 +42,23 @@ export const TRANSLATIONS_EN = {
     [base_keys.form.sale_off]:"Sale off",
     [base_keys.form.combo]:"Combo",
     [base_keys.form.nofication]:"Nofication",
+    //Recommendation
+    [base_keys.form.recommendation]:"Recommendation",
+    [base_keys.form.trending]: "Trending now?",
+    [base_keys.form.everybodyeating]:"Your friends' choice",
+    [base_keys.form.goodforhealth]:"Good for your health",
+    [base_keys.form.trending_description]:"How to follow the trend? Pick one of these",
+    [base_keys.form.everybodyeating_description]: "Which one do your friends order these days?",
+    [base_keys.form.goodforhealth_description]:"These dishes are highly recommended by nutritionist",
+    //Cart
+    [base_keys.form.cart]: "Cart",
+    [base_keys.form.foodname]: "NAME",
+    [base_keys.form.price]: "PRICE",
+    [base_keys.form.amount]: "AMOUNT",
+    [base_keys.form.total_food_price]: "TOTAL PRICE",
+    [base_keys.form.total]: "Total:",
+    [base_keys.form.pay]: "PAY",
+
     // * Below is for testing purpose only
     [base_keys.test.welcome]: "Welcome to React - Thinh",
     [base_keys.test.learn_react]: "Learn React Now",

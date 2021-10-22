@@ -43,7 +43,23 @@ export const base_keys = {
         news:"news",
         sale_off:"sale_off",
         combo:"combo",
-        nofication:"nofication"
+        nofication:"nofication",
+        //Recommendation
+        recommendation: "recommendation",
+        trending: "trending",
+        everybodyeating: "everybodyeating",
+        goodforhealth: "goodforhealth",
+        trending_description: "trending_description",
+        everybodyeating_description: "everybodyeating_description",
+        goodforhealth_description: "goodforhealth_description",
+        //Cart
+        cart: "cart",
+        foodname: "foodname",
+        price: "price",
+        amount: "amount",
+        total_food_price: "total_food_price",
+        total: "total",
+        pay: "pay"
     }
     ,
     // Language Translation
