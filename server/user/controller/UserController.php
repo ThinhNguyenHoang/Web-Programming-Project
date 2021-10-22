@@ -33,8 +33,8 @@ class UserController extends BaseController implements RequestHandler
     public function update(){
 
     }
-    public function delete(){
+    public function delete()
+    {
 
-
-        
+    }
 }

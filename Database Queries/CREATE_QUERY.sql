@@ -17,19 +17,31 @@ INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (3,1,3, 2
 DROP TABLE IF EXISTS TRANSACTION; 
 CREATE TABLE TRANSACTION (TransactionID BIGINT(8), TimeStamp TIMESTAMP, Description TEXT, PayAmount BIGINT(8), Status VARCHAR(255), Subject VARCHAR(255), PaymentMethod VARCHAR(255), OrderID BIGINT(8), UserID BIGINT(8), PRIMARY KEY (TransactionID)); 
 INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (1,'2021-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000,'Com True','Da tra tien', 'Vi dien tu', 1,1); 
-INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (2,'2018-05-03 00:00:01', 'Tra tien cho nguoi choi', 6000000, 'Hu tieu','Da tra tien', 'Vi dien tu', 1,1); 
+INSERT INTO TRANuser_accountSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (2,'2018-05-03 00:00:01', 'Tra tien cho nguoi choi', 6000000, 'Hu tieu','Da tra tien', 'Vi dien tu', 1,1); 
 INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (3,'2019-11-01 00:00:01', 'Tra tien cho nguoi choi', 5000000, 'Hu tieu','Da tra tien', 'Vi dien tu', 1,1); 
 INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (4,'2020-11-01 00:00:01', 'Tra tien cho nguoi choi', 4000000, 'Hu tieu','Da tra tien', 'Vi dien tu', 1,1); 
 INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (5,'2022-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000, 'Hu tieu','Da tra tien', 'Vi dien tu', 1,1); 
 
 DROP TABLE IF EXISTS USER; 
-CREATE TABLE USER (UserID BIGINT(8), FullName VARCHAR(255), UserName VARCHAR(255), DOB DATE, Email VARCHAR(255), Point BIGINT(8),BankAccountID BIGINT(8) ,Address VARCHAR(255), PhoneNumber VARCHAR(255), PRIMARY KEY (UserID)); 
-INSERT INTO USER(UserID, FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(1,'Nguyen Hoang Thinh', 'thinhhaha13','2000-01-01', 'thinh@gmail.com', 13, 3,'Số 85-87 Trần Hưng Đạo, Hoàn Kiếm, TP. Hà Nội','099761235');
-INSERT INTO USER(UserID, FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(3,'Tran Hoang Khoi', 'khoi1213','2012-01-01', 'khoi@gmail.com', 13, 3,'Số 268 Trần Hưng Đạo, P. Nguyễn Cư Trinh, Q.1, TP. HCM','099761235');
-INSERT INTO USER(UserID, FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(2,'Hua Phuoc Thuan', 'thuan33','2011-01-01', 'thuan@gmail.com', 14, 3,'Số 80 Lê Lợi - Thành phố Đà Nẵng','099761235');
-INSERT INTO USER(UserID, FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(4,'Khong Manh Quyen', 'quyenhaha13','2002-01-01', 'quyen@gmail.com', 12, 3,'Số 9A Trần Phú, P. Cái Khế, Q. Ninh Kiều, TP. Cần Thơ','099761235');
-INSERT INTO USER(UserID, FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(6,'Le Huu Hieu', 'hieuhaha13','2011-01-01', 'hieu@gmail.com', 16, 3,'Số 2 Thống Nhất, P.1, Tp. Vũng Tàu','099761235');
+DROP TABLE IF EXISTS USER_PROFILE; 
+CREATE TABLE USER_PROFILE(Id BIGINT(8) NOT NULL auto_increment,AccountID BIGINT(8), FullName VARCHAR(255), UserName VARCHAR(255), DOB DATE, Email VARCHAR(255), Point BIGINT(8),BankAccountID BIGINT(8) ,Address VARCHAR(255), PhoneNumber VARCHAR(255), PRIMARY KEY (Id)); 
+INSERT INTO USER_PROFILE(AccountID , FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(1,'Nguyen Hoang Thinh', 'thinhhaha13','2000-01-01', 'thinh@gmail.com', 13, 3,'Số 85-87 Trần Hưng Đạo, Hoàn Kiếm, TP. Hà Nội','099761235');
+INSERT INTO USER_PROFILE(AccountID , FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(2,'Tran Hoang Khoi', 'khoi1213','2012-01-01', 'khoi@gmail.com', 13, 3,'Số 268 Trần Hưng Đạo, P. Nguyễn Cư Trinh, Q.1, TP. HCM','099761235');
+INSERT INTO USER_PROFILE(AccountID , FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(3,'Hua Phuoc Thuan', 'thuan33','2011-01-01', 'thuan@gmail.com', 14, 3,'Số 80 Lê Lợi - Thành phố Đà Nẵng','099761235');
+INSERT INTO USER_PROFILE(AccountID , FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(4,'Khong Manh Quyen', 'quyenhaha13','2002-01-01', 'quyen@gmail.com', 12, 3,'Số 9A Trần Phú, P. Cái Khế, Q. Ninh Kiều, TP. Cần Thơ','099761235');
+INSERT INTO USER_PROFILE(AccountID , FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(5,'Le Huu Hieu', 'hieuhaha13','2011-01-01', 'hieu@gmail.com', 16, 3,'Số 2 Thống Nhất, P.1, Tp. Vũng Tàu','099761235');
+INSERT INTO USER_PROFILE(AccountID , FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(6,'Huu Hieu', 'asdhaha13','2011-01-12', 'hieu@gmail.com', 16, 3,'Số 2 Thống Nhất, P.1, Tp. Vũng Tàu','099761235');
+-- User Profile: UserID --> UserAccount: UserId 
+DROP TABLE IF EXISTS USER_ACCOUNT; 
+CREATE TABLE USER_ACCOUNT(Id BIGINT(8) NOT NULL auto_increment, Username VARCHAR(255), Password Varchar(255), PRIMARY KEY (Id)); 
+INSERT INTO USER_ACCOUNT(Username,Password) VALUES('thinhhaha13','asdjklsadfjlksadf');
+INSERT INTO USER_ACCOUNT(Username,Password) VALUES('asdfasfdasdf','asdjklsadfjlksadf');
+INSERT INTO USER_ACCOUNT(Username,Password) VALUES('asdasdasdasd','asdjklsadfjlksadf');
+INSERT INTO USER_ACCOUNT(Username,Password) VALUES('zxczxczxc','asdjklsadfjlksadf');
+INSERT INTO USER_ACCOUNT(Username,Password) VALUES('qweqweqwe','asdjklsadfjlksadf');
+INSERT INTO USER_ACCOUNT(Username,Password) VALUES('xasxas','asdjklsadfjlksadf');
 
+select last_insert_id();
 
 DROP TABLE IF EXISTS cart; 
 CREATE TABLE Cart(
@@ -37,6 +49,7 @@ CREATE TABLE Cart(
 	Total INT NOT NULL,
       PRIMARY KEY (UserID)
 );
+
 INSERT INTO `web_food`.`cart` (`UserID`, `Total`) VALUES ('1', '45000');
 INSERT INTO `web_food`.`cart` (`UserID`, `Total`) VALUES ('2', '30000');
 INSERT INTO `web_food`.`cart` (`UserID`, `Total`) VALUES ('3', '50000');
