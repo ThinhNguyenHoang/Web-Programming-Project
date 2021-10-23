@@ -1,18 +1,6 @@
 <?php
 class QueryExecutor extends Singleton
 {
-    public function select($query = "", $params = [])
-    {
-        try {
-            $stmt = $this->executeStatement($query, $params);
-            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-            $stmt->close();
-            return $result;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
-        return false;
-    }
 
     public static function executeQuery($query){
         $conn = ConnectionSingleton::getConnection();
@@ -35,6 +23,27 @@ class QueryExecutor extends Singleton
         $query = "SELECT FROM $table_name WHERE ID=$id";
         $result = QueryExecutor::executeQuery($query);
         return mysqli_fetch_array($result);
+    }
+
+
+    /**
+     * Thuan Old Functions
+     * @param string $query
+     * @param array $params
+     * @return false
+     * @throws Exception
+     */
+    public function select($query = "", $params = [])
+    {
+        try {
+            $stmt = $this->executeStatement($query, $params);
+            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+            return $result;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+        return false;
     }
 
     private function executeStatement($query = "", $params = [])

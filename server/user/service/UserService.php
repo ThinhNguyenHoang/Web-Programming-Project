@@ -1,6 +1,10 @@
 <?php
 /**
  * Define operation that can be done related to the entity
+ * Xu ly request : 3 khuc
+ * 1. Parse request --> lay param
+ * 2. Xu ly backend
+ * 3. Tra ve response cho client
  */
 class UserService
 {
@@ -13,6 +17,7 @@ class UserService
             echo "Username already taken. Please use another name";
         }
         $user->password = password_hash($user->password,PASSWORD_DEFAULT);
+        // TODO: Should use response helper class to return the result to user
         return UserRepository::create($user);
     }
 

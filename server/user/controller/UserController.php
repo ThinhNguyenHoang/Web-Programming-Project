@@ -5,7 +5,7 @@ class UserController extends BaseController implements RequestHandler
      * "/food/list" Endpoint - Get list of foods
      */
     private $service;
-    public function handleRequest($request)
+    public function handleRequest()
     {
         $method = strtolower(RequestHelper::getRequestMethod());
         switch($method){

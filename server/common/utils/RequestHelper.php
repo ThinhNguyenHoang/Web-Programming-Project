@@ -7,6 +7,11 @@ class RequestHelper{
     {
         return $_SERVER["REQUEST_METHOD"];
     }
+
+    public static function returnSuccess($body){
+
+    }
+
     /*
      *  GET Endpoint info:
      *  Example:
