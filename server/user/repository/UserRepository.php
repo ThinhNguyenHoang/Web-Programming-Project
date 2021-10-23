@@ -1,5 +1,7 @@
 <?php
 
+use function DeepCopy\deep_copy;
+
 /**
  * Class for interaction with database
  * + Create
@@ -14,8 +16,23 @@ class UserRepository implements Repository
     // Determine the latest inserted user ID --> Sequence
     public static string $table_name = "user_account";
 
-    public static function getLastUserId(){
+    public static function getLastUserId()
+    {
 
+    }
+
+
+    public static function findUserByName(string $user_name): ?UserAccount
+    {
+        $query = "SELECT * FROM USER_ACCOUNT WHERE USERNAME=$user_name";
+        try {
+            $row = QueryExecutor::executeQuery($query);
+            $return = $row->fetch_object($class = "UserAccount");
+            return deep_copy($return);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+        return null;
     }
 
     /**
@@ -24,19 +41,25 @@ class UserRepository implements Repository
     public static function create(UserAccount $entity = null)
     {
         $query = "INSERT INTO USER_ACCOUNT(Username,Password) VALUES($entity->username,$entity->password)";
-        QueryExecutor::executeQuery($query);
+        return QueryExecutor::executeQuery($query);
     }
 
     public static function read(int $entityID = null)
     {
-        $row = QueryExecutor::selectTableWithID(self::$table_name,$entityID);
-        //TODO: There should be a mapper that map the row to UserData Entity
-        return null;
+        $query = "SELECT * FROM USER_ACCOUNT WHERE ID=$entityID";
+        $row = QueryExecutor::executeQuery($query);
+        if (!$row) {
+            // Throw error return error message for client to display
+            echo "Something has gone wrong when reading user with id: $entityID! ";
+        }
+        $return = $row->fetch_object($class = "UserAccount");
+        return deep_copy($return);
     }
 
-    public static function update(int $entityID = null, UserAccount $entityBody = null)
+    public static function update(int $entityID = null, UserAccount $entity = null)
     {
-        // TODO: Implement update() method.
+        $query = "UPDATE USER_ACCOUNT SET USERNAME=$entity->username, PASSWORD=$entity->password WHERE ID=$entityID";
+        return QueryExecutor::executeQuery($query);
     }
 
     public static function delete(int $entityID = null)
