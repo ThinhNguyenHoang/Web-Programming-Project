@@ -31,6 +31,7 @@ INSERT INTO USER_PROFILE(AccountID , FullName, UserName, DOB, Email, Point, Bank
 INSERT INTO USER_PROFILE(AccountID , FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(4,'Khong Manh Quyen', 'quyenhaha13','2002-01-01', 'quyen@gmail.com', 12, 3,'Số 9A Trần Phú, P. Cái Khế, Q. Ninh Kiều, TP. Cần Thơ','099761235');
 INSERT INTO USER_PROFILE(AccountID , FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(5,'Le Huu Hieu', 'hieuhaha13','2011-01-01', 'hieu@gmail.com', 16, 3,'Số 2 Thống Nhất, P.1, Tp. Vũng Tàu','099761235');
 INSERT INTO USER_PROFILE(AccountID , FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(6,'Huu Hieu', 'asdhaha13','2011-01-12', 'hieu@gmail.com', 16, 3,'Số 2 Thống Nhất, P.1, Tp. Vũng Tàu','099761235');
+ALTER TABLE user_profile drop BankAccountID;
 -- User Profile: UserID --> UserAccount: UserId 
 DROP TABLE IF EXISTS USER_ACCOUNT; 
 CREATE TABLE USER_ACCOUNT(Id BIGINT(8) NOT NULL auto_increment, Username VARCHAR(255), Password Varchar(255), PRIMARY KEY (Id)); 
@@ -40,6 +41,25 @@ INSERT INTO USER_ACCOUNT(Username,Password) VALUES('asdasdasdasd','asdjklsadfjlk
 INSERT INTO USER_ACCOUNT(Username,Password) VALUES('zxczxczxc','asdjklsadfjlksadf');
 INSERT INTO USER_ACCOUNT(Username,Password) VALUES('qweqweqwe','asdjklsadfjlksadf');
 INSERT INTO USER_ACCOUNT(Username,Password) VALUES('xasxas','asdjklsadfjlksadf');
+
+-- DROP TABLE IF EXISTS USER_OWNS_BANK_ACCOUNT; 
+-- CREATE TABLE USER_OWNS_BANK_ACCOUNT(Id BIGINT(8) NOT NULL auto_increment, UserID BIGINT(8), BankAccountID BIGINT(8), PRIMARY KEY (Id)); 
+-- INSERT INTO USER_OWNS_BANK_ACCOUNT(UserID,BankAccountID) VALUES(1,2);
+-- INSERT INTO USER_OWNS_BANK_ACCOUNT(UserID,BankAccountID) VALUES(2,5);
+-- INSERT INTO USER_OWNS_BANK_ACCOUNT(UserID,BankAccountID) VALUES(3,3);
+-- INSERT INTO USER_OWNS_BANK_ACCOUNT(UserID,BankAccountID) VALUES(4,6);
+-- INSERT INTO USER_OWNS_BANK_ACCOUNT(UserID,BankAccountID) VALUES(3,7);
+
+DROP TABLE IF EXISTS BANK_ACCOUNT; 
+CREATE TABLE BANK_ACCOUNT(Id BIGINT(8) NOT NULL auto_increment, UserID BIGINT(8), BankAccountNumber BIGINT(8), AccountOwner VARCHAR(256),BankAccountType VARCHAR(256), Balance VARCHAR(256), ValidStart VARCHAR(256),  ValidEnd VARCHAR(256),PRIMARY KEY (Id)); 
+INSERT INTO BANK_ACCOUNT(UserID,BankAccountID) VALUES(1,2);
+INSERT INTO BANK_ACCOUNT(UserID,BankAccountID) VALUES(2,3);
+INSERT INTO BANK_ACCOUNT(UserID,BankAccountID) VALUES(3,6);
+INSERT INTO BANK_ACCOUNT(UserID,BankAccountID) VALUES(2,5);
+INSERT INTO BANK_ACCOUNT(UserID,BankAccountID) VALUES(1,4);
+
+
+
 
 select last_insert_id();
 

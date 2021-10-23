@@ -2,7 +2,9 @@
     "require": {
         "vlucas/phpdotenv": "^2.4",
         "firebase/php-jwt": "^5.4",
-        "ext-mysqli": "*"
+        "ext-mysqli": "*",
+        "myclabs/deep-copy": "^1.10",
+        "ext-json": "*"
     },
     "autoload": {
         "psr-4": {

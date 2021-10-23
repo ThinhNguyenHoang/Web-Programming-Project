@@ -4,14 +4,10 @@ class FoodController extends BaseController
     /**
      * "/food/list" Endpoint - Get list of foods
      */
-<<<<<<< Updated upstream:server/Food/controller/FoodController.php
     public function handleRequest($request){
 
     }
     public function listAction()
-=======
-    public function readAction()
->>>>>>> Stashed changes:server/Controller/Api/FoodController.php
     {
         $strErrorDesc = '';
         $requestMethod = $_SERVER["REQUEST_METHOD"];

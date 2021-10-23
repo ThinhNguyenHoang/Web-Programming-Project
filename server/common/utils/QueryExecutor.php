@@ -1,26 +1,6 @@
 <?php
 class QueryExecutor extends Singleton
 {
-    protected mysqli $conn;
-
-    /**
-     * @throws Exception
-     */
-    public static function getInstance()
-    {
-        $subclass = static::class;
-        if (!isset(self::$instances[$subclass])) {
-            // Note that here we use the "static" keyword instead of the actual
-            // class name. In this context, the "static" keyword means "the name
-            // of the current class". That detail is important because when the
-            // method is called on the subclass, we want an instance of that
-            // subclass to be created here.
-            self::$instances[$subclass] = new static();
-            $conn = ConnectionSingleton::getInstance()::getConnection();
-        }
-        return self::$instances[$subclass];
-    }
-
     public function select($query = "", $params = [])
     {
         try {
@@ -35,7 +15,15 @@ class QueryExecutor extends Singleton
     }
 
     public static function executeQuery($query){
-        return mysqli_query(ConnectionSingleton::getConnection(),$query);
+        $conn = ConnectionSingleton::getConnection();
+        if($conn->connect_error){
+            die("Connection Error: " . $conn->connect_error);
+        }
+        $result =  $conn->query($query);
+        if(!$result){
+            throw new Exception("Query Executor:: Query went wrong");
+        }
+        return $result;
     }
 
 

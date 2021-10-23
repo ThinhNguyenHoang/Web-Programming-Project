@@ -6,6 +6,8 @@ $uri = explode('/', $uri);
 
 $endpoint = array('food');
 
+// TODO: Parse the token for protected endpoints before assigning the request to the controller
+
 if ((isset($uri[2]) && !in_array($uri[2], $endpoint))) {
     header("HTTP/1.1 404 Not Found");
     exit(1);
