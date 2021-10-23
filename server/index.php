@@ -11,7 +11,10 @@ if ((isset($uri[2]) && !in_array($uri[2], $endpoint))) {
     exit(1);
 }
 
-// Perform Routing functionality
-if ($uri[2] == 'food') {
+require PROJECT_ROOT_PATH . "/Controller/Api/FoodController.php";
 
+if ($uri[2] == 'food') {
+    $objFeedController = new FoodController();
+    $strMethodName = $uri[3] . 'Action';
+    $objFeedController->{$strMethodName}();
 }
