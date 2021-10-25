@@ -1,7 +1,14 @@
 <?php
 namespace src\user\service;
 
-require_once __DIR__ . '/vendor/autoload.php';
+use src\common\utils\ResponseHelper;
+use src\user\dto\UserRegisterRequest;
+use src\user\dto\UserResponseDTO;
+use src\user\mapper\UserMapper;
+use src\user\message\UserMessage;
+use src\user\repository\UserRepository;
+
+require_once  __DIR__ . '/../../../vendor/autoload.php';
 
 /**
  * Define operation that can be done related to the entity
@@ -12,9 +19,14 @@ require_once __DIR__ . '/vendor/autoload.php';
  */
 class UserService
 {
-    private static function registerUser(UserRegisterRequest $request){
+    public static function getUserList(){
+        ResponseHelper::success(UserMessage::getMessages()->readSuccess,UserRepository::listUserAccount());
+    }
+
+
+    public static function registerUser(UserRegisterRequest $request){
         // Find user with the username in database
-        $user = UserMapper::getUserFromRegisterRequest($request);
+        $user = UserMapper::mapUserFromRegisterRequest($request);
         $user_found = UserRepository::findUserByName($user->username);
         if($user_found){
             // Throw error notifying username already taken
@@ -25,8 +37,8 @@ class UserService
         return UserRepository::create($user);
     }
 
-    private static function signInUser(UserSignInRequest $request){
-        $user = UserMapper::getUserAccountFromSignInRequest($request);
+    public static function signInUser(UserSignInRequest $request){
+        $user = UserMapper::mapUserAccountFromSignInRequest($request);
         // Hash the password before saving in the database
         // Find user with the username in database
         $user_found = UserRepository::findUserByName($user->username);
@@ -42,12 +54,13 @@ class UserService
         echo RequestHelper::generate_jwt_token($user_found);
     }
 
-    private static function updateUserInfo(UserUpdateRequest $request){
+    public static function updateUserInfo(UserUpdateRequest $request){
         // Get the user account
 
     }
 
-    private static function singOutUser(){
+
+    public static function singOutUser(){
 
     }
 }

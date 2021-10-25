@@ -1,6 +1,9 @@
 <?php
 namespace src\common\utils;
-require_once  __DIR__ . '../../../vendor/autoload.php';
+require_once  __DIR__ . '/../../../vendor/autoload.php';
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+
 
 
 /*
@@ -12,13 +15,22 @@ class ResponseHelper {
 
     }
 
+    public static function returnJsonBody($body){
+        http_response_code(200);
+        header("Access-Control-Allow-Origin: *");
+        header("Content-Type: application/json; charset=UTF-8");
+        echo json_encode($body);
+    }
+
     public static function success($message=null,$body=null){
         // TODO: Tra ve code 200 và trả về body cho người dùng (nếu có)
         http_response_code(200);
+        $object = new \stdClass();
         if($message){
-            //TODO: Quăng về kèm message
-            echo json_encode(array("message" => $message));
+            $object->message = $message;
         }
+        $object->data = $body;
+        echo json_encode($object);
     }
 
     public static function error_client($message){

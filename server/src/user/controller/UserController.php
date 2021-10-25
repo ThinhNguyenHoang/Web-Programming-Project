@@ -2,20 +2,34 @@
 
 namespace src\user\controller;
 
-require_once  __DIR__ . '../../../vendor/autoload.php';
+use src\common\base\BaseController;
+use src\common\base\RequestHandler;
+use src\common\utils\RequestHelper;
+use src\common\utils\ResponseHelper;
+use src\user\service\UserService;
+
+require_once  __DIR__ . '/../../../vendor/autoload.php';
 
 class UserController extends BaseController implements RequestHandler
 {
     /**
      * "/food/list" Endpoint - Get list of foods
      */
-    private $service;
     public function handleRequest()
     {
         $method = strtolower(RequestHelper::getRequestMethod());
+        error_log("User controller::METHOD::" . $method);
+        $relative_path = RequestHelper::get_ith_path_item(1);
         switch($method){
             case "get":
-                $this->read();
+                switch ($relative_path){
+                    case "accounts":
+                        error_log("USER_CONTROLLER::LIST ENDPOINT::" . $relative_path);
+                        UserService::getUserList();
+                        break;
+                    default:
+                        ResponseHelper::error_client("Invalid path in user endpoint");
+                }
                 break;
             case "post":
                 $this->create();
@@ -26,20 +40,8 @@ class UserController extends BaseController implements RequestHandler
             case "delete":
                 $this->delete();
                 break;
+            default:
+                return false;
         }
-    }
-
-    public function create(){
-
-    }
-    public function read(){
-
-    }
-    public function update(){
-
-    }
-    public function delete()
-    {
-
     }
 }

@@ -1,11 +1,16 @@
 <?php
 namespace src\common\utils;
-require_once  __DIR__ . '../../../vendor/autoload.php';
+use Exception;
+use src\common\base\Singleton;
+use src\common\config\ConnectionSingleton;
+
+require_once  __DIR__ . '/../../../vendor/autoload.php';
 
 class QueryExecutor extends Singleton
 {
 
-    public static function executeQuery($query){
+    public static function executeQuery($query): \mysqli_result|bool
+    {
         $conn = ConnectionSingleton::getConnection();
         if($conn->connect_error){
             die("Connection Error: " . $conn->connect_error);

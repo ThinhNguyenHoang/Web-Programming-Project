@@ -2,12 +2,11 @@
 
 
 namespace src\common\base;
-require_once  __DIR__ . '../../../vendor/autoload.php';
 
 interface Repository
 {
-    public static function create($entity = null);
-    public static function read($entityID=null);
-    public static function update($entityID=null,$entity=null);
-    public static function delete($entityID=null);
+    public static function create(object $entity = null);
+    public static function read(int $entityID=null);
+    public static function update(int $entityID=null,object $entity=null);
+    public static function delete(int $entityID=null);
 }

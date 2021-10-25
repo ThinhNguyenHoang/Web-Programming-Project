@@ -1,12 +1,9 @@
 <?php
 namespace src\common\utils;
-require_once  __DIR__ . '../../../vendor/autoload.php';
+require_once  __DIR__ . '/../../../vendor/autoload.php';
 
 
 use Firebase\JWT\JWT;
-
-include '../config/jwt_token_config.php';
-require_once('../../vendor/autoload.php');
 
 // show error reporting
 error_reporting(E_ALL);
@@ -48,14 +45,17 @@ class RequestHelper{
      *  Example:
      *  Input: https://www.server.com/user/authorize
      *  Output:
-     *      + Call to get_ith_path_item(1) should return user
-     *      + Call to get_ith_path_item(2) should return authorize
+     *      + Call to get_ith_path_item(0) should return user
+     *      + Call to get_ith_path_item(1) should return authorize
      *  NOTE: We only get the base endpoint to determine which controller to call.
      *  /authorize will be handled by the controller called it self.
      */
-    public static function get_ith_path_item($ith_num){
-        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $uri = explode( '/', $uri );
+    public static function get_ith_path_item(int $ith_num) : ?string {
+        $uri = explode("/",substr($_SERVER['REQUEST_URI'],1));
+        if($ith_num > count($uri)){
+            error_log("RequestHelper: Có thằng lấy index sai " . $ith_num);
+            return null;
+        }
         return $uri[$ith_num];
     }
 
@@ -81,7 +81,7 @@ class RequestHelper{
             echo 'Token not found in request';
             exit;
         }
-        
+
         $jwt = $matches[1];
         if (! $jwt) {
             // No token was able to be extracted from the authorization header

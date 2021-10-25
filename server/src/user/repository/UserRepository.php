@@ -1,15 +1,23 @@
 <?php
 namespace src\user\repository;
 
-require_once  __DIR__ . '../../../vendor/autoload.php';
+require_once  __DIR__ . '/../../../vendor/autoload.php';
 
-// generate json web token
-include_once 'config/core.php';
-include_once 'libs/php-jwt-master/src/BeforeValidException.php';
-include_once 'libs/php-jwt-master/src/ExpiredException.php';
-include_once 'libs/php-jwt-master/src/SignatureInvalidException.php';
-include_once 'libs/php-jwt-master/src/JWT.php';
+//// generate json web token
+//include_once 'libs/php-jwt-master/src/BeforeValidException.php';
+//include_once 'libs/php-jwt-master/src/ExpiredException.php';
+//include_once 'libs/php-jwt-master/src/SignatureInvalidException.php';
+//include_once 'libs/php-jwt-master/src/JWT.php';
+
+use Exception;
 use \Firebase\JWT\JWT;
+use http\Env\Request;
+use src\common\base\Repository;
+use src\common\config\ConnectionSingleton;
+use src\common\utils\QueryExecutor;
+use src\common\utils\RequestHelper;
+use src\user\entity\UserAccount;
+use src\user\mapper\UserMapper;
 use function DeepCopy\deep_copy;
 
 /**
@@ -27,6 +35,26 @@ class UserRepository implements Repository
     // Determine the latest inserted user ID --> Sequence
     public static string $table_name = "user_account";
 
+    /**
+     */
+    public static function listUserAccount(): array
+    {
+        $query = "SELECT ID,USERNAME,PASSWORD FROM USER_ACCOUNT";
+        try {
+            $result = QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+        }
+//        $num_row = $result->num_rows;
+        $list_user = array();
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+            error_log(json_encode($row),0);
+            array_push($list_user,$row);
+        }
+        error_log("USER_REPOSITORY::FETCH_LIST::",0);
+        return $list_user;
+    }
+
     public static function getLastUserId()
     {
 
@@ -39,7 +67,7 @@ class UserRepository implements Repository
         try {
             $row = QueryExecutor::executeQuery($query);
             $return = $row->fetch_object($class = "UserAccount");
-            return deep_co0py($return);
+            return deep_copy($return);
         } catch (Exception $exception) {
             echo $exception->getMessage();
         }
@@ -49,7 +77,7 @@ class UserRepository implements Repository
     /**
      * @param UserAccount|null $entity
      */
-    public static function create(UserAccount $entity = null)
+    public static function create($entity = null)
     {
         $query = "INSERT INTO USER_ACCOUNT(Username,Password) VALUES($entity->username,$entity->password)";
         return QueryExecutor::executeQuery($query);
@@ -67,7 +95,7 @@ class UserRepository implements Repository
         return deep_copy($return);
     }
 
-    public static function update(int $entityID = null, UserAccount $entity = null)
+    public static function update(int $entityID = null, object $entity = null)
     {
         $query = "UPDATE USER_ACCOUNT SET USERNAME=$entity->username, PASSWORD=$entity->password WHERE ID=$entityID";
         return QueryExecutor::executeQuery($query);

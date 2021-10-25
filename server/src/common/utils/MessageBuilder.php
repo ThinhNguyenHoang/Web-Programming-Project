@@ -1,7 +1,9 @@
 <?php
 
 namespace src\common\utils;
-require_once  __DIR__ . '../../../vendor/autoload.php';
+use src\common\base\MessageObject;
+
+require_once  __DIR__ . '/../../../vendor/autoload.php';
 
 const SUCCESS_STATUS = "result in success";
 const ERROR_STATUS = "result in error";
