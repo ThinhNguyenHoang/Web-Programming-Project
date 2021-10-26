@@ -16,6 +16,7 @@ use src\common\base\Repository;
 use src\common\config\ConnectionSingleton;
 use src\common\utils\QueryExecutor;
 use src\common\utils\RequestHelper;
+use src\user\entity\BankAccount;
 use src\user\entity\UserAccount;
 use src\user\mapper\UserMapper;
 use function DeepCopy\deep_copy;
@@ -39,7 +40,7 @@ class UserRepository implements Repository
      */
     public static function listUserAccount(): array
     {
-        $query = "SELECT ID,USERNAME,PASSWORD FROM USER_ACCOUNT";
+        $query = "SELECT id,username,password,role FROM USER_ACCOUNT";
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
@@ -55,32 +56,40 @@ class UserRepository implements Repository
         return $list_user;
     }
 
-    public static function getLastUserId()
+    public static function findUserByName(string $user_name)
     {
-
-    }
-
-
-    public static function findUserByName(string $user_name): ?UserAccount
-    {
-        $query = "SELECT * FROM USER_ACCOUNT WHERE USERNAME=$user_name";
+        $query = "SELECT id,username,password,role FROM USER_ACCOUNT WHERE USERNAME='$user_name'";
         try {
-            $row = QueryExecutor::executeQuery($query);
-            $return = $row->fetch_object($class = "UserAccount");
-            return deep_copy($return);
+            $result = QueryExecutor::executeQuery($query);
+            return UserMapper::mapUserFromDatabaseResult($result);
         } catch (Exception $exception) {
             echo $exception->getMessage();
         }
         return null;
     }
 
+    public static function getUserProfile(int $userId) : ?object{
+        $query = "select id,fullname as full_name,accountID as account_id, dob,email,point,address,phonenumber as phone_number from user_profile where id=$userId";
+        try {
+            $result = QueryExecutor::executeQuery($query);
+            return UserMapper::mapUserProfileFromResult($result);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+        return null;
+    }
     /**
      * @param UserAccount|null $entity
      */
-    public static function create($entity = null)
+    public static function create($entity = null): \mysqli_result|bool|null
     {
-        $query = "INSERT INTO USER_ACCOUNT(Username,Password) VALUES($entity->username,$entity->password)";
-        return QueryExecutor::executeQuery($query);
+        $query = "INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('$entity->username','$entity->password','CUSTOMER')";
+        try {
+            return QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage(),0);
+            return null;
+        }
     }
 
     public static function read(int $entityID = null)
@@ -101,8 +110,66 @@ class UserRepository implements Repository
         return QueryExecutor::executeQuery($query);
     }
 
+
     public static function delete(int $entityID = null)
     {
         // TODO: Implement delete() method.
+        // Delete the user profile
+        // Delete the user bank accounts
+        // Delete the user account
+        $query = "DELETE FROM USER_ACCOUNT  WHERE ID=$entityID";
+        try {
+            return QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+        return null;
     }
+
+
+
+    public static function listUserBankAccounts($userID): array
+    {
+        $token = RequestHelper::validate_jwt_token();
+        error_log("Token attached is: " . json_encode($token), 0);
+        $query = "SELECT * FROM BANK_ACCOUNT WHERE USERID = $userID";
+        try {
+            $result = QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+        }
+        $list_user = array();
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+            error_log(json_encode($row),0);
+            array_push($list_user,$row);
+        }
+        error_log("USER_REPOSITORY::FETCH_LIST::",0);
+        return $list_user;
+    }
+
+    public static function createUserBankAccount(BankAccount $bankAccountInfo=null, $userId=null): \mysqli_result|bool|null
+    {
+        $query = "INSERT INTO BANK_ACCOUNT(UserID,BankAccountNumber, AccountOwner, BankAccountType,Balance, ValidStart, ValidEnd)
+ VALUES($bankAccountInfo->id,$bankAccountInfo->bankAccountType,$bankAccountInfo->cardHolderName,$bankAccountInfo->bankAccountType,$bankAccountInfo->userBalance,$bankAccountInfo->cardValidTimeStart,$bankAccountInfo->cardValidTimeEnd);";
+        try {
+            return QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage(), 0);
+        }
+        return null;
+    }
+    public static function readUserBankAccountById(int $bankAccountId): \mysqli_result|bool|null
+    {
+        $query = "SELECT * FROM BANK_ACCOUNT WHERE ID=$bankAccountId";
+        try {
+            $result = QueryExecutor::executeQuery($query);
+            return QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage(), 0);
+        }
+        return null;
+    }
+
+
+
 }

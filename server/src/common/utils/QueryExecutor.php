@@ -11,13 +11,15 @@ class QueryExecutor extends Singleton
 
     public static function executeQuery($query): \mysqli_result|bool
     {
+        error_log("Querying the query:" . $query,0 );
         $conn = ConnectionSingleton::getConnection();
         if($conn->connect_error){
             die("Connection Error: " . $conn->connect_error);
         }
         $result =  $conn->query($query);
         if(!$result){
-            throw new Exception("Query Executor:: Query went wrong");
+            error_log("ERROR WHEN EXECUTING QUERY: " . $conn->error);
+            die("Query Error: " . $conn->error);
         }
         return $result;
     }

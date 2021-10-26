@@ -11,7 +11,11 @@ require_once  __DIR__ . '/../../vendor/autoload.php';
 require_once  __DIR__ . '/../../../vendor/autoload.php';
 */
 //header('Access-Control-Allow-Origin: *');
+//header('Access-Control-Allow-Methods: *');
 use src\user\controller\UserController;
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Headers:Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,Authorization");
 
 require_once './vendor/autoload.php';
 
