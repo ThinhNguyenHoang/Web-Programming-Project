@@ -37,12 +37,14 @@ export const TRANSLATIONS_EN = {
     [base_keys.form.login]:"Login",
     [base_keys.form.register]:"Register",
     [base_keys.form.back_home]:"Home Page",
-    //News
-    [base_keys.form.news]:"News",
-    [base_keys.form.sale_off]:"Sale off",
-    [base_keys.form.combo]:"Combo",
-    [base_keys.form.nofication]:"Nofication",
+    
     // * Below is for testing purpose only
     [base_keys.test.welcome]: "Welcome to React - Thinh",
     [base_keys.test.learn_react]: "Learn React Now",
+
+    //News
+    [base_keys.food.news]:"News",
+    [base_keys.food.sale_off]:"Sale off",
+    [base_keys.food.combo]:"Combo",
+    [base_keys.food.nofication]:"Nofication",
 };

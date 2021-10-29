@@ -54,4 +54,5 @@ const foodCardlst= createSlice({
         }
     }
 });
+
 export default foodCardlst;

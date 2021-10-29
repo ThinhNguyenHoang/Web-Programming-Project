@@ -50,5 +50,13 @@ export const base_keys = {
     test:{
         welcome:"test.welcome",
         learn_react: "test.learn_react"
+    },
+    //food
+    food:{
+        //News
+        news:"news",
+        sale_off:"sale_off",
+        combo:"combo",
+        nofication:"nofication"
     }
 };

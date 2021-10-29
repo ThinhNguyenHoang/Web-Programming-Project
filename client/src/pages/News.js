@@ -11,13 +11,15 @@ import Nofication from '../components/Nofication';
 import fimg from "../assets/images/foodimg.png";
 import { store } from '../redux/store';
 import foodCardlst from '../redux/slices/foodCardlst/foodCardlst';
+import { useSelector } from 'react-redux';
 
-const foodstate=store.getState().foodCardlst;
-const foodlst=foodstate.foodShow;
+
+
 
 function News (){
     let history = useHistory();
     const {t, i18n} = useTranslation();
+    const foodList= useSelector((state)=>state.foodCardlst.foodShow);
     return (
         <div>
         <Box sx={{
@@ -34,7 +36,7 @@ function News (){
                     <ButtonBase onClick={ () => store.dispatch(foodCardlst.actions.backList())}>
                         <ArrowBackIosIcon fontSize="large" />
                     </ButtonBase>
-                    {foodlst.map(food => <FoodCard foodinfo={food} key={food.foodname}/>)}
+                    {foodList.map(food => <FoodCard foodinfo={food} key={food.foodname}/>)}
                     <ButtonBase onClick={ () => store.dispatch(foodCardlst.actions.nextList())}>
                         <ArrowForwardIosIcon fontSize="large"/>
                     </ButtonBase>
@@ -53,12 +55,12 @@ function News (){
             <Box sx={{
                 display: `flex`,
                 flexDirection: `row`,mx:"auto"}}>
-                    <ButtonBase >
+                    <ButtonBase onClick={ () => store.dispatch(foodCardlst.actions.backList())}>
                         <ArrowBackIosIcon fontSize="large"/>
                     </ButtonBase>
-                    {foodlst.map(FoodCard)}
+                    {foodList.map(food => <FoodCard foodinfo={food} key={food.foodname}/>)}
 
-                    <ButtonBase  >
+                    <ButtonBase onClick={ () => store.dispatch(foodCardlst.actions.nextList())} >
                         <ArrowForwardIosIcon fontSize="large"/>
                     </ButtonBase>
                 
