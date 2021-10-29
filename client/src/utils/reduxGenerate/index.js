@@ -67,6 +67,6 @@ export function error(errors) {
         isSuccess: false,
         isError: true,
         isLoading: false,
-        errors
+        errors: errors.message
     };
 }
