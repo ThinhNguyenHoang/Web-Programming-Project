@@ -17,4 +17,5 @@ PS: Mọi người viết Tiếng anh hay tiếng việt cũng được nhưng c
 		- Mô tả bug: 
 			- Nguyên nhân tự đoán
 			- Đã thử làm gì để debug nhưng không được 
-		- Chạy bị crash hoặc ra kết quả không mong muốn 
+		- Chạy bị crash hoặc ra kết quả không mong muốn
+

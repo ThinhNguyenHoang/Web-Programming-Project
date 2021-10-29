@@ -1,6 +1,14 @@
 <?php
+
+namespace src\common\base;
+require_once  __DIR__ . '/../../../vendor/autoload.php';
+
 class BaseController
 {
+    /**
+     *  Handle the request respective to the controler:
+     */
+
     /**
      * __call magic method.
      */
@@ -52,4 +60,6 @@ class BaseController
         echo $data;
         exit;
     }
+
+
 }
