@@ -21,6 +21,11 @@ export const TRANSLATIONS_VI = {
     [base_keys.form.password_required_prompt]: "Mật khẩu là bắt buộc",
     [base_keys.form.password_min_8_requirement]: "Độ dài của mật khẩu phải lớn hơn 8",
 
+    [base_keys.form.username]: "Tên tài khoản",
+    [base_keys.form.username_prompt]: "Nhập tài khoản của bạn",
+    [base_keys.form.username_required_prompt]: "Tài khoản là bắt buộc",
+    [base_keys.form.username_min_8_requirement]: "Độ dài của tài khoản phải lớn hơn 8",
+
     [base_keys.form.confirm_password]: "Nhập lại mật khẩu",
     [base_keys.form.confirm_password_correct_prompt]: "Mật khẩu nhập lại đang không khớp",
 

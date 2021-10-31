@@ -53,6 +53,7 @@ class UserService
         $result = UserRepository::create($user);
         if($result){
             error_log("Created User: " . json_encode($user),0);
+            $user->password = "";
             ResponseHelper::success(UserMessage::getMessages()->createSuccess,$user);
             return;
         }
@@ -86,7 +87,7 @@ class UserService
         $body->token=RequestHelper::generate_jwt_token($user_found);
         $body->user_profile = UserRepository::getUserProfile($user_found->id);
         error_log("LOGIN SUCCESS: " . $body->token, 0);
-        ResponseHelper::success("Login Success", $body);
+        ResponseHelper::success("Login success", $body);
         die();
     }
 

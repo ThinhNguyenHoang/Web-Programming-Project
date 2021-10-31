@@ -9,6 +9,8 @@ import {useHistory} from 'react-router-dom';
 import {useTranslation} from "react-i18next";
 import {ROUTING_CONSTANTS} from "../routes/RouterConfig";
 import logo from "../assets/images/logo_64.png"
+import {login_actions, register_actions, selectors} from "../redux/slices/auth/AuthSlice";
+import {useDispatch, useSelector} from "react-redux";
 
 const styles = {
     button: {
@@ -33,7 +35,19 @@ const styles = {
 function Login() {
     let history = useHistory();
     const {t, i18n} = useTranslation();
+    const dispatch = useDispatch();
+    const loginSuccess = useSelector(selectors.getLoginSuccess);
+    const loginLoading = useSelector(selectors.getLoginLoading);
+
     const navigateHome = () => history.push(ROUTING_CONSTANTS.HOMEPAGE);
+        const onLoginUser = (values,setSubmitting) =>{
+        const username = values.username;
+        const password = values.password;
+        console.log("Login user with values:", values);
+        dispatch({type:login_actions.loading,payload:{username, password}});
+        setSubmitting(false);
+    };
+
     return (
         <Box sx={{...styles.outer_box}} display={`flex`} justifyContent={`center`} alignItems={`center`}
              minHeight={`100vh`}>
@@ -53,14 +67,14 @@ function Login() {
                 </Box>
                 <Formik
                     initialValues={{
-                        email: '',
+                        username: '',
                         password: '',
                     }}
                     validationSchema={yup.object({
-                        email: yup
-                            .string(t(base_keys.form.email))
-                            .email(t(base_keys.form.email_valid_prompt))
-                            .required(t(base_keys.form.email_required_prompt)),
+                        username: yup
+                            .string(t(base_keys.form.username))
+                            .min(9,t(base_keys.form.username_min_8_requirement))
+                            .required(t(base_keys.form.username_required_prompt)),
                         password: yup
                             .string(t(base_keys.form.password_prompt))
                             .min(8, t(base_keys.form.password_min_8_requirement))
@@ -68,13 +82,14 @@ function Login() {
                     })}
                     // * TODO: Change onSubmit handler to post to authorize api
                     onSubmit={(values, {setSubmitting}) => {
-                        setTimeout(() => {
-                            setSubmitting(false);
-                            alert(JSON.stringify(values, null, 2));
-                        }, 500);
+                        // setTimeout(() => {
+                        //     setSubmitting(false);
+                        //     alert(JSON.stringify(values, null, 2));
+                        // }, 500);
+                        onLoginUser(values, setSubmitting);
                     }}
                 >
-                    {({submitForm, isSubmitting}) => (
+                    {({submitForm, isSubmitting,isValid}) => (
                         <Form>
                             <Box display={`flex`} flexDirection={`column`} justifyContent={`center`} alignItems={`center`}>
                                 <Box sx={{
@@ -83,9 +98,9 @@ function Login() {
                                 }}>
                                     <Field
                                         component={TextField}
-                                        name="email"
-                                        type="email"
-                                        label="Email"
+                                        name="username"
+                                        type="text"
+                                        label="Username"
                                         variant={`outlined`}
                                     />
 
@@ -121,7 +136,7 @@ function Login() {
                                     <Button
                                         variant={`contained`}
                                         color={`secondary`}
-                                        disabled={isSubmitting}
+                                        disabled={loginLoading}
                                         onClick={navigateHome}
                                     >
                                         {t(base_keys.form.back_home)}
@@ -135,7 +150,7 @@ function Login() {
                                     <Button
                                         variant={`contained`}
                                         color={`primary`}
-                                        disabled={isSubmitting}
+                                        disabled={isSubmitting || (!isValid)}
                                         onClick={submitForm}
                                     >
                                         {t(base_keys.form.login)}

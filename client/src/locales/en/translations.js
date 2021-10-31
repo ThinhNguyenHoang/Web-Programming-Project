@@ -19,6 +19,10 @@ export const TRANSLATIONS_EN = {
     [base_keys.form.password_prompt]: "Enter your password",
     [base_keys.form.password_required_prompt]: "Password is required",
     [base_keys.form.password_min_8_requirement]: "Password length must be greater than 8",
+    [base_keys.form.username]: "Username",
+    [base_keys.form.username_prompt]: "Enter your username",
+    [base_keys.form.username_required_prompt]: "Username is required",
+    [base_keys.form.username_min_8_requirement]: "Username length must be greater than 8",
 
     [base_keys.form.confirm_password]: "Confirm Password",
     [base_keys.form.confirm_password_correct_prompt]: "Password must match",
