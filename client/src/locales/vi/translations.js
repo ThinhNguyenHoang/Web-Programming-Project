@@ -44,4 +44,18 @@ export const TRANSLATIONS_VI = {
     [base_keys.food.sale_off]:"Ưu đãi",
     [base_keys.food.combo]:"Combo",
     [base_keys.food.nofication]:"Thông báo",
+
+    //food cart
+    [base_keys.food.cart]:"Giỏ hàng",
+    [base_keys.food.price]:"Giá",
+    [base_keys.food.quantity]:"Số lượng",
+    [base_keys.food.voucher]:"Khuyến mãi",
+    [base_keys.food.address]:"Địa chỉ",
+    [base_keys.food.subtotal]:"Tạm tính",
+    [base_keys.food.total]:"Tổng cộng",
+    [base_keys.food.discount]:"Khuyến mãi",
+    [base_keys.food.phone]:"Số điện thoại",
+    [base_keys.food.pay]:"Thanh toán",
+    [base_keys.food.note]:"Ghi chú",
+
 };

@@ -3,6 +3,7 @@ import Login from "../pages/Login";
 import App from "../App";
 import Register from "../pages/Register";
 import News from "../pages/News"
+import FoodCart from "../pages/FoodCart"
 
 
 
@@ -67,6 +68,9 @@ export const RouterConfig = () => {
             </Route>
             <Route exact path={ROUTING_CONSTANTS.RECOMMENDATION}>
                 <Recommendations/>
+            </Route>
+            <Route exact path={ROUTING_CONSTANTS.ITEM_CART}>
+                <FoodCart/>
             </Route>
         </Switch>
     )

@@ -51,4 +51,18 @@ export const TRANSLATIONS_EN = {
     [base_keys.food.sale_off]:"Sale off",
     [base_keys.food.combo]:"Combo",
     [base_keys.food.nofication]:"Nofication",
+    //food cart
+    [base_keys.food.cart]:"Cart",
+    [base_keys.food.price]:"Price",
+    [base_keys.food.quantity]:"Quantity",
+    [base_keys.food.voucher]:"Vouchers",
+    [base_keys.food.address]:"Address",
+    [base_keys.food.subtotal]:"Subtotal",
+    [base_keys.food.total]:"Total",
+    [base_keys.food.discount]:"Discount",
+    [base_keys.food.phone]:"Phone number",
+    [base_keys.food.pay]:"Pay",
+    [base_keys.food.note]:"Note",
+
+
 };

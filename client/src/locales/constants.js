@@ -61,6 +61,20 @@ export const base_keys = {
         news:"news",
         sale_off:"sale_off",
         combo:"combo",
-        nofication:"nofication"
+        nofication:"nofication",
+        //food cart
+        cart:"cart",
+        price:"price",
+        quantity:"quantity",
+        voucher:"voucher",
+        address:"address",
+        subtotal:"subtotal",
+        total:"total",
+        discount:"discount",
+        phone:"phone",
+        pay:"pay",
+        note:"note",
+
+
     }
 };

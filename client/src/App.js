@@ -31,6 +31,7 @@ function App() {
     const navigateToRegisterPage = () => history.push(ROUTING_CONSTANTS.REGISTER);
     ///////////////test
     const navigateToNewsPage = () => history.push(ROUTING_CONSTANTS.NEWS);
+    const navigateToCartPage=()=>{history.push(ROUTING_CONSTANTS.ITEM_CART);}
     ///////////////test
 
     Toaster.toastSuccessful("HHUHU");
@@ -106,8 +107,8 @@ function App() {
                     </Grid>
                     {/* //////////////test */}
                     <Button value={`vi`} variant={`contained`} color={`error`}
-                        onClick={navigateToNewsPage}>
-                        Tin tức
+                        onClick={navigateToCartPage}>
+                        Cart
                     </Button>
                     {/* //////////////test */}
                 </Grid>
