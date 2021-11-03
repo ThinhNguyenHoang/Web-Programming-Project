@@ -4,6 +4,7 @@ import watchersFood from '../slices/Food/FoodSaga';
 import { fork } from 'redux-saga/effects';
 
 export default function* rootSaga(){
+    yield fork(watchersFood);
     yield fork(watchers);
-    yield fork(watchersFood)
+    
 }

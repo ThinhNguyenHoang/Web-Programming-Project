@@ -45,15 +45,17 @@ export const GetFoodDataService=(payload)=>{
 
 }
 
-export  const GetCartService = async (payload)=>{
+export const GetCartService = async  (payload)=>{
     console.log("Get cart");
     const cartData = await GetCartDataService(payload);
     const foodData = await GetFoodDataService(payload);
     const voucherData = await GetVoucherDataService(payload);
-
+    
     return {
             food_list:CartData2FoodCart(cartData,foodData),
-            voucher_list:VoucherData2VoucherList(voucherData)
+            voucher_list:VoucherData2VoucherList(voucherData),
         }
+    // return 1;
 
 }
+

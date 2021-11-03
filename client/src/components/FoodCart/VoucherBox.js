@@ -8,14 +8,15 @@ import styled from "@emotion/styled";
 import LoyaltyIcon from '@mui/icons-material/Loyalty';
 import { Button } from "@mui/material";
 import { ButtonGroup } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { change_voucher_cart } from "../../redux/slices/Food/FoodSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { change_voucher_cart, selectors } from "../../redux/slices/Food/FoodSlice";
 import { base_keys } from "../../locales/constants";
 import { useTranslation } from "react-i18next";
 
-const VoucherButton= (props)=>{
+export const VoucherButton= (props)=>{
 	const choose=()=>{
-		props.dispatch({type:change_voucher_cart,id:props.voucher.id})
+		props.dispatch({type:change_voucher_cart,payload:props.voucher.id})
+		
 	};
 	let bg="#fffad1";
 	if (props.voucher.id===props.voucher_id){
@@ -47,7 +48,7 @@ const VoucherButton= (props)=>{
 
 
 			
-		}}onClick={choose}  variant="contained" startIcon={<LoyaltyIcon sx={{color:"#ff0000",fontSize:10}} />}  square="true">  {props.voucher}</Button>
+		}}onClick={()=>{choose()}}  variant="contained" startIcon={<LoyaltyIcon sx={{color:"#ff0000",fontSize:10}} />}  square="true">  {props.voucher.name}</Button>
 	</Box>
 	);
 };
@@ -56,7 +57,6 @@ function VoucherBox(props) {
 	const voucherList=props.voucherList;
 	const dispatch=useDispatch();
 	const {t,i18n} = useTranslation();
-	const {choose,setChoose}=useState({id:0, bg:"#fffad1"});
 	const voucher_id=props.voucher_id;
 	return (
 		<Grid item >
@@ -65,7 +65,7 @@ function VoucherBox(props) {
 					<Typography variant="body1" color="initial" sx={{fontWeight:"bold", fontSize:20 ,}}>{t(base_keys.food.voucher)}</Typography>
 					<hr/>
 						{voucherList.map((voucher)=>{
-							return <VoucherButton dispatch={dispatch} voucher={voucher} voucher_id={voucher_id}/>;
+							return <VoucherButton  dispatch={dispatch} voucher={voucher} voucher_id={voucher_id} key={voucher.id}/>;
 						})}
 				</CardContent>
 			</Card>

@@ -6,7 +6,7 @@ export const UpdateSubtotal=(cart)=>{
 }
 export const UpdateDiscount=(cart)=>{
     //TODO
-    cart.discount=cart.voucher_list.filter(voucher=>voucher.id===cart.voucher_id).discount;
+    cart.discount=cart.voucher_list.filter(voucher=>voucher.id===cart.voucher_id)[0].discount;
 }
 export const UpdateQuantity=(cart)=>{
     //TODO
@@ -22,7 +22,7 @@ export const CartData2FoodCart=(cartData,FoodData)=>{
         const food=FoodData.filter((e)=>e.FoodID===item.FoodID);
         return {
             id:food[0].FoodID,
-            food_name:food[0].FoodName,
+            name:food[0].FoodName,
             price:food[0].Price,
             quantity:item.Quantity,
             img:food[0].Picture
@@ -45,6 +45,7 @@ export const VoucherData2VoucherList = (voucherData)=>{
             discount:voucher.Discount,
         }
     })
+
 }
 //convert food list in cart to food data to update
 export const FoodCart2CartData=(FoodCart)=>{

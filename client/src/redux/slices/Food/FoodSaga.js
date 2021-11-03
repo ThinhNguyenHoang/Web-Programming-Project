@@ -1,8 +1,9 @@
-import {call, put, takeLatest} from "redux-saga/effects";
+import {call, put, takeLatest,putResolve} from "redux-saga/effects";
 import { UpdateCart,GetCart,GetNews } from "./FoodService";
 import { update_cart_actions,get_cart_actions,get_news_actions } from "./FoodSlice";
 import Toaster from "../../../utils/Toaster/Toaster";
 import {GetCartService,GetFoodService,GetVoucherService,UpdateCartService} from './FoodService';
+
 function* UpdateCartSaga({payload}){
     console.log("Update cart Saga");
     try{
@@ -22,11 +23,13 @@ function* GetCartSaga({payload}){
     try{
         const res=yield call(GetCartService,payload);
         console.log("res data",res);
+        yield put({type:"get_cart.success",payload:res});
         Toaster.toastSuccessful("Load cart Successfully");
-        yield put({type:get_cart_actions.success,res});
+        
+
     }catch(e){
         Toaster.toastError("Load cart faild: " + e.message);
-        yield put({type: get_cart_actions.error, payload: e.message});
+        yield put({type: get_cart_actions.error, payload: ''});
     }
 }
 

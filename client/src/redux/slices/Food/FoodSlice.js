@@ -5,7 +5,7 @@ import { UpdateDiscount,UpdateSubtotal, UpdateQuantity } from "./FoodHelper";
 
 const food_item_cart={
     id:0,
-    food_name:"",
+    name:"",
     price:0,
     quantity:0,
     img:"",
@@ -53,31 +53,36 @@ const initialValue={
 
 export const selectors={
     getCart: state=>state.food.cart,
+    getVoucher: state=>state.food.cart.voucher_list
 }
 
 export const update_cart_actions = generateSagaLifecycleNames("update_cart");
 export const get_cart_actions = generateSagaLifecycleNames("get_cart");
-export const change_voucher_cart = createAction("change_voucher");
-export const increase_quantity_cart = createAction("increase_quantity");
-export const decrease_quantity_cart = createAction("decrease_quantity");
-export const delete_food_cart = createAction("delete_food");
+export const change_voucher_cart = "change_voucher";
+export const increase_quantity_cart = "increase_quantity";
+export const decrease_quantity_cart = "decrease_quantity";
+export const delete_food_cart = "delete_food";
 
 export const get_news_actions = generateSagaLifecycleNames("get_news");
-export const next_food_news = createAction("next_food");
-export const back_food_news = createAction("back_food");
-export const next_combo_news = createAction("next_combo");
-export const back_combo_news = createAction("back_combo");
-export const next_nofi_news = createAction("next_nofication");
-export const back_nofi_news = createAction("back_nofication");
+export const next_food_news = "next_food";
+export const back_food_news = "back_food";
+export const next_combo_news = "next_combo";
+export const back_combo_news = "back_combo";
+export const next_nofi_news = "next_nofication";
+export const back_nofi_news = "back_nofication";
 
 
 const FoodSlice= createSlice({
     name:"cart",
     initialState:initialValue,
     reducers:{
+        
+    },
+    extraReducers:{
         [change_voucher_cart]:(state,action)=>{
             //TODO
-            state.voucher_id=action.payload;
+            console.log("change voucher");
+            state.cart.voucher_id=action.payload;
             UpdateDiscount(state.cart);
         },
         [increase_quantity_cart]:(state,action)=>{
@@ -135,7 +140,6 @@ const FoodSlice= createSlice({
             //TODO
             return state;
         },
-    extraReducers:{
         [get_cart_actions.loading]:(state,action)=>{
             state.cart.get_status=loading();
         },
@@ -167,8 +171,6 @@ const FoodSlice= createSlice({
             //TODO
             state.news.get_status=error();
         },
-    }
-        
     }
 });
 export default FoodSlice;
