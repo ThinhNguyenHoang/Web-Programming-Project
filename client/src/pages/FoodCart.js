@@ -16,10 +16,11 @@ import VoucherBox from '../components/FoodCart/VoucherBox';
 import TotalBox from '../components/FoodCart/TotalBox';
 import NoteBox from '../components/FoodCart/NoteBox';
 import FoodCard from '../components/FoodCart/FoodCard';
-import {get_cart_actions} from '../redux/slices/Food/FoodSlice'
+import {get_cart_actions,update_cart_actions} from '../redux/slices/Food/FoodSlice'
 
 function FoodCart() {
-  const cart=useSelector(selectors.getCart)
+  const cart=useSelector(selectors.getCart);
+  const userID=useSelector(selectors.getUserId);
   let history = useHistory();
   const {t, i18n} = useTranslation();
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ function FoodCart() {
           <TotalBox subtotal={cart.subtotal} discount={cart.discount} />
           <NoteBox/>
           <Box textAlign="center" pt={8} >
-            <Button onClick={()=>{}} variant="text" px="auto" sx={{
+            <Button onClick={()=>{dispatch({type:update_cart_actions.loading,payload:{food_list:cart.food_list,user_id:userID}})}} variant="text" px="auto" sx={{
               color:"#fff",
               backgroundColor:"#f00",
               height:"50px",

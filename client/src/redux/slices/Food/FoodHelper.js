@@ -48,12 +48,13 @@ export const VoucherData2VoucherList = (voucherData)=>{
 
 }
 //convert food list in cart to food data to update
-export const FoodCart2CartData=(FoodCart)=>{
-    return FoodCart.foodList.map((food)=>{
+export const FoodCart2CartData=(payload)=>{
+    return payload.food_list.map((food)=>{
         return {
+            id:food.id,
             FoodID:food.id,
-            userID:FoodCart.user_id,
+            userID:payload.user_id,
             Quantity:food.quantity,
-        }
+        }   
     })
 }

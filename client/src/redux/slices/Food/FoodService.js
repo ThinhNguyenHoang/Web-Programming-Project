@@ -1,5 +1,5 @@
 import request from "../../../utils/RequestHelper";
-import {CartData2FoodCart,VoucherData2VoucherList} from './FoodHelper';
+import {CartData2FoodCart,FoodCart2CartData,VoucherData2VoucherList} from './FoodHelper';
 import axios from "axios";
 const api_endpoints = {
     food:"/foods",
@@ -8,14 +8,14 @@ const api_endpoints = {
 
 }
 const baseURL="http://localhost:3001"
-const handleResponse= (reponseData)=>{
-    return reponseData;
-}
 
-export const UpdateCartService=(payload)=>{
-    console.log("Update user food cart");
+
+export const UpdateCartService= (payload)=>{
+    console.log("Update user food cart",FoodCart2CartData(payload));
     //TODO
-    return request.putAsync(api_endpoints.cart,payload);
+    return axios.put(`${baseURL}${api_endpoints.cart}`,...FoodCart2CartData(payload))
+    .then((reponse)=>console.log("axios success",reponse.data))
+    .catch((error)=>console.log("axios fail",error))
     //return request.putAsync(payload);
 }
 export const GetCartDataService= (payload)=>{

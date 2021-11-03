@@ -53,7 +53,8 @@ const initialValue={
 
 export const selectors={
     getCart: state=>state.food.cart,
-    getVoucher: state=>state.food.cart.voucher_list
+    getVoucher: state=>state.food.cart.voucher_list,
+    getUserId:state=>state.user_id
 }
 
 export const update_cart_actions = generateSagaLifecycleNames("update_cart");
@@ -110,11 +111,13 @@ const FoodSlice= createSlice({
         },
         [delete_food_cart]:(state,action)=>{
             //TODO
-            var deleteFood=state.cart.food_list(food=>food.id===action.payload);
-            var idx= state.cart.indexOf(deleteFood);
+            var deleteFood=state.cart.food_list.filter(food=>food.id==action.payload);
+            var idx= state.cart.food_list.indexOf(deleteFood[0]);
             if (idx!==-1){
                 state.cart.food_list.splice(idx,1);
             }
+            UpdateQuantity(state.cart);
+            UpdateSubtotal(state.cart);
         },
         [next_food_news]:(state,action)=>{
             //TODO
@@ -158,7 +161,15 @@ const FoodSlice= createSlice({
             state.cart.get_status=error();
         },
         [update_cart_actions.loading]:(state,action)=>{
-
+            state.cart.update_status=loading();
+        },
+        [update_cart_actions.success]:(state,action)=>{
+            console.log("Update cart sucess");
+            state.cart.update_status=success();
+        },
+        [update_cart_actions.error]:(state,action)=>{
+            console.log("Update cart fail")
+            state.cart.update_status=loading();
         },
         [get_news_actions.loading]:(state,action)=>{
             state.news.get_status=loading();
