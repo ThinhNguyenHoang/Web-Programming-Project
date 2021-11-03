@@ -13,9 +13,16 @@ const baseURL="http://localhost:3001"
 export const UpdateCartService= (payload)=>{
     console.log("Update user food cart",FoodCart2CartData(payload));
     //TODO
-    return axios.put(`${baseURL}${api_endpoints.cart}`,...FoodCart2CartData(payload))
-    .then((reponse)=>console.log("axios success",reponse.data))
-    .catch((error)=>console.log("axios fail",error))
+    FoodCart2CartData(payload).map((data)=>{
+        return axios.put(`${baseURL}${api_endpoints.cart}/${data.id}`,data)
+        .then((response=>console.log("Axios success ",data.id,response.data)))
+        .catch((error)=>console.log("Axios fail",data.id,error));
+    })
+    // return axios.put(`${baseURL}${api_endpoints.cart}/1`,{
+    //     Quantity:123
+    // })
+    // .then((reponse)=>console.log("axios success",reponse.data))
+    // .catch((error)=>console.log("axios fail",error))
     //return request.putAsync(payload);
 }
 export const GetCartDataService= (payload)=>{

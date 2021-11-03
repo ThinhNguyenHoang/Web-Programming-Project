@@ -54,7 +54,7 @@ const initialValue={
 export const selectors={
     getCart: state=>state.food.cart,
     getVoucher: state=>state.food.cart.voucher_list,
-    getUserId:state=>state.user_id
+    getUserId:state=>state.food.user_id,
 }
 
 export const update_cart_actions = generateSagaLifecycleNames("update_cart");
