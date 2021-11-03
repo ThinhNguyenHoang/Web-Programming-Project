@@ -7,8 +7,13 @@ import {GetCartService,GetFoodService,GetVoucherService,UpdateCartService} from 
 function* UpdateCartSaga({payload}){
     console.log("Update cart Saga");
     try{
+<<<<<<< HEAD
         const res = yield call(UpdateCartService,payload);
         yield put({type:update_cart_actions.success,payload:res})
+=======
+        yield call(UpdateCartService,payload);
+        yield put({type:update_cart_actions.success});
+>>>>>>> master/Khoi
         Toaster.toastSuccessful("Update cart Successfully");
     }catch(e){
         Toaster.toastError("Update cart faild: " + e.message);

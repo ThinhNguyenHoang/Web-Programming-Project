@@ -49,11 +49,7 @@
       "ExpirationDate": "2021-01-01",
       "Description": "Voucher description ID 1",
       "VoucherName": "Weeken Voucher",
-<<<<<<< HEAD
-      "Discount":10000,
-=======
       "Discount": 10000,
->>>>>>> master/Khoi
       "UserID": 1
     },
     {
@@ -61,11 +57,7 @@
       "ExpirationDate": "2020-01-01",
       "Description": "Voucher description ID 2",
       "VoucherName": "Wednesday Voucher",
-<<<<<<< HEAD
-      "Discount":25000,
-=======
       "Discount": 25000,
->>>>>>> master/Khoi
       "UserID": 1
     },
     {
@@ -73,11 +65,7 @@
       "ExpirationDate": "2020-11-11",
       "Description": "Voucher description ID 3",
       "VoucherName": "Tuesday Voucher",
-<<<<<<< HEAD
-      "Discount":15000,
-=======
       "Discount": 15000,
->>>>>>> master/Khoi
       "UserID": 1
     },
     {
@@ -85,11 +73,7 @@
       "ExpirationDate": "2019-01-09",
       "Description": "Voucher description ID 4",
       "VoucherName": "Thursday Voucher",
-<<<<<<< HEAD
-      "Discount":30000,
-=======
       "Discount": 30000,
->>>>>>> master/Khoi
       "UserID": 1
     },
     {
@@ -97,63 +81,6 @@
       "ExpirationDate": "2021-03-07",
       "Description": "Voucher description ID 5",
       "VoucherName": "Friday Voucher",
-<<<<<<< HEAD
-      "Discount":20000,
-      "UserID": 1
-    }
-  ],
-  "cart":[
-    {
-      "FoodID":3,
-      "userID":1,
-      "Quantity":1
-    },
-    {
-      "FoodID":1,
-      "userID":1,
-      "Quantity":3
-    },
-    {
-      "FoodID":2,
-      "userID":1,
-      "Quantity":1
-    },
-    {
-      "FoodID":4,
-      "userID":1,
-      "Quantity":2
-    }
-  ],
-  
-  "orderhistory":[
-    {
-      "OrderID":1827364,
-      "PurchaseDate": "30/10/2021",
-      "FoodName":"Bò nướng lá lốt",
-      "Total":200000,
-      "State": "Đang chuẩn bị"
-    },
-    {
-      "OrderID":1867364,
-      "PurchaseDate": "30/10/2021",
-      "FoodName":"Canh chua thịt",
-      "Total":200000,
-      "State": "Đang giao hàng"
-    },
-    {
-      "OrderID":1274854,
-      "PurchaseDate": "2/11/2021",
-      "FoodName":"Sườn xào chua ngọt",
-      "Total":200000,
-      "State": "Đã giao hàng"
-    },
-    {
-      "OrderID":1918744,
-      "PurchaseDate": "31/10/2021",
-      "FoodName":"Đậu sốt cà chua",
-      "Total":100000,
-      "State": "Đã hủy"
-=======
       "Discount": 20000,
       "UserID": 1
     }
@@ -182,7 +109,6 @@
       "FoodID": 4,
       "userID": 1,
       "Quantity": 2
->>>>>>> master/Khoi
     }
   ]
 }
