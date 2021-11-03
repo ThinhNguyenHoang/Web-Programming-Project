@@ -33,6 +33,7 @@ function App() {
     const navigateToNewsPage = () => history.push(ROUTING_CONSTANTS.NEWS);
     const navigateToCartPage=()=>{history.push(ROUTING_CONSTANTS.ITEM_CART);}
     ///////////////test
+    const navigateToAccountPage=()=>history.push(ROUTING_CONSTANTS.MYACCOUNT);
 
     Toaster.toastSuccessful("HHUHU");
     return (<div className="App">
@@ -111,6 +112,10 @@ function App() {
                         Cart
                     </Button>
                     {/* //////////////test */}
+                    <Button value={`vi`} variant={`contained`} color={`error`}
+                        onClick={navigateToAccountPage}>
+                        My Account
+                    </Button>
                 </Grid>
             </header>
         </div>

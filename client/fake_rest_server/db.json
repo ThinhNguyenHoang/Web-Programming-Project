@@ -106,5 +106,36 @@
       "userID":1,
       "Quantity":2
     }
+  ],
+  
+  "orderhistory":[
+    {
+      "OrderID":1827364,
+      "PurchaseDate": "30/10/2021",
+      "FoodName":"Bò nướng lá lốt",
+      "Total":200000,
+      "State": "Đang chuẩn bị"
+    },
+    {
+      "OrderID":1867364,
+      "PurchaseDate": "30/10/2021",
+      "FoodName":"Canh chua thịt",
+      "Total":200000,
+      "State": "Đang giao hàng"
+    },
+    {
+      "OrderID":1274854,
+      "PurchaseDate": "2/11/2021",
+      "FoodName":"Sườn xào chua ngọt",
+      "Total":200000,
+      "State": "Đã giao hàng"
+    },
+    {
+      "OrderID":1918744,
+      "PurchaseDate": "31/10/2021",
+      "FoodName":"Đậu sốt cà chua",
+      "Total":100000,
+      "State": "Đã hủy"
+    }
   ]
 }
