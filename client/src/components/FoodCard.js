@@ -15,26 +15,31 @@ const initfood={
 }
 
 
-function FoodCard ({foodinfo=initfood}) {
+
+
+function FoodCard (props) {
+    const foodinfo= props.foodinfo;
     return (
         <Card sx={{m:1,maxWidth:300}}>
             <CardMedia
                 component="img"
                 height="194"
                 image={foodinfo.fimg}
-                alt={foodinfo.foodname}/>
+                alt={foodinfo.FoodName}/>
             <CardHeader
-              subheader={foodinfo.foodtype}
-              title={foodinfo.foodname}
+              subheader={"foodinfo.foodtype"}
+              title={foodinfo.FoodName}
             />
             <CardContent>
-            <Typography variant="body2" color="text.secondary">{foodinfo.fooddescrip}</Typography>
+            <Typography variant="body2" color="text.secondary">{foodinfo.Description}</Typography>
             </CardContent>
             <CardActions>
                 <Button size="small">Order</Button>
                 <Button size="small">Wishlist</Button>
-                <Button size="small">{foodinfo.price}</Button>
+                <Button size="small">{foodinfo.Price}</Button>
             </CardActions>
+            
+
         </Card>
     );
 }

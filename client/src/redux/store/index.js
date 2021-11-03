@@ -1,8 +1,29 @@
-import { configureStore } from '@reduxjs/toolkit'
-import auth from "../slices/auth/auth";
+import {configureStore, getDefaultMiddleware} from '@reduxjs/toolkit'
+import authSlice from '../slices/auth/AuthSlice';
+import FoodSlice from '../slices/Food/FoodSlice';
+import createSagaMiddleware from 'redux-saga';
 
-export const store = configureStore({
-    reducer: {
-        auth: auth.reducer,
-    },
+import rootSaga from "./sagas";
+
+
+const sagaMiddleware = createSagaMiddleware()
+const middlewares = [sagaMiddleware];
+const middleware = [...getDefaultMiddleware({thunk: false}), ...middlewares];
+console.log("REDUCER OF AUTH: ", authSlice);
+
+const reducer = {
+    auth: authSlice.reducer,
+    food: FoodSlice.reducer,
+}
+
+const store = configureStore({
+    reducer,
+    middleware: middleware
 })
+
+
+sagaMiddleware.run(rootSaga);
+
+console.log("STORE CREATED: ", store);
+
+export default store;

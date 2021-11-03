@@ -1,24 +1,39 @@
-import { LogicError, RequestError } from './errorResponse';
+import {LogicError, RequestError} from './errorResponse';
 
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import constants from '../../constants';
-import { handleToastOnSuccess } from './successResponse';
+import {handleToastOnSuccess} from './successResponse';
 import queryString from 'query-string';
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
+
+require('dotenv').config()
+
+console.log("MYSQL_ENV_USER:", process.env.REACT_APP_MYSQL_USER);
+//const rootURL = `http://${process.env.REACT_APP_PHP_SERVER}:${process.env.REACT_APP_PHP_PORT}`;
+const rootURL=`http://localhost:3001`;
+
+
+function sleeper(ms) {
+    return function(x) {
+        return new Promise(resolve => setTimeout(() => resolve(x), ms));
+    };
+}
+
 
 class RequestHelper {
     constructor() {
         // ! Remember to change the BASE API ROOT to PHP
-        this.baseUrl = process.env.FAKE_SERVER_HOST;
+        this.baseUrl = rootURL;
         this.defaultConfig = {};
         this.defaultHeaders = {
             'Access-Control-Allow-Origin': '*',
             responseType: 'application/json'
         };
     }
+
     prepareHeaders(headers) {
-        const accessToken = Cookies.get('accessToken');
+        // const accessToken = Cookies.get('accessToken');\
+        const accessToken = localStorage.getItem("token");
         if (accessToken) {
             this.defaultHeaders.Authorization = `Bearer ${accessToken}`;
         }
@@ -29,22 +44,25 @@ class RequestHelper {
             ...headers
         };
     }
+
     prepareParams(payload) {
         if (!payload) return '';
         return `?${queryString.stringify(payload)}`;
     }
-    handleResponse(response, endPoint, hasToast = true) {
-        if (!response || !response.data.success) {
+
+    handleResponse(response, endPoint) {
+        console.log("RESPONSE IN HANDLE RESPONSE: ", response);
+        const responseMessage = response.data.message.toLowerCase() || "NO MESSAGE IN Response";
+        console.log("Response from server with message: ", responseMessage);
+        if (!response || !responseMessage.includes("success")) {
             throw new LogicError(
                 response?.data.message || 'Something went wrong. Please contact us',
                 endPoint
             );
         }
-        if (hasToast) {
-            handleToastOnSuccess(endPoint, response);
-        }
-        return response.data.payload;
+        return response.data;
     }
+
     handleError(error) {
         throw new LogicError(
             error?.data.message || 'Something went wrong. Please contact us',
@@ -65,6 +83,7 @@ class RequestHelper {
     }
 
     async postAsync(endPoint, payload, headers = {}) {
+        console.log("POSTED TO:", `${this.baseUrl}${endPoint}`, payload);
         this.prepareHeaders(headers);
         return axios
             .post(`${this.baseUrl}${endPoint}`, payload, {
@@ -72,6 +91,26 @@ class RequestHelper {
                 headers: this.defaultHeaders
             })
             .then((response) => this.handleResponse(response, endPoint))
+            .catch((error) => this.handleError(error.response));
+    }
+
+    async postAsyncDelayed(endPoint, payload, headers = {}) {
+        console.log("POSTED DELAY TO:", `${this.baseUrl}${endPoint}`, payload);
+        this.prepareHeaders(headers);
+        return axios
+            .post(`${this.baseUrl}${endPoint}`, payload, {
+                ...this.defaultConfig,
+                headers: this.defaultHeaders
+            })
+            .then(value => new Promise(resolve => {
+                setTimeout(() => {
+                    resolve(value);
+                }, 50000);
+            }))
+            .then((response) => {
+                console.log("RESPONSE DELAYED NOW RESOLEVE: ", response);
+                this.handleResponse(response, endPoint)
+            })
             .catch((error) => this.handleError(error.response));
     }
 

@@ -3,42 +3,42 @@
     {
       "FoodID": 1,
       "FoodName": "Thịt lợn rim tiêu",
-      "Picture": "",
+      "Picture": "../../assets/images/foodimg.png",
       "Price": 120000,
       "Description": "Thịt kho là món mặn dùng chính trong bữa cơm của người Việt, bên cạnh món canh và món rau. Hôm nay bếp kho quẹt sẽ giới thiệu đến các bạn món thịt kho tiêu, cũng là món được các chị em thường xuyên chế biến, nhưng để làm đúng chuẩn về màu sắc và mùi vị thì chắc hẳn nhiều người còn bỏ ngỏ. Nào, còn chờ gì nữa, chúng ta bắt tay vào làm món thịt kho tiêu cho kịp bữa cơm chiều nhé!"
     },
     {
       "FoodID": 2,
       "FoodName": "Trứng đúc thịt",
-      "Picture": "",
+      "Picture": "../../assets/images/foodimg.png",
       "Price": 80000,
       "Description": "Món trứng đúc thịt là một món dễ làm, dễ ăn. Đặc biệt là trẻ em, gần như bé nào cũng thích ăn trứng nhưng đôi khi lại không thích ăn thịt vì dai. Với cách làm trứng đúc thịt này, thịt mềm và ngon, trứng rán vàng thơm lừng khắp cả nhà, hương vị rất kích thích với các bé. Hơn nữa vào những ngày bận rộn Bạn chỉ cần mất vài phút là đã có ngay một món ăn thơm ngon mà vẫn đầy đủ chất dinh dưỡng cho cả nhà rồi."
     },
     {
       "FoodID": 3,
       "FoodName": "Đậu sốt cà chua",
-      "Picture": "",
+      "Picture": "../../assets/images/foodimg.png",
       "Price": 60000,
       "Description": "Đậu sốt cà chua đúng như tên gọi, đây là món ăn với thành phần chính với đậu phụ được rán giòn sau đó đem sốt với cà chua. Bằng việc đem sốt với cà chua, từng miếng đậu được khoác thêm lớp áo đỏ đẹp mắt với hương vị đậm đà hơn."
     },
     {
       "FoodID": 4,
       "FoodName": "Canh chua thịt",
-      "Picture": "",
+      "Picture": "../../assets/images/foodimg.png",
       "Price": 60000,
       "Description": "Món canh cà chua thịt bằm là một trong những món ăn phổ biến và dễ làm nhất trong các bữa ăn hàng ngày. Món ăn này sẽ mang lại hương vị thơm ngon, ăn mãi không chán bất kể trời nóng hay lạnh cho người thân của bạn. Bạn có thể ăn kèm món canh này cùng với món tôm chiên giòn cho bữa ăn thêm tròn vị."
     },
     {
       "FoodID": 5,
       "FoodName": "Bò nướng lá lốt",
-      "Picture": "",
+      "Picture": "../../assets/images/foodimg.png",
       "Price": 270000,
       "Description": "Bò nướng lá lốt hay còn gọi là bò lá lốt hoặc là thịt bò lá lốt hay bò cuốn lá lốt là một món ăn trong ẩm thực Việt Nam, thịnh hành ở vùng Nam bộ, nguyên liệu chính là thịt bò và lá lốt được chế biến theo phương pháp nướng, có thể kèm theo mỡ chài. Các loại rau sống ăn kèm rất phong phú như: xà lách, húng quế, diếp cá, chuối chát, dưa leo, khế và chấm mắm nêm. Món này đặc trưng bởi vị hấp dẫn với vị ngon của thịt bò nướng lá lốt, béo của đậu phộng hòa chung vị chát của chuối, chua của khế, vị thanh thanh của nhiều loại rau giòn mát, cùng hương mắm nêm cay cay"
     },
     {
       "FoodID": 6,
       "FoodName": "Sườn xào chua ngọt",
-      "Picture": "",
+      "Picture": "../../assets/images/foodimg.png",
       "Price": 35000,
       "Description": "Sườn xào chua ngọt là món ăn chính trong bữa cơm gia đình Việt Nam, đây là món ăn không bị ngán, mà rất giàu chất dinh dưỡng. Cách làm sườn xào chua ngọt miền Bắc thì khá đơn giản với nguyên liệu chính là sườn, còn miền Nam thì nhiều màu sắc, và hương vị"
     }
@@ -49,6 +49,7 @@
       "ExpirationDate": "2021-01-01",
       "Description": "Voucher description ID 1",
       "VoucherName": "Weeken Voucher",
+      "Discount":10000,
       "UserID": 1
     },
     {
@@ -56,6 +57,7 @@
       "ExpirationDate": "2020-01-01",
       "Description": "Voucher description ID 2",
       "VoucherName": "Wednesday Voucher",
+      "Discount":25000,
       "UserID": 1
     },
     {
@@ -63,6 +65,7 @@
       "ExpirationDate": "2020-11-11",
       "Description": "Voucher description ID 3",
       "VoucherName": "Tuesday Voucher",
+      "Discount":15000,
       "UserID": 1
     },
     {
@@ -70,6 +73,7 @@
       "ExpirationDate": "2019-01-09",
       "Description": "Voucher description ID 4",
       "VoucherName": "Thursday Voucher",
+      "Discount":30000,
       "UserID": 1
     },
     {
@@ -77,7 +81,30 @@
       "ExpirationDate": "2021-03-07",
       "Description": "Voucher description ID 5",
       "VoucherName": "Friday Voucher",
+      "Discount":20000,
       "UserID": 1
+    }
+  ],
+  "cart":[
+    {
+      "FoodID":3,
+      "userID":1,
+      "Quantity":1
+    },
+    {
+      "FoodID":1,
+      "userID":1,
+      "Quantity":3
+    },
+    {
+      "FoodID":2,
+      "userID":1,
+      "Quantity":1
+    },
+    {
+      "FoodID":4,
+      "userID":1,
+      "Quantity":2
     }
   ]
 }

@@ -22,6 +22,10 @@ export const base_keys = {
         password_prompt: "form.password_prompt",
         password_min_8_requirement: "form.pass_min_required",
         password_required_prompt: "form.pass_required_prompt",
+        username: "form.username",
+        username_prompt: "form.username_prompt",
+        username_min_8_requirement: "form.username_min_required",
+        username_required_prompt: "form.username_required_prompt",
         // * Register additional fields
         confirm_password: "form.confirm_password",
         confirm_password_correct_prompt: "form.confirm_password_correct",
@@ -43,28 +47,34 @@ export const base_keys = {
         news:"news",
         sale_off:"sale_off",
         combo:"combo",
-        nofication:"nofication",
-        //Recommendation
-        recommendation: "recommendation",
-        trending: "trending",
-        everybodyeating: "everybodyeating",
-        goodforhealth: "goodforhealth",
-        trending_description: "trending_description",
-        everybodyeating_description: "everybodyeating_description",
-        goodforhealth_description: "goodforhealth_description",
-        //Cart
-        cart: "cart",
-        foodname: "foodname",
-        price: "price",
-        amount: "amount",
-        total_food_price: "total_food_price",
-        total: "total",
-        pay: "pay"
+        nofication:"nofication"
     }
     ,
     // Language Translation
     test:{
         welcome:"test.welcome",
         learn_react: "test.learn_react"
+    },
+    //food
+    food:{
+        //News
+        news:"news",
+        sale_off:"sale_off",
+        combo:"combo",
+        nofication:"nofication",
+        //food cart
+        cart:"cart",
+        price:"price",
+        quantity:"quantity",
+        voucher:"voucher",
+        address:"address",
+        subtotal:"subtotal",
+        total:"total",
+        discount:"discount",
+        phone:"phone",
+        pay:"pay",
+        note:"note",
+
+
     }
 };

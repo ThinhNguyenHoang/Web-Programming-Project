@@ -19,6 +19,10 @@ export const TRANSLATIONS_EN = {
     [base_keys.form.password_prompt]: "Enter your password",
     [base_keys.form.password_required_prompt]: "Password is required",
     [base_keys.form.password_min_8_requirement]: "Password length must be greater than 8",
+    [base_keys.form.username]: "Username",
+    [base_keys.form.username_prompt]: "Enter your username",
+    [base_keys.form.username_required_prompt]: "Username is required",
+    [base_keys.form.username_min_8_requirement]: "Username length must be greater than 8",
 
     [base_keys.form.confirm_password]: "Confirm Password",
     [base_keys.form.confirm_password_correct_prompt]: "Password must match",
@@ -37,29 +41,28 @@ export const TRANSLATIONS_EN = {
     [base_keys.form.login]:"Login",
     [base_keys.form.register]:"Register",
     [base_keys.form.back_home]:"Home Page",
-    //News
-    [base_keys.form.news]:"News",
-    [base_keys.form.sale_off]:"Sale off",
-    [base_keys.form.combo]:"Combo",
-    [base_keys.form.nofication]:"Nofication",
-    //Recommendation
-    [base_keys.form.recommendation]:"Recommendation",
-    [base_keys.form.trending]: "Trending now?",
-    [base_keys.form.everybodyeating]:"Your friends' choice",
-    [base_keys.form.goodforhealth]:"Good for your health",
-    [base_keys.form.trending_description]:"How to follow the trend? Pick one of these",
-    [base_keys.form.everybodyeating_description]: "Which one do your friends order these days?",
-    [base_keys.form.goodforhealth_description]:"These dishes are highly recommended by nutritionist",
-    //Cart
-    [base_keys.form.cart]: "Cart",
-    [base_keys.form.foodname]: "NAME",
-    [base_keys.form.price]: "PRICE",
-    [base_keys.form.amount]: "AMOUNT",
-    [base_keys.form.total_food_price]: "TOTAL PRICE",
-    [base_keys.form.total]: "Total:",
-    [base_keys.form.pay]: "PAY",
-
+    
     // * Below is for testing purpose only
     [base_keys.test.welcome]: "Welcome to React - Thinh",
     [base_keys.test.learn_react]: "Learn React Now",
+
+    //News
+    [base_keys.food.news]:"News",
+    [base_keys.food.sale_off]:"Sale off",
+    [base_keys.food.combo]:"Combo",
+    [base_keys.food.nofication]:"Nofication",
+    //food cart
+    [base_keys.food.cart]:"Cart",
+    [base_keys.food.price]:"Price",
+    [base_keys.food.quantity]:"Quantity",
+    [base_keys.food.voucher]:"Vouchers",
+    [base_keys.food.address]:"Address",
+    [base_keys.food.subtotal]:"Subtotal",
+    [base_keys.food.total]:"Total",
+    [base_keys.food.discount]:"Discount",
+    [base_keys.food.phone]:"Phone number",
+    [base_keys.food.pay]:"Pay",
+    [base_keys.food.note]:"Note",
+
+
 };

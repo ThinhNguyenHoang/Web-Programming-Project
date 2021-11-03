@@ -8,19 +8,32 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import FoodCard from '../components/FoodCard';
 import Nofication from '../components/Nofication';
-import fimg from "../assets/images/foodimg.png";
 
-const initfood={
-    fimg:fimg,
-    foodname:"Food Name",
-    foodtype:"Category",
-    fooddescrip:"Fry your onion, peppers and garlic in olive oil until nicely translucent.\nMake a well in your veg and add your chicken.Add your seasoning and salt.",
-    price:"300K"
-}
+import { store } from '../redux/index';
+import foodCardlst,{selectors,BaseUrl} from '../redux/slices/foodCardlst/foodCardlst';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 
 function News (){
     let history = useHistory();
     const {t, i18n} = useTranslation();
+    const foodLst= useSelector( selectors.getFoodList);
+    const dispatch = useDispatch();
+    console.log(JSON.stringify(foodLst));
+    console.log(foodCardlst);
+    // THINH CODE: 
+    React.useEffect( ()=>{
+        const foodData = axios.get(`${BaseUrl}/foods`)
+        .then(response => {
+            console.log("Food data in News: ", response.data); 
+            dispatch(foodCardlst.actions.addFoodItems(response.data));    
+        })
+        .catch((err) =>{
+            console.log("ERROR FETCHING DATA IN NEWS", err);
+        });
+    },[]);
+    // END THINH CODE em xem anh bo vao store dung chua 
+
     return (
         <div>
         <Box sx={{
@@ -34,11 +47,11 @@ function News (){
             <Box sx={{
                 display: `flex`,
                 flexDirection: `row`,mx:"auto"}}>
-                    <ButtonBase>
-                        <ArrowBackIosIcon fontSize="large"/>
+                    <ButtonBase onClick={ () => dispatch(foodCardlst.actions.backList())}>
+                        <ArrowBackIosIcon fontSize="large" />
                     </ButtonBase>
-                    {[initfood,initfood,initfood].map(FoodCard)}
-                    <ButtonBase>
+                    {foodLst.map(foods => <FoodCard foodinfo={foods} key={foods.FoodName}/>)}
+                    <ButtonBase onClick={ () => dispatch(foodCardlst.actions.nextList())}>
                         <ArrowForwardIosIcon fontSize="large"/>
                     </ButtonBase>
                     
@@ -56,12 +69,12 @@ function News (){
             <Box sx={{
                 display: `flex`,
                 flexDirection: `row`,mx:"auto"}}>
-                    <ButtonBase>
+                    <ButtonBase onClick={ () => dispatch(foodCardlst.actions.backList())}>
                         <ArrowBackIosIcon fontSize="large"/>
                     </ButtonBase>
-                    {[initfood,initfood,initfood].map(FoodCard)}
+                    {foodLst.map((foods) => {return <FoodCard foodinfo={foods} key={foods.foodname}/>})}
 
-                    <ButtonBase>
+                    <ButtonBase onClick={ () => dispatch(foodCardlst.actions.nextList())} >
                         <ArrowForwardIosIcon fontSize="large"/>
                     </ButtonBase>
                 
