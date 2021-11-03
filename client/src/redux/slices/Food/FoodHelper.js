@@ -48,15 +48,6 @@ export const VoucherData2VoucherList = (voucherData)=>{
 
 }
 //convert food list in cart to food data to update
-<<<<<<< HEAD
-export const FoodCart2CartData=(FoodCart)=>{
-    return FoodCart.foodList.map((food)=>{
-        return {
-            FoodID:food.id,
-            userID:FoodCart.user_id,
-            Quantity:food.quantity,
-        }
-=======
 export const FoodCart2CartData=(payload)=>{
     return payload.food_list.map((food)=>{
         return {
@@ -65,6 +56,5 @@ export const FoodCart2CartData=(payload)=>{
             userID:payload.user_id,
             Quantity:food.quantity,
         }   
->>>>>>> master/Khoi
     })
 }

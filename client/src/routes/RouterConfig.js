@@ -4,11 +4,7 @@ import App from "../App";
 import Register from "../pages/Register";
 import News from "../pages/News"
 import FoodCart from "../pages/FoodCart"
-<<<<<<< HEAD
-import MyAccount from "../pages/MyAccount";
-=======
 
->>>>>>> master/Khoi
 
 
 const baseUrl = process.env.FAKE_SERVER_HOST;
@@ -23,7 +19,6 @@ export const ROUTING_CONSTANTS = {
     NEWS: "/news",
     ITEM_CART: "/cart",
     RECOMMENDATION: "/recommendations",
-    MYACCOUNT:"/myaccount",
 }
 
 /*
@@ -77,12 +72,6 @@ export const RouterConfig = () => {
             <Route exact path={ROUTING_CONSTANTS.ITEM_CART}>
                 <FoodCart/>
             </Route>
-<<<<<<< HEAD
-            <Route exact path={ROUTING_CONSTANTS.MYACCOUNT}>
-                <MyAccount/>
-            </Route>
-=======
->>>>>>> master/Khoi
         </Switch>
     )
 }

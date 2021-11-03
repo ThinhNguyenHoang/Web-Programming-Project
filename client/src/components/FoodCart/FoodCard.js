@@ -41,11 +41,7 @@ function FoodCard(props) {
 					<Typography variant="subtitle1" color="initial" sx={{ fontWeight: "bold", display: "inline" }}>{t(base_keys.food.price)} : {food.price}đ</Typography>
 				</Grid>
 			</Grid>
-<<<<<<< HEAD
-			<Grid item  direction="column" justifyContent="center" alignItems="center"   >
-=======
 			<Grid item  justifyContent="center" alignItems="center"   >
->>>>>>> master/Khoi
 				<Typography variant="subtitle1" color="initial" sx={{ fontWeight: "bold", textAlign: "center" }} pb={2}>{t(base_keys.food.quantity)}</Typography>
 				<Box display="flex" flexDirection="row" pb={2}>
 					<QuanlityButton onClick={()=>{dispatch({type:increase_quantity_cart,payload:food.id})}} >
