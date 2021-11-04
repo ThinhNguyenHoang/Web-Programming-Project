@@ -96,7 +96,7 @@
       "id": 1,
       "FoodID": 1,
       "userID": 1,
-      "Quantity": 2
+      "Quantity": 1
     },
     {
       "id": 2,
@@ -108,7 +108,7 @@
       "id": 4,
       "FoodID": 4,
       "userID": 1,
-      "Quantity": 2
+      "Quantity": 1
     }
   ]
 }

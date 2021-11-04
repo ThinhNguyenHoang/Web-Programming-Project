@@ -4,6 +4,10 @@ import App from "../App";
 import Register from "../pages/Register";
 import News from "../pages/News"
 import FoodCart from "../pages/FoodCart"
+import Profile from "../pages/MyAccount/Profile";
+import Orders from "../pages/MyAccount/Orders";
+import ArchivedOrders from "../pages/MyAccount/ArchivedOrders";
+import Voucher from "../pages/MyAccount/Voucher";
 
 
 
@@ -19,6 +23,11 @@ export const ROUTING_CONSTANTS = {
     NEWS: "/news",
     ITEM_CART: "/cart",
     RECOMMENDATION: "/recommendations",
+    MYACCOUNT:"/myaccount",
+    PROFILE: "/myaccount/profile",
+    ORDERS: "/myaccount/orders",
+    ARCHIVEDORDERS: "/myaccount/archivedorders",
+    VOUCHER:"/myaccount/voucher"
 }
 
 /*
@@ -71,6 +80,18 @@ export const RouterConfig = () => {
             </Route>
             <Route exact path={ROUTING_CONSTANTS.ITEM_CART}>
                 <FoodCart/>
+            </Route>
+            <Route exact path={ROUTING_CONSTANTS.PROFILE}>
+                <Profile/>
+            </Route>
+            <Route exact path={ROUTING_CONSTANTS.ORDERS}>
+                <Orders/>
+            </Route>
+            <Route exact path={ROUTING_CONSTANTS.ARCHIVEDORDERS}>
+                <ArchivedOrders/>
+            </Route>
+            <Route exact path={ROUTING_CONSTANTS.VOUCHER}>
+                <Voucher/>
             </Route>
         </Switch>
     )
