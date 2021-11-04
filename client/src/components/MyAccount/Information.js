@@ -19,7 +19,7 @@ function Information (props) {
                         <Typography variant="subtitle1" color="initial" sx={{fontWeight: "bold", display: "inline", fontSize: "h6.fontSize"}}>Email:</Typography>
                         <Typography variant="subtitle1" color="initial" sx={{fontWeight: "bold", display: "inline", fontSize: "h6.fontSize"}}>Số điện thoại:</Typography>
                     </Grid>
-                    <Grid sx={{display:"flex", flexDirection:"column", alignItems:"flex-start", rowGap:5.7}}>
+                    <Grid sx={{display:"flex", flexDirection:"column", alignItems:"flex-start", rowGap:5.5}}>
                         <Typography variant="subtitle1" color="initial" sx={{display: "inline", fontSize: "h6.fontSize"}}>iamlion </Typography>
                         <Typography variant="subtitle1" color="initial" sx={{display: "inline", fontSize: "h6.fontSize", paddingRight:10}}>**********             
                             <IconButton aria-label="visible"><VisibilityOffIcon /></IconButton>
