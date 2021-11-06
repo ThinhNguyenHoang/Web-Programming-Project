@@ -3,7 +3,8 @@ namespace src\common\utils;
 require_once  __DIR__ . '/../../../vendor/autoload.php';
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-
+header("Access-Control-Allow-Methods: GET,PUT,POST,DELETE,PATCH,OPTIONS");
+header("Access-Control-Allow-Headers:Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,Authorization");
 
 
 /*
@@ -36,7 +37,11 @@ class ResponseHelper {
     public static function error_client($message){
         // TODO: Trả về code lỗi: 400  và trả về message lỗi (Lỗi do client)
         http_response_code(400);
-        echo json_encode(array("message" => $message));
+        $object = new \stdClass();
+        $object->message = "HASDHASHD";
+        echo json_encode(
+            array("message" => $message)
+        );
     }
 
     public static function error_server($message){

@@ -9,6 +9,9 @@ import {useHistory} from 'react-router-dom';
 import {useTranslation} from "react-i18next";
 import {ROUTING_CONSTANTS} from "../routes/RouterConfig";
 import logo from "../assets/images/logo_64.png"
+import {useDispatch, useSelector} from "react-redux";
+import {register_actions} from "../redux/slices/auth/AuthSlice";
+import {selectors} from "../redux/slices/auth/AuthSlice";
 
 const styles = {
     button: {
@@ -34,6 +37,18 @@ function Register() {
     let history = useHistory();
     const {t, i18n} = useTranslation();
     const navigateHome = () => history.push(ROUTING_CONSTANTS.HOMEPAGE);
+    const dispatch = useDispatch();
+
+    const registerLoading = useSelector(selectors.getRegisterLoading);
+
+    const onRegisterUser = (values,setSubmitting) =>{
+        const username = values.username;
+        const password = values.password;
+        console.log("Registerign user with values:", values);
+        dispatch({type:register_actions.loading,payload:{username, password}});
+        setSubmitting(false);
+    };
+
     return (
         <Box sx={{...styles.outer_box}} display={`flex`} justifyContent={`center`} alignItems={`center`}
              minHeight={`100vh`}>
@@ -53,15 +68,16 @@ function Register() {
                 </Box>
                 <Formik
                     initialValues={{
-                        email: '',
+                        username: '',
                         password: '',
-                        confirm_password:'',
+                        confirm_password: '',
                     }}
+                    enableReinitialize
                     validationSchema={yup.object({
-                        email: yup
-                            .string(t(base_keys.form.email))
-                            .email(t(base_keys.form.email_valid_prompt))
-                            .required(t(base_keys.form.email_required_prompt)),
+                        username: yup
+                            .string(t(base_keys.form.username))
+                            .min(9,t(base_keys.form.username_min_8_requirement))
+                            .required(t(base_keys.form.username_required_prompt)),
                         password: yup
                             .string(t(base_keys.form.password_prompt))
                             .min(8, t(base_keys.form.password_min_8_requirement))
@@ -69,35 +85,34 @@ function Register() {
                         confirm_password: yup
                             .string(t(base_keys.form.confirm_password))
                             .oneOf([yup.ref('password'), null], t(`${base_keys.form.confirm_password_correct_prompt}`))
+                            .required(t(base_keys.form.confirm_password_correct_prompt)),
                     })}
                     // * TODO: Change onSubmit handler to post to authorize api
                     onSubmit={(values, {setSubmitting}) => {
-                        setTimeout(() => {
-                            setSubmitting(false);
-                            alert(JSON.stringify(values, null, 2));
-                        }, 500);
+                        // setTimeout(() => onRegisterUser(values,setSubmitting), 10000);
+                        onRegisterUser(values,setSubmitting);
                     }}
                 >
-                    {({submitForm, isSubmitting}) => (
+                    {({submitForm, isSubmitting,isValid,dirty,setSubmitting}) => (
                         <Form>
                             <Box sx={{
-                                '& .field-box':{
-                                    my:2,
-                                    px:3,
+                                '& .field-box': {
+                                    my: 2,
+                                    px: 3,
                                 }
                             }} display={`flex`} flexDirection={`column`} justifyContent={`center`}
                                  alignItems={`center`}>
                                 <Box className={`field-box`}>
                                     <Field
                                         component={TextField}
-                                        name="email"
-                                        type="email"
-                                        label="Email"
+                                        name="username"
+                                        type="username"
+                                        label={`${t(base_keys.form.username)}`}
                                         variant={`outlined`}
                                     />
 
                                 </Box>
-                                <Box className={`field-box`} >
+                                <Box className={`field-box`}>
                                     <Field
                                         component={TextField}
                                         type="password"
@@ -135,7 +150,7 @@ function Register() {
                                     <Button
                                         variant={`contained`}
                                         color={`secondary`}
-                                        disabled={isSubmitting}
+                                        disabled={registerLoading}
                                         onClick={navigateHome}
                                     >
                                         {t(base_keys.form.back_home)}
@@ -149,7 +164,7 @@ function Register() {
                                     <Button
                                         variant={`contained`}
                                         color={`primary`}
-                                        disabled={isSubmitting}
+                                        disabled={isSubmitting|| !(isValid)}
                                         onClick={submitForm}
                                     >
                                         {t(base_keys.form.register)}
