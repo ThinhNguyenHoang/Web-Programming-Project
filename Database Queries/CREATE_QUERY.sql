@@ -83,13 +83,14 @@ CREATE TABLE CartFood(
 	  FoodName VARCHAR(255) NOT NULL,
       FoodID BIGINT(8),
       UserID BIGINT(8),
+	Quantity INT,
       PRIMARY KEY (FoodID,UserID)
 );
-INSERT INTO `web_food`.`cartfood` (`FoodName`, `FoodID`, `UserID`) VALUES ('Pho Ha Noi', '11', '1');
-INSERT INTO `web_food`.`cartfood` (`FoodName`, `FoodID`, `UserID`) VALUES ('Bun Bo Hue', '12', '4');
-INSERT INTO `web_food`.`cartfood` (`FoodName`, `FoodID`, `UserID`) VALUES ('Banh Mi', '13', '2');
-INSERT INTO `web_food`.`cartfood` (`FoodName`, `FoodID`, `UserID`) VALUES ('Bun Cha', '15', '4');
-INSERT INTO `web_food`.`cartfood` (`FoodName`, `FoodID`, `UserID`) VALUES ('Cam Ep', '14', '3');
+INSERT INTO `web_food`.`cartfood` (`FoodName`, `FoodID`, `UserID`) VALUES ('Pho Ha Noi', '11', '1','1');
+INSERT INTO `web_food`.`cartfood` (`FoodName`, `FoodID`, `UserID`) VALUES ('Bun Bo Hue', '12', '4','2');
+INSERT INTO `web_food`.`cartfood` (`FoodName`, `FoodID`, `UserID`) VALUES ('Banh Mi', '13', '2','2');
+INSERT INTO `web_food`.`cartfood` (`FoodName`, `FoodID`, `UserID`) VALUES ('Bun Cha', '15', '4','1');
+INSERT INTO `web_food`.`cartfood` (`FoodName`, `FoodID`, `UserID`) VALUES ('Cam Ep', '14', '3','1');
 
 
 
