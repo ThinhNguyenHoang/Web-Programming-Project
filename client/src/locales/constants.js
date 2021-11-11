@@ -76,5 +76,11 @@ export const base_keys = {
         note:"note",
 
 
+    },
+    manage:{
+        client_management:"client_management",
+        order_management:"order_management",
+        search_by_name:"search_by_name",
+        export:"export"
     }
 };

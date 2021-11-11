@@ -37,17 +37,13 @@ function FoodCart() {
           <Paper sx={{boxShadow:3,width:"100%",height:"auto"}} >
             <Grid item container xs={12}  >
               {cart.food_list.map((food)=>{
-                return <FoodCard food={food} key={food.id}/>;
+                return <FoodCard food={food} key={food.id} userId={userID}/>;
               })}
             </Grid>
           </Paper>
         </Grid>
         <Grid item container md={4} xs={12} display="flex" flexDirection="column" spacing={2}  >
-
-
           <VoucherBox  voucherList={cart.voucher_list} voucher_id={cart.voucher_id} />
-
-          
           <TotalBox subtotal={cart.subtotal} discount={cart.discount} />
           <NoteBox/>
           <Box textAlign="center" pt={8} >

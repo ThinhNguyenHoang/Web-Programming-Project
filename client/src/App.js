@@ -32,6 +32,8 @@ function App() {
     ///////////////test
     const navigateToNewsPage = () => history.push(ROUTING_CONSTANTS.NEWS);
     const navigateToCartPage=()=>{history.push(ROUTING_CONSTANTS.ITEM_CART);}
+    const navigateToClient=()=>{history.push(ROUTING_CONSTANTS.CLIENT)};
+    const navigateToOrder=()=>{history.push(ROUTING_CONSTANTS.ORDER)}
     ///////////////test
 
     Toaster.toastSuccessful("HHUHU");
@@ -106,9 +108,21 @@ function App() {
                                 onClick={navigateToRegisterPage}> {t(base_keys.form.register)} </Button>
                     </Grid>
                     {/* //////////////test */}
-                    <Button value={`vi`} variant={`contained`} color={`error`}
+                    <Button ml={4} value={`vi`} variant={`contained`} color={`error`}
                         onClick={navigateToCartPage}>
                         Cart
+                    </Button>
+                    <Button value={`vi`} variant={`contained`} color={`error`}
+                        onClick={navigateToNewsPage}>
+                        News
+                    </Button>
+                    <Button value={`vi`} variant={`contained`} color={`error`}
+                        onClick={navigateToClient}>
+                        Client
+                    </Button>
+                    <Button value={`vi`} variant={`contained`} color={`error`}
+                        onClick={navigateToOrder}>
+                        Order
                     </Button>
                     {/* //////////////test */}
                 </Grid>

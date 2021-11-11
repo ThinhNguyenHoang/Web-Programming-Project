@@ -58,4 +58,10 @@ export const TRANSLATIONS_VI = {
     [base_keys.food.pay]:"Thanh toán",
     [base_keys.food.note]:"Ghi chú",
 
+    //manage
+    [base_keys.manage.client_management]:"Quản lý khách hàng",
+    [base_keys.manage.order_management]:"Quản lý đơn hàng",
+    [base_keys.manage.search_by_name]:"Tìm kiếm theo tên",
+    [base_keys.manage.export]:"Xuất dữ liệu",
+
 };
