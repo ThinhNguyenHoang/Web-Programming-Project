@@ -75,7 +75,7 @@ export const RouterConfig = () => {
             <Route exact path={ROUTING_CONSTANTS.ITEM_CART}>
                 <FoodCart/>
             </Route>
-            <Route exact path={ROUTING_CONSTANTS.ClIENT}>
+            <Route exact path={ROUTING_CONSTANTS.CLIENT}>
                 <ClientManagement/>
             </Route>
             <Route exact path={ROUTING_CONSTANTS.ORDER}>

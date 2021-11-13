@@ -28,6 +28,8 @@ import { IconButton } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNew from '@mui/icons-material/ArrowBackIosNew';
+import  pdfMake  from 'pdfmake/build/pdfmake';
+import pdfFonts from "pdfmake/build/vfs_fonts";
 const Mclient={
     client_list:[
         {
@@ -169,6 +171,34 @@ const Mclient={
         
     ]
 }
+
+const exportData= (client_list)=>{
+    const head=["STT","Họ và tên","Giới tính","Số điện thoại","Email","Địa chỉ ","Last modified"];
+    var idx=0;
+    const body=client_list.map((client)=>{
+        idx+=1;
+        const sex=client.sex===0 ? "Nữ":"Nam";
+        return [`${idx}`,`${client.name}`,`${sex}`,`${client.phone}`,`${client.email}`,`${client.address}`,`${client.lastModified}`];
+    })
+    const docDef={
+        content:[
+            {
+                layout:"lightHorizontalLines",
+                table:{
+                    headerRows:1,
+                    wdiths:['auto','auto','auto','auto','auto','auto','auto'],
+                    body:[
+                        head,
+                        ...body
+                    ]
+                }
+            }
+        ]
+    }
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+    pdfMake.createPdf(docDef).download();
+}
+
 function ClientManagement(){
 
     let history = useHistory();
@@ -178,8 +208,6 @@ function ClientManagement(){
     //const client=useSelector(Mselectors.getClient);
     const client=Mclient;
 
-    const KeyList=[...Array(client.client_list.length).keys()].map(i=>i+1);
-    console.log("keylsit",KeyList);
     const maxPage=client.client_list.length % 10===0 ? client.client_list.length/10 : Math.floor(client.client_list.length/10)+1;
     const [currPage, setPage] = useState(1) ;
     const RenderList=[...Array(10).keys()].map(i=>i+1+(currPage-1)*10);
@@ -193,7 +221,7 @@ function ClientManagement(){
     }, []);
     return (
         <Box sx={{display:"flex", flexDirection:"column",mx:4}}>
-            <Typography variant="h4" color="initial" my={2}>Quản lý đơn hàng</Typography>
+            <Typography variant="h4" color="initial" my={2}>Quản lý khách hàng</Typography>
             <Box sx={{display:"flex",flexDirection:"row",justifyContent:"space-between",my:2}}>
                 <Box sx={{display:"inline-flex",flexDirection:"row",alignItems:"end"}}>
                     <TextField label="Name" id="fullWidth" size="small" sx={{height:30}} />
@@ -201,11 +229,11 @@ function ClientManagement(){
                         <SearchIcon/>
                     </IconButton>
                 </Box>
-                <Button variant="text" startIcon={<ArchiveIcon/>}>{t(base_keys.manage.export)}</Button>
+                <Button variant="text" startIcon={<ArchiveIcon/>} onClick={()=>exportData(client.client_list)}>{t(base_keys.manage.export)}</Button>
                 
             </Box>
             <TableContainer component={Paper} sx={{mt:4}}>
-                <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                <Table sx={{ minWidth: 650 }} size= "small" aria-label="a dense table">
                     <TableHead>
                         <TableRow>
                             <TableCell>STT</TableCell>
@@ -223,7 +251,7 @@ function ClientManagement(){
                         {RenderList.map((idx)=>{
                                 if (idx>client.client_list.length){
                                     return(
-                                        <TableRow style={{ height: 53 * 1 }}>
+                                        <TableRow style={{ height: 53  }}>
                                             <TableCell colSpan={6} />
                                         </TableRow>
                                     );
