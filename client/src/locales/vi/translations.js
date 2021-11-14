@@ -33,7 +33,35 @@ export const TRANSLATIONS_VI = {
     [base_keys.form.login]:"Đăng nhập",
     [base_keys.form.register]:"Đăng ký",
     [base_keys.form.back_home]:"Về trang chủ",
+
+
     // * Below is for testing purpose only
     [base_keys.test.welcome]: "Chào mừng tới page welcome của React - Thinh",
     [base_keys.test.learn_react]: "Học React Ngay",
+
+    //News
+    [base_keys.food.news]:"Tin tức",
+    [base_keys.food.sale_off]:"Ưu đãi",
+    [base_keys.food.combo]:"Combo",
+    [base_keys.food.nofication]:"Thông báo",
+
+    //food cart
+    [base_keys.food.cart]:"Giỏ hàng",
+    [base_keys.food.price]:"Giá",
+    [base_keys.food.quantity]:"Số lượng",
+    [base_keys.food.voucher]:"Khuyến mãi",
+    [base_keys.food.address]:"Địa chỉ",
+    [base_keys.food.subtotal]:"Tạm tính",
+    [base_keys.food.total]:"Tổng cộng",
+    [base_keys.food.discount]:"Khuyến mãi",
+    [base_keys.food.phone]:"Số điện thoại",
+    [base_keys.food.pay]:"Thanh toán",
+    [base_keys.food.note]:"Ghi chú",
+
+    //manage
+    [base_keys.manage.client_management]:"Quản lý khách hàng",
+    [base_keys.manage.order_management]:"Quản lý đơn hàng",
+    [base_keys.manage.search_by_name]:"Tìm kiếm theo tên",
+    [base_keys.manage.export]:"Xuất dữ liệu",
+
 };

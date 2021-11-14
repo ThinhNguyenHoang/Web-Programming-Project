@@ -53,3 +53,54 @@ const Header = (props) => {
         </Box>
     );
 }
+
+
+
+
+const food_item_cart={
+    id:0,
+    name:"",
+    price:0,
+    quantity:0,
+    img:"",
+}
+const food_combo_item_news={
+    id:0,
+    name:"",
+    price:"",
+    decrip:"",
+    img:"",
+}
+const nofi_item_news={
+    id:0,
+    name:"",
+    content:"",
+}
+const voucher={
+    id:0,
+    name:"",
+    discount:0,
+}
+
+const initialValue={
+    user_id:1,
+    cart:{
+        food_list:[],
+        voucher_list:[],
+        subtotal:0,
+        discount:0,
+        quantity:0,
+        voucher_id:0,
+        get_status:generateStatus(),
+        update_status:generateStatus(),
+        delete_status:generateStatus(),
+    },
+    news:{
+        food_list:[],
+        combo_list:[],
+        nofi_list:[],
+        get_status:generateStatus(),
+        addCart_status:generateStatus(),
+    }
+    
+}

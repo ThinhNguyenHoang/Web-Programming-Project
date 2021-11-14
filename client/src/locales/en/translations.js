@@ -41,7 +41,33 @@ export const TRANSLATIONS_EN = {
     [base_keys.form.login]:"Login",
     [base_keys.form.register]:"Register",
     [base_keys.form.back_home]:"Home Page",
+    
     // * Below is for testing purpose only
     [base_keys.test.welcome]: "Welcome to React - Thinh",
     [base_keys.test.learn_react]: "Learn React Now",
+
+    //News
+    [base_keys.food.news]:"News",
+    [base_keys.food.sale_off]:"Sale off",
+    [base_keys.food.combo]:"Combo",
+    [base_keys.food.nofication]:"Nofication",
+    //food cart
+    [base_keys.food.cart]:"Cart",
+    [base_keys.food.price]:"Price",
+    [base_keys.food.quantity]:"Quantity",
+    [base_keys.food.voucher]:"Vouchers",
+    [base_keys.food.address]:"Address",
+    [base_keys.food.subtotal]:"Subtotal",
+    [base_keys.food.total]:"Total",
+    [base_keys.food.discount]:"Discount",
+    [base_keys.food.phone]:"Phone number",
+    [base_keys.food.pay]:"Pay",
+    [base_keys.food.note]:"Note",
+
+    //manage
+    [base_keys.manage.client_management]:"Client Management",
+    [base_keys.manage.order_management]:"Order Management",
+    [base_keys.manage.search_by_name]:"Search by name",
+    [base_keys.manage.export]:"Export data",
+
 };

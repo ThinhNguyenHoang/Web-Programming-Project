@@ -2,7 +2,10 @@ import {Switch, Route, Redirect} from "react-router-dom";
 import Login from "../pages/Login";
 import App from "../App";
 import Register from "../pages/Register";
-
+import News from "../pages/News"
+import FoodCart from "../pages/FoodCart"
+import OrderMangament from "../pages/OrderManagement";
+import ClientManagement from "../pages/ClientManagement";
 
 
 const baseUrl = process.env.FAKE_SERVER_HOST;
@@ -21,7 +24,9 @@ export const ROUTING_CONSTANTS = {
     MANAGE_USERS: "/manage-user",
     MANAGE_ITEM_LIST :"/manage-item-info",
     MANAGE_BILL: "/manage-bill",
-    TRANSACTIONS: "/transaction"
+    TRANSACTIONS: "/transaction",
+    CLIENT:"/clients",
+    ORDER:"/orders",
 }
 
 const generateTabLinkItem = (label_name,component,nav_to,require_auth) => {
@@ -82,9 +87,9 @@ function AboutUs() {
     return null;
 }
 
-function News() {
-    return null;
-}
+// function News() {
+//     return null;
+// }
 
 function Recommendations() {
     return null;
@@ -113,6 +118,15 @@ export const RouterConfig = () => {
             </Route>
             <Route exact path={ROUTING_CONSTANTS.RECOMMENDATION}>
                 <Recommendations/>
+            </Route>
+            <Route exact path={ROUTING_CONSTANTS.ITEM_CART}>
+                <FoodCart/>
+            </Route>
+            <Route exact path={ROUTING_CONSTANTS.CLIENT}>
+                <ClientManagement/>
+            </Route>
+            <Route exact path={ROUTING_CONSTANTS.ORDER}>
+                <OrderMangament/>
             </Route>
         </Switch>
     )
