@@ -46,7 +46,7 @@ class UserService
             ResponseHelper::error_client("Account exist already");
             return;
         }
-        error_log("Creating user: savepoint1",0);
+        error_log("Creating user: savepoint 1",0);
 
         // Create user account
         $user->password = password_hash($user->password,PASSWORD_DEFAULT);

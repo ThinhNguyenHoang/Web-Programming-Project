@@ -12,6 +12,7 @@ require_once  __DIR__ . '/../../../vendor/autoload.php';
 */
 //header('Access-Control-Allow-Origin: *');
 //header('Access-Control-Allow-Methods: *');
+
 use src\user\controller\UserController;
 use src\food\controller\FoodController;
 header("Access-Control-Allow-Origin: *");

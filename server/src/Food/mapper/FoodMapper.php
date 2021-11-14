@@ -3,9 +3,8 @@
 namespace src\food\mapper;
 
 use JetBrains\PhpStorm\Pure;
-use src\food\dto\UserRegisterRequest;
-use src\food\entity\BankAccount;
 use src\food\entity\Food;
+use src\food\entity\Combo;
 
 require_once  __DIR__ . '/../../../vendor/autoload.php';
 

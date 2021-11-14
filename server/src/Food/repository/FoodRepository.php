@@ -1,4 +1,5 @@
 <?php
+
 namespace src\food\repository;
 
 require_once  __DIR__ . '/../../../vendor/autoload.php';
@@ -11,6 +12,7 @@ require_once  __DIR__ . '/../../../vendor/autoload.php';
 
 use Exception;
 use \Firebase\JWT\JWT;
+use Food;
 use http\Env\Request;
 use src\common\base\Repository;
 use src\common\config\ConnectionSingleton;
@@ -32,36 +34,68 @@ use function DeepCopy\deep_copy;
  */
 class FoodRepository implements Repository
 {
-    // Determine the latest inserted food ID --> Sequence
-    public static string $table_name = "food_account";
 
     /**
      */
-    public static function listFoodAccount(): array
+    public static function listFood(): array
     {
-        $query = "SELECT ID,USERNAME,PASSWORD FROM food";
+        $query = "SELECT * FROM food AS food 
+        INNER JOIN includes AS includes
+        ON food.FoodID = includes.FoodID 
+        INNER JOIN combo AS combo
+        ON combo.ComboID = includes.ComboID ORDER BY food.FoodID;";
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
             error_log($e->getMessage());
         }
-//        $num_row = $result->num_rows;
+        //        $num_row = $result->num_rows;
         $list_food = array();
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            error_log(json_encode($row),0);
-            array_push($list_food,$row);
+            error_log(json_encode($row), 0);
+
+            $FoodID = $row["FoodID"];
+
+            $material_query = "SELECT MaterialName FROM material AS material
+            INNER JOIN makeby AS makeby
+            ON material.MaterialID = makeby.MaterialID
+            WHERE makeby.FoodID = $FoodID";
+
+            try {
+                $material_result = QueryExecutor::executeQuery($material_query);
+            } catch (Exception $e) {
+                error_log($e->getMessage());
+            }
+
+            $list_material = array();
+
+            while ($material = $material_result->fetch_array(MYSQLI_ASSOC)) {
+                error_log(json_encode($material), 0);
+                array_push($list_material, $material);
+            }
+            // end($list_food)["material"] = $list_material;
+
+            $row["Material"] = $list_material;
+
+            array_push($list_food, $row);
         }
-        error_log("USER_REPOSITORY::FETCH_LIST::",0);
+
+        error_log("FOOD_REPOSITORY::FETCH_LIST::", 0);
         return $list_food;
     }
 
-    public static function getLastFoodId()
+    public static function create($entity = null): \mysqli_result|bool|null
     {
-
+        $query = "INSERT INTO food VALUES('$entity->FoodID','$entity->FoodName','$entity->Picture', '$entity->Price', '$entity->Description', '$entity->Instruct')";
+        try {
+            return QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage(), 0);
+            return null;
+        }
     }
 
-
-    public static function findFoodByName(string $food_name): ?FoodAccount
+    public static function findFoodByName(string $food_name): ?Food
     {
         $query = "SELECT * FROM USER_ACCOUNT WHERE USERNAME=$food_name";
         try {
@@ -72,15 +106,6 @@ class FoodRepository implements Repository
             echo $exception->getMessage();
         }
         return null;
-    }
-
-    /**
-     * @param FoodAccount|null $entity
-     */
-    public static function create($entity = null)
-    {
-        $query = "INSERT INTO USER_ACCOUNT(Foodname,Password) VALUES($entity->foodname,$entity->password)";
-        return QueryExecutor::executeQuery($query);
     }
 
     public static function read(int $entityID = null)
