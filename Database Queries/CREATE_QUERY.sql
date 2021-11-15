@@ -97,7 +97,7 @@ DROP TABLE IF EXISTS food;
 create table Food(
     FoodID bigint(8),
     FoodName varchar(255) NOT NULL,
-    Picture blob(5120) ,
+    Picture text ,
     Price int NOT NULL,
     Desciption text,
     Instruct text,
@@ -161,7 +161,7 @@ INSERT INTO `web_food`.`combo` (`ComboID`,`ComboName`,`ComboDescrip`,`Price`) VA
 create table Material(
     MaterialID bigint(8),
     MaterialName varchar(255),
-    Picture blob(5120),
+    Picture text,
     Primary key (MaterialID)
 );
 INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('1', 'Hành');
@@ -196,7 +196,7 @@ CREATE TABLE SERVICE (
       ServiceID BIGINT(8) NOT NULL,
 	ServiceInfo TEXT NOT NULL,
 	ServiceName VARCHAR(255),
-	BannerImage BLOB(5120),
+	BannerImage text,
       PRIMARY KEY (ServiceID)
 );
 INSERT INTO SERVICE VALUES ( 819292, 'Service Info 1', 'ServiceName 1', 'BannerImage 1');
