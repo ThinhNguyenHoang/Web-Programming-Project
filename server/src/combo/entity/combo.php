@@ -1,5 +1,5 @@
 <?php
-namespace src\food\entity;
+namespace src\combo\entity;
 require_once  __DIR__ . '/../../../vendor/autoload.php';
 
 class Combo

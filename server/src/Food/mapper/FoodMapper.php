@@ -16,7 +16,7 @@ class FoodMapper
 {
 
     // Map a food create request body to in memory user r
-    #[Pure] public static function mapFoodFromAddFoodRequest($request): Food
+    #[Pure] public static function mapFoodFromRequest($request): Food
     {
         $food = new Food();
         $food->FoodID = $request->FoodID;

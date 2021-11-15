@@ -1,5 +1,6 @@
 <?php
-namespace src\food\message;
+namespace src\combo\message;
+
 use src\common\base\MessageObject;
 use src\common\base\Singleton;
 use src\common\utils\MessageBuilder;

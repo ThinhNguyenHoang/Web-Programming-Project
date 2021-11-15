@@ -1,10 +1,9 @@
 <?php
 
-namespace src\food\mapper;
+namespace src\combo\mapper;
 
 use JetBrains\PhpStorm\Pure;
-use src\food\entity\Food;
-use src\food\entity\Combo;
+use src\combo\entity\Combo;
 
 require_once  __DIR__ . '/../../../vendor/autoload.php';
 

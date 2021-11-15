@@ -1,8 +1,10 @@
 import {configureStore, getDefaultMiddleware} from '@reduxjs/toolkit'
-import authSlice from '../slices/auth/AuthSlice'
+import authSlice from '../slices/auth/AuthSlice';
+import FoodSlice from '../slices/Food/FoodSlice';
 import createSagaMiddleware from 'redux-saga';
 
 import rootSaga from "./sagas";
+
 
 const sagaMiddleware = createSagaMiddleware()
 const middlewares = [sagaMiddleware];
@@ -11,6 +13,7 @@ console.log("REDUCER OF AUTH: ", authSlice);
 
 const reducer = {
     auth: authSlice.reducer,
+    food: FoodSlice.reducer,
 }
 
 const store = configureStore({

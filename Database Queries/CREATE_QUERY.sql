@@ -80,17 +80,16 @@ INSERT INTO `web_food`.`cart` (`UserID`, `Total`) VALUES ('5', '0');
 
 DROP TABLE IF EXISTS cartfood; 
 CREATE TABLE CartFood(
-	  FoodName VARCHAR(255) NOT NULL,
       FoodID BIGINT(8),
       UserID BIGINT(8),
 	Quantity INT,
       PRIMARY KEY (FoodID,UserID)
 );
-INSERT INTO `web_food`.`cartfood` (`FoodName`, `FoodID`, `UserID`) VALUES ('Pho Ha Noi', '11', '1','1');
-INSERT INTO `web_food`.`cartfood` (`FoodName`, `FoodID`, `UserID`) VALUES ('Bun Bo Hue', '12', '4','2');
-INSERT INTO `web_food`.`cartfood` (`FoodName`, `FoodID`, `UserID`) VALUES ('Banh Mi', '13', '2','2');
-INSERT INTO `web_food`.`cartfood` (`FoodName`, `FoodID`, `UserID`) VALUES ('Bun Cha', '15', '4','1');
-INSERT INTO `web_food`.`cartfood` (`FoodName`, `FoodID`, `UserID`) VALUES ('Cam Ep', '14', '3','1');
+INSERT INTO `web_food`.`cartfood` ( `FoodID`, `UserID`) VALUES ( '11', '1','1');
+INSERT INTO `web_food`.`cartfood` ( `FoodID`, `UserID`) VALUES ( '12', '4','2');
+INSERT INTO `web_food`.`cartfood` (`FoodID`, `UserID`) VALUES ( '13', '2','2');
+INSERT INTO `web_food`.`cartfood` (`FoodID`, `UserID`) VALUES ( '15', '4','1');
+INSERT INTO `web_food`.`cartfood` ( `FoodID`, `UserID`) VALUES ( '14', '3','1');
 
 
 
@@ -98,7 +97,7 @@ DROP TABLE IF EXISTS food;
 create table Food(
     FoodID bigint(8),
     FoodName varchar(255) NOT NULL,
-    Picture blob(5120) ,
+    Picture text ,
     Price int NOT NULL,
     Description text,
     Instruct text,
@@ -148,16 +147,39 @@ DROP TABLE IF EXISTS Combo;
 create table Combo(
     ComboID bigint(8),
     ComboName varchar(255) NOT NULL,
+    ComboDescrip text,
     Price int NOT NULL,
     primary key (ComboID)
 );
-INSERT INTO `web_food`.`combo` (`ComboID`,`ComboName`,`Price`) VALUES (1,'Thịt lợn rim tiêu + Trứng đúc thịt',150000);
-INSERT INTO `web_food`.`combo` (`ComboID`,`ComboName`,`Price`) VALUES (2,'Thịt lợn rim tiêu + Canh chua thịt',120000);
-INSERT INTO `web_food`.`combo` (`ComboID`,`ComboName`,`Price`) VALUES (3,'Thịt lợn rim tiêu + Đậu sốt cà chua + Canh chua thịt',180000);
-INSERT INTO `web_food`.`combo` (`ComboID`,`ComboName`,`Price`) VALUES (4,'Đậu sốt cà chua + Canh chua thịt',100000);
-INSERT INTO `web_food`.`combo` (`ComboID`,`ComboName`,`Price`) VALUES (5,'Bò nướng lá lốt + Canh chua thịt ',300000);
+INSERT INTO `web_food`.`combo` (`ComboID`,`ComboName`,`ComboDescrip`,`Price`) VALUES (1,'Combo thứ 2','Thịt lợn rim tiêu + Trứng đúc thịt',150000);
+INSERT INTO `web_food`.`combo` (`ComboID`,`ComboName`,`ComboDescrip`,`Price`) VALUES (2,'Combo thứ 3','Thịt lợn rim tiêu + Canh chua thịt',120000);
+INSERT INTO `web_food`.`combo` (`ComboID`,`ComboName`,`ComboDescrip`,`Price`) VALUES (3,'Combo thứ 4','Thịt lợn rim tiêu + Đậu sốt cà chua + Canh chua thịt',180000);
+INSERT INTO `web_food`.`combo` (`ComboID`,`ComboName`,`ComboDescrip`,`Price`) VALUES (4,'Combo thứ 5','Đậu sốt cà chua + Canh chua thịt',100000);
+INSERT INTO `web_food`.`combo` (`ComboID`,`ComboName`,`ComboDescrip`,`Price`) VALUES (5,'Combo cuối tuần','Bò nướng lá lốt + Canh chua thịt ',300000);
 
+<<<<<<< HEAD
 DROP TABLE IF EXISTS Makeby; 
+=======
+
+
+
+create table Material(
+    MaterialID bigint(8),
+    MaterialName varchar(255),
+    Picture text,
+    Primary key (MaterialID)
+);
+INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('1', 'Hành');
+INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('2', 'Tỏi');
+INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('3', 'Rượu');
+INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('4', 'Giấm');
+INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('5', 'Thịt heo');
+INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('6', 'Trứng');
+INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('7', 'Cà chua');
+
+
+
+>>>>>>> b9fd26ab93e7da3650caa9313a3fbb3ad9a0c982
 create table Makeby(
     MaterialID bigint(8),
     FoodID bigint(8),
@@ -180,7 +202,7 @@ CREATE TABLE SERVICE (
       ServiceID BIGINT(8) NOT NULL,
 	ServiceInfo TEXT NOT NULL,
 	ServiceName VARCHAR(255),
-	BannerImage BLOB(5120),
+	BannerImage text,
       PRIMARY KEY (ServiceID)
 );
 INSERT INTO SERVICE VALUES ( 819292, 'Service Info 1', 'ServiceName 1', 'BannerImage 1');

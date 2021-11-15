@@ -1,9 +1,9 @@
 <?php
 
-namespace src\food\mapper;
+namespace src\material\mapper;
 
 use JetBrains\PhpStorm\Pure;
-use src\food\entity\Material;
+use src\material\entity\Material;
 
 require_once  __DIR__ . '/../../../vendor/autoload.php';
 

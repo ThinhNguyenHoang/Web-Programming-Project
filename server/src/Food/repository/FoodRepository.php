@@ -12,13 +12,12 @@ require_once  __DIR__ . '/../../../vendor/autoload.php';
 
 use Exception;
 use \Firebase\JWT\JWT;
-use Food;
 use http\Env\Request;
 use src\common\base\Repository;
 use src\common\config\ConnectionSingleton;
 use src\common\utils\QueryExecutor;
 use src\common\utils\RequestHelper;
-use src\food\entity\FoodAccount;
+use src\food\entity\Food;
 use src\food\mapper\FoodMapper;
 use function DeepCopy\deep_copy;
 
@@ -95,19 +94,6 @@ class FoodRepository implements Repository
         }
     }
 
-    public static function findFoodByName(string $food_name): ?Food
-    {
-        $query = "SELECT * FROM USER_ACCOUNT WHERE USERNAME=$food_name";
-        try {
-            $row = QueryExecutor::executeQuery($query);
-            $return = $row->fetch_object($class = "FoodAccount");
-            return deep_copy($return);
-        } catch (Exception $exception) {
-            echo $exception->getMessage();
-        }
-        return null;
-    }
-
     public static function read(int $entityID = null)
     {
         $query = "SELECT * FROM USER_ACCOUNT WHERE ID=$entityID";
@@ -122,8 +108,20 @@ class FoodRepository implements Repository
 
     public static function update(int $entityID = null, object $entity = null)
     {
-        $query = "UPDATE USER_ACCOUNT SET USERNAME=$entity->foodname, PASSWORD=$entity->password WHERE ID=$entityID";
+        $query = "UPDATE food SET FoodID=$entity->FoodID, FoodName='$entity->FoodName', Picture='$entity->Picture', Price=$entity->Price, Description='$entity->Description', Instruct='$entity->Instruct' WHERE FoodID=$entityID";
         return QueryExecutor::executeQuery($query);
+    }
+
+    public static function findFoodByID(int $FoodID) {
+        $query = "SELECT * FROM food WHERE FoodID=$FoodID";
+        try {
+            $row = QueryExecutor::executeQuery($query);
+            $return = $row->fetch_object();
+            return deep_copy($return);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+        return null;
     }
 
     public static function delete(int $entityID = null)

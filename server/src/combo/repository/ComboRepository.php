@@ -1,6 +1,6 @@
 <?php
 
-namespace src\food\repository;
+namespace src\combo\repository;
 
 require_once  __DIR__ . '/../../../vendor/autoload.php';
 
@@ -13,13 +13,8 @@ require_once  __DIR__ . '/../../../vendor/autoload.php';
 use Exception;
 use \Firebase\JWT\JWT;
 use Food;
-use http\Env\Request;
 use src\common\base\Repository;
-use src\common\config\ConnectionSingleton;
 use src\common\utils\QueryExecutor;
-use src\common\utils\RequestHelper;
-use src\food\entity\FoodAccount;
-use src\food\mapper\FoodMapper;
 use function DeepCopy\deep_copy;
 
 /**
@@ -34,6 +29,28 @@ use function DeepCopy\deep_copy;
  */
 class ComboRepository implements Repository
 {
+    public static function listCombo(): array
+    {
+        $query = "SELECT * FROM food AS food 
+        INNER JOIN includes AS includes
+        ON food.FoodID = includes.FoodID 
+        INNER JOIN combo AS combo
+        ON combo.ComboID = includes.ComboID ORDER BY food.FoodID;";
+        try {
+            $result = QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+        }
+        //        $num_row = $result->num_rows;
+        $list_combo = array();
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+            error_log(json_encode($row), 0);
+            array_push($list_combo, $row);
+        }
+
+        error_log("COMBO_REPOSITORY::FETCH_LIST::", 0);
+        return $list_combo;
+    }
     /**
      */
     public static function create($entity = null): \mysqli_result|bool|null

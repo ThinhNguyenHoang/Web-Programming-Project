@@ -1,5 +1,5 @@
 <?php
-namespace src\food\message;
+namespace src\material\message;
 use src\common\base\MessageObject;
 use src\common\base\Singleton;
 use src\common\utils\MessageBuilder;

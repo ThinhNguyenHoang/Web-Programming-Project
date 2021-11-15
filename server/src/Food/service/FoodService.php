@@ -2,19 +2,11 @@
 
 namespace src\food\service;
 
-use JetBrains\PhpStorm\NoReturn;
-use src\common\config\ConnectionSingleton;
 use src\common\utils\RequestHelper;
 use src\common\utils\ResponseHelper;
 use src\food\mapper\FoodMapper;
-use src\food\mapper\ComboMapper;
-use src\food\mapper\MaterialMapper;
 use src\food\message\FoodMessage;
-use src\food\message\ComboMessage;
-use src\food\message\MaterialMessage;
 use src\food\repository\FoodRepository;
-use src\food\repository\ComboRepository;
-use src\food\repository\MaterialRepository;
 
 require_once  __DIR__ . '/../../../vendor/autoload.php';
 
@@ -38,7 +30,7 @@ class FoodService
 
         error_log("Adding food: get request body", 0);
 
-        $food = FoodMapper::mapFoodFromAddFoodRequest($request);
+        $food = FoodMapper::mapFoodFromRequest($request);
 
         error_log("Adding food: Map Food entity from request", 0);
 
@@ -57,59 +49,22 @@ class FoodService
         return;
     }
 
-    public static function addCombo()
-    {
+    public static function updateFood(){
         $request = RequestHelper::getRequestBody();
-
-        error_log("Adding combo: get request body", 0);
-
-        $combo = ComboMapper::mapComboFromAddComboRequest($request);
-
-        error_log("Adding combo: Map Combo entity from request", 0);
-
-        $includes_result = ComboRepository::insertIncludes($request->FoodID, $combo->ComboID);
-
-        $combo_result = ComboRepository::create($combo);
-
-
-        error_log("Adding combo: Insert to database", 0);
-
-        if($combo_result && $includes_result){
-            error_log("Adding combo: " . json_encode($combo),0);
-            ResponseHelper::success(ComboMessage::getMessages()->createSuccess, $combo);
-            return;
+        error_log("FOOD_SERVICE::UPDATE::" ,0);
+        // Find food with the FoodID in database
+        $food = FoodMapper::mapFoodFromRequest($request);
+        $food_found = FoodRepository::findFoodByID($food->FoodID);
+        if(!$food_found){
+            // Throw error notifying FoodID already taken
+            ResponseHelper::error_client("FoodID doesn't exist");
         }
-
-         ResponseHelper::error_server(ComboMessage::getMessages()->createError);
-
-        return;
-    }
-    public static function addMaterial()
-    {
-        $request = RequestHelper::getRequestBody();
-
-        error_log("Adding material: get request body", 0);
-
-        $material = MaterialMapper::mapMaterialFromAddMaterialRequest($request);
-
-        error_log("Adding material: Map Material entity from request", 0);
-
-        $makeby_result = MaterialRepository::insertMakeBy($request->FoodID, $material->MaterialID);
-
-        $material_result = MaterialRepository::create($material);
-
-
-        error_log("Adding material: Insert to database", 0);
-
-        if($makeby_result && $material_result){
-            error_log("Adding material: " . json_encode($material),0);
-            ResponseHelper::success(MaterialMessage::getMessages()->createSuccess, $material);
-            return;
+        // Create food
+        $result = FoodRepository::update($food_found->FoodID,$food);
+        if($result){
+            ResponseHelper::success(FoodMessage::getMessages()->updateSuccess,$food);
         }
-
-         ResponseHelper::error_server(MaterialMessage::getMessages()->createError);
-
-        return;
+        ResponseHelper::error_server(FoodMessage::getMessages()->updateError);
     }
 
 }

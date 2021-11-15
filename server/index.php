@@ -9,12 +9,15 @@ require_once  __DIR__ . '/../vendor/autoload.php';
 require_once  __DIR__ . '/../../vendor/autoload.php';
 // 3th level autoload: File in Service, Repos, ....
 require_once  __DIR__ . '/../../../vendor/autoload.php';
-*/
+ */
 //header('Access-Control-Allow-Origin: *');
 //header('Access-Control-Allow-Methods: *');
 
 use src\user\controller\UserController;
 use src\food\controller\FoodController;
+use src\combo\controller\ComboController;
+use src\material\controller\MaterialController;
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Headers:Access-Control-Allow-Headers, Access-Control-Allow-Origin, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,Authorization,ResponseType,X-Request-Id");
@@ -31,7 +34,7 @@ error_log("ENDOINT ĐƯỢC XỬ LÝ: " . $endpoint, 0);
 
 //// TODO: Parse the token for protected endpoints before assigning the request to the controller
 //// TODO: Thịnh thêm code xác thực trước khi chuyển request cho các controller
-switch ($endpoint){
+switch ($endpoint) {
     case "food":
         $foodController = new FoodController();
         $foodController->handleRequest();
@@ -40,6 +43,12 @@ switch ($endpoint){
         $userController = new UserController();
         $userController->handleRequest();
         break;
+    case "combo":
+        $comboController = new ComboController();
+        $comboController->handleRequest();
+    case "material":
+        $materialController = new MaterialController();
+        $materialController->handleRequest();
     default:
         header("HTTP/1.1 404 Not Found");
         exit(1);
