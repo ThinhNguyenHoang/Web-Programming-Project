@@ -31,11 +31,11 @@ class ComboRepository implements Repository
 {
     public static function listCombo(): array
     {
-        $query = "SELECT * FROM food AS food 
-        INNER JOIN includes AS includes
-        ON food.FoodID = includes.FoodID 
+        $query = "
         INNER JOIN combo AS combo
         ON combo.ComboID = includes.ComboID ORDER BY food.FoodID;";
+
+        $query = "SELECT * FROM combo";
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
@@ -45,17 +45,53 @@ class ComboRepository implements Repository
         $list_combo = array();
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
             error_log(json_encode($row), 0);
+            $ComboID =  $row["ComboID"];
+
+            $food_query = "SELECT * FROM food AS food 
+            INNER JOIN includes AS includes
+            ON food.FoodID = includes.FoodID 
+            WHERE includes.ComboID = $ComboID";
+
+            try {
+                $food_result = QueryExecutor::executeQuery($food_query);
+            } catch (Exception $e) {
+                error_log($e->getMessage());
+            }
+
+            $list_food = array();
+
+            while ($food = $food_result->fetch_array(MYSQLI_ASSOC)) {
+                unset($food["ComboID"]);
+                error_log(json_encode($food), 0);
+                array_push($list_food, $food);
+            }
+            // end($list_food)["material"] = $list_material;
+
+            $row["Material"] = $list_food;
+
             array_push($list_combo, $row);
         }
 
         error_log("COMBO_REPOSITORY::FETCH_LIST::", 0);
         return $list_combo;
     }
+
+    public static function findComboByID($ComboID) {
+        $query = "SELECT * FROM combo WHERE ComboID=$ComboID";
+        try {
+            $row = QueryExecutor::executeQuery($query);
+            $return = $row->fetch_object();
+            return deep_copy($return);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+        return null;
+    }
     /**
      */
     public static function create($entity = null): \mysqli_result|bool|null
     {
-        $query = "INSERT INTO combo VALUES('$entity->ComboID','$entity->ComboName','$entity->Price')";
+        $query = "INSERT INTO combo (ComboName, ComboDescrip, Price) VALUES('$entity->ComboName', '$entity->ComboDescrip','$entity->Price')";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
@@ -64,7 +100,8 @@ class ComboRepository implements Repository
         }
     }
 
-    public static function insertIncludes(int $FoodID, int $ComboID): \mysqli_result|bool|null {
+    public static function insertIncludes(int $FoodID, int $ComboID): \mysqli_result|bool|null
+    {
         $query = "INSERT INTO includes VALUES('$FoodID','$ComboID')";
         try {
             return QueryExecutor::executeQuery($query);
@@ -73,7 +110,7 @@ class ComboRepository implements Repository
             return null;
         }
     }
-    
+
     public static function read(int $entityID = null)
     {
         $query = "SELECT * FROM USER_ACCOUNT WHERE ID=$entityID";

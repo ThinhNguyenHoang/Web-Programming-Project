@@ -27,42 +27,27 @@ class ComboController extends BaseController implements RequestHandler
                     ComboService::getComboList();
                 }
                 else {
-                    ResponseHelper::error_client("Invalid path in food endpoint");
+                    ResponseHelper::error_client("Invalid path in combo endpoint");
                 }
                 break;
-            // case "post":
-            //     switch ($relative_path){
-            //         case "add-food":
-            //             error_log("FOOD_CONTROLLER::ADD FOOD ENDPOINT::" . $relative_path);
-            //             FoodService::addFood();
-            //             break;
-            //         case "add-combo":
-            //             error_log("FOOD_CONTROLLER::ADD COMBO ENDPOINT::" . $relative_path);
-            //             FoodService::addCombo();
-            //             break;
-            //         case "add-material":
-            //             error_log("FOOD_CONTROLLER::ADD MATERIAL ENDPOINT::" . $relative_path);
-            //             FoodService::addMaterial();
-            //             break;
-            //         default:
-            //             ResponseHelper::error_client("Invalid path in food endpoint");
-            //     }
-            //     break;
-            // case "put":
-            //     switch($relative_path){
-            //         case null:
-            //             FoodService::updateFood();
-            //             break;
-            //         case null:
-            //             FoodService::updateUserAccount();
-            //             break;
-            //         case "change-password":
-            //             FoodService::setNewPassword();
-            //             break;
-            //         default:
-            //             ResponseHelper::error_client("Invalid parameter");
-            //     }
-            //     break;
+                case "post":
+                    if($relative_path == null){
+                        error_log("COMBO_CONTROLLER::ADD MATERIAL ENDPOINT::" . $relative_path);
+                        ComboService::addCombo();
+                    }
+                    else {
+                        ResponseHelper::error_client("Invalid path in combo endpoint");
+                    }
+                    break;
+            case "put":
+                if (is_numeric($relative_path)) {
+                    error_log("COMBO_CONTROLLER::UPDATE COMBO ENDPOINT::" . $relative_path);
+                    ComboService::updateCombo($relative_path);
+                } else {
+                    ResponseHelper::error_client("Invalid parameter");
+                }
+                break;
+                break;
             // case "delete":
             //     switch ($relative_path){
             //         case "bank-account":

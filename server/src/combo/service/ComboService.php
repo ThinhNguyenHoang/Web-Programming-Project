@@ -32,14 +32,15 @@ class ComboService
 
         error_log("Adding combo: get request body", 0);
 
-        $combo = ComboMapper::mapComboFromAddComboRequest($request);
+        $combo = ComboMapper::mapComboFromRequest($request);
 
         error_log("Adding combo: Map Combo entity from request", 0);
 
-        $includes_result = ComboRepository::insertIncludes($request->FoodID, $combo->ComboID);
-
         $combo_result = ComboRepository::create($combo);
 
+        $combo->ComboID = QueryExecutor::getLastInsertID();
+
+        $includes_result = ComboRepository::insertIncludes($request->FoodID, $combo->ComboID);
 
         error_log("Adding combo: Insert to database", 0);
 
@@ -52,6 +53,26 @@ class ComboService
          ResponseHelper::error_server(ComboMessage::getMessages()->createError);
 
         return;
+    }
+
+    public static function updateCombo($ComboID) {
+        $request = RequestHelper::getRequestBody();
+        error_log("COMBO_SERVICE::UPDATE::" ,0);
+        // Find food with the FoodID in database
+        $combo = ComboMapper::mapComboFromRequest($request);
+        $combo->ComboID = $ComboID;
+        $combo_found = ComboRepository::findComboByID($combo->FoodID);
+        if(!$combo_found){
+            // Throw error notifying FoodID already taken
+            ResponseHelper::error_client("ComboID doesn't exist");
+            die();
+        }
+        // Create food
+        $result = ComboRepository::update($combo_found->FoodID,$combo);
+        if($result){
+            ResponseHelper::success(ComboMessage::getMessages()->updateSuccess,$combo);
+        }
+        ResponseHelper::error_server(ComboMessage::getMessages()->updateError);
     }
 
 }
