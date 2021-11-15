@@ -1,102 +1,53 @@
-import {useDispatch, useSelector} from "react-redux";
-import {Box, Typography, Tabs, Tab, Avatar} from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { Box } from "@mui/material";
 import TableContext from "@mui/material/Table/TableContext";
 import logo from "../../assets/images/logo_64.png";
-import {ROUTING_CONSTANTS} from "../../routes/RouterConfig";
-import {selectors} from "../../redux/slices/auth/AuthSlice";
-import userDefaultAvatar from "../../assets/images/user_default.jpg";
+import { ROUTING_CONSTANTS, ROUTING_TAB_ITEMS } from "../../routes/RouterConfig";
+import { Link } from "react-router-dom";
 
-const styles = {
-    allContainer: {
-        display: `flex`,
-        justifyContent: `space-between`,
-        alignItems: `center`,
-        mb: 2,
-    },
-    brandContainer: {
-        justifyContent: `space-between`,
-        alignItems: `center`,
-        ml: 2,
-        p: 1,
-    },
-    logo: {},
-    brandName: {},
-    tabContainer: {},
-    userInfoContainer: {
-        display: `flex`,
-        justifyContent: `space-between`,
-        alignItems: `center`,
-        m: 2,
-    },
-    avatar: {},
-    userName: {}
-}
 
-const tabs = [
-    {
-        value: ROUTING_CONSTANTS.HOMEPAGE,
-        label: "Home Page",
-    },
-    {
-        value: ROUTING_CONSTANTS.FOOD_COMBO_LIST,
-        label: "Food & Combos",
-    },
-    {
-        value: ROUTING_CONSTANTS.NEWS,
-        label: "News"
-    }, {
-        value: ROUTING_CONSTANTS.ITEM_CART,
-        label: "Cart"
-    }, {
-        value: ROUTING_CONSTANTS.ABOUT_US,
-        label: "About Us",
-    }, {
-        value: ROUTING_CONSTANTS.BILLS,
-        label: "Bills"
-    }, {
-        value: ROUTING_CONSTANTS.TRANSACTIONS_HISTORY,
-        label: "Transactions"
-    }
-];
+// const tabsName = ["Home Page", "Food & Combo", "News", "Cart", "About Us", "Bill", "Transactions"];
+
+
+// const generateTabLinkItem = (label_name,component,nav_to,require_auth) => {
+//     return {
+//         id: `id-${label_name}`,
+//         label: label_name,
+//         component: component,
+//         navigateTo: nav_to,
+//         require_auth_level: "",
+//     }
+// }
+
+// Header should be passed in the number of tabs available
+// If not logged in the props should not contains the protected routes
 const Header = (props) => {
-
+    const currentUser = useSelector((state) => state.auth.currentUser);
     const dispatch = useDispatch();
-    // * This function should navigate to other component
-    const handleChange = (event, value) => {
-
+    const [activeTab, setActiveTab] = useState(0);
+    const components = props.components;
+    const handleChange = (event , value) => {
+        setValue(value);
     }
-    const userAvatar = useSelector(selectors.getUserAvatar);
-    const userName = useSelector(selectors.getUserName);
-
     return (
-        <Box className={`outside-container`}>
-            <Box className={`brand-container`}>
-                <img src={logo} alt={`Logo Image`}/>
-                <Typography variant={`h1`}>BKFood System</Typography>
-            </Box>
-            <Box className={`tabs-container`}>
-                <Tabs
-                    value={0}
-                    onChange={handleChange}
-                    textColor="secondary"
-                    indicatorColor="secondary"
-                    aria-label="secondary tabs example"
-                >
+        <Box sx={{ width: '100%' }}>
+            <Box sx={{ borderBottm: 1, borderColor: 'divider' }}>
+                <img id="logo-mage" src={logo} alt={`Food Sale Logo`} />
+                <Tabs value={1} onChange={handleChange} >
+                    {/* <Tab label />   */}
                     {
-                        tabs.map((item, index) =>
-                            <Tab key={`{index}`} label={item.label} value={item.value}/>
-                        )
+                        ROUTING_TAB_ITEMS.map((item, index) => {
+                            return <Tab label={item.label} id={item.id}>
+                                <Link to={item.navigateTo}>
+                                </Link>
+                            </Tab>
+                        })
                     }
                 </Tabs>
-            </Box>
-            <Box className={`user-info-container`}>
-                <Avatar
-                    alt="User Avatar"
-                    src={userAvatar? userAvatar:userDefaultAvatar}
-                    sx={{ width: 56, height: 56 }}
-                />
-                <Typography variant={`h2`}>{userName ? userName : "Guess"}</Typography>
             </Box>
         </Box>
     );
 }
+
+
+

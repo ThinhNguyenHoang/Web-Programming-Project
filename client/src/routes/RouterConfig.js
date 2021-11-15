@@ -2,6 +2,10 @@ import {Switch, Route, Redirect} from "react-router-dom";
 import Login from "../pages/Login";
 import App from "../App";
 import Register from "../pages/Register";
+import News from "../pages/News"
+import FoodCart from "../pages/FoodCart"
+import OrderMangament from "../pages/OrderManagement";
+import ClientManagement from "../pages/ClientManagement";
 
 
 const baseUrl = process.env.FAKE_SERVER_HOST;
@@ -16,21 +20,62 @@ export const ROUTING_CONSTANTS = {
     NEWS: "/news",
     ITEM_CART: "/cart",
     RECOMMENDATION: "/recommendations",
-    USER_MANAGEMENT: "/user-manage",
-    FOOD_COMBO_LIST: "/food_combo",
-    FOOD_DETAIL: "/food/:food_id",
-    USER_DETAIL: "/user/:user_id",
-    COMBO_DETAIL: "/combo/:combo_id",
-    BILLS: "/bill",
-    TRANSACTIONS_HISTORY: "/transaction"
-
+    ACCOUNT: "/account",
+    MANAGE_USERS: "/manage-user",
+    MANAGE_ITEM_LIST :"/manage-item-info",
+    MANAGE_BILL: "/manage-bill",
+    TRANSACTIONS: "/transaction",
+    CLIENT:"/clients",
+    ORDER:"/orders",
 }
+
+const generateTabLinkItem = (label_name,component,nav_to,require_auth) => {
+    return {
+        id: `id-${label_name}`,
+        label: label_name,
+        component: component,
+        navigateTo: nav_to,
+        require_auth_level: "",
+    }
+}
+
+export const ROUTING_TAB_ITEMS = [
+    generateTabLinkItem("Home Page", Home,ROUTING_CONSTANTS.HOMEPAGE),
+    generateTabLinkItem("Login", Login,ROUTING_CONSTANTS.LOGIN),
+    generateTabLinkItem("Register",Register,ROUTING_CONSTANTS.REGISTER),
+    generateTabLinkItem("About Us",AboutUs,ROUTING_CONSTANTS.ABOUT_US),
+    generateTabLinkItem("News", News,ROUTING_CONSTANTS.NEWS),
+    generateTabLinkItem("My Cart", Cart,ROUTING_CONSTANTS.ITEM_CART),
+    generateTabLinkItem("Recommendations", Recommendations,ROUTING_CONSTANTS.RECOMMENDATION),
+    generateTabLinkItem("My Account", Account,ROUTING_CONSTANTS.ACCOUNT),
+    // ! EDIT THE FOLLOWING LAST PROPS TO THE USER ROLE STRING CONSTANT
+    generateTabLinkItem("Manage User",ManageUser,ROUTING_CONSTANTS.MANAGE_USERS,"Manager"),
+    generateTabLinkItem("Manage Item Info",ManageItemInfo,"Manager"),
+    generateTabLinkItem("Manage User",ManageBills,ROUTING_CONSTANTS.MANAGE_BILL,"Manager"),
+    generateTabLinkItem("Manage User",ManageTransactions,ROUTING_CONSTANTS.MANAGE_ITEM_LIST,"Manager"),
+]
+
 
 /*
     * Từng component dưới này phải được thay bằng một page ở pages
     ! Còn phải thêm trang cho các lần thanh toán và các đơn hàng
  */
 function Home() {
+    return null;
+}
+function ManageItemInfo (){
+    return null;
+}
+function ManageBills (){
+    return null;
+}
+function ManageTransactions(){
+    return null;
+}
+function Account() {
+    return null;
+}
+function Cart(){
     return null;
 }
 
@@ -42,27 +87,11 @@ function AboutUs() {
     return null;
 }
 
-function News() {
-    return null;
-}
+// function News() {
+//     return null;
+// }
 
 function Recommendations() {
-    return null;
-}
-
-function UserManagement() {
-    return null;
-}
-
-function FoodDetail() {
-    return null;
-}
-
-function ComboDetail() {
-    return null;
-}
-
-function FoodsAndCombos() {
     return null;
 }
 
@@ -90,18 +119,15 @@ export const RouterConfig = () => {
             <Route exact path={ROUTING_CONSTANTS.RECOMMENDATION}>
                 <Recommendations/>
             </Route>
-            <Route exact path={ROUTING_CONSTANTS.USER_MANAGEMENT}>
-                <UserManagement/>
+            <Route exact path={ROUTING_CONSTANTS.ITEM_CART}>
+                <FoodCart/>
             </Route>
-            <Route exact path={ROUTING_CONSTANTS.FOOD_COMBO_LIST}>
-                <FoodsAndCombos/>
+            <Route exact path={ROUTING_CONSTANTS.CLIENT}>
+                <ClientManagement/>
             </Route>
-            <Route exact path={ROUTING_CONSTANTS.FOOD_DETAIL}>
-                <FoodDetail/>
-            </Route>
-            <Route exact path={ROUTING_CONSTANTS.COMBO_DETAIL}>
-                <ComboDetail/>
+            <Route exact path={ROUTING_CONSTANTS.ORDER}>
+                <OrderMangament/>
             </Route>
         </Switch>
-    );
+    )
 }
