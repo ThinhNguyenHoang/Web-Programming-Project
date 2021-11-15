@@ -220,6 +220,10 @@ function ClientManagement(){
         dispatch({type:get_client_actions.loading,payload:''});
     }, []);
     return (
+        <>
+        <Box>
+            {/* Header here */}
+        </Box>
         <Box sx={{display:"flex", flexDirection:"column",mx:4}}>
             <Typography variant="h4" color="initial" my={2}>Quản lý khách hàng</Typography>
             <Box sx={{display:"flex",flexDirection:"row",justifyContent:"space-between",my:2}}>
@@ -302,6 +306,7 @@ function ClientManagement(){
             </TableContainer>
 
         </Box>
+        </>
     );
 }
 export default ClientManagement;

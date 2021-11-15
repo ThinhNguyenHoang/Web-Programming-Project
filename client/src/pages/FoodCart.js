@@ -28,6 +28,10 @@ function FoodCart() {
     dispatch({type:get_cart_actions.loading,payload:``});
   }, []);
   return (
+    <>
+        <Box>
+            {/* Header here */}
+        </Box>
     <Grid container spacing={2} p={5} >
       <Grid item xs={12}>
         <Typography variant="h5" sx={{fontWeight:"Bold"}}>{t(base_keys.food.cart)}({cart.quantity})</Typography>
@@ -72,6 +76,7 @@ function FoodCart() {
       </Grid>
       
     </Grid>
+    </>
   );
 }
 

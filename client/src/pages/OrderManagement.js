@@ -266,6 +266,10 @@ function OrderMangament(){
         setPage(NewPage);
     }
     return (
+        <>
+        <Box>
+            {/* Header here */}
+        </Box>
         <Box sx={{display:"flex", flexDirection:"column"}}>
             <Typography variant="h4" color="initial" my={2}>Quản lý đơn hàng</Typography>
             <ButtonGroup size="large" aria-label="large button group"my={2}>
@@ -353,6 +357,7 @@ function OrderMangament(){
                 </Box>
             </TableContainer>
         </Box>
+        </>
     );
 }
 export default OrderMangament;

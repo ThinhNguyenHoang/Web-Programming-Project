@@ -34,6 +34,10 @@ function News (){
     
     console.log("hi test here");
     return (
+        <>
+        <Box>
+            {/* Header here */}
+        </Box>
         <Box sx={{
             display:"flex", 
             flexDirection:"column"
@@ -151,6 +155,7 @@ function News (){
             </Box>
             
         </Box>
+        </>
     );
 }
 
