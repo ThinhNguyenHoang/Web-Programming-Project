@@ -20,7 +20,11 @@ export const ROUTING_CONSTANTS = {
     NEWS: "/news",
     ITEM_CART: "/cart",
     RECOMMENDATION: "/recommendations",
+<<<<<<< HEAD
     ACCOUNT: "/account", 
+=======
+    ACCOUNT: "/account",
+>>>>>>> main
     MANAGE_USERS: "/manage-user",
     MANAGE_ITEM_LIST :"/manage-item-info",
     MANAGE_BILL: "/manage-bill",
@@ -32,7 +36,11 @@ export const ROUTING_CONSTANTS = {
 const generateTabLinkItem = (label_name,component,nav_to,require_auth) => {
     return {
         id: `id-${label_name}`,
+<<<<<<< HEAD
         label: label_name, 
+=======
+        label: label_name,
+>>>>>>> main
         component: component,
         navigateTo: nav_to,
         require_auth_level: "",
@@ -42,11 +50,19 @@ const generateTabLinkItem = (label_name,component,nav_to,require_auth) => {
 export const ROUTING_TAB_ITEMS = [
     generateTabLinkItem("Home Page", Home,ROUTING_CONSTANTS.HOMEPAGE),
     generateTabLinkItem("Login", Login,ROUTING_CONSTANTS.LOGIN),
+<<<<<<< HEAD
     generateTabLinkItem("Register",Register,ROUTING_CONSTANTS.REGISTER), 
     generateTabLinkItem("About Us",AboutUs,ROUTING_CONSTANTS.ABOUT_US), 
     generateTabLinkItem("News", News,ROUTING_CONSTANTS.NEWS), 
     generateTabLinkItem("My Cart", Cart,ROUTING_CONSTANTS.ITEM_CART),
     generateTabLinkItem("Recommendations", Recommendations,ROUTING_CONSTANTS.RECOMMENDATION), 
+=======
+    generateTabLinkItem("Register",Register,ROUTING_CONSTANTS.REGISTER),
+    generateTabLinkItem("About Us",AboutUs,ROUTING_CONSTANTS.ABOUT_US),
+    generateTabLinkItem("News", News,ROUTING_CONSTANTS.NEWS),
+    generateTabLinkItem("My Cart", Cart,ROUTING_CONSTANTS.ITEM_CART),
+    generateTabLinkItem("Recommendations", Recommendations,ROUTING_CONSTANTS.RECOMMENDATION),
+>>>>>>> main
     generateTabLinkItem("My Account", Account,ROUTING_CONSTANTS.ACCOUNT),
     // ! EDIT THE FOLLOWING LAST PROPS TO THE USER ROLE STRING CONSTANT
     generateTabLinkItem("Manage User",ManageUser,ROUTING_CONSTANTS.MANAGE_USERS,"Manager"),
@@ -64,6 +80,7 @@ function Home() {
     return null;
 }
 function ManageItemInfo (){
+<<<<<<< HEAD
     return null; 
 }
 function ManageBills (){
@@ -77,6 +94,21 @@ function Account() {
 }
 function Cart(){
     return null; 
+=======
+    return null;
+}
+function ManageBills (){
+    return null;
+}
+function ManageTransactions(){
+    return null;
+}
+function Account() {
+    return null;
+}
+function Cart(){
+    return null;
+>>>>>>> main
 }
 
 function Topics() {

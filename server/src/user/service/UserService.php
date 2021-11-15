@@ -85,8 +85,10 @@ class UserService
         // TODO: Generate the access token and Packetize the response and send back to client
         $body = new \stdClass();
         $body->token=RequestHelper::generate_jwt_token($user_found);
+        $body->username = $user->username;
         $body->user_profile = UserRepository::getUserProfile($user_found->id);
         error_log("LOGIN SUCCESS: " . $body->token, 0);
+        error_log("LOGIN SUCCESS::USER_PROFILE:: " . $body->token, 0);
         ResponseHelper::success("Login success", $body);
         die();
     }
