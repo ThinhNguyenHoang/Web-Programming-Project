@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { error, generateSagaLifecycleNames, generateStatus, loading, success } from "../../../utils/reduxGenerate";
 import {useSelector} from "react-redux";
+import userDefaultAvatar from "../../../assets/images/user_default.jpg"
 /*
  * Sample user profile:
  * profile: {
@@ -13,8 +14,10 @@ import {useSelector} from "react-redux";
  *   bankAccountId:
  *   address:
  *   phoneNumber:
+ *   avatar
  * }
  */
+
 const initialValue = {
     currentUser: {
         token: "",
@@ -26,17 +29,22 @@ const initialValue = {
         token_renew_status: generateStatus(),
         profile: {
             account_id: "",
+            username: "",
             address: "",
             dob: "",
             email: "",
             point: "",
             phone_number: "",
-            full_name: ""
+            full_name: "",
+            avatar: "",
         },
     }
 }
 
 export const selectors = {
+    getUserAvatar: (state) => state.auth.currentUser.avatar,
+    getUserName: (state) => state.auth.currentUser.profile.username,
+
     getRegisterLoading: (state) => state.auth.currentUser.register_status.isLoading,
     getRegisterSuccess: (state) => state.auth.currentUser.register_status.isSuccess,
     getRegisterError: (state) => state.auth.register_status.isError,
@@ -85,13 +93,14 @@ const authSlice = createSlice({
         },
         [login_actions.success]: (state, action) => {
             console.log("PAYLOAD:" ,action.payload.data);
-            const { token} = action.payload.data;
+            const { token,username} = action.payload.data;
             // * Store the token for later retrieval
             localStorage.setItem('token', token);
             console.log("Stored token to local storage: ", token);
             state.currentUser.login_status = success();
             // state.currentUser.profile = user_profile;
             state.currentUser.token = token;
+            state.currentUser.profile.username = username;
         },
         [login_actions.error]: (state, action) => {
             const { message } = action.payload;

@@ -4,7 +4,6 @@ import App from "../App";
 import Register from "../pages/Register";
 
 
-
 const baseUrl = process.env.FAKE_SERVER_HOST;
 export const ROUTING_CONSTANTS = {
     ROOT: "/",
@@ -17,6 +16,14 @@ export const ROUTING_CONSTANTS = {
     NEWS: "/news",
     ITEM_CART: "/cart",
     RECOMMENDATION: "/recommendations",
+    USER_MANAGEMENT: "/user-manage",
+    FOOD_COMBO_LIST: "/food_combo",
+    FOOD_DETAIL: "/food/:food_id",
+    USER_DETAIL: "/user/:user_id",
+    COMBO_DETAIL: "/combo/:combo_id",
+    BILLS: "/bill",
+    TRANSACTIONS_HISTORY: "/transaction"
+
 }
 
 /*
@@ -40,6 +47,22 @@ function News() {
 }
 
 function Recommendations() {
+    return null;
+}
+
+function UserManagement() {
+    return null;
+}
+
+function FoodDetail() {
+    return null;
+}
+
+function ComboDetail() {
+    return null;
+}
+
+function FoodsAndCombos() {
     return null;
 }
 
@@ -67,6 +90,18 @@ export const RouterConfig = () => {
             <Route exact path={ROUTING_CONSTANTS.RECOMMENDATION}>
                 <Recommendations/>
             </Route>
+            <Route exact path={ROUTING_CONSTANTS.USER_MANAGEMENT}>
+                <UserManagement/>
+            </Route>
+            <Route exact path={ROUTING_CONSTANTS.FOOD_COMBO_LIST}>
+                <FoodsAndCombos/>
+            </Route>
+            <Route exact path={ROUTING_CONSTANTS.FOOD_DETAIL}>
+                <FoodDetail/>
+            </Route>
+            <Route exact path={ROUTING_CONSTANTS.COMBO_DETAIL}>
+                <ComboDetail/>
+            </Route>
         </Switch>
-    )
+    );
 }
