@@ -85,17 +85,17 @@ CREATE TABLE CartFood(
 	Quantity INT,
       PRIMARY KEY (FoodID,UserID)
 );
-INSERT INTO `web_food`.`cartfood` ( `FoodID`, `UserID`) VALUES ( '11', '1','1');
-INSERT INTO `web_food`.`cartfood` ( `FoodID`, `UserID`) VALUES ( '12', '4','2');
-INSERT INTO `web_food`.`cartfood` (`FoodID`, `UserID`) VALUES ( '13', '2','2');
-INSERT INTO `web_food`.`cartfood` (`FoodID`, `UserID`) VALUES ( '15', '4','1');
-INSERT INTO `web_food`.`cartfood` ( `FoodID`, `UserID`) VALUES ( '14', '3','1');
+INSERT INTO `web_food`.`cartfood` ( `FoodID`, `UserID`, `Quantity`) VALUES ( '11', '1','1');
+INSERT INTO `web_food`.`cartfood` ( `FoodID`, `UserID`, `Quantity`) VALUES ( '12', '4','2');
+INSERT INTO `web_food`.`cartfood` (`FoodID`, `UserID`, `Quantity`) VALUES ( '13', '2','2');
+INSERT INTO `web_food`.`cartfood` (`FoodID`, `UserID`, `Quantity`) VALUES ( '15', '4','1');
+INSERT INTO `web_food`.`cartfood` ( `FoodID`, `UserID`, `Quantity`) VALUES ( '14', '3','1');
 
 
 
 DROP TABLE IF EXISTS food; 
 create table Food(
-    FoodID bigint(8),
+    FoodID bigint(8) NOT NULL AUTO_INCREMENT,
     FoodName varchar(255) NOT NULL,
     Picture text ,
     Price int NOT NULL,
@@ -112,8 +112,8 @@ INSERT INTO `web_food`.`food` (`FoodID`,`FoodName`,`Picture`,`Price`,`Descriptio
 DROP TABLE IF EXISTS Includes; 
 create table Includes(
 	FoodID bigint(8) not null,
-    ComboID bigint(8) not null,
-    primary key (FoodID,ComboID)
+    ComboID bigint(8)  NOT NULL AUTO_INCREMENT,
+    primary key (ComboID,FoodID)
 );
 INSERT INTO `web_food`.`includes` (`FoodID`, `ComboID`) VALUES ('1', '1');
 INSERT INTO `web_food`.`includes` (`FoodID`, `ComboID`) VALUES ('2', '1');
@@ -127,25 +127,10 @@ INSERT INTO `web_food`.`includes` (`FoodID`, `ComboID`) VALUES ('4', '4');
 INSERT INTO `web_food`.`includes` (`FoodID`, `ComboID`) VALUES ('5', '5');
 INSERT INTO `web_food`.`includes` (`FoodID`, `ComboID`) VALUES ('4', '5');
 
-DROP TABLE IF EXISTS Material; 
-create table Material(
-	MaterialID bigint(8) not null,
-    MaterialName varchar(256) not null,
-    primary key (MaterialID)
-);
-INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('1', 'Hành');
-INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('2', 'Tỏi');
-INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('3', 'Rượu');
-INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('4', 'Giấm');
-INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('5', 'Thịt heo');
-INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('6', 'Trứng');
-INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('7', 'Cà chua');
-
-
 
 DROP TABLE IF EXISTS Combo; 
 create table Combo(
-    ComboID bigint(8),
+    ComboID bigint(8)  NOT NULL AUTO_INCREMENT,
     ComboName varchar(255) NOT NULL,
     ComboDescrip text,
     Price int NOT NULL,
@@ -157,14 +142,12 @@ INSERT INTO `web_food`.`combo` (`ComboID`,`ComboName`,`ComboDescrip`,`Price`) VA
 INSERT INTO `web_food`.`combo` (`ComboID`,`ComboName`,`ComboDescrip`,`Price`) VALUES (4,'Combo thứ 5','Đậu sốt cà chua + Canh chua thịt',100000);
 INSERT INTO `web_food`.`combo` (`ComboID`,`ComboName`,`ComboDescrip`,`Price`) VALUES (5,'Combo cuối tuần','Bò nướng lá lốt + Canh chua thịt ',300000);
 
-<<<<<<< HEAD
-DROP TABLE IF EXISTS Makeby; 
-=======
 
 
 
+drop table if exists Material;
 create table Material(
-    MaterialID bigint(8),
+    MaterialID bigint(8) NOT NULL AUTO_INCREMENT,
     MaterialName varchar(255),
     Picture text,
     Primary key (MaterialID)
@@ -179,9 +162,9 @@ INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('7', 'C
 
 
 
->>>>>>> b9fd26ab93e7da3650caa9313a3fbb3ad9a0c982
+Drop table if exists Makeby;
 create table Makeby(
-    MaterialID bigint(8),
+    MaterialID bigint(8) NOT NULL AUTO_INCREMENT,
     FoodID bigint(8),
     primary key (MaterialID,FoodID)
 );
