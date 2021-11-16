@@ -126,6 +126,12 @@ class FoodRepository implements Repository
 
     public static function delete(int $entityID = null)
     {
-        // TODO: Implement delete() method.
+        $query = "DELETE FROM food WHERE FoodID = $entityID";
+        try {
+            return QueryExecutor::executeQuery($query);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+        return null;
     }
 }

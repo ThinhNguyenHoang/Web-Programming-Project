@@ -17,57 +17,47 @@ class FoodController extends BaseController implements RequestHandler
     /**
      * "/food" Endpoint - Get list of foods
      */
-    public function handleRequest(){
+    public function handleRequest()
+    {
         $method = strtolower(RequestHelper::getRequestMethod());
         error_log("Food controller::METHOD::" . $method);
         $relative_path = RequestHelper::get_ith_path_item(1);
-        switch($method){
+        switch ($method) {
             case "get":
-                if($relative_path == null){
+                if ($relative_path == null) {
                     error_log("FOOD_CONTROLLER::GET FOOD ENDPOINT::" . $relative_path);
                     FoodService::getFoodList();
-                }
-                else {
+                } else if (is_numeric($relative_path)) {
+                    error_log("FOOD_CONTROLLER::GET FOOD BY ID ENDPOINT::" . $relative_path);
+                    FoodService::getFoodByID($relative_path);
+                } else {
                     ResponseHelper::error_client("Invalid path in food endpoint");
                 }
                 break;
             case "post":
-                if($relative_path == null){
+                if ($relative_path == null) {
                     error_log("FOOD_CONTROLLER::ADD FOOD ENDPOINT::" . $relative_path);
                     FoodService::addFood();
-                }
-                else {
+                } else {
                     ResponseHelper::error_client("Invalid path in food endpoint");
                 }
                 break;
             case "put":
-                switch($relative_path){
-                    case null:
-                        error_log("FOOD_CONTROLLER::UPDATE FOOD ENDPOINT::" . $relative_path);
-                        FoodService::updateFood();
-                        break;
-                    // case null:
-                    //     FoodService::updateUserAccount();
-                    //     break;
-                    // case "change-password":
-                    //     FoodService::setNewPassword();
-                    //     break;
-                    default:
-                        ResponseHelper::error_client("Invalid parameter");
+                if (is_numeric($relative_path)) {
+                    error_log("FOOD_CONTROLLER::UPDATE FOOD ENDPOINT::" . $relative_path);
+                    FoodService::updateFood($relative_path);
+                } else {
+                    ResponseHelper::error_client("Invalid parameter");
                 }
                 break;
-            // case "delete":
-            //     switch ($relative_path){
-            //         case "bank-account":
-            //             FoodService::updateUserAccount();
-            //             break;
-            //         case null:
-            //             FoodService::removeUserAccount();
-            //             break;
-            //         default:
-            //             ResponseHelper::error_client("Invalid parameter");
-            //     };
-            //     break;
+            case "delete":
+                if (is_numeric($relative_path)) {
+                    error_log("FOOD_CONTROLLER::DELETE FOOD ENDPOINT::" . $relative_path);
+                    FoodService::deleteFood($relative_path);
+                } else {
+                    ResponseHelper::error_client("Invalid parameter");
+                }
+                break;
             default:
                 return false;
         }

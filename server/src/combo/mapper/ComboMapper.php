@@ -13,12 +13,8 @@ require_once  __DIR__ . '/../../../vendor/autoload.php';
  */
 class ComboMapper
 {
-    #[Pure] public static function mapComboFromRequest($request): Combo
+    #[Pure] public static function mapComboFromAddComboRequest($request): Combo
     {
-        $combo = new Combo();
-        $combo->ComboName = $request->ComboName ;
-        $combo->ComboDescrip = $request->ComboDescrip;
-        $combo->Price = $request->Price;
-        return $combo;
+        return new Combo($request->ComboID, $request->ComboName, $request->Price);
     }
 }

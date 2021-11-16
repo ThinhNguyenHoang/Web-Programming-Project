@@ -19,7 +19,6 @@ class FoodMapper
     #[Pure] public static function mapFoodFromRequest($request): Food
     {
         $food = new Food();
-        $food->FoodID = $request->FoodID;
         $food->FoodName = $request->FoodName;
         $food->Picture = $request->Picture;
         $food->Price = $request->Price;
