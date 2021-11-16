@@ -27,7 +27,14 @@ class FoodService
 
     public static function getFoodByID($FoodID)
     {
-        ResponseHelper::success(FoodMessage::getMessages()->readSuccess, FoodRepository::findFoodByID($FoodID));
+        // Find food with the FoodID in database
+        $food_found = FoodRepository::findFoodByID($FoodID);
+        if (!$food_found) {
+            // Throw error notifying FoodID already taken
+            ResponseHelper::error_client("FoodID doesn't exist");
+            die();
+        }
+        ResponseHelper::success(FoodMessage::getMessages()->readSuccess, $food_found);
     }
 
     public static function addFood()
@@ -93,7 +100,7 @@ class FoodService
         }
 
         if (property_exists($request, "Instruct")) {
-            if ($request->Instruct != ""){
+            if ($request->Instruct != "") {
                 $food->Instruct = $request->Instruct;
                 $is_update_food = true;
             }

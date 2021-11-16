@@ -38,11 +38,7 @@ class FoodRepository implements Repository
      */
     public static function listFood(): array
     {
-        $query = "SELECT * FROM food AS food 
-        INNER JOIN includes AS includes
-        ON food.FoodID = includes.FoodID 
-        INNER JOIN combo AS combo
-        ON combo.ComboID = includes.ComboID ORDER BY food.FoodID;";
+        $query = "SELECT * FROM food ORDER BY food.FoodID;";
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
@@ -52,30 +48,6 @@ class FoodRepository implements Repository
         $list_food = array();
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
             error_log(json_encode($row), 0);
-
-            $FoodID = $row["FoodID"];
-
-            $material_query = "SELECT MaterialName FROM material AS material
-            INNER JOIN makeby AS makeby
-            ON material.MaterialID = makeby.MaterialID
-            WHERE makeby.FoodID = $FoodID";
-
-            try {
-                $material_result = QueryExecutor::executeQuery($material_query);
-            } catch (Exception $e) {
-                error_log($e->getMessage());
-            }
-
-            $list_material = array();
-
-            while ($material = $material_result->fetch_array(MYSQLI_ASSOC)) {
-                error_log(json_encode($material), 0);
-                array_push($list_material, $material);
-            }
-            // end($list_food)["material"] = $list_material;
-
-            $row["Material"] = $list_material;
-
             array_push($list_food, $row);
         }
 
@@ -112,7 +84,8 @@ class FoodRepository implements Repository
         return QueryExecutor::executeQuery($query);
     }
 
-    public static function findFoodByID(int $FoodID) {
+    public static function findFoodByID(int $FoodID)
+    {
         $query = "SELECT * FROM food WHERE FoodID=$FoodID";
         try {
             $row = QueryExecutor::executeQuery($query);

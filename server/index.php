@@ -46,9 +46,11 @@ switch ($endpoint) {
     case "combo":
         $comboController = new ComboController();
         $comboController->handleRequest();
+        break;
     case "material":
         $materialController = new MaterialController();
         $materialController->handleRequest();
+        break;
     default:
         header("HTTP/1.1 404 Not Found");
         exit(1);
