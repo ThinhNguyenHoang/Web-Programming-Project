@@ -24,6 +24,10 @@ class QueryExecutor extends Singleton
         return $result;
     }
 
+    public static function getLastInsertID () {
+        return ConnectionSingleton::getConnection()->insert_id;
+    }
+
 
     /**
      * @param $query

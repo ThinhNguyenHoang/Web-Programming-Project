@@ -8,6 +8,7 @@ use src\food\mapper\FoodMapper;
 use src\food\message\FoodMessage;
 use src\food\repository\FoodRepository;
 use src\food\entity\Food;
+use src\common\utils\QueryExecutor;
 
 require_once  __DIR__ . '/../../../vendor/autoload.php';
 
@@ -53,6 +54,7 @@ class FoodService
 
         if ($result) {
             error_log("Adding food: " . json_encode($food), 0);
+            $food->FoodID = QueryExecutor::getLastInsertID();
             ResponseHelper::success(FoodMessage::getMessages()->createSuccess, $food);
             return;
         }

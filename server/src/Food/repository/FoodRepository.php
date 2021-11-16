@@ -14,11 +14,9 @@ use Exception;
 use \Firebase\JWT\JWT;
 use http\Env\Request;
 use src\common\base\Repository;
-use src\common\config\ConnectionSingleton;
 use src\common\utils\QueryExecutor;
 use src\common\utils\RequestHelper;
 use src\food\entity\Food;
-use src\food\mapper\FoodMapper;
 use function DeepCopy\deep_copy;
 
 /**
@@ -68,20 +66,18 @@ class FoodRepository implements Repository
 
     public static function read(int $entityID = null)
     {
-        $query = "SELECT * FROM USER_ACCOUNT WHERE ID=$entityID";
-        $row = QueryExecutor::executeQuery($query);
-        if (!$row) {
-            // Throw error return error message for client to display
-            echo "Something has gone wrong when reading food with id: $entityID! ";
-        }
-        $return = $row->fetch_object($class = "FoodAccount");
-        return deep_copy($return);
+        //DO NOTHING HERE
     }
 
     public static function update(int $entityID = null, object $entity = null)
     {
-        $query = "UPDATE food SET FoodID=$entity->FoodID, FoodName='$entity->FoodName', Picture='$entity->Picture', Price=$entity->Price, Description='$entity->Description', Instruct='$entity->Instruct' WHERE FoodID=$entityID";
-        return QueryExecutor::executeQuery($query);
+        $query = "UPDATE food SET FoodName='$entity->FoodName', Picture='$entity->Picture', Price=$entity->Price, Description='$entity->Description', Instruct='$entity->Instruct' WHERE FoodID=$entityID";
+        try {
+            return QueryExecutor::executeQuery($query);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+        return null;
     }
 
     public static function findFoodByID(int $FoodID)

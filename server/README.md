@@ -61,13 +61,28 @@ COMBO:
                     ]
                 }
         }
-        /food/add-combo
+        /combo/:id
+
+    POST: /combo
             body: {
-                "FoodID":"",
-                "ComboID": "",
                 "ComboName": "",
-                "Price" : ""
+                "ComboDescrip": "",
+                "Price" : "",
+                "Food": [
+                    {
+                        "FoodID":
+                    },
+                    {
+                        "FoodID":
+                    }
+                ]
             }
+
+    PUT: /combo/:id
+
+    DELETE: /combo/:id
+
+MATERIAL:
         /food/add-material
             body: {
                 "FoodID":"3",

@@ -15,6 +15,9 @@ use \Firebase\JWT\JWT;
 use Food;
 use src\common\base\Repository;
 use src\common\utils\QueryExecutor;
+use src\common\utils\ResponseHelper;
+use src\combo\message\ComboMessage;
+use src\combo\entity\Combo;
 use function DeepCopy\deep_copy;
 
 /**
@@ -31,31 +34,96 @@ class ComboRepository implements Repository
 {
     public static function listCombo(): array
     {
-        $query = "SELECT * FROM food AS food 
-        INNER JOIN includes AS includes
-        ON food.FoodID = includes.FoodID 
-        INNER JOIN combo AS combo
-        ON combo.ComboID = includes.ComboID ORDER BY food.FoodID;";
+        $query = "SELECT * FROM combo ORDER BY ComboID";
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
             error_log($e->getMessage());
         }
-        //        $num_row = $result->num_rows;
+
         $list_combo = array();
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
             error_log(json_encode($row), 0);
+
+            $ComboID = $row['ComboID'];
+
+            $food_query = "SELECT * FROM food AS food
+                            INNER JOIN includes AS includes
+                            ON food.FoodID = includes.FoodID
+                            WHERE includes.ComboID = $ComboID";
+
+            try {
+                $food_result = QueryExecutor::executeQuery($food_query);
+            } catch (Exception $e) {
+                error_log($e->getMessage());
+            }
+
+            $list_food = array();
+
+            while ($food = $food_result->fetch_array(MYSQLI_ASSOC)) {
+                unset($food["ComboID"]);
+                error_log(json_encode($food), 0);
+                array_push($list_food, $food);
+            }
+
+            $row["Food"] = $list_food;
+
             array_push($list_combo, $row);
         }
 
         error_log("COMBO_REPOSITORY::FETCH_LIST::", 0);
         return $list_combo;
     }
+
+    public static function findComboByID($ComboID)
+    {
+        $query = "SELECT * FROM combo WHERE ComboID = $ComboID";
+
+        try {
+            $result = QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+        }
+
+        $list_combo = array();
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+            error_log(json_encode($row), 0);
+
+            $ComboID = $row['ComboID'];
+
+            $food_query = "SELECT * FROM food AS food
+                            INNER JOIN includes AS includes
+                            ON food.FoodID = includes.FoodID
+                            WHERE includes.ComboID = $ComboID";
+
+            try {
+                $food_result = QueryExecutor::executeQuery($food_query);
+            } catch (Exception $e) {
+                error_log($e->getMessage());
+            }
+
+            $list_food = array();
+
+            while ($food = $food_result->fetch_array(MYSQLI_ASSOC)) {
+                unset($food["ComboID"]);
+                error_log(json_encode($food), 0);
+                array_push($list_food, $food);
+            }
+
+            $row["Food"] = $list_food;
+
+            array_push($list_combo, $row);
+        }
+
+        error_log("COMBO_REPOSITORY::FETCH_LIST::", 0);
+        return $list_combo;
+    }
+
     /**
      */
     public static function create($entity = null): \mysqli_result|bool|null
     {
-        $query = "INSERT INTO combo VALUES('$entity->ComboID','$entity->ComboName','$entity->Price')";
+        $query = "INSERT INTO combo (ComboName, ComboDescrip, Price) VALUES('$entity->ComboName','$entity->ComboDescrip', '$entity->Price')";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
@@ -64,7 +132,8 @@ class ComboRepository implements Repository
         }
     }
 
-    public static function insertIncludes(int $FoodID, int $ComboID): \mysqli_result|bool|null {
+    public static function insertIncludes(int $FoodID, int $ComboID): \mysqli_result|bool|null
+    {
         $query = "INSERT INTO includes VALUES('$FoodID','$ComboID')";
         try {
             return QueryExecutor::executeQuery($query);
@@ -73,27 +142,58 @@ class ComboRepository implements Repository
             return null;
         }
     }
-    
+
     public static function read(int $entityID = null)
     {
-        $query = "SELECT * FROM USER_ACCOUNT WHERE ID=$entityID";
-        $row = QueryExecutor::executeQuery($query);
-        if (!$row) {
-            // Throw error return error message for client to display
-            echo "Something has gone wrong when reading food with id: $entityID! ";
-        }
-        $return = $row->fetch_object($class = "FoodAccount");
-        return deep_copy($return);
+        //NOTHING
     }
 
     public static function update(int $entityID = null, object $entity = null)
     {
-        $query = "UPDATE USER_ACCOUNT SET USERNAME=$entity->foodname, PASSWORD=$entity->password WHERE ID=$entityID";
-        return QueryExecutor::executeQuery($query);
+        $query = "UPDATE combo set ComboName='$entity->ComboName', ComboDescrip='$entity->ComboDescrip', Price='$entity->Price' WHERE ComboID='$entityID'";
+        try {
+            return QueryExecutor::executeQuery($query);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+        return null;
+    }
+
+    public static function updateInclude($ComboID, $Foods)
+    {
+        $delete_include_query = "DELETE FROM includes WHERE ComboID = $ComboID";
+        try {
+            QueryExecutor::executeQuery($delete_include_query);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+
+        foreach ($Foods as $food) {
+            $result = ComboRepository::insertIncludes($food->FoodID, $ComboID);
+            if (!$result) {
+                ResponseHelper::error_server(ComboMessage::getMessages()->deleteError);
+                die();
+            }
+        }
+        return true;
     }
 
     public static function delete(int $entityID = null)
     {
-        // TODO: Implement delete() method.
+        $delete_combo_query = "DELETE FROM combo WHERE ComboID = $entityID";
+        try {
+            QueryExecutor::executeQuery($delete_combo_query);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+
+        $delete_include_query = "DELETE FROM includes WHERE ComboID = $entityID";
+        try {
+            return QueryExecutor::executeQuery($delete_include_query);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+
+        return null;
     }
 }

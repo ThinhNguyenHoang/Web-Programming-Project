@@ -112,7 +112,7 @@ INSERT INTO `web_food`.`food` (`FoodID`,`FoodName`,`Picture`,`Price`,`Descriptio
 DROP TABLE IF EXISTS Includes; 
 create table Includes(
 	FoodID bigint(8) not null,
-    ComboID bigint(8)  NOT NULL AUTO_INCREMENT,
+    ComboID bigint(8)  NOT NULL ,
     primary key (ComboID,FoodID)
 );
 INSERT INTO `web_food`.`includes` (`FoodID`, `ComboID`) VALUES ('1', '1');
