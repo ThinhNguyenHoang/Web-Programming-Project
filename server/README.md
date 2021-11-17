@@ -11,6 +11,18 @@ FOOD:
                     "Price": "",
                     "Description": "",
                     "Instruct": null,
+                    "Material": [
+                        {
+                            "MaterialID": "",
+                            "MaterialName": "",
+                            "Picture": 
+                        },
+                        {
+                            "MaterialID": "",
+                            "MaterialName": "",
+                            "Picture": 
+                        }
+                    ]
                 }
             ]
         }
@@ -32,7 +44,6 @@ FOOD:
             }
     DELETE: /food/:id
 ```
-
 ```
 COMBO:
     GET: /combo
@@ -65,7 +76,7 @@ COMBO:
                 }
         }
         /combo/:id
-
+        
     POST: /combo
             body: {
                 "ComboName": "",
@@ -85,6 +96,7 @@ COMBO:
 
     DELETE: /combo/:id
 ```
+```
 MATERIAL:
         /food/add-material
             body: {
@@ -92,3 +104,4 @@ MATERIAL:
                 "MaterialID": "8",
                 "MaterialName": "test"
             }
+```
