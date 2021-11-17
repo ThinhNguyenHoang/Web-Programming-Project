@@ -4,8 +4,6 @@ require_once  __DIR__ . '/../../../vendor/autoload.php';
 
 use DateTimeImmutable;
 use Firebase\JWT\JWT;
-use http\Env\Response;
-use src\user\entity\UserAccount;
 
 // show error reporting
 error_reporting(E_ALL);
@@ -94,7 +92,7 @@ class RequestHelper{
      */
     public static function get_ith_path_item(int $ith_num) : ?string {
         $uri = explode("/",substr($_SERVER['REQUEST_URI'],1));
-        if($ith_num > count($uri)){
+        if($ith_num >= count($uri)){
             error_log("RequestHelper: Có thằng lấy index sai " . $ith_num);
             return null;
         }

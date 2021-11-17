@@ -2,13 +2,8 @@
 namespace src\user\service;
 
 use JetBrains\PhpStorm\NoReturn;
-use src\common\config\ConnectionSingleton;
 use src\common\utils\RequestHelper;
 use src\common\utils\ResponseHelper;
-use src\user\dto\UserRegisterRequest;
-use src\user\dto\UserResponseDTO;
-use src\user\dto\UserSignInRequest;
-use src\user\entity\UserAccount;
 use src\user\mapper\UserMapper;
 use src\user\message\UserMessage;
 use src\user\repository\UserRepository;
@@ -46,7 +41,7 @@ class UserService
             ResponseHelper::error_client("Account exist already");
             return;
         }
-        error_log("Creating user: savepoint1",0);
+        error_log("Creating user: savepoint 1",0);
 
         // Create user account
         $user->password = password_hash($user->password,PASSWORD_DEFAULT);

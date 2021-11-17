@@ -17,7 +17,7 @@ INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (3,1,3, 2
 DROP TABLE IF EXISTS TRANSACTION; 
 CREATE TABLE TRANSACTION (TransactionID BIGINT(8), TimeStamp TIMESTAMP, Description TEXT, PayAmount BIGINT(8), Status VARCHAR(255), Subject VARCHAR(255), PaymentMethod VARCHAR(255), OrderID BIGINT(8), UserID BIGINT(8), PRIMARY KEY (TransactionID)); 
 INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (1,'2021-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000,'Com True','Da tra tien', 'Vi dien tu', 1,1); 
-INSERT INTO TRANuser_accountSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (2,'2018-05-03 00:00:01', 'Tra tien cho nguoi choi', 6000000, 'Hu tieu','Da tra tien', 'Vi dien tu', 1,1); 
+INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (2,'2018-05-03 00:00:01', 'Tra tien cho nguoi choi', 6000000, 'Hu tieu','Da tra tien', 'Vi dien tu', 1,1); 
 INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (3,'2019-11-01 00:00:01', 'Tra tien cho nguoi choi', 5000000, 'Hu tieu','Da tra tien', 'Vi dien tu', 1,1); 
 INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (4,'2020-11-01 00:00:01', 'Tra tien cho nguoi choi', 4000000, 'Hu tieu','Da tra tien', 'Vi dien tu', 1,1); 
 INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (5,'2022-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000, 'Hu tieu','Da tra tien', 'Vi dien tu', 1,1); 
@@ -85,35 +85,35 @@ CREATE TABLE CartFood(
 	Quantity INT,
       PRIMARY KEY (FoodID,UserID)
 );
-INSERT INTO `web_food`.`cartfood` ( `FoodID`, `UserID`) VALUES ( '11', '1','1');
-INSERT INTO `web_food`.`cartfood` ( `FoodID`, `UserID`) VALUES ( '12', '4','2');
-INSERT INTO `web_food`.`cartfood` (`FoodID`, `UserID`) VALUES ( '13', '2','2');
-INSERT INTO `web_food`.`cartfood` (`FoodID`, `UserID`) VALUES ( '15', '4','1');
-INSERT INTO `web_food`.`cartfood` ( `FoodID`, `UserID`) VALUES ( '14', '3','1');
+INSERT INTO `web_food`.`cartfood` ( `FoodID`, `UserID`, `Quantity`) VALUES ( '11', '1','1');
+INSERT INTO `web_food`.`cartfood` ( `FoodID`, `UserID`, `Quantity`) VALUES ( '12', '4','2');
+INSERT INTO `web_food`.`cartfood` (`FoodID`, `UserID`, `Quantity`) VALUES ( '13', '2','2');
+INSERT INTO `web_food`.`cartfood` (`FoodID`, `UserID`, `Quantity`) VALUES ( '15', '4','1');
+INSERT INTO `web_food`.`cartfood` ( `FoodID`, `UserID`, `Quantity`) VALUES ( '14', '3','1');
 
 
 
 DROP TABLE IF EXISTS food; 
 create table Food(
-    FoodID bigint(8),
+    FoodID bigint(8) NOT NULL AUTO_INCREMENT,
     FoodName varchar(255) NOT NULL,
     Picture text ,
     Price int NOT NULL,
-    Desciption text,
+    Description text,
     Instruct text,
     primary key (FoodID)
 );
-INSERT INTO `web_food`.`food` (`FoodID`,`FoodName`,`Picture`,`Price`,`Desciption`) VALUES (1,'Thịt lợn rim tiêu',NULL,120000,'Thịt kho là món mặn dùng chính trong bữa cơm của người Việt, bên cạnh món canh và món rau. Hôm nay bếp kho quẹt sẽ giới thiệu đến các bạn món thịt kho tiêu, cũng là món được các chị em thường xuyên chế biến, nhưng để làm đúng chuẩn về màu sắc và mùi vị thì chắc hẳn nhiều người còn bỏ ngỏ. Nào, còn chờ gì nữa, chúng ta bắt tay vào làm món thịt kho tiêu cho kịp bữa cơm chiều nhé!');
-INSERT INTO `web_food`.`food` (`FoodID`,`FoodName`,`Picture`,`Price`,`Desciption`) VALUES (2,'Trứng đúc thịt',NULL,80000,'Món trứng đúc thịt là một món dễ làm, dễ ăn. Đặc biệt là trẻ em, gần như bé nào cũng thích ăn trứng nhưng đôi khi lại không thích ăn thịt vì dai. Với cách làm trứng đúc thịt này, thịt mềm và ngon, trứng rán vàng thơm lừng khắp cả nhà, hương vị rất kích thích với các bé. Hơn nữa vào những ngày bận rộn Bạn chỉ cần mất vài phút là đã có ngay một món ăn thơm ngon mà vẫn đầy đủ chất dinh dưỡng cho cả nhà rồi.');
-INSERT INTO `web_food`.`food` (`FoodID`,`FoodName`,`Picture`,`Price`,`Desciption`) VALUES (3,'Đậu sốt cà chua',NULL,60000,'Đậu sốt cà chua đúng như tên gọi, đây là món ăn với thành phần chính với đậu phụ được rán giòn sau đó đem sốt với cà chua. Bằng việc đem sốt với cà chua, từng miếng đậu được khoác thêm lớp áo đỏ đẹp mắt với hương vị đậm đà hơn.');
-INSERT INTO `web_food`.`food` (`FoodID`,`FoodName`,`Picture`,`Price`,`Desciption`) VALUES (4,'Canh chua thịt',NULL,60000,'Món canh cà chua thịt bằm là một trong những món ăn phổ biến và dễ làm nhất trong các bữa ăn hàng ngày. Món ăn này sẽ mang lại hương vị thơm ngon, ăn mãi không chán bất kể trời nóng hay lạnh cho người thân của bạn. Bạn có thể ăn kèm món canh này cùng với món tôm chiên giòn cho bữa ăn thêm tròn vị.');
-INSERT INTO `web_food`.`food` (`FoodID`,`FoodName`,`Picture`,`Price`,`Desciption`) VALUES (5,'Bò nướng lá lốt',NULL,270000,'Bò nướng lá lốt hay còn gọi là bò lá lốt hoặc là thịt bò lá lốt hay bò cuốn lá lốt là một món ăn trong ẩm thực Việt Nam, thịnh hành ở vùng Nam bộ, nguyên liệu chính là thịt bò và lá lốt được chế biến theo phương pháp nướng, có thể kèm theo mỡ chài. Các loại rau sống ăn kèm rất phong phú như: xà lách, húng quế, diếp cá, chuối chát, dưa leo, khế và chấm mắm nêm. Món này đặc trưng bởi vị hấp dẫn với vị ngon của thịt bò nướng lá lốt, béo của đậu phộng hòa chung vị chát của chuối, chua của khế, vị thanh thanh của nhiều loại rau giòn mát, cùng hương mắm nêm cay cay');
+INSERT INTO `web_food`.`food` (`FoodID`,`FoodName`,`Picture`,`Price`,`Description`) VALUES (1,'Thịt lợn rim tiêu',NULL,120000,'Thịt kho là món mặn dùng chính trong bữa cơm của người Việt, bên cạnh món canh và món rau. Hôm nay bếp kho quẹt sẽ giới thiệu đến các bạn món thịt kho tiêu, cũng là món được các chị em thường xuyên chế biến, nhưng để làm đúng chuẩn về màu sắc và mùi vị thì chắc hẳn nhiều người còn bỏ ngỏ. Nào, còn chờ gì nữa, chúng ta bắt tay vào làm món thịt kho tiêu cho kịp bữa cơm chiều nhé!');
+INSERT INTO `web_food`.`food` (`FoodID`,`FoodName`,`Picture`,`Price`,`Description`) VALUES (2,'Trứng đúc thịt',NULL,80000,'Món trứng đúc thịt là một món dễ làm, dễ ăn. Đặc biệt là trẻ em, gần như bé nào cũng thích ăn trứng nhưng đôi khi lại không thích ăn thịt vì dai. Với cách làm trứng đúc thịt này, thịt mềm và ngon, trứng rán vàng thơm lừng khắp cả nhà, hương vị rất kích thích với các bé. Hơn nữa vào những ngày bận rộn Bạn chỉ cần mất vài phút là đã có ngay một món ăn thơm ngon mà vẫn đầy đủ chất dinh dưỡng cho cả nhà rồi.');
+INSERT INTO `web_food`.`food` (`FoodID`,`FoodName`,`Picture`,`Price`,`Description`) VALUES (3,'Đậu sốt cà chua',NULL,60000,'Đậu sốt cà chua đúng như tên gọi, đây là món ăn với thành phần chính với đậu phụ được rán giòn sau đó đem sốt với cà chua. Bằng việc đem sốt với cà chua, từng miếng đậu được khoác thêm lớp áo đỏ đẹp mắt với hương vị đậm đà hơn.');
+INSERT INTO `web_food`.`food` (`FoodID`,`FoodName`,`Picture`,`Price`,`Description`) VALUES (4,'Canh chua thịt',NULL,60000,'Món canh cà chua thịt bằm là một trong những món ăn phổ biến và dễ làm nhất trong các bữa ăn hàng ngày. Món ăn này sẽ mang lại hương vị thơm ngon, ăn mãi không chán bất kể trời nóng hay lạnh cho người thân của bạn. Bạn có thể ăn kèm món canh này cùng với món tôm chiên giòn cho bữa ăn thêm tròn vị.');
+INSERT INTO `web_food`.`food` (`FoodID`,`FoodName`,`Picture`,`Price`,`Description`) VALUES (5,'Bò nướng lá lốt',NULL,270000,'Bò nướng lá lốt hay còn gọi là bò lá lốt hoặc là thịt bò lá lốt hay bò cuốn lá lốt là một món ăn trong ẩm thực Việt Nam, thịnh hành ở vùng Nam bộ, nguyên liệu chính là thịt bò và lá lốt được chế biến theo phương pháp nướng, có thể kèm theo mỡ chài. Các loại rau sống ăn kèm rất phong phú như: xà lách, húng quế, diếp cá, chuối chát, dưa leo, khế và chấm mắm nêm. Món này đặc trưng bởi vị hấp dẫn với vị ngon của thịt bò nướng lá lốt, béo của đậu phộng hòa chung vị chát của chuối, chua của khế, vị thanh thanh của nhiều loại rau giòn mát, cùng hương mắm nêm cay cay');
 
 DROP TABLE IF EXISTS Includes; 
 create table Includes(
 	FoodID bigint(8) not null,
-    ComboID bigint(8) not null,
-    primary key (FoodID,ComboID)
+    ComboID bigint(8)  NOT NULL ,
+    primary key (ComboID,FoodID)
 );
 INSERT INTO `web_food`.`includes` (`FoodID`, `ComboID`) VALUES ('1', '1');
 INSERT INTO `web_food`.`includes` (`FoodID`, `ComboID`) VALUES ('2', '1');
@@ -127,23 +127,10 @@ INSERT INTO `web_food`.`includes` (`FoodID`, `ComboID`) VALUES ('4', '4');
 INSERT INTO `web_food`.`includes` (`FoodID`, `ComboID`) VALUES ('5', '5');
 INSERT INTO `web_food`.`includes` (`FoodID`, `ComboID`) VALUES ('4', '5');
 
-DROP TABLE IF EXISTS Material; 
-create table Material(
-	MaterialID bigint(8) not null,
-    MaterialName varchar(256) not null,
-    primary key (MaterialID)
-);
-INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('1', 'Hành');
-INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('2', 'Tỏi');
-INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('3', 'Rượu');
-INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('4', 'Giấm');
-INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('5', 'Thịt heo');
 
-
-
-
+DROP TABLE IF EXISTS Combo; 
 create table Combo(
-    ComboID bigint(8),
+    ComboID bigint(8)  NOT NULL AUTO_INCREMENT,
     ComboName varchar(255) NOT NULL,
     ComboDescrip text,
     Price int NOT NULL,
@@ -158,8 +145,9 @@ INSERT INTO `web_food`.`combo` (`ComboID`,`ComboName`,`ComboDescrip`,`Price`) VA
 
 
 
+drop table if exists Material;
 create table Material(
-    MaterialID bigint(8),
+    MaterialID bigint(8) NOT NULL AUTO_INCREMENT,
     MaterialName varchar(255),
     Picture text,
     Primary key (MaterialID)
@@ -174,8 +162,9 @@ INSERT INTO `web_food`.`material` (`MaterialID`, `MaterialName`) VALUES ('7', 'C
 
 
 
+Drop table if exists Makeby;
 create table Makeby(
-    MaterialID bigint(8),
+    MaterialID bigint(8) NOT NULL AUTO_INCREMENT,
     FoodID bigint(8),
     primary key (MaterialID,FoodID)
 );
@@ -243,14 +232,14 @@ CREATE TABLE CONTAINS (
 	OrderID BIGINT(8) NOT NULL,
       PRIMARY KEY (OrderID, FoodID, ComboID)
 );
-INSERT INTO CONTAINS VALUES ( 123478, 182912, 129932 );
-INSERT INTO CONTAINS VALUES ( 627394, 819201, 319292 );
-INSERT INTO CONTAINS VALUES ( 119284, 123414, 109182 );
-INSERT INTO CONTAINS VALUES ( 928341, 829192, 819232 );
-INSERT INTO CONTAINS VALUES ( 829385, 678330, 590122 );
-INSERT INTO CONTAINS VALUES ( 918384, 790018, 891203);
-INSERT INTO CONTAINS VALUES ( 192094, 799212, 678129 );
-INSERT INTO CONTAINS VALUES ( 729019, 839021, 627129 );
+INSERT INTO CONTAINS VALUES ( 123478, 1, 129932 );
+INSERT INTO CONTAINS VALUES ( 627394, 2, 319292 );
+INSERT INTO CONTAINS VALUES ( 119284, 3, 109182 );
+INSERT INTO CONTAINS VALUES ( 928341, 4, 819232 );
+INSERT INTO CONTAINS VALUES ( 829385, 5, 590122 );
+INSERT INTO CONTAINS VALUES ( 918384, 6, 891203);
+INSERT INTO CONTAINS VALUES ( 192094, 7, 678129 );
+INSERT INTO CONTAINS VALUES ( 729019, 8, 627129 );
 
 
 DROP TABLE IF EXISTS EVALUATION; 
