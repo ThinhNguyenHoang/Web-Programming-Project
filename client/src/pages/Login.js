@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Formik, Form, Field } from "formik";
+import {Formik, Form, Field} from "formik";
 import {
     Box,
     Button,
@@ -9,20 +9,21 @@ import {
     Paper,
     Typography,
 } from "@mui/material";
-import { makeStyles } from "@mui/material";
-import { TextField } from "formik-material-ui";
+import {makeStyles} from "@mui/material";
+import {TextField} from "formik-material-ui";
 import * as yup from "yup";
-import { base_keys } from "../locales/constants";
-import { useHistory } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import { ROUTING_CONSTANTS } from "../routes/RouterConfig";
+import {base_keys} from "../locales/constants";
+import {useHistory} from "react-router-dom";
+import {useTranslation} from "react-i18next";
+import {ROUTING_CONSTANTS} from "../routes/RouterConfig";
 import logo from "../assets/images/logo_64.png";
 import {
     login_actions,
     register_actions,
     selectors,
 } from "../redux/slices/auth/AuthSlice";
-import { useDispatch, useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import Header from "../components/header/Header";
 
 const styles = {
     button: {
@@ -46,7 +47,7 @@ const styles = {
 
 function Login() {
     let history = useHistory();
-    const { t, i18n } = useTranslation();
+    const {t, i18n} = useTranslation();
     const dispatch = useDispatch();
     const loginSuccess = useSelector(selectors.getLoginSuccess);
     const loginLoading = useSelector(selectors.getLoginLoading);
@@ -58,21 +59,21 @@ function Login() {
         console.log("Login user with values:", values);
         dispatch({
             type: login_actions.loading,
-            payload: { username, password },
+            payload: {username, password},
         });
         setSubmitting(false);
     };
 
     return (
         <Box
-            sx={{ ...styles.outer_box }}
+            sx={{...styles.outer_box}}
             display={`flex`}
             justifyContent={`center`}
             alignItems={`center`}
             minHeight={`100vh`}
         >
             <Box
-                sx={{ ...styles.form_container, boxShadow: 3 }}
+                sx={{...styles.form_container, boxShadow: 3}}
                 display={`flex`}
                 flexDirection={`column`}
                 justifyContent={`space-between`}
@@ -87,7 +88,7 @@ function Login() {
                         p: 1,
                     }}
                 >
-                    <img alt={`SystemLogo`} src={logo} />{" "}
+                    <img alt={`SystemLogo`} src={logo}/>{" "}
                     <Typography p={1} variant={`h5`} mt={1}>
                         {" "}
                         {t(base_keys.form.login)}{" "}
@@ -119,7 +120,7 @@ function Login() {
                             ),
                     })}
                     // * TODO: Change onSubmit handler to post to authorize api
-                    onSubmit={(values, { setSubmitting }) => {
+                    onSubmit={(values, {setSubmitting}) => {
                         // setTimeout(() => {
                         //     setSubmitting(false);
                         //     alert(JSON.stringify(values, null, 2));
@@ -127,7 +128,7 @@ function Login() {
                         onLoginUser(values, setSubmitting);
                     }}
                 >
-                    {({ submitForm, isSubmitting, isValid }) => (
+                    {({submitForm, isSubmitting, isValid}) => (
                         <Form>
                             <Box
                                 display={`flex`}
@@ -149,7 +150,7 @@ function Login() {
                                         variant={`outlined`}
                                     />{" "}
                                 </Box>{" "}
-                                <br />
+                                <br/>
                                 <Box
                                     sx={{
                                         my: 1,
@@ -164,7 +165,7 @@ function Login() {
                                         variant={`outlined`}
                                     />{" "}
                                 </Box>{" "}
-                                {isSubmitting && <LinearProgress />}{" "}
+                                {isSubmitting && <LinearProgress/>}{" "}
                             </Box>{" "}
                             <Box
                                 sx={{
@@ -207,9 +208,9 @@ function Login() {
                                 </Box>{" "}
                             </Box>{" "}
                         </Form>
-                    )}{" "}
-                </Formik>{" "}
-            </Box>{" "}
+                    )}
+                </Formik>
+            </Box>
         </Box>
     );
 }

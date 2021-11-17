@@ -7,10 +7,9 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import FoodCard from '../components/News/FoodCard';
 import Nofication from '../components/News/Nofication';
-import { selectors } from '../redux/slices/Food/FoodSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton } from '@mui/material';
-import { get_news_actions } from '../redux/slices/Food/FoodSlice';
+import { get_news_actions,selectors } from '../redux/slices/food/FoodSlice'
 import { useEffect } from 'react';
 function News (){
     let history = useHistory();

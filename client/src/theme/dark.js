@@ -4,7 +4,7 @@ export const darkTheme = createTheme(({
     palette:{
         type: 'dark',
         primary: {
-            main: '#1565c0'
+            main: '#ebefeb  '
         },
         secondary:{
             main: '#7b1fa2'
@@ -20,6 +20,19 @@ export const darkTheme = createTheme(({
         },
         success:{
             main: '#1b5e20'
+        },
+        background:{
+            main: '#090808',
+            contrastText: '#fff'
+        },
+        header: {
+            main:'#ffffff',
+            background: '#000000',
+            contrast: '#ebefeb',
+            indicator:'#ffffff',
+        },
+        test:{
+            default: '#db3300'
         },
     }
 }))

@@ -30,7 +30,7 @@ const CustomThemeProvider = (props) => {
         _setThemeName(name);
     }
     return (
-        <ThemeContext.Provider value={setThemeName}>
+        <ThemeContext.Provider value={[curThemeName,setThemeName]}>
             <ThemeProvider theme={theme}> {props.children} </ThemeProvider>
         </ThemeContext.Provider>
     )

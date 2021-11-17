@@ -6,7 +6,8 @@ import News from "../pages/News"
 import FoodCart from "../pages/FoodCart"
 import OrderMangament from "../pages/OrderManagement";
 import ClientManagement from "../pages/ClientManagement";
-
+import HomePage from "../pages/HomePage";
+import {WithHeader} from "../components/header/Header";
 
 const baseUrl = process.env.FAKE_SERVER_HOST;
 export const ROUTING_CONSTANTS = {
@@ -22,37 +23,41 @@ export const ROUTING_CONSTANTS = {
     RECOMMENDATION: "/recommendations",
     ACCOUNT: "/account",
     MANAGE_USERS: "/manage-user",
-    MANAGE_ITEM_LIST :"/manage-item-info",
+    MANAGE_ITEM_LIST: "/manage-item-info",
     MANAGE_BILL: "/manage-bill",
     TRANSACTIONS: "/transaction",
-    CLIENT:"/clients",
-    ORDER:"/orders",
+    CLIENT: "/clients",
+    ORDER: "/orders",
+    TESTING: "/test",
 }
 
-const generateTabLinkItem = (label_name,component,nav_to,require_auth) => {
+const generateTabLinkItem = (label_name, nav_to, require_auth) => {
     return {
         id: `id-${label_name}`,
         label: label_name,
-        component: component,
         navigateTo: nav_to,
         require_auth_level: "",
     }
 }
 
+function ManageUser() {
+
+}
+
 export const ROUTING_TAB_ITEMS = [
-    generateTabLinkItem("Home Page", Home,ROUTING_CONSTANTS.HOMEPAGE),
-    generateTabLinkItem("Login", Login,ROUTING_CONSTANTS.LOGIN),
-    generateTabLinkItem("Register",Register,ROUTING_CONSTANTS.REGISTER),
-    generateTabLinkItem("About Us",AboutUs,ROUTING_CONSTANTS.ABOUT_US),
-    generateTabLinkItem("News", News,ROUTING_CONSTANTS.NEWS),
-    generateTabLinkItem("My Cart", Cart,ROUTING_CONSTANTS.ITEM_CART),
-    generateTabLinkItem("Recommendations", Recommendations,ROUTING_CONSTANTS.RECOMMENDATION),
-    generateTabLinkItem("My Account", Account,ROUTING_CONSTANTS.ACCOUNT),
+    generateTabLinkItem("Home Page", ROUTING_CONSTANTS.HOMEPAGE),
+    generateTabLinkItem("Login", ROUTING_CONSTANTS.LOGIN),
+    generateTabLinkItem("Register", ROUTING_CONSTANTS.REGISTER),
+    generateTabLinkItem("About Us", ROUTING_CONSTANTS.ABOUT_US),
+    generateTabLinkItem("News", ROUTING_CONSTANTS.NEWS),
+    generateTabLinkItem("My Cart", ROUTING_CONSTANTS.ITEM_CART),
+    generateTabLinkItem("Recommendations", ROUTING_CONSTANTS.RECOMMENDATION),
+    generateTabLinkItem("My Account", ROUTING_CONSTANTS.ACCOUNT),
     // ! EDIT THE FOLLOWING LAST PROPS TO THE USER ROLE STRING CONSTANT
-    generateTabLinkItem("Manage User",ManageUser,ROUTING_CONSTANTS.MANAGE_USERS,"Manager"),
-    generateTabLinkItem("Manage Item Info",ManageItemInfo,"Manager"),
-    generateTabLinkItem("Manage User",ManageBills,ROUTING_CONSTANTS.MANAGE_BILL,"Manager"),
-    generateTabLinkItem("Manage User",ManageTransactions,ROUTING_CONSTANTS.MANAGE_ITEM_LIST,"Manager"),
+    generateTabLinkItem("Manage User", ROUTING_CONSTANTS.MANAGE_USERS, "Manager"),
+    generateTabLinkItem("Manage Item Info", "Manager"),
+    generateTabLinkItem("Manage User", ROUTING_CONSTANTS.MANAGE_BILL, "Manager"),
+    generateTabLinkItem("Manage User", ROUTING_CONSTANTS.MANAGE_ITEM_LIST, "Manager"),
 ]
 
 
@@ -63,19 +68,24 @@ export const ROUTING_TAB_ITEMS = [
 function Home() {
     return null;
 }
-function ManageItemInfo (){
+
+function ManageItemInfo() {
     return null;
 }
-function ManageBills (){
+
+function ManageBills() {
     return null;
 }
-function ManageTransactions(){
+
+function ManageTransactions() {
     return null;
 }
+
 function Account() {
     return null;
 }
-function Cart(){
+
+function Cart() {
     return null;
 }
 
@@ -97,37 +107,43 @@ function Recommendations() {
 
 export const RouterConfig = () => {
     return (
-        <Switch>
-            <Route exact path={ROUTING_CONSTANTS.ROOT}>
-                <Redirect to={ROUTING_CONSTANTS.HOMEPAGE}/>
-            </Route>
-            <Route exact path={ROUTING_CONSTANTS.HOMEPAGE}>
-                <App/>
-            </Route>
-            <Route exact path={ROUTING_CONSTANTS.LOGIN}>
-                <Login/>
-            </Route>
-            <Route exact path={ROUTING_CONSTANTS.REGISTER}>
-                <Register/>
-            </Route>
-            <Route exact path={ROUTING_CONSTANTS.ABOUT_US}>
-                <AboutUs/>
-            </Route>
-            <Route exact path={ROUTING_CONSTANTS.NEWS}>
-                <News/>
-            </Route>
-            <Route exact path={ROUTING_CONSTANTS.RECOMMENDATION}>
-                <Recommendations/>
-            </Route>
-            <Route exact path={ROUTING_CONSTANTS.ITEM_CART}>
-                <FoodCart/>
-            </Route>
-            <Route exact path={ROUTING_CONSTANTS.CLIENT}>
-                <ClientManagement/>
-            </Route>
-            <Route exact path={ROUTING_CONSTANTS.ORDER}>
-                <OrderMangament/>
-            </Route>
-        </Switch>
+        <WithHeader>
+            <Switch>
+                <Route exact path={ROUTING_CONSTANTS.ROOT}>
+                    <Redirect to={ROUTING_CONSTANTS.HOMEPAGE}/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.HOMEPAGE}>
+                    <HomePage/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.LOGIN}>
+                    <Login/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.REGISTER}>
+                    <Register/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.ABOUT_US}>
+                    <AboutUs/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.NEWS}>
+                    <News/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.RECOMMENDATION}>
+                    <Recommendations/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.ITEM_CART}>
+                    <FoodCart/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.CLIENT}>
+                    <ClientManagement/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.ORDER}>
+                    <OrderMangament/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.TESTING}>
+                    <App/>
+                </Route>
+            </Switch>
+        </WithHeader>
+
     )
 }

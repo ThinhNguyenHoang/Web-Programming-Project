@@ -6,8 +6,6 @@ import { Card } from '@mui/material';
 import { Paper } from '@mui/material';
 
 import {useSelector} from 'react-redux';
-
-import {selectors} from '../redux/slices/Food/FoodSlice'
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -16,7 +14,7 @@ import VoucherBox from '../components/FoodCart/VoucherBox';
 import TotalBox from '../components/FoodCart/TotalBox';
 import NoteBox from '../components/FoodCart/NoteBox';
 import FoodCard from '../components/FoodCart/FoodCard';
-import {get_cart_actions,update_cart_actions} from '../redux/slices/Food/FoodSlice'
+import {update_cart_actions,selectors,get_cart_actions} from "../redux/slices/food/FoodSlice";
 
 function FoodCart() {
   const cart=useSelector(selectors.getCart);
