@@ -1,3 +1,4 @@
+```
 FOOD:
     GET: /food
         {
@@ -30,7 +31,7 @@ FOOD:
                 "Instruct": ""
             }
     DELETE: /food/:id
-
+```
 COMBO:
     GET: /combo
         {
