@@ -32,6 +32,8 @@ FOOD:
             }
     DELETE: /food/:id
 ```
+
+```
 COMBO:
     GET: /combo
         {
@@ -82,7 +84,7 @@ COMBO:
     PUT: /combo/:id
 
     DELETE: /combo/:id
-
+```
 MATERIAL:
         /food/add-material
             body: {
