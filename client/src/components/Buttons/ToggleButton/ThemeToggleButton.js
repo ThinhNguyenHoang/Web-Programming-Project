@@ -13,7 +13,7 @@ import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 // </div>
 const LightThemeButton = ({setTheme}) => {
     return (
-      <Button variant={`contained`} color={`primary`} onClick={
+      <Button sx={{bgcolor:'grey.800'}} variant={`contained`} color={`primary`} onClick={
           () => setTheme(THEME_CONSTANTS.DARK_THEME)}>
           <Box sx={{mr:1}}>
               <FontAwesomeIcon icon={faMoon}/>
@@ -25,10 +25,10 @@ const LightThemeButton = ({setTheme}) => {
 
 const DarkThemeButton = ({setTheme}) => {
     return (
-        <Button variant={`contained`} color={`error`} onClick={
+        <Button variant={`contained`} color={`primary`}  onClick={
             () => setTheme(THEME_CONSTANTS.LIGHT_THEME)}>
             <Box sx={{mr:1}}>
-                <FontAwesomeIcon icon={faSun}/>
+                <FontAwesomeIcon style={{color:'#dfc32a'}} icon={faSun}/>
             </Box>
             Light Mode
         </Button>

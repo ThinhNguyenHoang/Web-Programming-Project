@@ -27,7 +27,18 @@ const voucher={
     name:"",
     discount:0,
 }
-
+const food_item = {
+    id: "",
+    name: "",
+    picture_uri: "",
+    price: "",
+    description: "",
+    status: generateStatus(),
+    sale_value: "",
+    instruct: "",
+    tags: [],
+    material: []
+}
 const initialValue={
     user_id:1,
     cart:{
@@ -47,8 +58,9 @@ const initialValue={
         nofi_list:[],
         get_status:generateStatus(),
         addCart_status:generateStatus(),
-    }
-    
+    },
+    recommendations: [],
+    food_item_detail: food_item
 }
 
 export const selectors={
@@ -60,6 +72,7 @@ export const selectors={
     getComboList:state=>state.food.news.combo_list,
     getNofiList: state=>state.food.news.nofi_list,
 }
+
 //Cart action
 export const update_cart_actions = generateSagaLifecycleNames("update_cart");
 export const get_cart_actions = generateSagaLifecycleNames("get_cart");
@@ -68,6 +81,7 @@ export const change_voucher_cart = "change_voucher";
 export const increase_quantity_cart = "increase_quantity";
 export const decrease_quantity_cart = "decrease_quantity";
 export const delete_food_cart = "delete_food";
+
 //News actions
 export const get_news_actions = generateSagaLifecycleNames("get_news");
 export const add_cart_actions = generateSagaLifecycleNames("add_cart");
@@ -78,12 +92,15 @@ export const back_combo_news = "back_combo";
 export const next_nofi_news = "next_nofication";
 export const back_nofi_news = "back_nofication";
 
+// Food Item Action
+export const food_item_detail = generateSagaLifecycleNames("food_item_detail");
+
 
 const FoodSlice= createSlice({
     name:"food",
     initialState:initialValue,
     reducers:{
-        
+
     },
     extraReducers:{
         [change_voucher_cart]:(state,action)=>{
@@ -125,7 +142,7 @@ const FoodSlice= createSlice({
         },
         [next_food_news]:(state,action)=>{
             state.news.food_list.push(state.news.food_list.shift());
-        },  
+        },
         [back_food_news]:(state,action)=>{
             state.news.food_list.unshift(state.news.food_list.pop());
         },
@@ -199,7 +216,20 @@ const FoodSlice= createSlice({
         },
         [add_cart_actions.error]:(state,action)=>{
             state.news.addCart_status=error();
+        },
+        [food_item_detail.loading]:(state,action) =>{
+            state.food_item_detail.status = loading();
+        },
+        [food_item_detail.success]:(state,action) =>{
+            const detail = action.payload.detail;
+            console.log("FOOD_DETAIL: ",detail);
+            state.food_item_detail = detail;
+            state.food_item_detail.status = success();
+        },
+        [food_item_detail.loading]:(state,action) =>{
+            state.food_item_detail.status = error();
         }
+
     }
 });
 export default FoodSlice;

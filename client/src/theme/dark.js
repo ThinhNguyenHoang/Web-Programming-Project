@@ -4,7 +4,7 @@ export const darkTheme = createTheme(({
     palette:{
         type: 'dark',
         primary: {
-            main: '#ebefeb  '
+            main: '#ffffff'
         },
         secondary:{
             main: '#7b1fa2'
@@ -34,5 +34,14 @@ export const darkTheme = createTheme(({
         test:{
             default: '#db3300'
         },
+        borderColor: {
+            main: '#020000'
+        },
+        button:{
+            outlined: {
+                main:'#fd0808'
+            }
+        }
+
     }
 }))

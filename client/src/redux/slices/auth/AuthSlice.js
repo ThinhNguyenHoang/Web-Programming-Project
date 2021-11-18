@@ -37,6 +37,7 @@ const initialValue = {
             phone_number: "",
             full_name: "",
             avatar: "",
+            role: "",
         },
     }
 }
@@ -44,6 +45,7 @@ const initialValue = {
 export const selectors = {
     getUserAvatar: (state) => state.auth.currentUser.avatar,
     getUserName: (state) => state.auth.currentUser.profile.username,
+    getUesrRole: (state) => state.auth.currentUser.profile.role,
 
     getRegisterLoading: (state) => state.auth.currentUser.register_status.isLoading,
     getRegisterSuccess: (state) => state.auth.currentUser.register_status.isSuccess,

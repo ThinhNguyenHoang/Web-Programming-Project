@@ -29,6 +29,11 @@ export const lightTheme = createTheme({
         },
         background:{
             default: '#ffffff'
+        },
+        button:{
+            outlined: {
+                main:'#fd0808'
+            }
         }
     },
 
