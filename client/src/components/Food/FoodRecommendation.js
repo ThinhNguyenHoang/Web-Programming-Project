@@ -59,11 +59,11 @@ const FoodRecommendation = ({food_list}) => {
     // TODO: Change this to real food api
     const list_food = food_list ? food_list : food_list_test;
     return (
-        <Box sx={{display:`flex`,flexDirection:`column`}}>
+        <Box sx={{display:`flex`,flexDirection:`column`,flexWrap:'wrap'}}>
             <Box sx={{display:'flex',flexDirection: {sx:'column',sm:'column',md:`row`}, alignItems:'center',justifyContent:`center` }}>
                 {
                     list_food.map((item,index) => {
-                        return <FoodItemCard food_item={item} key={index.toString()} mx={4}/>
+                        return <FoodItemCard food_item={item} key={index.toString()} mx={{xs:1,sm:2,md:3,lg:4}}/>
                     })
                 }
             </Box>

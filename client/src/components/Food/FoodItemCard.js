@@ -19,6 +19,7 @@ import default_food_image from "../../assets/images/defaul_food_image.jpg";
 import {Button} from "@mui/material";
 import {useState} from "react";
 import {ThemedOutlineButton} from "../Buttons/ThemedButton/ThemedButton";
+import Box from "@mui/material/Box";
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -76,7 +77,9 @@ export default function FoodItemCard({food_item,mx},...props) {
                     <HeartIconButton/>
                 }
                 title={food_item.name ? food_item.name : "No food name info"}
-                subheader="Available"
+                subheader= <Typography variant={`h5`} color={`primary.main`}>
+                    {food_item.price ? `${food_item.price} K` : `Not available`}
+                </Typography>
             />
 
             <CardContent>
@@ -84,23 +87,24 @@ export default function FoodItemCard({food_item,mx},...props) {
                     {food_item.description ? food_item.description : "No food description"}
                 </Typography>
             </CardContent>
-            <CardActions >
-                <ThemedOutlineButton>
-                    ORDER NOW
-                </ThemedOutlineButton>
-                <ThemedOutlineButton >
-                    DETAILS
-                </ThemedOutlineButton>
+            <CardActions disableSpacing>
+                    <ThemedOutlineButton>
+                        ORDER NOW
+                    </ThemedOutlineButton>
+                    <ThemedOutlineButton>
+                        DETAILS
+                    </ThemedOutlineButton>
                 {/*<Button variant={`outlined`}>*/}
                 {/*    ORDER NOW*/}
                 {/*</Button>*/}
                 {/*<Button variant={`outlined`}>*/}
                 {/*    DETAILS*/}
                 {/*</Button>*/}
-                <Typography variant={`h5`}>
+                <Typography variant={`h5`} color={`primary.main`} sx={{display:{sx:`hidden`,sm:`none`}}}>
                     {food_item.price ? `${food_item.price} K` : `Not available`}
                 </Typography>
                 <ExpandMore
+                    sx={{justifySelf:`flex-end`}}
                     expand={expanded}
                     onClick={handleExpandClick}
                     aria-expanded={expanded}

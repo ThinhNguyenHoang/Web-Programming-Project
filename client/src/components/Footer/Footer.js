@@ -35,18 +35,18 @@ const branch_name = {
 const Footer = (props) => {
     return (
         <Grid sx={{position:'static',left:0,bottom:0,right:0,bgcolor:'header.background',marginTop:`50px`,justifyContent:'center',display:{sm:"none", md: 'flex' }}} px={5} container spacing={{ xs: 2, md: 3}}>
-            <Grid item xs={12} sm={8} md={3}>
+            <Grid item xs={12} sm={8} md={3} mx={3}>
                 <Typography variant={`h4`} sx={{color:`header.contrast`}}>
                     ORDER FOOD NOW
                 </Typography>
                 <Typography variant={`h3`} color={`secondary.main`}>
-                    086645777235
+                    0866457235
                 </Typography>
                 <ThemedButton>
                     Contacts Us Now
                 </ThemedButton>
             </Grid>
-            <Grid item xs={12} sm={3} md={3} sx={{display:`flex`,flexDirection:`column`, justifyContent:`center`}}>
+            <Grid item xs={12} sm={3} md={3}  mx={3} sx={{display:`flex`,flexDirection:`column`, justifyContent:`center`}}>
                 <Typography variant={`h3`} color={`secondary.main`}> Company</Typography>
                 <Typography variant={`h4`} color={`primary`}> Who we server</Typography>
                 <Typography variant={`h4`} color={`primary`}> Our Approach</Typography>
@@ -58,7 +58,7 @@ const Footer = (props) => {
                 <Typography variant={`h4`} color={`primary`}> HR Employee</Typography>
                 <Typography variant={`h4`} color={`primary`}> Developer</Typography>
             </Grid>
-            <Grid item xs={12} sm={12} md={12} mt={5} sx={{display:`flex`,justifyContent:'space-evenly'}} >
+            <Grid item xs={12} sm={12} md={12} mt={5} mx={3} sx={{display:`flex`,justifyContent:'space-evenly'}} >
                 <Typography variant={`h5`} color={`primary`}>
                     {branch_name.address}
                 </Typography>

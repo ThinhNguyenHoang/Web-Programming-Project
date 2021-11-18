@@ -55,7 +55,7 @@ const Header = (props) => {
         setActiveTab(value);
     }
     return (
-        <Box sx={{width: '100%',position:'fixed'}}>
+        <Box sx={{width: '100%',position:'fixed',zIndex:2}}>
             <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                 <AppBar sx={{bgcolor:'header.background',display:`flex`,justifyContent:`space-around`}} position="static" color={`default`}>
                     <Toolbar sx={{display:`flex`,justifyContent:`space-around`, flexWrap: `wrap`}}>

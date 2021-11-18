@@ -15,21 +15,24 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {ThemedOutlineButton} from "../Buttons/ThemedButton/ThemedButton";
+import default_avatar from "../../assets/images/user_default.jpg"
 
 const review = {
     id: "",
     name: "",
+    food_name :"",
     role: "",
     food_reviewed: "",
     description: "",
+    user_avatar: "",
 }
 export default function RecipeReviewCard({review}) {
     return (
         <Card sx={{ maxWidth: 345 }}>
             <CardHeader
                 avatar={
-                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                        R
+                    <Avatar src={review.user_avatar ? review.user_avatar : default_avatar} sx={{ bgcolor: red[500] }} aria-label="recipe">
+                        {review.name ? review.name : "Guess"}
                     </Avatar>
                 }
                 action={
@@ -37,9 +40,12 @@ export default function RecipeReviewCard({review}) {
                         <MoreVertIcon />
                     </IconButton>
                 }
-                title="Shrimp and Chorizo Paella"
-                subheader="September 14, 2016"
+                title={`${review.name ? review.name : "Customer"}`}
+                subheader="Our Customer"
             />
+            <CardContent>
+                <Typography>{review.food_name ? review.food_name : "Main Dish"}</Typography>
+            </CardContent>
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
                     This impressive paella is a perfect party dish and a fun meal to cook
@@ -47,14 +53,14 @@ export default function RecipeReviewCard({review}) {
                     if you like.
                 </Typography>
             </CardContent>
-            <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
-                </IconButton>
-                <ThemedOutlineButton>
-                    Order same disk
-                </ThemedOutlineButton>
-            </CardActions>
+            {/*<CardActions disableSpacing>*/}
+            {/*    <IconButton aria-label="add to favorites">*/}
+            {/*        <FavoriteIcon />*/}
+            {/*    </IconButton>*/}
+            {/*    <ThemedOutlineButton>*/}
+            {/*        Order same disk*/}
+            {/*    </ThemedOutlineButton>*/}
+            {/*</CardActions>*/}
         </Card>
     );
 }
