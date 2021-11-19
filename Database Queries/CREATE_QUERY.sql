@@ -274,3 +274,10 @@ CREATE TABLE user_ref_tag (
     PRIMARY KEY (UserID, TagID)
 );
 
+DROP TABLE IF EXISTS a;
+CREATE TABLE a (
+	TagID BIGINT(8) NOT NULL,
+    FoodID BIGINT(8),
+    ComboID BIGINT(8),
+    PRIMARY KEY (TagID, FoodID, ComboID)
+);
