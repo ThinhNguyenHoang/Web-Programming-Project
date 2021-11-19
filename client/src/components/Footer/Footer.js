@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Typography} from "@mui/material";
+import {Button, Grid, Typography} from "@mui/material";
 import logo from '../../assets/images/logo_128.png'
 import ThemedButton from "../Buttons/ThemedButton/ThemedButton";
 import facebook_icon from '../../assets/icons/facebook.png';
@@ -29,40 +29,40 @@ const icons = [
 ]
 const branch_name = {
     name: "BK FOOD SALE",
-    address: "286, Ly Thuowng kiet, quan 10, TP HCM",
+    address: "286, Ly Thường Kiệt, Quận 10, TP HCM",
 }
 
 const Footer = (props) => {
     return (
-        <Grid sx={{position:'static',left:0,bottom:0,right:0,bgcolor:'header.background',marginTop:`50px`,justifyContent:'center',display:{sm:"none", md: 'flex' }}} px={5} container spacing={{ xs: 2, md: 3}}>
+        <Grid sx={{position:'static',boxShadow:3,left:0,bottom:0,right:0,bgcolor:'elevation.layer1.main',marginTop:`50px`,justifyContent:'center',display:{sm:"none", md: 'flex' },mt:6}} container spacing={{ xs: 2, md: 3}}>
             <Grid item xs={12} sm={8} md={3} mx={3}>
                 <Typography variant={`h4`} sx={{color:`header.contrast`}}>
-                    ORDER FOOD NOW
+                    Order Now
                 </Typography>
-                <Typography variant={`h3`} color={`secondary.main`}>
+                <Typography sx={{mb:1}} variant={`h3`} color={`primary.main`}>
                     0866457235
                 </Typography>
-                <ThemedButton>
+                <Button variant={`contained`} color={`primary`}>
                     Contacts Us Now
-                </ThemedButton>
+                </Button>
             </Grid>
             <Grid item xs={12} sm={3} md={3}  mx={3} sx={{display:`flex`,flexDirection:`column`, justifyContent:`center`}}>
-                <Typography variant={`h3`} color={`secondary.main`}> Company</Typography>
-                <Typography variant={`h4`} color={`primary`}> Who we server</Typography>
-                <Typography variant={`h4`} color={`primary`}> Our Approach</Typography>
-                <Typography variant={`h4`} color={`primary`}> {`About ${branch_name.name}`}</Typography>
+                <Typography variant={`h4`} color={`primary.main`}> Company</Typography>
+                <Typography variant={`h6`} color={`elevation.layer2.contrast`}> Who we server</Typography>
+                <Typography variant={`h6`} color={`elevation.layer2.contrast`}> Our Approach</Typography>
+                <Typography variant={`h6`} color={`elevation.layer2.contrast`}> {`About ${branch_name.name}`}</Typography>
             </Grid>
             <Grid item xs={12} sm={3} md={3}>
-                <Typography variant={`h3`} color={`secondary.main`}> Jobs</Typography>
-                <Typography variant={`h4`} color={`primary`}> Cooker</Typography>
-                <Typography variant={`h4`} color={`primary`}> HR Employee</Typography>
-                <Typography variant={`h4`} color={`primary`}> Developer</Typography>
+                <Typography variant={`h4`} color={`primary.main`}> Jobs</Typography>
+                <Typography variant={`h6`} color={`elevation.layer2.contrast`}> Cooker</Typography>
+                <Typography variant={`h6`} color={`elevation.layer2.contrast`}> HR Employee</Typography>
+                <Typography variant={`h6`} color={`elevation.layer2.contrast`}> Developer</Typography>
             </Grid>
-            <Grid item xs={12} sm={12} md={12} mt={5} mx={3} sx={{display:`flex`,justifyContent:'space-evenly'}} >
-                <Typography variant={`h5`} color={`primary`}>
+            <Grid item xs={12} sm={12} md={12} mt={5} mx={3} sx={{display:{xs:'none',md:'flex'},justifyContent:'space-evenly'}} >
+                <Typography variant={`h6`} color={`elevation.layer2.contrast`}>
                     {branch_name.address}
                 </Typography>
-                <Typography variant={`h5`} color={`primary`}>
+                <Typography variant={`h6`} color={`elevation.layer2.contrast`}>
                     {`© Copyright 2021, ${branch_name.name}.`}
                 </Typography>
                 <Box sx={{display:`flex`,flexDirection:'row',alignItems:'center',justifyContent:'center'}}>

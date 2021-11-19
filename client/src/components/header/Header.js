@@ -9,6 +9,8 @@ import ThemeToggleButton from "../Buttons/ToggleButton/ThemeToggleButton";
 import {selectors} from "../../redux/slices/auth/AuthSlice";
 import {deepOrange} from "@mui/material/colors";
 import {SearchBar} from "../Search/SearchBar";
+import Footer from "../Footer/Footer";
+import * as React from "react";
 
 // Header should be passed in the number of tabs available
 // If not logged in the props should not contains the protected routes
@@ -55,11 +57,11 @@ const Header = (props) => {
         setActiveTab(value);
     }
     return (
-        <Box sx={{width: '100%',position:'fixed',zIndex:2}}>
+        <Box sx={{width: '100%',position:'fixed',zIndex:2,maxHeight:{xs:`100px`,sm:`100px`,md:`100px`,lg:`100px`}}}>
             <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                <AppBar sx={{bgcolor:'header.background',display:`flex`,justifyContent:`space-around`}} position="static" color={`default`}>
+                <AppBar sx={{bgcolor:'elevation.layer1.main',display:`flex`,justifyContent:`space-around`}} position="static" color={`default`}>
                     <Toolbar sx={{display:`flex`,justifyContent:`space-around`, flexWrap: `wrap`}}>
-                        <Tabs sx={{display: `flex`, flexWrap: `wrap`,color:`header.contrast`}} value={activeTab} onChange={handleChange}
+                        <Tabs sx={{display: `flex`, flexWrap: `wrap`,color:`elevation.layer0.contrast`}} value={activeTab} onChange={handleChange}
                               variant={`scrollable`} scrollButtons={`auto`}
                               textColor="header.contrast"
                               indicatorColor="primary"
@@ -94,7 +96,10 @@ export const WithHeader = (props) => {
     return (
         <div>
             <Header/>
-            {props.children}
+            <Box sx={{pt:{xs:`100px`,sm:`100px`,md:`100px`,lg:`75px`}}}>
+                {props.children}
+            </Box>
+            <Footer/>
         </div>
     )
 }

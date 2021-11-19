@@ -1,10 +1,12 @@
-import {createTheme} from "@mui/material";
+import {createTheme,alpha} from "@mui/material";
+import {THEME_CONSTANTS} from "./constants";
 
+const main_dark = '#121212'
 export const darkTheme = createTheme(({
     palette:{
         type: 'dark',
         primary: {
-            main: '#ffffff'
+            main: '#f30021'
         },
         secondary:{
             main: '#7b1fa2'
@@ -41,7 +43,33 @@ export const darkTheme = createTheme(({
             outlined: {
                 main:'#fd0808'
             }
+        },
+        elevation:{
+            layer0: {
+                main: '#121212',
+                contrast: '#fff'
+            }, // For the deepest level background
+            layer1: {
+                main: '#1d1d1d',
+                contrast: '#fff'
+            }, // Item containers , header, footer
+            layer2: {
+                main: '#2c2c2c',
+                contrast: '#fff'
+            }, // Item above the container
+            layer3: {
+                main: '#373737',
+                contrast: '#fff'
+            }, // popup,...
         }
-
     }
 }))
+
+
+
+const ELEVATION_BACKGROUND = {
+    LAYER0: 'elevation.layer0',
+    LAYER1: 'elevation.layer1',
+    LAYER2: 'elevation.layer2',
+    LAYER3: 'elevation.layer3',
+}

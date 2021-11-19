@@ -1,4 +1,3 @@
-// * Anh chưa code xong nhưng up lên để mấy đứa chạy được mà coi source
 import logo from './logo.svg';
 import './App.css';
 import {useContext, useState} from "react";
@@ -11,10 +10,15 @@ import {RouterConfig, ROUTING_CONSTANTS} from "./routes/RouterConfig";
 import {useHistory} from "react-router-dom";
 import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import Map from './components/Map/Map'
+
 import Toaster from "./utils/Toaster/Toaster";
 require('dotenv').config();
-
 // function TestComponent(){}
+
+const api_key = process.env.MAP_API;
+const host = process.env.REACT_APP_PHP_PORT;
+console.log("MAP KEY IS: ",process.env.MAP_API,host);
 function App() {
     // Test theme context:
     const setThemeName = useContext(ThemeContext);
@@ -35,8 +39,6 @@ function App() {
     const navigateToClient=()=>{history.push(ROUTING_CONSTANTS.CLIENT)};
     const navigateToOrder=()=>{history.push(ROUTING_CONSTANTS.ORDER)}
     ///////////////test
-
-    Toaster.toastSuccessful("HHUHU");
     return (<div className="App">
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo"/>
@@ -127,6 +129,12 @@ function App() {
                     {/* //////////////test */}
                 </Grid>
             </header>
+            <Map
+                googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAMeYALPFuQ_klstxu-M8WDNUmR4hoEJZM&callback=initMap`}
+                loadingElement={<div style={{ height: `100%` }} />}
+                containerElement={<div style={{ height: `90vh`, margin: `auto`, border: '2px solid black' }} />}
+                mapElement={<div style={{ height: `100%` }} />}
+            />
         </div>
     );
 }

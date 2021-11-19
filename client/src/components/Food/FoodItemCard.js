@@ -20,6 +20,7 @@ import {Button} from "@mui/material";
 import {useState} from "react";
 import {ThemedOutlineButton} from "../Buttons/ThemedButton/ThemedButton";
 import Box from "@mui/material/Box";
+import {ThemeContext} from "../../theme";
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -59,13 +60,12 @@ const HeartIconButton = ({isClicked}) =>{
 // }
 export default function FoodItemCard({food_item,mx},...props) {
     const [expanded, setExpanded] = React.useState(false);
-
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
 
     return (
-        <Card sx={{ maxWidth: 345, mb:6,mx:mx? mx:0}} >
+        <Card sx={{display:"flex", flexDirection:"column", maxWidth: 345,mx:mx? mx:0,bgcolor:`elevation.layer2.main`,boxShadow:2}} >
             <CardMedia
                 component="img"
                 height="194"
@@ -73,17 +73,18 @@ export default function FoodItemCard({food_item,mx},...props) {
                 alt={food_item.name ? food_item.name : "No food image info"}
             />
             <CardHeader
+                sx={{color:'elevation.layer2.contrast'}}
                 action={
                     <HeartIconButton/>
                 }
                 title={food_item.name ? food_item.name : "No food name info"}
-                subheader= <Typography variant={`h5`} color={`primary.main`}>
+                subheader={<Typography variant={`h5`} color={`primary.main`}>
                     {food_item.price ? `${food_item.price} K` : `Not available`}
-                </Typography>
+                </Typography>}
             />
 
             <CardContent>
-                <Typography variant="body2" color="text.secondary">
+                <Typography  variant="body2" color="elevation.layer2.contrast">
                     {food_item.description ? food_item.description : "No food description"}
                 </Typography>
             </CardContent>
@@ -100,11 +101,11 @@ export default function FoodItemCard({food_item,mx},...props) {
                 {/*<Button variant={`outlined`}>*/}
                 {/*    DETAILS*/}
                 {/*</Button>*/}
-                <Typography variant={`h5`} color={`primary.main`} sx={{display:{sx:`hidden`,sm:`none`}}}>
-                    {food_item.price ? `${food_item.price} K` : `Not available`}
+                <Typography variant={`h5`} color={`primary.main`} sx={{display:{xs:`none`,sm:`none`}}}>
+                    {food_item.price ? `${food_item.price} K` : `500K`}
                 </Typography>
                 <ExpandMore
-                    sx={{justifySelf:`flex-end`}}
+                    sx={{color:`elevation.layer2.contrast`}}
                     expand={expanded}
                     onClick={handleExpandClick}
                     aria-expanded={expanded}
@@ -114,7 +115,7 @@ export default function FoodItemCard({food_item,mx},...props) {
                 </ExpandMore>
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
+                <CardContent  sx={{color:'elevation.layer2.contrast'}}>
                     <Typography paragraph>Method:</Typography>
                     <Typography paragraph>
                         Heat 1/2 cup of the broth in a pot until simmering, add saffron and

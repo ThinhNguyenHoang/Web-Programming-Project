@@ -104,7 +104,13 @@ const FoodListCarousel = () => {
     // const food_list = food_list_test;
     return (
         <Box sx={{display:`flex`,flexDirection:`column`}}>
-            <Typography p={2} variant={`h2`} color={`primary.main`} justifySelf={`center`} alignSelf={`center`}>
+            <Typography sx={{
+                fontSize: {
+                    lg: 50,
+                    md: 40,
+                    sm: 30,
+                    xs: 20
+                }}} p={2} variant={`h2`} color={`primary.main`} justifySelf={`center`} alignSelf={`center`}>
                 Today Recommendation
             </Typography>
             <Carousel>

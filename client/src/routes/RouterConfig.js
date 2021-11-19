@@ -8,6 +8,7 @@ import OrderMangament from "../pages/OrderManagement";
 import ClientManagement from "../pages/ClientManagement";
 import HomePage from "../pages/HomePage";
 import {WithHeader} from "../components/header/Header";
+import AboutUs from "../pages/AboutUs";
 
 const baseUrl = process.env.FAKE_SERVER_HOST;
 export const ROUTING_CONSTANTS = {
@@ -46,8 +47,6 @@ function ManageUser() {
 
 export const ROUTING_TAB_ITEMS = [
     generateTabLinkItem("Home Page", ROUTING_CONSTANTS.HOMEPAGE),
-    generateTabLinkItem("Login", ROUTING_CONSTANTS.LOGIN),
-    generateTabLinkItem("Register", ROUTING_CONSTANTS.REGISTER),
     generateTabLinkItem("About Us", ROUTING_CONSTANTS.ABOUT_US),
     generateTabLinkItem("News", ROUTING_CONSTANTS.NEWS),
     generateTabLinkItem("My Cart", ROUTING_CONSTANTS.ITEM_CART),
@@ -58,6 +57,9 @@ export const ROUTING_TAB_ITEMS = [
     generateTabLinkItem("Manage Item Info", "Manager"),
     generateTabLinkItem("Manage User", ROUTING_CONSTANTS.MANAGE_BILL, "Manager"),
     generateTabLinkItem("Manage User", ROUTING_CONSTANTS.MANAGE_ITEM_LIST, "Manager"),
+    generateTabLinkItem("Login", ROUTING_CONSTANTS.LOGIN),
+    generateTabLinkItem("Register", ROUTING_CONSTANTS.REGISTER),
+
 ]
 
 
@@ -93,9 +95,6 @@ function Topics() {
     return null;
 }
 
-function AboutUs() {
-    return null;
-}
 
 // function News() {
 //     return null;
