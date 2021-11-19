@@ -259,12 +259,18 @@ CREATE TABLE COMMENT_FOR  (
     PRIMARY KEY(CommentID)
 );
 
-DROP TABLE IF EXISTS TAG;
+DROP TABLE IF EXISTS tag;
 CREATE TABLE tag (
 	TagID BIGINT(8) NOT NULL AUTO_INCREMENT,
-    TagName TEXT.
+    TagName TEXT,
     PRIMARY KEY (TagID)
 );
+
+INSERT INTO tag VALUES (1, "Cay");
+INSERT INTO tag VALUES (1, "Chua");
+INSERT INTO tag VALUES (1, "Món nước");
+INSERT INTO tag VALUES (1, "Món chay");
+INSERT INTO tag VALUES (1, "Đường phố");
 
 DROP TABLE IF EXISTS user_ref_tag;
 CREATE TABLE user_ref_tag (
@@ -274,10 +280,30 @@ CREATE TABLE user_ref_tag (
     PRIMARY KEY (UserID, TagID)
 );
 
-DROP TABLE IF EXISTS a;
-CREATE TABLE a (
+INSERT INTO user_ref_tag VALUES (1, 7, 0);
+INSERT INTO user_ref_tag VALUES (2, 7, 1);
+INSERT INTO user_ref_tag VALUES (3, 7, 2);
+INSERT INTO user_ref_tag VALUES (4, 7, 1);
+INSERT INTO user_ref_tag VALUES (5, 7, 1);
+INSERT INTO user_ref_tag VALUES (6, 7, 3);
+
+DROP TABLE IF EXISTS category_tag;
+CREATE TABLE category_tag (
 	TagID BIGINT(8) NOT NULL,
     FoodID BIGINT(8),
     ComboID BIGINT(8),
     PRIMARY KEY (TagID, FoodID, ComboID)
 );
+
+INSERT INTO category_tag VALUES (1,1,4);
+INSERT INTO category_tag VALUES (1,1,3);
+INSERT INTO category_tag VALUES (1,2,2);
+INSERT INTO category_tag VALUES (2,2,1);
+INSERT INTO category_tag VALUES (2,3,2);
+INSERT INTO category_tag VALUES (2,3,3);
+INSERT INTO category_tag VALUES (3,4,4);
+INSERT INTO category_tag VALUES (3,4,5);
+INSERT INTO category_tag VALUES (3,5,4);
+INSERT INTO category_tag VALUES (4,5,3);
+INSERT INTO category_tag VALUES (4,3,2);
+INSERT INTO category_tag VALUES (4,2,1);
