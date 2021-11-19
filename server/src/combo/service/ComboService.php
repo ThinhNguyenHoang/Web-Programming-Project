@@ -81,49 +81,6 @@ class ComboService
         $is_update_combo = false;
         $is_update_include = false;
 
-        if (property_exists($request, "ComboName")) {
-            if ($request->ComboName != "") {
-                $combo->ComboName = $request->ComboName;
-                $is_update_combo = true;
-            }
-        }
-
-        if (property_exists($request, "ComboDescrip")) {
-            if ($request->ComboDescrip != "") {
-                $combo->ComboDescrip = $request->ComboDescrip;
-                $is_update_combo = true;
-            }
-        }
-
-        if (property_exists($request, "Price")) {
-            if ($request->Price != "") {
-                $combo->Price = $request->Price;
-                $is_update_combo = true;
-            }
-        }
-
-        // if (property_exists($request, "Food")) {
-        //     if (is_array($request->Food)) {
-        //         if (!empty($request->Food)) {
-        //             $is_update_include = true;
-        //         }
-        //     } esle {
-        //         ResponseHelper::error_client("Food feild incorrect");
-        //         die();
-        //     }
-        // }
-
-        if (property_exists($request, "Food")) {
-            if (is_array($request->Food)) {
-                if (!empty($request->Food)) {
-                    $is_update_include = true;
-                }
-            } else {
-                ResponseHelper::error_client("Food feild must be an array");
-                die();
-            }
-        }
-
         // Find combo with the ComboID in database
         $combo_found = ComboRepository::findComboByID($ComboID);
         if (!$combo_found) {
@@ -131,6 +88,61 @@ class ComboService
             ResponseHelper::error_client("ComboID doesn't exist");
             die();
         }
+
+        if (property_exists($request, "ComboName")) {
+            if ($request->ComboName != "") {
+                $combo->ComboName = $request->ComboName;
+                $is_update_combo = true;
+            } else {
+                $combo->ComboName = $combo_found["ComboName"];
+            }
+        } else {
+            $combo->ComboName = $combo_found["ComboName"];
+        }
+
+        if (property_exists($request, "ComboDescrip")) {
+            if ($request->ComboDescrip != "") {
+                $combo->ComboDescrip = $request->ComboDescrip;
+                $is_update_combo = true;
+            } else {
+                $combo->ComboDescrip = $combo_found["ComboDescrip"];
+            }
+        } else {
+            $combo->ComboDescrip = $combo_found["ComboDescrip"];
+        }
+
+        if (property_exists($request, "Price")) {
+            if ($request->Price != "") {
+                $combo->Price = $request->Price;
+                $is_update_combo = true;
+            } else {
+                $combo->Price = $combo_found["Price"];
+            }
+        } else {
+            $combo->Price = $combo_found["Price"];
+        }
+
+        if (property_exists($request, "Food")) {
+            if (is_array($request->Food)) {
+                if (!empty($request->Food)) {
+                    foreach ($request->Food as $food) {
+                        if (!property_exists($food, "FoodID")) {
+                            ResponseHelper::error_client("Cannot find FoodID in Food array");
+                            die();
+                        }
+                    }
+                    $is_update_include = true;
+                } else {
+                    $combo->Food = $combo_found["Food"];
+                }
+            } else {
+                ResponseHelper::error_client("Food feild must be an array");
+                die();
+            }
+        } else {
+            $combo->Food = $combo_found["Food"];
+        }
+
         $combo->ComboID = $ComboID;
         // update combo
         $update_combo_result = false;

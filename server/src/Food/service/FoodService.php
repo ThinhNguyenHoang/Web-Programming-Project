@@ -36,6 +36,7 @@ class FoodService
             die();
         }
         ResponseHelper::success(FoodMessage::getMessages()->readSuccess, $food_found);
+        return $food_found;
     }
 
     public static function addFood()
@@ -83,52 +84,6 @@ class FoodService
         $is_update_food = false;
         $is_update_makeby = false;
 
-        if (property_exists($request, "FoodName")) {
-            if ($request->FoodName != "") {
-                $food->FoodName = $request->FoodName;
-                $is_update_food = true;
-            }
-        }
-
-        if (property_exists($request, "Picture")) {
-            if ($request->Picture != "") {
-                $food->Picture = $request->Picture;
-                $is_update_food = true;
-            }
-        }
-
-        if (property_exists($request, "Price")) {
-            if ($request->Price != "") {
-                $food->Price = $request->Price;
-                $is_update_food = true;
-            }
-        }
-
-        if (property_exists($request, "Description")) {
-            if ($request->Description != "") {
-                $food->Description = $request->Description;
-                $is_update_food = true;
-            }
-        }
-
-        if (property_exists($request, "Instruct")) {
-            if ($request->Instruct != "") {
-                $food->Instruct = $request->Instruct;
-                $is_update_food = true;
-            }
-        }
-
-        if (property_exists($request, "Material")) {
-            if (is_array($request->Material)) {
-                if (!empty($request->Material)) {
-                    $is_update_makeby = true;
-                }
-            } else {
-                ResponseHelper::error_client("Material feild must be an array");
-                die();
-            }
-        }
-
         // Find food with the FoodID in database
         $food_found = FoodRepository::findFoodByID($FoodID);
         if (!$food_found) {
@@ -136,6 +91,84 @@ class FoodService
             ResponseHelper::error_client("FoodID doesn't exist");
             die();
         }
+
+        if (property_exists($request, "FoodName")) {
+            if ($request->FoodName != "") {
+                $food->FoodName = $request->FoodName;
+                $is_update_food = true;
+            } else {
+                $food->FoodName = $food_found["FoodName"];
+            }
+        } else {
+            $food->FoodName = $food_found["FoodName"];
+        }
+
+        if (property_exists($request, "Picture")) {
+            if ($request->Picture != "") {
+                $food->Picture = $request->Picture;
+                $is_update_food = true;
+            } else {
+                $food->Picture = $food_found["Picture"];
+            }
+        } else {
+            $food->Picture = $food_found["Picture"];
+        }
+
+        if (property_exists($request, "Price")) {
+            if ($request->Price != "") {
+                $food->Price = $request->Price;
+                $is_update_food = true;
+            } else {
+                $food->Price = $food_found["Price"];
+            }
+        } else {
+            $food->Price = $food_found["Price"];
+        }
+
+        if (property_exists($request, "Description")) {
+            if ($request->Description != "") {
+                $food->Description = $request->Description;
+                $is_update_food = true;
+            } else {
+                $food->Description = $food_found["Description"];
+            }
+        } else {
+            $food->Description = $food_found["Description"];
+        }
+
+        if (property_exists($request, "Instruct")) {
+            if ($request->Instruct != "") {
+                $food->Instruct = $request->Instruct;
+                $is_update_food = true;
+            } else {
+                $food->Instruct = $food_found["Instruct"];
+            }
+        } else {
+            $food->Instruct = $food_found["Instruct"];
+        }
+
+        //TODO:validate thằng Material trong body
+        if (property_exists($request, "Material")) {
+            if (is_array($request->Material)) {
+                if (!empty($request->Material)) {
+                    foreach ($request->Material as $material) {
+                        if (!property_exists($material, "MaterialID")) {
+                            ResponseHelper::error_client("Cannot find MaterialID in Material array");
+                            die();
+                        }
+                    }
+                    $is_update_makeby = true;
+                } else {
+                    $food->Material = $food_found["Material"];
+                }
+            } else {
+                ResponseHelper::error_client("Material feild must be an array");
+                die();
+            }
+        } else {
+            $food->Material = $food_found["Material"];
+        }
+
         $food->FoodID = $FoodID;
         // update food
         $update_food_result = false;

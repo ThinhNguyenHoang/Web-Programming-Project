@@ -17,6 +17,7 @@ use src\combo\controller\ComboController;
 use src\food\controller\FoodController;
 use src\material\controller\MaterialController;
 use src\user\controller\UserController;
+use src\tag\controller\TagController;
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -50,6 +51,10 @@ switch ($endpoint) {
     case "material":
         $materialController = new MaterialController();
         $materialController->handleRequest();
+        break;
+    case "tag":
+        $tagController = new TagController();
+        $tagController->handleRequest();
         break;
     default:
         header("HTTP/1.1 404 Not Found");

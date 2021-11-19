@@ -102,4 +102,28 @@ class MaterialRepository implements Repository
             return null;
         }
     }
+
+    public static function getMaterialByFoodID($FoodID)
+    {
+        $material_query = "SELECT * FROM material AS material
+        INNER JOIN makeby AS makeby
+        ON material.MaterialID = makeby.MaterialID
+        WHERE makeby.FoodID = $FoodID;";
+
+        try {
+            $material_result = QueryExecutor::executeQuery($material_query);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+        }
+
+        $list_material = array();
+
+        while ($material = $material_result->fetch_array(MYSQLI_ASSOC)) {
+            unset($material["FoodID"]);
+            error_log(json_encode($material), 0);
+            array_push($list_material, $material);
+        }
+
+        return $list_material;
+    }
 }

@@ -15,6 +15,8 @@ use src\common\base\Repository;
 use src\common\utils\QueryExecutor;
 use src\common\utils\ResponseHelper;
 use src\food\message\FoodMessage;
+use src\material\repository\MaterialRepository;
+use src\tag\repository\TagRepository;
 use function DeepCopy\deep_copy;
 
 /**
@@ -34,7 +36,7 @@ class FoodRepository implements Repository
      */
     public static function listFood(): array
     {
-        $query = "SELECT * FROM food ORDER BY FoodID";
+        $query = "SELECT * FROM food ORDER BY FoodID;";
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
@@ -47,26 +49,11 @@ class FoodRepository implements Repository
 
             $FoodID = $row['FoodID'];
 
-            $material_query = "SELECT * FROM material AS material
-                            INNER JOIN makeby AS makeby
-                            ON material.MaterialID = makeby.MaterialID
-                            WHERE makeby.FoodID = $FoodID";
-
-            try {
-                $material_result = QueryExecutor::executeQuery($material_query);
-            } catch (Exception $e) {
-                error_log($e->getMessage());
-            }
-
-            $list_material = array();
-
-            while ($material = $material_result->fetch_array(MYSQLI_ASSOC)) {
-                unset($material["FoodID"]);
-                error_log(json_encode($material), 0);
-                array_push($list_material, $material);
-            }
-
+            $list_material = MaterialRepository::getMaterialByFoodID($FoodID);
             $row["Material"] = $list_material;
+
+            $list_tag = TagRepository::getTagByFoodID($FoodID);
+            $row["Tags"] = $list_tag;
 
             array_push($list_food, $row);
         }
@@ -77,7 +64,7 @@ class FoodRepository implements Repository
 
     public static function findFoodByID(int $FoodID)
     {
-        $query = "SELECT * FROM food WHERE FoodID = $FoodID";
+        $query = "SELECT * FROM food WHERE FoodID = $FoodID;";
 
         try {
             $result = QueryExecutor::executeQuery($query);
@@ -91,26 +78,11 @@ class FoodRepository implements Repository
 
             $FoodID = $row['FoodID'];
 
-            $material_query = "SELECT * FROM material AS material
-                            INNER JOIN makeby AS makeby
-                            ON material.MaterialID = makeby.MaterialID
-                            WHERE makeby.FoodID = $FoodID";
-
-            try {
-                $material_result = QueryExecutor::executeQuery($material_query);
-            } catch (Exception $e) {
-                error_log($e->getMessage());
-            }
-
-            $list_material = array();
-
-            while ($material = $material_result->fetch_array(MYSQLI_ASSOC)) {
-                unset($material["FoodID"]);
-                error_log(json_encode($material), 0);
-                array_push($list_material, $material);
-            }
-
+            $list_material = MaterialRepository::getMaterialByFoodID($FoodID);
             $row["Material"] = $list_material;
+
+            $list_tag = TagRepository::getTagByFoodID($FoodID);
+            $row["Tags"] = $list_tag;
 
             array_push($list_food, $row);
         }
@@ -121,7 +93,7 @@ class FoodRepository implements Repository
 
     public static function create($entity = null): \mysqli_result|bool|null
     {
-        $query = "INSERT INTO food VALUES('$entity->FoodID','$entity->FoodName','$entity->Picture', '$entity->Price', '$entity->Description', '$entity->Instruct')";
+        $query = "INSERT INTO food VALUES('$entity->FoodID','$entity->FoodName','$entity->Picture', '$entity->Price', '$entity->Description', '$entity->Instruct');";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
@@ -148,7 +120,7 @@ class FoodRepository implements Repository
 
     public static function update(int $entityID = null, object $entity = null)
     {
-        $query = "UPDATE food SET FoodName='$entity->FoodName', Picture='$entity->Picture', Price=$entity->Price, Description='$entity->Description', Instruct='$entity->Instruct' WHERE FoodID=$entityID";
+        $query = "UPDATE food SET FoodName='$entity->FoodName', Picture='$entity->Picture', Price=$entity->Price, Description='$entity->Description', Instruct='$entity->Instruct' WHERE FoodID=$entityID;";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $exception) {
@@ -178,7 +150,7 @@ class FoodRepository implements Repository
 
     public static function delete(int $entityID = null)
     {
-        $query = "DELETE FROM food WHERE FoodID = $entityID";
+        $query = "DELETE FROM food WHERE FoodID = $entityID";;
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $exception) {
@@ -189,7 +161,7 @@ class FoodRepository implements Repository
 
     public static function deleteMakeBy($FoodID)
     {
-        $query = "DELETE FROM makeby WHERE FoodID = $FoodID";
+        $query = "DELETE FROM makeby WHERE FoodID = $FoodID;";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $exception) {

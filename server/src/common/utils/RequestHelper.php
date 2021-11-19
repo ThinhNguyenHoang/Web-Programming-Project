@@ -148,6 +148,28 @@ class RequestHelper{
         }
         return $token;
     }
+
+    public static function isLogin()
+    {
+        $key = "example_key";
+        $issuer = "http://localhost/CodeOfaN";
+        // GET THE jwt token attached to the request
+        $jwt = self::getBearerToken();
+        error_log("TOKEN ATTACHED:" . json_encode($jwt), 0);
+        if (! $jwt) {
+            // No token was able to be extracted from the authorization header
+            return false;
+        }
+        $token = JWT::decode($jwt,$key , ['HS512']);
+        $now = new DateTimeImmutable();
+
+        if ($token->iss !== $issuer ||
+            $token->exp < $now->getTimestamp())
+        {
+            return false;
+        }
+        return $token;
+    }
     public static function isAdminPrivilege(): bool {
         $token = self::validate_jwt_token();
         $payload = self::getTokenPayload();

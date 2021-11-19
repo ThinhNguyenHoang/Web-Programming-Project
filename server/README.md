@@ -130,11 +130,13 @@ MATERIAL:
     GET: /material
         {
             "message": "Read material:result in success",
-            "data": {
+            "data": [
+                {
                 "MaterialID": "",
                 "MaterialName": "",
                 "Picture": ""
-            }
+                }
+            ]
         }
         /material/:id
 

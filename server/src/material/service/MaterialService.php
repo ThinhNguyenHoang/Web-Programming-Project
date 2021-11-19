@@ -48,12 +48,12 @@ class MaterialService
 
         $result = MaterialRepository::create($material);
 
-        $material->MaterialID = QueryExecutor::getLastInsertID();
-
         error_log("Adding material: Insert to database", 0);
 
         if ($result) {
+            $material->MaterialID = QueryExecutor::getLastInsertID();
             error_log("Adding material: " . json_encode($material), 0);
+
             ResponseHelper::success(MaterialMessage::getMessages()->createSuccess, $material);
             return;
         }
@@ -72,20 +72,6 @@ class MaterialService
         $material = new Material();
         $is_update_material = false;
 
-        if (property_exists($request, "MaterialName")) {
-            if ($request->MaterialName != "") {
-                $material->MaterialName = $request->MaterialName;
-                $is_update_material = true;
-            }
-        }
-
-        if (property_exists($request, "Picture")) {
-            if ($request->Picture != "") {
-                $material->Picture = $request->Picture;
-                $is_update_material = true;
-            }
-        }
-
         // Find material with the MaterialID in database
         $material_found = MaterialRepository::findMaterialByID($MaterialID);
         if (!$material_found) {
@@ -93,6 +79,29 @@ class MaterialService
             ResponseHelper::error_client("MaterialID doesn't exist");
             die();
         }
+
+        if (property_exists($request, "MaterialName")) {
+            if ($request->MaterialName != "") {
+                $material->MaterialName = $request->MaterialName;
+                $is_update_material = true;
+            } else {
+                $material->MaterialName = $material_found["MaterialName"];
+            }
+        } else {
+            $material->MaterialName = $material_found["MaterialName"];
+        }
+
+        if (property_exists($request, "Picture")) {
+            if ($request->Picture != "") {
+                $material->Picture = $request->Picture;
+                $is_update_material = true;
+            } else {
+                $material->Picture = $material_found["Picture"];
+            }
+        } else {
+            $material->Picture = $material_found["Picture"];
+        }
+
         $material->MaterialID = $MaterialID;
 
         if ($is_update_material) {
@@ -104,6 +113,7 @@ class MaterialService
 
         if ($result) {
             ResponseHelper::success(MaterialMessage::getMessages()->updateSuccess, $material);
+            return;
         }
 
         ResponseHelper::error_server(MaterialMessage::getMessages()->updateError);
@@ -125,6 +135,7 @@ class MaterialService
         $result = MaterialRepository::delete($MaterialID);
         if ($result) {
             ResponseHelper::success(MaterialMessage::getMessages()->deleteSuccess, $material_found);
+            return;
         }
         ResponseHelper::error_server(MaterialMessage::getMessages()->deleteError);
     }

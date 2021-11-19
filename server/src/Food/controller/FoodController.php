@@ -6,8 +6,8 @@ use src\common\base\BaseController;
 use src\common\base\RequestHandler;
 use src\common\utils\RequestHelper;
 use src\common\utils\ResponseHelper;
-use src\food\dto\FoodRegisterRequest;
 use src\food\service\FoodService;
+use src\tag\repository\TagRepository;
 
 require_once  __DIR__ . '/../../../vendor/autoload.php';
 
@@ -28,7 +28,13 @@ class FoodController extends BaseController implements RequestHandler
                     FoodService::getFoodList();
                 } else if (is_numeric($relative_path)) {
                     error_log("FOOD_CONTROLLER::GET FOOD BY ID ENDPOINT::" . $relative_path);
-                    FoodService::getFoodByID($relative_path);
+                    $token = RequestHelper::isLogin();
+                    $food = FoodService::getFoodByID($relative_path);
+                    if ($token) {
+                        TagRepository::increaseTagCount($token->data->id, $food[0]["Tags"]);
+                    } else {
+                        echo "unauthorize";
+                    }
                 } else {
                     ResponseHelper::error_client("Invalid path in food endpoint");
                 }
@@ -46,7 +52,7 @@ class FoodController extends BaseController implements RequestHandler
                     error_log("FOOD_CONTROLLER::UPDATE FOOD ENDPOINT::" . $relative_path);
                     FoodService::updateFood($relative_path);
                 } else {
-                    ResponseHelper::error_client("Invalid parameter");
+                    ResponseHelper::error_client("Invalid path in food endpoint");
                 }
                 break;
             case "delete":
@@ -54,7 +60,7 @@ class FoodController extends BaseController implements RequestHandler
                     error_log("FOOD_CONTROLLER::DELETE FOOD ENDPOINT::" . $relative_path);
                     FoodService::deleteFood($relative_path);
                 } else {
-                    ResponseHelper::error_client("Invalid parameter");
+                    ResponseHelper::error_client("Invalid path in food endpoint");
                 }
                 break;
             default:
