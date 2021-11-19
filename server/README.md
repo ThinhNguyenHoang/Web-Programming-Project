@@ -98,10 +98,28 @@ COMBO:
 ```
 ```
 MATERIAL:
-        /food/add-material
-            body: {
-                "FoodID":"3",
-                "MaterialID": "8",
-                "MaterialName": "test"
+    GET: /material
+        {
+            "message": "Read material:result in success",
+            "data": {
+                "MaterialID": "",
+                "MaterialName": "",
+                "Picture": ""
             }
+        }
+        /material/:id
+
+    POST: /material
+        body: {
+            "MaterialName": "",
+            "Picture": 
+        }
+    
+    PUT: /material/:id
+        body: {
+            "MaterialName": "",
+            "Picture": 
+        }
+
+    DELETE: /material/:id
 ```
