@@ -173,7 +173,7 @@ class ComboService
         // delete combo
         $result = ComboRepository::delete($ComboID);
         if ($result) {
-            ResponseHelper::success(ComboMessage::getMessages()->deleteSuccess, $ComboID);
+            ResponseHelper::success(ComboMessage::getMessages()->deleteSuccess, $combo_found);
         }
         ResponseHelper::error_server(ComboMessage::getMessages()->deleteError);
     }

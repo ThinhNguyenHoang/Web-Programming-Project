@@ -167,7 +167,7 @@ class ComboRepository implements Repository
         foreach ($Foods as $food) {
             $result = ComboRepository::insertIncludes($food->FoodID, $ComboID);
             if (!$result) {
-                ResponseHelper::error_server(ComboMessage::getMessages()->deleteError);
+                ResponseHelper::error_server(ComboMessage::getMessages()->updateError);
                 die();
             }
         }

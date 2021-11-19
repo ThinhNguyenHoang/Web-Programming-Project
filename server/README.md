@@ -93,6 +93,19 @@ COMBO:
             }
 
     PUT: /combo/:id
+            body: {
+                "ComboName": "",
+                "ComboDescrip": "",
+                "Price" : "",
+                "Food": [
+                    {
+                        "FoodID":
+                    },
+                    {
+                        "FoodID":
+                    }
+                ]
+            }
 
     DELETE: /combo/:id
 ```
