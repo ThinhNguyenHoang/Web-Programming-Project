@@ -11,11 +11,10 @@ require_once  __DIR__ . '/../../../vendor/autoload.php';
 //include_once 'libs/php-jwt-master/src/JWT.php';
 
 use Exception;
-use src\combo\message\ComboMessage;
 use src\common\base\Repository;
 use src\common\utils\QueryExecutor;
 use src\common\utils\ResponseHelper;
-
+use src\combo\message\ComboMessage;
 /**
  * Class for interaction with database
  * + Create
@@ -157,7 +156,7 @@ class ComboRepository implements Repository
 
     public static function updateInclude($ComboID, $Foods)
     {
-        $delete_include_query = "DELETE FROM includes WHERE ComboID = $ComboID";
+        $delete_include_query = "DELETE FROM includes WHERE ComboID = $ComboID;";
         try {
             QueryExecutor::executeQuery($delete_include_query);
         } catch (Exception $exception) {
@@ -178,12 +177,16 @@ class ComboRepository implements Repository
     {
         $delete_combo_query = "DELETE FROM combo WHERE ComboID = $entityID";
         try {
-            QueryExecutor::executeQuery($delete_combo_query);
+            return QueryExecutor::executeQuery($delete_combo_query);
         } catch (Exception $exception) {
             echo $exception->getMessage();
         }
 
-        $delete_include_query = "DELETE FROM includes WHERE ComboID = $entityID";
+        return null;
+    }
+
+    public static function deleteInclude($ComboID) {
+        $delete_include_query = "DELETE FROM includes WHERE ComboID = $ComboID";
         try {
             return QueryExecutor::executeQuery($delete_include_query);
         } catch (Exception $exception) {

@@ -32,7 +32,15 @@ FOOD:
                 "Picture": "",
                 "Price": "",
                 "Description": "",
-                "Instruct": ""
+                "Instruct": "",
+                "Material": [
+                    {
+                        "MaterialID":""
+                    },
+                    {
+                        "MaterialID":""
+                    }
+                ]
             }
     PUT: /food/:id
             body: {
@@ -40,7 +48,15 @@ FOOD:
                 "Picture": "",
                 "Price": "",
                 "Description": "",
-                "Instruct": ""
+                "Instruct": "",
+                "Material": [
+                    {
+                        "MaterialID":""
+                    },
+                    {
+                        "MaterialID":""
+                    }
+                ]
             }
     DELETE: /food/:id
 ```

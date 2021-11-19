@@ -48,25 +48,26 @@ class ComboService
         error_log("Adding combo: Map Combo entity from request", 0);
         $combo_result = ComboRepository::create($combo);
 
-        $combo->ComboID = QueryExecutor::getLastInsertID();
-
-        $combo->Food = array();
-        $food_includes = $request->Food;
-        foreach ($food_includes as $combo) {
-            $includes_result = ComboRepository::insertIncludes($combo->ComboID, $combo->ComboID);
-            array_push($combo->Food, $combo);
-        }
-
         error_log("Adding combo: Insert to database", 0);
 
-        if ($combo_result && $includes_result) {
+        if ($combo_result) {
             error_log("Adding combo: " . json_encode($combo), 0);
-            ResponseHelper::success(ComboMessage::getMessages()->createSuccess, $combo);
-            return;
+
+            $combo->ComboID = QueryExecutor::getLastInsertID();
+
+            $combo->Food = array();
+            $food_includes = $request->Food;
+            foreach ($food_includes as $food) {
+                $includes_result = ComboRepository::insertIncludes($food->FoodID, $combo->ComboID);
+                array_push($combo->Food, $combo);
+            }
+            if ($includes_result) {
+                ResponseHelper::success(ComboMessage::getMessages()->createSuccess, $combo);
+                return;
+            }
         }
 
         ResponseHelper::error_server(ComboMessage::getMessages()->createError);
-
         return;
     }
 
@@ -118,7 +119,7 @@ class ComboService
                     $is_update_include = true;
                 }
             } else {
-                ResponseHelper::error_client("Food feild incorrect");
+                ResponseHelper::error_client("Food feild must be an array");
                 die();
             }
         }
@@ -135,6 +136,11 @@ class ComboService
         $update_combo_result = false;
         $update_include_result = false;
 
+        if (!($is_update_combo || $is_update_include)) {
+            ResponseHelper::error_client("No Feild to update");
+            die();
+        }
+
         if ($is_update_combo) {
             $update_combo_result = ComboRepository::update($ComboID, $combo);
         }
@@ -142,18 +148,14 @@ class ComboService
         if ($is_update_include) {
             $update_include_result = ComboRepository::updateInclude($ComboID, $request->Food);
             $combo->Food = array();
-            foreach($request->Food as $food) {
+            foreach ($request->Food as $food) {
                 array_push($combo->Food, $food);
             }
         }
 
-        if (!($is_update_combo || $is_update_include)) {
-            ResponseHelper::error_client("No Feild to update");
-            die();
-        }
-
         if ($update_combo_result || $update_include_result) {
             ResponseHelper::success(ComboMessage::getMessages()->updateSuccess, $combo);
+            return;
         }
         ResponseHelper::error_server(ComboMessage::getMessages()->updateError);
     }
@@ -171,9 +173,13 @@ class ComboService
         }
 
         // delete combo
-        $result = ComboRepository::delete($ComboID);
-        if ($result) {
-            ResponseHelper::success(ComboMessage::getMessages()->deleteSuccess, $combo_found);
+        $delete_combo_result = ComboRepository::delete($ComboID);
+        if ($delete_combo_result) {
+            $delete_include_result = ComboRepository::deleteInclude($ComboID);
+            if ($delete_include_result) {
+                ResponseHelper::success(ComboMessage::getMessages()->deleteSuccess, $combo_found);
+                return;
+            }
         }
         ResponseHelper::error_server(ComboMessage::getMessages()->deleteError);
     }

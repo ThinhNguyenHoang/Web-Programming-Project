@@ -13,6 +13,8 @@ require_once  __DIR__ . '/../../../vendor/autoload.php';
 use Exception;
 use src\common\base\Repository;
 use src\common\utils\QueryExecutor;
+use src\common\utils\ResponseHelper;
+use src\food\message\FoodMessage;
 use function DeepCopy\deep_copy;
 
 /**
@@ -128,6 +130,17 @@ class FoodRepository implements Repository
         }
     }
 
+    public static function insertMakeBy(int $FoodID, int $MaterialID): \mysqli_result|bool|null
+    {
+        $query = "INSERT INTO makeby VALUES('$MaterialID','$FoodID');";
+        try {
+            return QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage(), 0);
+            return null;
+        }
+    }
+
     public static function read(int $entityID = null)
     {
         //DO NOTHING HERE
@@ -144,9 +157,39 @@ class FoodRepository implements Repository
         return null;
     }
 
+    public static function updateMakeBy($FoodID, $Materials)
+    {
+        $delete_makeby_query = "DELETE FROM makeby WHERE FoodID = $FoodID;";
+        try {
+            QueryExecutor::executeQuery($delete_makeby_query);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+
+        foreach ($Materials as $material) {
+            $result = FoodRepository::insertMakeBy($FoodID, $material->MaterialID);
+            if (!$result) {
+                ResponseHelper::error_server(FoodMessage::getMessages()->updateError);
+                die();
+            }
+        }
+        return true;
+    }
+
     public static function delete(int $entityID = null)
     {
         $query = "DELETE FROM food WHERE FoodID = $entityID";
+        try {
+            return QueryExecutor::executeQuery($query);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+        return null;
+    }
+
+    public static function deleteMakeBy($FoodID)
+    {
+        $query = "DELETE FROM makeby WHERE FoodID = $FoodID";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $exception) {

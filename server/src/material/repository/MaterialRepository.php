@@ -76,17 +76,6 @@ class MaterialRepository implements Repository
         }
     }
 
-    // public static function insertMakeBy(int $FoodID, int $MaterialID): \mysqli_result|bool|null
-    // {
-    //     $query = "INSERT INTO makeby VALUES('$MaterialID','$FoodID');";
-    //     try {
-    //         return QueryExecutor::executeQuery($query);
-    //     } catch (Exception $e) {
-    //         error_log($e->getMessage(), 0);
-    //         return null;
-    //     }
-    // }
-
     public static function read(int $entityID = null)
     {
         //DO NOTHING
