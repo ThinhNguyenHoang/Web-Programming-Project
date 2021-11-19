@@ -29,31 +29,45 @@ class MaterialRepository implements Repository
 {
     public static function listMaterial(): array
     {
-        $query = "SELECT * FROM food AS food 
-        INNER JOIN makeby AS makeby
-        ON food.FoodID = makeby.FoodID 
-        INNER JOIN material AS material
-        ON material.MaterialID = makeby.MaterialID ORDER BY food.FoodID;";
+        $query = "SELECT * FROM MATERIAL;";
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
             error_log($e->getMessage());
         }
         //        $num_row = $result->num_rows;
-        $list_combo = array();
+        $list_material = array();
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
             error_log(json_encode($row), 0);
-            array_push($list_combo, $row);
+            array_push($list_material, $row);
         }
 
         error_log("MATERIAL_REPOSITORY::FETCH_LIST::", 0);
-        return $list_combo;
+        return $list_material;
     }
+
+    public static function findMaterialByID($MaterialID)
+    {
+        $query = "SELECT * FROM material WHERE MaterialID = $MaterialID;";
+
+        try {
+            $result = QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+        }
+        $material = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+        error_log(json_encode($material), 0);
+
+        error_log("MATERIAL_REPOSITORY::FETCH_LIST::", 0);
+        return $material;
+    }
+
     /**
      */
     public static function create($entity = null): \mysqli_result|bool|null
     {
-        $query = "INSERT INTO material VALUES('$entity->MaterialID','$entity->MaterialName')";
+        $query = "INSERT INTO material (MaterialName, Picture) VALUES('$entity->MaterialName', '$entity->Picture');";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
@@ -62,36 +76,41 @@ class MaterialRepository implements Repository
         }
     }
 
-    public static function insertMakeBy(int $FoodID, int $MaterialID): \mysqli_result|bool|null {
-        $query = "INSERT INTO makeby VALUES('$MaterialID','$FoodID')";
-        try {
-            return QueryExecutor::executeQuery($query);
-        } catch (Exception $e) {
-            error_log($e->getMessage(), 0);
-            return null;
-        }
-    }
-    
+    // public static function insertMakeBy(int $FoodID, int $MaterialID): \mysqli_result|bool|null
+    // {
+    //     $query = "INSERT INTO makeby VALUES('$MaterialID','$FoodID');";
+    //     try {
+    //         return QueryExecutor::executeQuery($query);
+    //     } catch (Exception $e) {
+    //         error_log($e->getMessage(), 0);
+    //         return null;
+    //     }
+    // }
+
     public static function read(int $entityID = null)
     {
-        $query = "SELECT * FROM USER_ACCOUNT WHERE ID=$entityID";
-        $row = QueryExecutor::executeQuery($query);
-        if (!$row) {
-            // Throw error return error message for client to display
-            echo "Something has gone wrong when reading food with id: $entityID! ";
-        }
-        $return = $row->fetch_object($class = "FoodAccount");
-        return deep_copy($return);
+        //DO NOTHING
     }
 
     public static function update(int $entityID = null, object $entity = null)
     {
-        $query = "UPDATE USER_ACCOUNT SET USERNAME=$entity->foodname, PASSWORD=$entity->password WHERE ID=$entityID";
-        return QueryExecutor::executeQuery($query);
+        $query = "UPDATE material SET MaterialName='$entity->MaterialName', Picture='$entity->Picture' WHERE MaterialID='$entityID';";
+        try {
+            return QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage(), 0);
+            return null;
+        }
     }
 
     public static function delete(int $entityID = null)
     {
-        // TODO: Implement delete() method.
+        $query = "DELETE FROM material WHERE MaterialID=$entityID;";
+        try {
+            return QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage(), 0);
+            return null;
+        }
     }
 }
