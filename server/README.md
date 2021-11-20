@@ -22,6 +22,16 @@ FOOD:
                             "MaterialName": "",
                             "Picture": 
                         }
+                    ],
+                    "Tags": [
+                        {
+                            "TagID": "",
+                            "TagName": ""
+                        },
+                        {
+                            "TagID": "",
+                            "TagName": ""
+                        }
                     ]
                 }
             ]
@@ -40,6 +50,16 @@ FOOD:
                     {
                         "MaterialID":""
                     }
+                ],
+                "Tags": [
+                    {
+                        "TagID": "",
+                        "TagName": ""
+                    },
+                    {
+                        "TagID": "",
+                        "TagName": ""
+                    }
                 ]
             }
     PUT: /food/:id
@@ -55,6 +75,16 @@ FOOD:
                     },
                     {
                         "MaterialID":""
+                    }
+                ],
+                "Tags": [
+                    {
+                        "TagID": "",
+                        "TagName": ""
+                    },
+                    {
+                        "TagID": "",
+                        "TagName": ""
                     }
                 ]
             }
@@ -88,6 +118,16 @@ COMBO:
                             "Description": "",
                             "Instruct": 
                         }
+                    ],
+                    "Tags": [
+                        {
+                            "TagID": "",
+                            "TagName": ""
+                        },
+                        {
+                            "TagID": "",
+                            "TagName": ""
+                        }
                     ]
                 }
         }
@@ -105,6 +145,16 @@ COMBO:
                     {
                         "FoodID":
                     }
+                ],
+                "Tags": [
+                    {
+                        "TagID": "",
+                        "TagName": ""
+                    },
+                    {
+                        "TagID": "",
+                        "TagName": ""
+                    }
                 ]
             }
 
@@ -119,6 +169,16 @@ COMBO:
                     },
                     {
                         "FoodID":
+                    }
+                ],
+                "Tags": [
+                    {
+                        "TagID": "",
+                        "TagName": ""
+                    },
+                    {
+                        "TagID": "",
+                        "TagName": ""
                     }
                 ]
             }

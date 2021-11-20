@@ -88,7 +88,7 @@ class FoodRepository implements Repository
         }
 
         error_log("FOOD_REPOSITORY::FETCH_LIST::", 0);
-        return $list_food;
+        return $list_food ? $list_food[0] : $list_food;
     }
 
     public static function create($entity = null): \mysqli_result|bool|null
@@ -104,7 +104,18 @@ class FoodRepository implements Repository
 
     public static function insertMakeBy(int $FoodID, int $MaterialID): \mysqli_result|bool|null
     {
-        $query = "INSERT INTO makeby VALUES('$MaterialID','$FoodID');";
+        $query = "INSERT INTO makeby (MaterialID, FoodID) VALUES('$MaterialID','$FoodID');";
+        try {
+            return QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage(), 0);
+            return null;
+        }
+    }
+
+    public static function insertCategoryTag($FoodID, $TagID)
+    {
+        $query = "INSERT INTO category_tag (TagID, FoodID) VALUES('$TagID','$FoodID');";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
@@ -148,6 +159,25 @@ class FoodRepository implements Repository
         return true;
     }
 
+    public static function updateCategoryTag($FoodID, $Tags)
+    {
+        $delete_category_tag_query = "DELETE FROM category_tag WHERE FoodID = $FoodID;";
+        try {
+            QueryExecutor::executeQuery($delete_category_tag_query);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+
+        foreach ($Tags as $tag) {
+            $result = FoodRepository::insertCategoryTag($FoodID, $tag->TagID);
+            if (!$result) {
+                ResponseHelper::error_server(FoodMessage::getMessages()->updateError);
+                die();
+            }
+        }
+        return true;
+    }
+
     public static function delete(int $entityID = null)
     {
         $query = "DELETE FROM food WHERE FoodID = $entityID";;
@@ -162,6 +192,17 @@ class FoodRepository implements Repository
     public static function deleteMakeBy($FoodID)
     {
         $query = "DELETE FROM makeby WHERE FoodID = $FoodID;";
+        try {
+            return QueryExecutor::executeQuery($query);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+        return null;
+    }
+
+    public static function deleteCategoryTag($FoodID)
+    {
+        $query = "DELETE FROM category_tag WHERE FoodID = $FoodID;";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $exception) {

@@ -267,10 +267,10 @@ CREATE TABLE tag (
 );
 
 INSERT INTO tag VALUES (1, "Cay");
-INSERT INTO tag VALUES (1, "Chua");
-INSERT INTO tag VALUES (1, "Món nước");
-INSERT INTO tag VALUES (1, "Món chay");
-INSERT INTO tag VALUES (1, "Đường phố");
+INSERT INTO tag VALUES (2, "Chua");
+INSERT INTO tag VALUES (3, "Món nước");
+INSERT INTO tag VALUES (4, "Món chay");
+INSERT INTO tag VALUES (5, "Đường phố");
 
 DROP TABLE IF EXISTS user_ref_tag;
 CREATE TABLE user_ref_tag (
@@ -291,19 +291,27 @@ DROP TABLE IF EXISTS category_tag;
 CREATE TABLE category_tag (
 	TagID BIGINT(8) NOT NULL,
     FoodID BIGINT(8),
-    ComboID BIGINT(8),
+    ComboID BIGINT(8) default NULL,
     PRIMARY KEY (TagID, FoodID, ComboID)
 );
 
-INSERT INTO category_tag VALUES (1,1,4);
-INSERT INTO category_tag VALUES (1,1,3);
-INSERT INTO category_tag VALUES (1,2,2);
-INSERT INTO category_tag VALUES (2,2,1);
-INSERT INTO category_tag VALUES (2,3,2);
-INSERT INTO category_tag VALUES (2,3,3);
-INSERT INTO category_tag VALUES (3,4,4);
-INSERT INTO category_tag VALUES (3,4,5);
-INSERT INTO category_tag VALUES (3,5,4);
-INSERT INTO category_tag VALUES (4,5,3);
-INSERT INTO category_tag VALUES (4,3,2);
-INSERT INTO category_tag VALUES (4,2,1);
+INSERT INTO category_tag VALUES (1,1,0);
+INSERT INTO category_tag VALUES (2,1,0);
+INSERT INTO category_tag VALUES (3,2,0);
+INSERT INTO category_tag VALUES (4,2,0);
+INSERT INTO category_tag VALUES (5,3,0);
+INSERT INTO category_tag VALUES (1,3,0);
+INSERT INTO category_tag VALUES (2,4,0);
+INSERT INTO category_tag VALUES (3,4,0);
+INSERT INTO category_tag VALUES (4,5,0);
+INSERT INTO category_tag VALUES (5,5,0);
+INSERT INTO category_tag VALUES (1,0,1);
+INSERT INTO category_tag VALUES (2,0,1);
+INSERT INTO category_tag VALUES (3,0,2);
+INSERT INTO category_tag VALUES (4,0,2);
+INSERT INTO category_tag VALUES (5,0,3);
+INSERT INTO category_tag VALUES (1,0,3);
+INSERT INTO category_tag VALUES (2,0,4);
+INSERT INTO category_tag VALUES (3,0,4);
+INSERT INTO category_tag VALUES (4,0,5);
+INSERT INTO category_tag VALUES (5,0,5);

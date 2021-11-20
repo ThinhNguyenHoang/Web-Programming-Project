@@ -58,16 +58,38 @@ class FoodService
             $food->FoodID = QueryExecutor::getLastInsertID();
 
             $food->Material = array();
-            $material_makeby = $request->Material;
-            foreach ($material_makeby as $material) {
-                $makeby_result = FoodRepository::insertMakeBy($food->FoodID, $material->MaterialID);
-                array_push($food->Material, $material);
+
+            if (property_exists($food, 'Material')) {
+                $materials = $request->Material;
+                foreach ($materials as $material) {
+                    $material_result = FoodRepository::insertMakeBy($food->FoodID, $material->MaterialID);
+                    if ($material_result) {
+                        array_push($food->Material, $material);
+                    } else {
+                        ResponseHelper::error_server(FoodMessage::getMessages()->createError);
+                        die();
+                    }
+                }
             }
 
-            if ($makeby_result) {
-                ResponseHelper::success(FoodMessage::getMessages()->createSuccess, $food);
-                return;
+            $food->Tags = array();
+
+            if (property_exists($food, "Tags")) {
+                $tags = $request->Tags;
+                foreach ($tags as $tag) {
+                    $tag_result = FoodRepository::insertCategoryTag($food->FoodID, $tag->TagID);
+
+                    if ($tag_result) {
+                        array_push($food->Tags, $tag);
+                    } else {
+                        ResponseHelper::error_server(FoodMessage::getMessages()->createError);
+                        die();
+                    }
+                }
             }
+
+            ResponseHelper::success(FoodMessage::getMessages()->createSuccess, $food);
+            return;
         }
 
         ResponseHelper::error_server(FoodMessage::getMessages()->createError);
@@ -83,6 +105,7 @@ class FoodService
         $food = new Food();
         $is_update_food = false;
         $is_update_makeby = false;
+        $is_update_category_tag = false;
 
         // Find food with the FoodID in database
         $food_found = FoodRepository::findFoodByID($FoodID);
@@ -147,13 +170,15 @@ class FoodService
             $food->Instruct = $food_found["Instruct"];
         }
 
-        //TODO:validate thằng Material trong body
+        $food->Material = array();
         if (property_exists($request, "Material")) {
             if (is_array($request->Material)) {
                 if (!empty($request->Material)) {
                     foreach ($request->Material as $material) {
-                        if (!property_exists($material, "MaterialID")) {
-                            ResponseHelper::error_client("Cannot find MaterialID in Material array");
+                        if (property_exists($material, "MaterialID")) {
+                            array_push($food->Material, $material);
+                        } else {
+                            ResponseHelper::error_client("Must contain MaterialID in Material array element");
                             die();
                         }
                     }
@@ -169,25 +194,50 @@ class FoodService
             $food->Material = $food_found["Material"];
         }
 
+        // echo json_encode($food->Material);
+        // die();
+
+        $food->Tags = array();
+        if (property_exists($request, "Tags")) {
+            if (is_array($request->Tags)) {
+                if (!empty($request->Tags)) {
+                    foreach ($request->Tags as $tag) {
+                        if (property_exists($tag, "TagID")) {
+                            array_push($food->Tags, $tag);
+                        } else {
+                            ResponseHelper::error_client("Must contain TagID in Tag array element");
+                            die();
+                        }
+                    }
+                    $is_update_category_tag = true;
+                } else {
+                    $food->Tags = $food_found["Tags"];
+                }
+            } else {
+                ResponseHelper::error_client("Tags feild must be an array");
+                die();
+            }
+        } else {
+            $food->Tags = $food_found["Tags"];
+        }
+
         $food->FoodID = $FoodID;
         // update food
         $update_food_result = false;
         $update_makeby_result = false;
 
-        if (!($is_update_food || $is_update_makeby)) {
+        if (!($is_update_food || $is_update_makeby || $is_update_category_tag)) {
             ResponseHelper::error_client("No Feild to update");
             die();
         }
 
-        if ($is_update_food) {
-            $update_food_result = FoodRepository::update($FoodID, $food);
-        }
+        $update_food_result = $is_update_food ? FoodRepository::update($FoodID, $food) : true;
 
-        if ($is_update_makeby) {
-            $update_makeby_result = FoodRepository::updateMakeBy($FoodID, $request->Material);
-        }
+        $update_makeby_result = $is_update_makeby ? FoodRepository::updateMakeBy($FoodID, $request->Material) : true;
 
-        if ($update_food_result || $update_makeby_result) {
+        $update_category_tag_result = $is_update_category_tag ? FoodRepository::updateCategoryTag($FoodID, $request->Tags) : true;
+
+        if ($update_food_result && $update_makeby_result && $update_category_tag_result) {
             ResponseHelper::success(FoodMessage::getMessages()->updateSuccess, $food);
             return;
         }
@@ -211,6 +261,8 @@ class FoodService
         $delete_food_result = FoodRepository::delete($FoodID);
         if ($delete_food_result) {
             $delete_makeby_result = FoodRepository::deleteMakeBy($FoodID);
+
+            $delete_category_tag_result = FoodRepository::deleteCategoryTag($FoodID);
 
             if ($delete_makeby_result) {
                 ResponseHelper::success(FoodMessage::getMessages()->deleteSuccess, $FoodID);

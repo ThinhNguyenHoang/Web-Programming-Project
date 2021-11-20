@@ -30,8 +30,9 @@ class FoodController extends BaseController implements RequestHandler
                     error_log("FOOD_CONTROLLER::GET FOOD BY ID ENDPOINT::" . $relative_path);
                     $token = RequestHelper::isLogin();
                     $food = FoodService::getFoodByID($relative_path);
+
                     if ($token) {
-                        TagRepository::increaseTagCount($token->data->id, $food[0]["Tags"]);
+                        TagRepository::increaseTagCount($token->data->id, $food["Tags"]);
                     } else {
                         echo "unauthorize";
                     }
