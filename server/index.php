@@ -18,6 +18,7 @@ use src\food\controller\FoodController;
 use src\material\controller\MaterialController;
 use src\user\controller\UserController;
 use src\tag\controller\TagController;
+use src\voucher\controller\VoucherController;
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -55,6 +56,10 @@ switch ($endpoint) {
     case "tag":
         $tagController = new TagController();
         $tagController->handleRequest();
+        break;
+    case "voucher":
+        $voucherController = new VoucherController();
+        $voucherController->handleRequest();
         break;
     default:
         header("HTTP/1.1 404 Not Found");
