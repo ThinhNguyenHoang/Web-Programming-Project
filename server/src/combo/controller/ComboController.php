@@ -8,6 +8,7 @@ use src\common\base\BaseController;
 use src\common\base\RequestHandler;
 use src\common\utils\RequestHelper;
 use src\common\utils\ResponseHelper;
+use src\tag\repository\TagRepository;
 
 require_once  __DIR__ . '/../../../vendor/autoload.php';
 
@@ -28,7 +29,12 @@ class ComboController extends BaseController implements RequestHandler
                     ComboService::getComboList();
                 } else if (is_numeric($relative_path)) {
                     error_log("COMBO_CONTROLLER::GET COMBO ENDPOINT::" . $relative_path);
-                    ComboService::getComboByID($relative_path);
+                    $token = RequestHelper::isLogin();
+                    $combo = ComboService::getComboByID($relative_path);
+
+                    if ($token) {
+                        TagRepository::increaseTagCount($token->data->id, $combo["Tags"]);
+                    }
                 } else {
                     ResponseHelper::error_client("Invalid path in combo endpoint");
                 }

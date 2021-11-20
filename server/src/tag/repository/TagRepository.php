@@ -195,4 +195,28 @@ class TagRepository implements Repository
             }
         }
     }
+
+    public static function getTagByComboID($ComboID) {
+        $tag_query = "SELECT * FROM tag AS tag
+        INNER JOIN category_tag AS category_tag
+        ON tag.TagID = category_tag.TagID
+        WHERE category_tag.ComboID = $ComboID;";
+
+        try {
+            $tag_result = QueryExecutor::executeQuery($tag_query);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+        }
+
+        $list_tag = array();
+
+        while ($tag = $tag_result->fetch_array(MYSQLI_ASSOC)) {
+            unset($tag["FoodID"]);
+            unset($tag["ComboID"]);
+            error_log(json_encode($tag), 0);
+            array_push($list_tag, $tag);
+        }
+
+        return $list_tag;
+    }
 }

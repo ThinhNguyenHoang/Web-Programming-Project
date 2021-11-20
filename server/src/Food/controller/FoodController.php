@@ -33,8 +33,6 @@ class FoodController extends BaseController implements RequestHandler
 
                     if ($token) {
                         TagRepository::increaseTagCount($token->data->id, $food["Tags"]);
-                    } else {
-                        echo "unauthorize";
                     }
                 } else {
                     ResponseHelper::error_client("Invalid path in food endpoint");

@@ -91,6 +91,30 @@ class FoodRepository implements Repository
         return $list_food ? $list_food[0] : $list_food;
     }
 
+    public static function getFoodByComboID($ComboID)
+    {
+        $food_query = "SELECT * FROM food AS food
+                            INNER JOIN includes AS includes
+                            ON food.FoodID = includes.FoodID
+                            WHERE includes.ComboID = $ComboID";
+
+        try {
+            $food_result = QueryExecutor::executeQuery($food_query);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+        }
+
+        $list_food = array();
+
+        while ($food = $food_result->fetch_array(MYSQLI_ASSOC)) {
+            unset($food["ComboID"]);
+            error_log(json_encode($food), 0);
+            array_push($list_food, $food);
+        }
+
+        return $list_food;
+    }
+
     public static function create($entity = null): \mysqli_result|bool|null
     {
         $query = "INSERT INTO food VALUES('$entity->FoodID','$entity->FoodName','$entity->Picture', '$entity->Price', '$entity->Description', '$entity->Instruct');";

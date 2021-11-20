@@ -264,7 +264,7 @@ class FoodService
 
             $delete_category_tag_result = FoodRepository::deleteCategoryTag($FoodID);
 
-            if ($delete_makeby_result) {
+            if ($delete_makeby_result && $delete_category_tag_result) {
                 ResponseHelper::success(FoodMessage::getMessages()->deleteSuccess, $FoodID);
                 return;
             }
