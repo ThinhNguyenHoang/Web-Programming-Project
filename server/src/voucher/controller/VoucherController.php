@@ -20,6 +20,7 @@ class VoucherController extends BaseController implements RequestHandler
         $method = strtolower(RequestHelper::getRequestMethod());
         error_log("Voucher controller::METHOD::" . $method);
         $relative_path = RequestHelper::get_ith_path_item(1);
+        $token = RequestHelper::validate_jwt_token();
         switch ($method) {
             case "get":
                 if ($relative_path == null) {

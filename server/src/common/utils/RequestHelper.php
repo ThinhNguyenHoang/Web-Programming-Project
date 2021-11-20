@@ -1,5 +1,7 @@
 <?php
+
 namespace src\common\utils;
+
 require_once  __DIR__ . '/../../../vendor/autoload.php';
 
 use DateTimeImmutable;
@@ -17,7 +19,8 @@ $issued_at = time();
 $expiration_time = $issued_at + (60 * 60); // valid for 1 hour
 $issuer = "http://localhost/CodeOfaNinja/RestApiAuthLevel1/";
 
-class RequestHelper{
+class RequestHelper
+{
     /*
         * This one return either: GET | PUT | POST | DELETE
      */
@@ -34,8 +37,7 @@ class RequestHelper{
         $headers = null;
         if (isset($_SERVER['Authorization'])) {
             $headers = trim($_SERVER["Authorization"]);
-        }
-        else if (isset($_SERVER['HTTP_AUTHORIZATION'])) { //Nginx or fast CGI
+        } else if (isset($_SERVER['HTTP_AUTHORIZATION'])) { //Nginx or fast CGI
             $headers = trim($_SERVER["HTTP_AUTHORIZATION"]);
         } elseif (function_exists('apache_request_headers')) {
             $requestHeaders = apache_request_headers();
@@ -51,7 +53,8 @@ class RequestHelper{
     /**
      * get access token from header
      * */
-    public static function getBearerToken() {
+    public static function getBearerToken()
+    {
         $headers = self::getAuthorizationHeader();
         // HEADER: Get the access token from the header
         if (!empty($headers)) {
@@ -62,8 +65,8 @@ class RequestHelper{
         return null;
     }
 
-    public static function returnSuccess($body){
-
+    public static function returnSuccess($body)
+    {
     }
 
     /*
@@ -74,10 +77,11 @@ class RequestHelper{
      *  NOTE: We only get the base endpoint to determine which controller to call.
      *  /authorize will be handled by the controller called it self.
      */
-    public static function getBaseEndpoint(){
+    public static function getBaseEndpoint()
+    {
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-        $uri = explode( '/', $uri );
+        $uri = explode('/', $uri);
         return $uri[1];
     }
     /*
@@ -90,27 +94,30 @@ class RequestHelper{
      *  NOTE: We only get the base endpoint to determine which controller to call.
      *  /authorize will be handled by the controller called it self.
      */
-    public static function get_ith_path_item(int $ith_num) : ?string {
-        $uri = explode("/",substr($_SERVER['REQUEST_URI'],1));
-        if($ith_num >= count($uri)){
+    public static function get_ith_path_item(int $ith_num): ?string
+    {
+        $uri = explode("/", substr($_SERVER['REQUEST_URI'], 1));
+        if ($ith_num >= count($uri)) {
             error_log("RequestHelper: Có thằng lấy index sai " . $ith_num);
             return null;
         }
         return $uri[$ith_num];
     }
 
-    public static function getRequestBody() : ?object{
+    public static function getRequestBody(): ?object
+    {
         return json_decode(file_get_contents("php://input"));
     }
 
-    public static function generate_jwt_token($userAccount) : string{
+    public static function generate_jwt_token($userAccount): string
+    {
         $key = "example_key";
         $issued_at = time();
         $expiration_time = $issued_at + (60 * 60); // valid for 1 hour
         $issuer = "http://localhost/CodeOfaN";
 
         $object = new \stdClass();
-        error_log("KEY_FLOBAL_TEST:" . $key,0);
+        error_log("KEY_FLOBAL_TEST:" . $key, 0);
         $payload = (object) array(
             "iat" => $issued_at,
             "exp" => $expiration_time,
@@ -121,7 +128,7 @@ class RequestHelper{
                 "role" => $userAccount->role
             )
         );
-        return JWT::encode($payload,$key,'HS512');
+        return JWT::encode($payload, $key, 'HS512');
     }
 
     public static function validate_jwt_token(): object
@@ -131,22 +138,29 @@ class RequestHelper{
         // GET THE jwt token attached to the request
         $jwt = self::getBearerToken();
         error_log("TOKEN ATTACHED:" . json_encode($jwt), 0);
-        if (! $jwt) {
+        if (!$jwt) {
             // No token was able to be extracted from the authorization header
             header('HTTP/1.0 400 Bad Request');
             ResponseHelper::error_client("Unauthorized. Suck Ass Token. Stop being an Imposter");
             exit;
         }
-        $token = JWT::decode($jwt,$key , ['HS512']);
+        $token = JWT::decode($jwt, $key, ['HS512']);
         $now = new DateTimeImmutable();
 
-        if ($token->iss !== $issuer ||
-            $token->exp < $now->getTimestamp())
-        {
+        if (
+            $token->iss !== $issuer ||
+            $token->exp < $now->getTimestamp()
+        ) {
             header('HTTP/1.1 401 Unauthorized');
             exit;
         }
         return $token;
+    }
+
+    public static function getUserIDFromToken()
+    {
+        $token = RequestHelper::isLogin();
+        return $token ? $token->data->id : null;
     }
 
     public static function isLogin()
@@ -156,29 +170,32 @@ class RequestHelper{
         // GET THE jwt token attached to the request
         $jwt = self::getBearerToken();
         error_log("TOKEN ATTACHED:" . json_encode($jwt), 0);
-        if (! $jwt) {
+        if (!$jwt) {
             // No token was able to be extracted from the authorization header
             return false;
         }
-        $token = JWT::decode($jwt,$key , ['HS512']);
+        $token = JWT::decode($jwt, $key, ['HS512']);
         $now = new DateTimeImmutable();
 
-        if ($token->iss !== $issuer ||
-            $token->exp < $now->getTimestamp())
-        {
+        if (
+            $token->iss !== $issuer ||
+            $token->exp < $now->getTimestamp()
+        ) {
             return false;
         }
         return $token;
     }
-    public static function isAdminPrivilege(): bool {
+    public static function isAdminPrivilege(): bool
+    {
         $token = self::validate_jwt_token();
         $payload = self::getTokenPayload();
         return $payload->role == "ADMIN";
     }
-    public static function getTokenPayload(): object{
+    public static function getTokenPayload(): object
+    {
         $jwt = self::getRequestBody()->token;
         global $key;
-        return JWT::decode($jwt,$key , ['HS512']);
+        return JWT::decode($jwt, $key, ['HS512']);
     }
 
 

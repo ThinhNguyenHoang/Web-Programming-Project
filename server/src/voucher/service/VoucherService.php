@@ -28,11 +28,11 @@ class VoucherService
 
     public static function getVoucherByID($VoucherID)
     {
-        // Find tag with the FoodID in database
+        // Find tag with the VoucherID in database
         $voucher_found = VoucherRepository::findVoucherByID($VoucherID);
         if (!$voucher_found) {
-            // Throw error notifying FoodID already taken
-            ResponseHelper::error_client("FoodID doesn't exist");
+            // Throw error notifying VoucherID already taken
+            ResponseHelper::error_client("VoucherID doesn't exist");
             die();
         }
         ResponseHelper::success(VoucherMessage::getMessages()->readSuccess, $voucher_found);

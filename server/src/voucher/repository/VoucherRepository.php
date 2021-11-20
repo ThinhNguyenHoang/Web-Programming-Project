@@ -14,6 +14,7 @@ use Exception;
 use src\common\base\Repository;
 use src\common\utils\QueryExecutor;
 use src\common\utils\ResponseHelper;
+use src\common\utils\RequestHelper;
 use src\tag\message\FoodMessage;
 use function DeepCopy\deep_copy;
 
@@ -34,43 +35,46 @@ class VoucherRepository implements Repository
      */
     public static function listVoucher(): array
     {
-        $query = "SELECT * FROM voucher ORDER BY VoucherID;";
+        $UserID = RequestHelper::getUserIDFromToken();
+        $query = "SELECT * FROM voucher WHERE UserID='$UserID' ORDER BY VoucherID;";
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
             error_log($e->getMessage());
         }
 
-        $list_tag = array();
+        $list_voucher = array();
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
             error_log(json_encode($row), 0);
-            array_push($list_tag, $row);
+            array_push($list_voucher, $row);
         }
 
         error_log("VOUCHER_REPOSITORY::FETCH_LIST::", 0);
-        return $list_tag;
+        return $list_voucher;
     }
 
     public static function findVoucherByID(int $VoucherID)
     {
-        $query = "SELECT * FROM voucher WHERE VoucherID=$VoucherID;";
+        $UserID = RequestHelper::getUserIDFromToken();
+        $query = "SELECT * FROM voucher WHERE VoucherID=$VoucherID AND UserID=$UserID;";
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
             error_log($e->getMessage());
         }
 
-        $tag = mysqli_fetch_array($result, MYSQLI_ASSOC);
-        error_log(json_encode($tag), 0);
+        $voucher = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        error_log(json_encode($voucher), 0);
 
         error_log("VOUCHER_REPOSITORY::FETCH_BY_ID::", 0);
-        return $tag;
+        return $voucher;
     }
 
     public static function create($entity = null): \mysqli_result|bool|null
     {
-        $query = "INSERT INTO voucher (ExpirationDate, Description, VoucherName)
-         VALUES ('$entity->ExpirationDate', '$entity->Description', '$entity->VoucherName');";
+        $UserID = RequestHelper::getUserIDFromToken();
+        $query = "INSERT INTO voucher (ExpirationDate, Description, VoucherName, UserID)
+         VALUES ('$entity->ExpirationDate', '$entity->Description', '$entity->VoucherName', '$UserID');";
 
         try {
             return QueryExecutor::executeQuery($query);
@@ -87,9 +91,10 @@ class VoucherRepository implements Repository
 
     public static function update(int $entityID = null, object $entity = null)
     {
+        $UserID = RequestHelper::getUserIDFromToken();
         $query = "UPDATE voucher SET 
                     ExpirationDate='$entity->ExpirationDate', VoucherName='$entity->VoucherName',
-                    Description='$entity->Description'  WHERE VoucherID=$entityID;";
+                    Description='$entity->Description'  WHERE VoucherID=$entityID AND UserID=$UserID;";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $exception) {
@@ -100,7 +105,8 @@ class VoucherRepository implements Repository
 
     public static function delete(int $entityID = null)
     {
-        $query = "DELETE FROM voucher WHERE VoucherID=$entityID;;";
+        $UserID = RequestHelper::getUserIDFromToken();
+        $query = "DELETE FROM voucher WHERE VoucherID=$entityID AND UserID=$UserID;";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $exception) {
