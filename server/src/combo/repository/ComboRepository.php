@@ -15,6 +15,7 @@ use src\common\base\Repository;
 use src\common\utils\QueryExecutor;
 use src\common\utils\ResponseHelper;
 use src\combo\message\ComboMessage;
+use src\common\utils\RequestHelper;
 use src\food\repository\FoodRepository;
 use src\tag\repository\TagRepository;
 
@@ -84,7 +85,34 @@ class ComboRepository implements Repository
         }
 
         error_log("COMBO_REPOSITORY::FETCH_LIST::", 0);
-        return $list_combo ? $list_combo[0] : $list_food;
+        return $list_combo ? $list_combo[0] : $list_combo;
+    }
+
+    public static function getTopTagCombo()
+    {
+        $UserID = RequestHelper::getUserIDFromToken();
+        $tag_limit = 6;
+        $query = "SELECT * FROM user_ref_tag AS ref_tag
+                INNER JOIN category_tag AS category_tag
+                ON ref_tag.TagID=category_tag.TagID 
+                WHERE ref_tag.UserID=$UserID AND category_tag.FoodID=0
+                 ORDER BY ref_tag.Count DESC LIMIT $tag_limit";
+
+        try {
+            $result = QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+        }
+
+        $top_tag = array();
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+            error_log(json_encode($row), 0);
+            unset($row["FoodID"]);
+            array_push($top_tag, $row);
+        }
+
+        error_log("COMBO_REPOSITORY::GET_TOP_TAG::", 0);
+        return $top_tag;
     }
 
     /**

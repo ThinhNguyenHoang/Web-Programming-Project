@@ -39,6 +39,22 @@ class FoodService
         return $food_found;
     }
 
+    public static function getFoodRecomendation()
+    {
+        $top_tag = FoodRepository::getTopTagFood();
+        $list_food = array();
+        foreach($top_tag as $tag) {
+            // echo json_encode($tag);die();
+            $food_found = FoodRepository::findFoodByID($tag["FoodID"]);
+            if ($food_found) {
+                array_push($list_food, $food_found);
+            }
+        }
+        ResponseHelper::success(FoodMessage::getMessages()->readSuccess, $list_food);
+    }
+
+
+
     public static function addFood()
     {
         $request = RequestHelper::getRequestBody();

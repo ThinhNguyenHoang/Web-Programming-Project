@@ -38,6 +38,21 @@ class ComboService
         return $result;
     }
 
+    public static function getComboRecomendation()
+    {
+        $top_tag = ComboRepository::getTopTagCombo();
+        echo json_encode($top_tag);die();
+        $list_combo = array();
+        foreach($top_tag as $tag) {
+            // echo json_encode($tag);die();
+            $combo_found = ComboRepository::findComboByID($tag["ComboID"]);
+            if ($combo_found) {
+                array_push($list_combo, $combo_found);
+            }
+        }
+        ResponseHelper::success(ComboMessage::getMessages()->readSuccess, $list_combo);
+    }
+
     public static function addCombo()
     {
         $request = RequestHelper::getRequestBody();

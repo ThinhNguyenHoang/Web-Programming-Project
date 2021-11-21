@@ -28,12 +28,16 @@ class FoodController extends BaseController implements RequestHandler
                     FoodService::getFoodList();
                 } else if (is_numeric($relative_path)) {
                     error_log("FOOD_CONTROLLER::GET FOOD BY ID ENDPOINT::" . $relative_path);
-                    $token = RequestHelper::isLogin();
+                    $UserID = RequestHelper::getUserIDFromToken();
                     $food = FoodService::getFoodByID($relative_path);
 
-                    if ($token) {
-                        TagRepository::increaseTagCount($token->data->id, $food["Tags"]);
+                    if ($UserID) {
+                        TagRepository::increaseTagCount($UserID, $food["Tags"]);
                     }
+                } else if ($relative_path == "recomendation") {
+                    $token = RequestHelper::validate_jwt_token();
+                    error_log("FOOD_CONTROLLER::GET FOOD RECOMENDATION ENDPOINT::" . $relative_path);
+                    FoodService::getFoodRecomendation();
                 } else {
                     ResponseHelper::error_client("Invalid path in food endpoint");
                 }

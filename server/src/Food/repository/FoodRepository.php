@@ -14,6 +14,7 @@ use Exception;
 use src\common\base\Repository;
 use src\common\utils\QueryExecutor;
 use src\common\utils\ResponseHelper;
+use src\common\utils\RequestHelper;
 use src\food\message\FoodMessage;
 use src\material\repository\MaterialRepository;
 use src\tag\repository\TagRepository;
@@ -89,6 +90,33 @@ class FoodRepository implements Repository
 
         error_log("FOOD_REPOSITORY::FETCH_LIST::", 0);
         return $list_food ? $list_food[0] : $list_food;
+    }
+
+    public static function getTopTagFood()
+    {
+        $UserID = RequestHelper::getUserIDFromToken();
+        $tag_limit = 6;
+        $query = "SELECT * FROM user_ref_tag AS ref_tag
+                INNER JOIN category_tag AS category_tag
+                ON ref_tag.TagID=category_tag.TagID 
+                WHERE ref_tag.UserID=$UserID AND category_tag.ComboID=0
+                 ORDER BY ref_tag.Count DESC LIMIT $tag_limit";
+
+        try {
+            $result = QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+        }
+
+        $top_tag = array();
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+            error_log(json_encode($row), 0);
+            unset($row["ComboID"]);
+            array_push($top_tag, $row);
+        }
+
+        error_log("FOOD_REPOSITORY::GET_TOP_TAG::", 0);
+        return $top_tag;
     }
 
     public static function getFoodByComboID($ComboID)
