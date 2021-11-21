@@ -7,11 +7,7 @@ import ButtonBase from '@mui/material/ButtonBase';
 import Box from '@mui/material/Box';
 import { Card, CardMedia } from '@mui/material';
 
-
-
-function Nofication (props){
-    const nofimg="https://codelearn.io/Upload/Blog/database-change-notification-oracle-63742419191.3747.jpg";
-    const nofInfo=props.nofi;
+function NewsCard (props){
     return (
     <Card sx={{display:"flex",flexDirection:"row",height:128,mb:2}}>
         <CardMedia title="nofication" image={nofimg} sx={{width: 128 ,height: 128,borderBottomLeftRadius:"10px",borderTopLeftRadius:"10px",flexShrink:0}}/>
@@ -22,4 +18,4 @@ function Nofication (props){
     </Card>
     );
 }
-export default Nofication;
+export default NewsCard;

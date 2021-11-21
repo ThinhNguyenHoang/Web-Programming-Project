@@ -10,7 +10,7 @@ require('dotenv').config()
 
 console.log("MYSQL_ENV_USER:", process.env.REACT_APP_MYSQL_USER);
 //const rootURL = `http://${process.env.REACT_APP_PHP_SERVER}:${process.env.REACT_APP_PHP_PORT}`;
-const rootURL=`http://localhost:3001`;
+const rootURL=`http://localhost:10001`;
 
 
 function sleeper(ms) {

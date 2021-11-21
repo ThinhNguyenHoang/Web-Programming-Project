@@ -26,13 +26,13 @@ function FoodCart() {
     dispatch({type:get_cart_actions.loading,payload:``});
   }, []);
   return (
-    <Grid container spacing={2} p={5} >
+    <Grid container spacing={2} p={5} sx={{bgcolor:'elevation.layer0.main'}} >
       <Grid item xs={12}>
-        <Typography variant="h5" sx={{fontWeight:"Bold"}}>{t(base_keys.food.cart)}({cart.quantity})</Typography>
+        <Typography variant="h4" sx={{fontWeight:"Bold", color:"elevation.layer0.contrast"}}>{t(base_keys.food.cart)} ({cart.quantity})</Typography>
       </Grid>
       <Grid item container xs={12} spacing={2} >
         <Grid item container md={8} xs={12}  >
-          <Paper sx={{boxShadow:3,width:"100%",height:"auto"}} >
+          <Paper sx={{boxShadow:3,width:"100%",height:"auto", bgcolor:'elevation.layer1.main'}} >
             <Grid item container xs={12}  >
               {cart.food_list.map((food)=>{
                 return <FoodCard food={food} key={food.id} userId={userID}/>;
@@ -41,7 +41,7 @@ function FoodCart() {
           </Paper>
         </Grid>
         <Grid item container md={4} xs={12} display="flex" flexDirection="column" spacing={2}  >
-          <VoucherBox  voucherList={cart.voucher_list} voucher_id={cart.voucher_id} />
+          <VoucherBox voucherList={cart.voucher_list} voucher_id={cart.voucher_id} />
           <TotalBox subtotal={cart.subtotal} discount={cart.discount} />
           <NoteBox/>
           <Box textAlign="center" pt={8} >
