@@ -13,6 +13,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Map from './components/Map/Map'
 
 import Toaster from "./utils/Toaster/Toaster";
+import ReactFirebaseFileUpload from "./utils/UploadFile/FileUploader";
+import MyImageMasonry from "./components/ImageMasonry/MyImageMasonry";
 require('dotenv').config();
 // function TestComponent(){}
 
@@ -129,12 +131,14 @@ function App() {
                     {/* //////////////test */}
                 </Grid>
             </header>
-            <Map
-                googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAMeYALPFuQ_klstxu-M8WDNUmR4hoEJZM&callback=initMap`}
-                loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={<div style={{ height: `90vh`, margin: `auto`, border: '2px solid black' }} />}
-                mapElement={<div style={{ height: `100%` }} />}
-            />
+            {/*<Map*/}
+            {/*    googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAMeYALPFuQ_klstxu-M8WDNUmR4hoEJZM&callback=initMap`}*/}
+            {/*    loadingElement={<div style={{ height: `100%` }} />}*/}
+            {/*    containerElement={<div style={{ height: `90vh`, margin: `auto`, border: '2px solid black' }} />}*/}
+            {/*    mapElement={<div style={{ height: `100%` }} />}*/}
+            {/*/>*/}
+            <ReactFirebaseFileUpload/>
+            <MyImageMasonry/>
         </div>
     );
 }

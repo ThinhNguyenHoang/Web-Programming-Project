@@ -34,8 +34,10 @@ const food_item = {
     price: "",
     description: "",
     status: generateStatus(),
+    //* Giảm giá bao nhiêu phần trăm
     sale_value: "",
     instruct: "",
+    //* List các tag: Mỗi tag có thể có giá trị : "Mặn" , "Chua", "Cay", "Ngọt", "Đắng",...
     tags: [],
     material: []
 }
@@ -233,3 +235,42 @@ const FoodSlice= createSlice({
     }
 });
 export default FoodSlice;
+
+
+
+
+// //
+// const comment_init = {
+//     user_iamge: "",
+//     time: "",
+//     content: "",
+//     name: " ",
+// }
+// const Comment = () => {
+//     return (
+//
+//     );
+// }
+//
+// //
+// const review_init = {
+//     review: "",
+//     comments: []
+// }
+// const Review = () => {
+//     return (
+//         <Box>
+//             // Cái này là tiêu đề của cái review
+//             <Typography>
+//             </Typography>
+//             <Typography>
+//                 NỘi dung
+//                 {/*Có hình ảnh ở cuối cái review nếu có */}
+//             </Typography>
+//             <Box>
+//             {/*  LIst các comment lên trên bài review */}
+//             </Box>
+//         </Box>
+//     );
+// }
+
