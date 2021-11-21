@@ -35,6 +35,22 @@ class ComboService
         }
 
         ResponseHelper::success(ComboMessage::getMessages()->readSuccess, $result);
+        return $result;
+    }
+
+    public static function getComboRecomendation()
+    {
+        $top_tag = ComboRepository::getTopTagCombo();
+        echo json_encode($top_tag);die();
+        $list_combo = array();
+        foreach($top_tag as $tag) {
+            // echo json_encode($tag);die();
+            $combo_found = ComboRepository::findComboByID($tag["ComboID"]);
+            if ($combo_found) {
+                array_push($list_combo, $combo_found);
+            }
+        }
+        ResponseHelper::success(ComboMessage::getMessages()->readSuccess, $list_combo);
     }
 
     public static function addCombo()
@@ -48,25 +64,48 @@ class ComboService
         error_log("Adding combo: Map Combo entity from request", 0);
         $combo_result = ComboRepository::create($combo);
 
-        $combo->ComboID = QueryExecutor::getLastInsertID();
-
-        $combo->Food = array();
-        $food_includes = $request->Food;
-        foreach ($food_includes as $combo) {
-            $includes_result = ComboRepository::insertIncludes($combo->ComboID, $combo->ComboID);
-            array_push($combo->Food, $combo);
-        }
-
         error_log("Adding combo: Insert to database", 0);
 
-        if ($combo_result && $includes_result) {
+        if ($combo_result) {
             error_log("Adding combo: " . json_encode($combo), 0);
+
+            $combo->ComboID = QueryExecutor::getLastInsertID();
+
+            $combo->Food = array();
+
+            if (property_exists($combo, "Food")) {
+                $foods = $request->Food;
+                foreach ($foods as $food) {
+                    $food_result = ComboRepository::insertIncludes($food->FoodID, $combo->ComboID);
+                    if ($food_result) {
+                        array_push($combo->Food, $food);
+                    } else {
+                        ResponseHelper::error_server(ComboMessage::getMessages()->createError);
+                        die();
+                    }
+                }
+            }
+
+            $combo->Tags = array();
+
+            if (property_exists($combo, "Tags")) {
+                $tags = $request->Tags;
+                foreach ($tags as $tag) {
+                    $tag_result = ComboRepository::insertCategoryTag($combo->ComboID, $tag->TagID);
+                    if ($tag_result) {
+                        array_push($combo->Tags, $tag);
+                    } else {
+                        ResponseHelper::error_server(ComboMessage::getMessages()->createError);
+                        die();
+                    }
+                }
+            }
+
             ResponseHelper::success(ComboMessage::getMessages()->createSuccess, $combo);
             return;
         }
 
         ResponseHelper::error_server(ComboMessage::getMessages()->createError);
-
         return;
     }
 
@@ -80,49 +119,6 @@ class ComboService
         $is_update_combo = false;
         $is_update_include = false;
 
-        if (property_exists($request, "ComboName")) {
-            if ($request->ComboName != "") {
-                $combo->ComboName = $request->ComboName;
-                $is_update_combo = true;
-            }
-        }
-
-        if (property_exists($request, "ComboDescrip")) {
-            if ($request->ComboDescrip != "") {
-                $combo->ComboDescrip = $request->ComboDescrip;
-                $is_update_combo = true;
-            }
-        }
-
-        if (property_exists($request, "Price")) {
-            if ($request->Price != "") {
-                $combo->Price = $request->Price;
-                $is_update_combo = true;
-            }
-        }
-
-        // if (property_exists($request, "Food")) {
-        //     if (is_array($request->Food)) {
-        //         if (!empty($request->Food)) {
-        //             $is_update_include = true;
-        //         }
-        //     } esle {
-        //         ResponseHelper::error_client("Food feild incorrect");
-        //         die();
-        //     }
-        // }
-
-        if (property_exists($request, "Food")) {
-            if (is_array($request->Food)) {
-                if (!empty($request->Food)) {
-                    $is_update_include = true;
-                }
-            } else {
-                ResponseHelper::error_client("Food feild incorrect");
-                die();
-            }
-        }
-
         // Find combo with the ComboID in database
         $combo_found = ComboRepository::findComboByID($ComboID);
         if (!$combo_found) {
@@ -130,30 +126,107 @@ class ComboService
             ResponseHelper::error_client("ComboID doesn't exist");
             die();
         }
+
+        if (property_exists($request, "ComboName")) {
+            if ($request->ComboName != "") {
+                $combo->ComboName = $request->ComboName;
+                $is_update_combo = true;
+            } else {
+                $combo->ComboName = $combo_found["ComboName"];
+            }
+        } else {
+            $combo->ComboName = $combo_found["ComboName"];
+        }
+
+        if (property_exists($request, "ComboDescrip")) {
+            if ($request->ComboDescrip != "") {
+                $combo->ComboDescrip = $request->ComboDescrip;
+                $is_update_combo = true;
+            } else {
+                $combo->ComboDescrip = $combo_found["ComboDescrip"];
+            }
+        } else {
+            $combo->ComboDescrip = $combo_found["ComboDescrip"];
+        }
+
+        if (property_exists($request, "Price")) {
+            if ($request->Price != "") {
+                $combo->Price = $request->Price;
+                $is_update_combo = true;
+            } else {
+                $combo->Price = $combo_found["Price"];
+            }
+        } else {
+            $combo->Price = $combo_found["Price"];
+        }
+
+        $combo->Food = array();
+        if (property_exists($request, "Food")) {
+            if (is_array($request->Food)) {
+                if (!empty($request->Food)) {
+                    foreach ($request->Food as $food) {
+                        if (property_exists($food, "FoodID")) {
+                            array_push($combo->Food, $food);
+                        } else {
+                            ResponseHelper::error_client("Must contain FoodID in Food array element");
+                            die();
+                        }
+                    }
+                    $is_update_include = true;
+                } else {
+                    $combo->Food = $combo_found["Food"];
+                }
+            } else {
+                ResponseHelper::error_client("Food feild must be an array");
+                die();
+            }
+        } else {
+            $combo->Food = $combo_found["Food"];
+        }
+
+        $combo->Tags = array();
+        if (property_exists($request, "Tags")) {
+            if (is_array($request->Tags)) {
+                if (!empty($request->Tags)) {
+                    foreach ($request->Tags as $tag) {
+                        if (property_exists($tag, "TagID")) {
+                            array_push($combo->Tags, $tag);
+                        } else {
+                            ResponseHelper::error_client("Must contain TagID in Tag array element");
+                            die();
+                        }
+                    }
+                    $is_update_category_tag = true;
+                } else {
+                    $combo->Tags = $combo_found["Tags"];
+                }
+            } else {
+                ResponseHelper::error_client("Tags feild must be an array");
+                die();
+            }
+        } else {
+            $combo->Tags = $combo_found["Tags"];
+        }
+
         $combo->ComboID = $ComboID;
         // update combo
         $update_combo_result = false;
         $update_include_result = false;
 
-        if ($is_update_combo) {
-            $update_combo_result = ComboRepository::update($ComboID, $combo);
-        }
-
-        if ($is_update_include) {
-            $update_include_result = ComboRepository::updateInclude($ComboID, $request->Food);
-            $combo->Food = array();
-            foreach($request->Food as $food) {
-                array_push($combo->Food, $food);
-            }
-        }
-
-        if (!($is_update_combo || $is_update_include)) {
+        if (!($is_update_combo || $is_update_include || $is_update_category_tag)) {
             ResponseHelper::error_client("No Feild to update");
             die();
         }
 
-        if ($update_combo_result || $update_include_result) {
+        $update_combo_result = $is_update_combo ? ComboRepository::update($ComboID, $combo) : true;
+
+        $update_include_result = $is_update_include ? ComboRepository::updateInclude($ComboID, $request->Food) : true;
+
+        $update_category_tag_result = $is_update_category_tag ? ComboRepository::updateCategoryTag($ComboID, $request->Tags) : true;
+
+        if ($update_combo_result && $update_include_result && $update_category_tag_result) {
             ResponseHelper::success(ComboMessage::getMessages()->updateSuccess, $combo);
+            return;
         }
         ResponseHelper::error_server(ComboMessage::getMessages()->updateError);
     }
@@ -171,9 +244,16 @@ class ComboService
         }
 
         // delete combo
-        $result = ComboRepository::delete($ComboID);
-        if ($result) {
-            ResponseHelper::success(ComboMessage::getMessages()->deleteSuccess, $ComboID);
+        $delete_combo_result = ComboRepository::delete($ComboID);
+        if ($delete_combo_result) {
+            $delete_include_result = ComboRepository::deleteInclude($ComboID);
+
+            $delete_category_tag_result = ComboRepository::deleteCategoryTag($ComboID);
+
+            if ($delete_include_result && $delete_category_tag_result) {
+                ResponseHelper::success(ComboMessage::getMessages()->deleteSuccess, $combo_found);
+                return;
+            }
         }
         ResponseHelper::error_server(ComboMessage::getMessages()->deleteError);
     }

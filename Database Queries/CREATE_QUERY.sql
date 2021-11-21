@@ -43,6 +43,8 @@ INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('asdasdasdasd','asdjklsa
 INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('zxczxczxc','asdjklsadfjlksadf','CUSTOMER');
 INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('qweqweqwe','asdjklsadfjlksadf','CUSTOMER');
 INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('xasxas','asdjklsadfjlksadf','ADMIN');
+INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('thuandeptrai','$2y$10$.GHMTbGKvu14eayGWhVHq.vO5cwzeAcV1mpxAPmintOeOng1cUnlq','ADMIN');
+INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('thuandeptrai','$2y$10$.GHMTbGKvu14eayGWhVHq.vO5cwzeAcV1mpxAPmintOeOng1cUnlq','CUSTOMER');
 
 -- DROP TABLE IF EXISTS USER_OWNS_BANK_ACCOUNT; 
 -- CREATE TABLE USER_OWNS_BANK_ACCOUNT(Id BIGINT(8) NOT NULL auto_increment, UserID BIGINT(8), BankAccountID BIGINT(8), PRIMARY KEY (Id)); 
@@ -60,10 +62,7 @@ INSERT INTO BANK_ACCOUNT(UserID,BankAccountNumber, AccountOwner, BankAccountType
 INSERT INTO BANK_ACCOUNT(UserID,BankAccountNumber, AccountOwner, BankAccountType,Balance, ValidStart, ValidEnd) VALUES(4,'80119775222544','Thinh Thinh Thinh','Algribank','1150000','2000-01-01','2025-10-01');
 
 
-
-
-select last_insert_id();
-
+/*
 DROP TABLE IF EXISTS cart; 
 CREATE TABLE Cart(
 	UserID BIGINT(8),
@@ -76,7 +75,7 @@ INSERT INTO `web_food`.`cart` (`UserID`, `Total`) VALUES ('2', '30000');
 INSERT INTO `web_food`.`cart` (`UserID`, `Total`) VALUES ('3', '50000');
 INSERT INTO `web_food`.`cart` (`UserID`, `Total`) VALUES ('4', '100000');
 INSERT INTO `web_food`.`cart` (`UserID`, `Total`) VALUES ('5', '0');
-
+*/
 
 DROP TABLE IF EXISTS cartfood; 
 CREATE TABLE CartFood(
@@ -259,3 +258,59 @@ CREATE TABLE COMMENT_FOR  (
     PRIMARY KEY(CommentID)
 );
 
+DROP TABLE IF EXISTS tag;
+CREATE TABLE tag (
+	TagID BIGINT(8) NOT NULL AUTO_INCREMENT,
+    TagName TEXT,
+    PRIMARY KEY (TagID)
+);
+
+INSERT INTO tag VALUES (1, "Cay");
+INSERT INTO tag VALUES (2, "Chua");
+INSERT INTO tag VALUES (3, "Món nước");
+INSERT INTO tag VALUES (4, "Món chay");
+INSERT INTO tag VALUES (5, "Đường phố");
+
+DROP TABLE IF EXISTS user_ref_tag;
+CREATE TABLE user_ref_tag (
+	TagID BIGINT(8) NOT NULL,
+    UserID BIGINT(8) NOT NULL,
+    Count BIGINT(8),
+    PRIMARY KEY (UserID, TagID)
+);
+
+INSERT INTO user_ref_tag VALUES (1, 7, 0);
+INSERT INTO user_ref_tag VALUES (2, 7, 1);
+INSERT INTO user_ref_tag VALUES (3, 7, 2);
+INSERT INTO user_ref_tag VALUES (4, 7, 1);
+INSERT INTO user_ref_tag VALUES (5, 7, 1);
+INSERT INTO user_ref_tag VALUES (6, 7, 3);
+
+DROP TABLE IF EXISTS category_tag;
+CREATE TABLE category_tag (
+	TagID BIGINT(8) NOT NULL,
+    FoodID BIGINT(8),
+    ComboID BIGINT(8),
+    PRIMARY KEY (TagID, FoodID, ComboID)
+);
+
+INSERT INTO category_tag VALUES (1,1,0);
+INSERT INTO category_tag VALUES (2,1,0);
+INSERT INTO category_tag VALUES (3,2,0);
+INSERT INTO category_tag VALUES (4,2,0);
+INSERT INTO category_tag VALUES (5,3,0);
+INSERT INTO category_tag VALUES (1,3,0);
+INSERT INTO category_tag VALUES (2,4,0);
+INSERT INTO category_tag VALUES (3,4,0);
+INSERT INTO category_tag VALUES (4,5,0);
+INSERT INTO category_tag VALUES (5,5,0);
+INSERT INTO category_tag VALUES (1,0,1);
+INSERT INTO category_tag VALUES (2,0,1);
+INSERT INTO category_tag VALUES (3,0,2);
+INSERT INTO category_tag VALUES (4,0,2);
+INSERT INTO category_tag VALUES (5,0,3);
+INSERT INTO category_tag VALUES (1,0,3);
+INSERT INTO category_tag VALUES (2,0,4);
+INSERT INTO category_tag VALUES (3,0,4);
+INSERT INTO category_tag VALUES (4,0,5);
+INSERT INTO category_tag VALUES (5,0,5);
