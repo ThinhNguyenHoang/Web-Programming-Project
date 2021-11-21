@@ -9,13 +9,8 @@ import {v4 as uuidv4} from 'uuid';
 require('dotenv').config()
 
 console.log("MYSQL_ENV_USER:", process.env.REACT_APP_MYSQL_USER);
-<<<<<<< HEAD
 //const rootURL = `http://${process.env.REACT_APP_PHP_SERVER}:${process.env.REACT_APP_PHP_PORT}`;
 const rootURL=`http://localhost:10001`;
-=======
-const rootURL = `http://${process.env.REACT_APP_PHP_SERVER}:${process.env.REACT_APP_PHP_PORT}`;
-// const rootURL=`http://localhost:3001`;
->>>>>>> 55c93e77ee9123b045db8784d1c7a1721d6e0df8
 
 
 function sleeper(ms) {
