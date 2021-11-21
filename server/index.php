@@ -19,6 +19,7 @@ use src\material\controller\MaterialController;
 use src\user\controller\UserController;
 use src\tag\controller\TagController;
 use src\voucher\controller\VoucherController;
+use src\wish_list\controller\WishListController;
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -60,6 +61,10 @@ switch ($endpoint) {
     case "voucher":
         $voucherController = new VoucherController();
         $voucherController->handleRequest();
+        break;
+    case "wish_list":
+        $wishListController = new WishListController();
+        $wishListController->handleRequest();
         break;
     default:
         header("HTTP/1.1 404 Not Found");
