@@ -290,7 +290,7 @@ DROP TABLE IF EXISTS category_tag;
 CREATE TABLE category_tag (
 	TagID BIGINT(8) NOT NULL,
     FoodID BIGINT(8),
-    ComboID BIGINT(8) default NULL,
+    ComboID BIGINT(8),
     PRIMARY KEY (TagID, FoodID, ComboID)
 );
 
