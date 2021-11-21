@@ -27,6 +27,9 @@ class UserController extends BaseController implements RequestHandler
                 if($relative_path == null){
                     UserService::getUserList();
                 }
+                else if($relative_path == "profile"){
+                    UserService::getUserProfile();
+                }
                 else if ($relative_path == "accounts") {
                     UserService::getUserList();
                 }
@@ -73,6 +76,9 @@ class UserController extends BaseController implements RequestHandler
                         break;
                     case "change-password":
                         UserService::setNewPassword();
+                        break;
+                    case "profile":
+                        UserService::updateUserProfile();
                         break;
                     default:
                         ResponseHelper::error_client("Invalid parameter");

@@ -24,7 +24,19 @@ class UserService
         ResponseHelper::success(UserMessage::getMessages()->readSuccess,UserRepository::listUserAccount());
     }
 
-
+//    public static function getUserProfile()
+//    {
+//        $token = RequestHelper::validate_jwt_token();
+//        $request = RequestHelper::getRequestBody();
+//        error_log("USER_SERVICE::REGISTER::" . $request, 0);
+//        // Find user with the username in database
+//        $user = new \stdClass();
+//        $user->username = $token->data->username;
+//        if (!$user->username) {
+//            error_log("CANNOT FIND USER_NAME_FROM_TOKEN:" . $user->username, 0);
+//            die();
+//        }
+//    }
     public static function registerUser(){
         $request = RequestHelper::getRequestBody();
         // Find user with the username in database
@@ -82,8 +94,8 @@ class UserService
         $body->token=RequestHelper::generate_jwt_token($user_found);
         $body->username = $user->username;
         $body->user_profile = UserRepository::getUserProfile($user_found->id);
-        error_log("LOGIN SUCCESS: " . $body->token, 0);
-        error_log("LOGIN SUCCESS::USER_PROFILE:: " . $body->token, 0);
+        error_log("LOGIN SUCCESS: " . $body->username, 0);
+        error_log("LOGIN SUCCESS::USER_PROFILE:: " . json_encode($body->user_profile), 0);
         ResponseHelper::success("Login success", $body);
         die();
     }
@@ -164,4 +176,30 @@ class UserService
         }
         ResponseHelper::error_server(UserMessage::getMessages()->updateError);
     }
+
+    public static function updateUserProfile(){
+        $token = RequestHelper::validate_jwt_token();
+        $request = RequestHelper::getRequestBody();
+        error_log("USER_SERVICE::UPDATE PROFILE::" . $request,0);
+        // Find user with the username in database
+        $user = new \stdClass();
+        $user->username = $token->data->username;
+        if(!$user->username){
+            error_log("USER_NAME_FROM_TOKEN:" . $user->username,0);
+            die();
+        }
+        $user_found = UserRepository::findUserByName($user->username);
+        if(!$user_found){
+            // Throw error notifying username already taken
+            ResponseHelper::error_client("Account doesn't exist");
+        }
+        $user_profile = UserMapper::mapUserAccountFromSignInRequest($request);
+        $result = UserRepository::updateUserProfile($user_found->id,$user_profile);
+        if($result){
+            ResponseHelper::success(UserMessage::getMessages()->updateSuccess,$user);
+        }
+        ResponseHelper::error_server(UserMessage::getMessages()->updateError);
+    }
+
+
 }

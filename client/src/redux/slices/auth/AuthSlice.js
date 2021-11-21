@@ -45,8 +45,8 @@ const initialValue = {
 export const selectors = {
     getUserAvatar: (state) => state.auth.currentUser.avatar,
     getUserName: (state) => state.auth.currentUser.profile.username,
-    getUesrRole: (state) => state.auth.currentUser.profile.role,
-
+    getUserState: (state) => state.auth.currentUser.profile.role,
+    getUserProfile: (state) => state.auth.currentUser.profile,
     getRegisterLoading: (state) => state.auth.currentUser.register_status.isLoading,
     getRegisterSuccess: (state) => state.auth.currentUser.register_status.isSuccess,
     getRegisterError: (state) => state.auth.register_status.isError,
@@ -95,14 +95,16 @@ const authSlice = createSlice({
         },
         [login_actions.success]: (state, action) => {
             console.log("PAYLOAD:" ,action.payload.data);
-            const { token,username} = action.payload.data;
+            const { token,username,user_profile} = action.payload.data;
             // * Store the token for later retrieval
             localStorage.setItem('token', token);
             console.log("Stored token to local storage: ", token);
             state.currentUser.login_status = success();
             // state.currentUser.profile = user_profile;
             state.currentUser.token = token;
-            state.currentUser.profile.username = username;
+            state.currentUser.profile = {username,...user_profile}
+            // state.currentUser.profile.username = username;
+
         },
         [login_actions.error]: (state, action) => {
             const { message } = action.payload;

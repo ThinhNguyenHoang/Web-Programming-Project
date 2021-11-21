@@ -69,7 +69,7 @@ class UserRepository implements Repository
     }
 
     public static function getUserProfile(int $userId) : ?object{
-        $query = "select id,fullname as full_name,accountID as account_id, dob,email,point,address,phonenumber as phone_number from user_profile where id=$userId";
+        $query = "select fullname as full_name,accountID as account_id, avatarURI as avatar ,dob,email,point,address,phonenumber as phone_number,role from user_profile, user_account where user_profile.AccountID = user_account.Id and user_account.Id = $userId";
         try {
             $result = QueryExecutor::executeQuery($query);
             return UserMapper::mapUserProfileFromResult($result);
@@ -170,6 +170,15 @@ class UserRepository implements Repository
         return null;
     }
 
-
+    public static function updateUserProfile($user_id,$user_profile): object{
+        $query = "UPDATE USER_PROFILE SET FULLNAME=$user_profile->fullname, DOB=$user_profile->dob, EMAIL=$user_profile->email,Address=$user_profile->address,PHONENUMBER=$user_profile->phone_number,WHERE ACCOUNT_ID=$user_profile->account_id";
+        try {
+            $result = QueryExecutor::executeQuery($query);
+            $updated_profile = self::getUserProfile($user_id);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+        return null;
+    }
 
 }
