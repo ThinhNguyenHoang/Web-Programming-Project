@@ -6,13 +6,16 @@ class Material
 {
     public int $MaterialID;
     public string $MaterialName;
+    public string $Picture;
+
 
     /**
      * Material constructor.
      */
-    public function __construct(int $MaterialID=0,string $MaterialName="")
+    public function __construct(int $MaterialID=0,string $MaterialName="", string $Picture="")
     {
         $this->MaterialID= $MaterialID;
         $this->MaterialName = $MaterialName;
+        $this->Picture = $Picture;
     }
 }

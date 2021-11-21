@@ -15,6 +15,9 @@ class MaterialMapper
 {
     #[Pure] public static function mapMaterialFromAddMaterialRequest($request): Material
     {
-        return new Material($request->MaterialID, $request->MaterialName);
+        $material  = new Material();
+        $material->MaterialName = $request->MaterialName;
+        $material->Picture = $request->Picture;
+        return $material;
     }
 }

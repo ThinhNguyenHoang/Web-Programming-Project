@@ -15,57 +15,47 @@ class MaterialController extends BaseController implements RequestHandler
     /**
      * "/food" Endpoint - Get list of foods
      */
-    public function handleRequest(){
+    public function handleRequest()
+    {
         $method = strtolower(RequestHelper::getRequestMethod());
         error_log("Material controller::METHOD::" . $method);
         $relative_path = RequestHelper::get_ith_path_item(1);
-        switch($method){
+        switch ($method) {
             case "get":
-                if($relative_path == null){
+                if ($relative_path == null) {
                     error_log("MATERIAL_CONTROLLER::GET MATERIAL ENDPOINT::" . $relative_path);
                     MaterialService::getMaterialList();
-                }
-                else {
+                } else if (is_numeric($relative_path)) {
+                    error_log("MATERIAL_CONTROLLER::GET MATERIAL BY ID ENDPOINT::" . $relative_path);
+                    MaterialService::getMaterialByID($relative_path);
+                } else {
                     ResponseHelper::error_client("Invalid path in material endpoint");
                 }
                 break;
             case "post":
-                if($relative_path == null){
+                if ($relative_path == null) {
                     error_log("MATERIAL_CONTROLLER::ADD MATERIAL ENDPOINT::" . $relative_path);
                     MaterialService::addMaterial();
-                }
-                else {
+                } else {
                     ResponseHelper::error_client("Invalid path in material endpoint");
                 }
                 break;
             case "put":
-                switch($relative_path){
-                    case null:
-                        error_log("MATERIAL_CONTROLLER::UPDATE MATERIAL ENDPOINT::" . $relative_path);
-                        MaterialService::updateMaterial();
-                        break;
-                    // case null:
-                    //     FoodService::updateUserAccount();
-                    //     break;
-                    // case "change-password":
-                    //     FoodService::setNewPassword();
-                    //     break;
-                    default:
-                        ResponseHelper::error_client("Invalid parameter");
+                if (is_numeric($relative_path)) {
+                    error_log("MATERIAL_CONTROLLER::UPDATE MATERIAL ENDPOINT::" . $relative_path);
+                    MaterialService::updateMaterial($relative_path);
+                } else {
+                    ResponseHelper::error_client("Invalid path in material endpoint");
                 }
                 break;
-            // case "delete":
-            //     switch ($relative_path){
-            //         case "bank-account":
-            //             FoodService::updateUserAccount();
-            //             break;
-            //         case null:
-            //             FoodService::removeUserAccount();
-            //             break;
-            //         default:
-            //             ResponseHelper::error_client("Invalid parameter");
-            //     };
-            //     break;
+            case "delete":
+                if (is_numeric($relative_path)) {
+                    error_log("MATERIAL_CONTROLLER::DELETE MATERIAL ENDPOINT::" . $relative_path);
+                    MaterialService::deleteMaterial($relative_path);
+                } else {
+                    ResponseHelper::error_client("Invalid path in material endpoint");
+                }
+                break;
             default:
                 return false;
         }

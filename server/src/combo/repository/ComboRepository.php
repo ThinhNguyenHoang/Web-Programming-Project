@@ -11,10 +11,13 @@ require_once  __DIR__ . '/../../../vendor/autoload.php';
 //include_once 'libs/php-jwt-master/src/JWT.php';
 
 use Exception;
-use src\combo\message\ComboMessage;
 use src\common\base\Repository;
 use src\common\utils\QueryExecutor;
 use src\common\utils\ResponseHelper;
+use src\combo\message\ComboMessage;
+use src\common\utils\RequestHelper;
+use src\food\repository\FoodRepository;
+use src\tag\repository\TagRepository;
 
 /**
  * Class for interaction with database
@@ -43,26 +46,11 @@ class ComboRepository implements Repository
 
             $ComboID = $row['ComboID'];
 
-            $food_query = "SELECT * FROM food AS food
-                            INNER JOIN includes AS includes
-                            ON food.FoodID = includes.FoodID
-                            WHERE includes.ComboID = $ComboID";
-
-            try {
-                $food_result = QueryExecutor::executeQuery($food_query);
-            } catch (Exception $e) {
-                error_log($e->getMessage());
-            }
-
-            $list_food = array();
-
-            while ($food = $food_result->fetch_array(MYSQLI_ASSOC)) {
-                unset($food["ComboID"]);
-                error_log(json_encode($food), 0);
-                array_push($list_food, $food);
-            }
-
+            $list_food = FoodRepository::getFoodByComboID($ComboID);
             $row["Food"] = $list_food;
+
+            $list_tag = TagRepository::getTagByComboID($ComboID);
+            $row["Tags"] = $list_tag;
 
             array_push($list_combo, $row);
         }
@@ -87,32 +75,44 @@ class ComboRepository implements Repository
 
             $ComboID = $row['ComboID'];
 
-            $food_query = "SELECT * FROM food AS food
-                            INNER JOIN includes AS includes
-                            ON food.FoodID = includes.FoodID
-                            WHERE includes.ComboID = $ComboID";
-
-            try {
-                $food_result = QueryExecutor::executeQuery($food_query);
-            } catch (Exception $e) {
-                error_log($e->getMessage());
-            }
-
-            $list_food = array();
-
-            while ($food = $food_result->fetch_array(MYSQLI_ASSOC)) {
-                unset($food["ComboID"]);
-                error_log(json_encode($food), 0);
-                array_push($list_food, $food);
-            }
-
+            $list_food = FoodRepository::getFoodByComboID($ComboID);
             $row["Food"] = $list_food;
+
+            $list_tag = TagRepository::getTagByComboID($ComboID);
+            $row["Tags"] = $list_tag;
 
             array_push($list_combo, $row);
         }
 
         error_log("COMBO_REPOSITORY::FETCH_LIST::", 0);
-        return $list_combo;
+        return $list_combo ? $list_combo[0] : $list_combo;
+    }
+
+    public static function getTopTagCombo()
+    {
+        $UserID = RequestHelper::getUserIDFromToken();
+        $tag_limit = 6;
+        $query = "SELECT * FROM user_ref_tag AS ref_tag
+                INNER JOIN category_tag AS category_tag
+                ON ref_tag.TagID=category_tag.TagID 
+                WHERE ref_tag.UserID=$UserID AND category_tag.FoodID=0
+                 ORDER BY ref_tag.Count DESC LIMIT $tag_limit";
+
+        try {
+            $result = QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+        }
+
+        $top_tag = array();
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+            error_log(json_encode($row), 0);
+            unset($row["FoodID"]);
+            array_push($top_tag, $row);
+        }
+
+        error_log("COMBO_REPOSITORY::GET_TOP_TAG::", 0);
+        return $top_tag;
     }
 
     /**
@@ -130,7 +130,18 @@ class ComboRepository implements Repository
 
     public static function insertIncludes(int $FoodID, int $ComboID): \mysqli_result|bool|null
     {
-        $query = "INSERT INTO includes VALUES('$FoodID','$ComboID')";
+        $query = "INSERT INTO includes (FoodID, ComboID) VALUES('$FoodID','$ComboID')";
+        try {
+            return QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage(), 0);
+            return null;
+        }
+    }
+
+    public static function insertCategoryTag($ComboID, $TagID)
+    {
+        $query = "INSERT INTO category_tag (TagID, ComboID) VALUES('$TagID','$ComboID');";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
@@ -157,7 +168,7 @@ class ComboRepository implements Repository
 
     public static function updateInclude($ComboID, $Foods)
     {
-        $delete_include_query = "DELETE FROM includes WHERE ComboID = $ComboID";
+        $delete_include_query = "DELETE FROM includes WHERE ComboID = $ComboID;";
         try {
             QueryExecutor::executeQuery($delete_include_query);
         } catch (Exception $exception) {
@@ -167,7 +178,26 @@ class ComboRepository implements Repository
         foreach ($Foods as $food) {
             $result = ComboRepository::insertIncludes($food->FoodID, $ComboID);
             if (!$result) {
-                ResponseHelper::error_server(ComboMessage::getMessages()->deleteError);
+                ResponseHelper::error_server(ComboMessage::getMessages()->updateError);
+                die();
+            }
+        }
+        return true;
+    }
+
+    public static function updateCategoryTag($ComboID, $Tags)
+    {
+        $delete_category_tag_query = "DELETE FROM category_tag WHERE ComboID = $ComboID;";
+        try {
+            QueryExecutor::executeQuery($delete_category_tag_query);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+
+        foreach ($Tags as $tag) {
+            $result = ComboRepository::insertCategoryTag($ComboID, $tag->TagID);
+            if (!$result) {
+                ResponseHelper::error_server(ComboMessage::getMessages()->updateError);
                 die();
             }
         }
@@ -178,18 +208,33 @@ class ComboRepository implements Repository
     {
         $delete_combo_query = "DELETE FROM combo WHERE ComboID = $entityID";
         try {
-            QueryExecutor::executeQuery($delete_combo_query);
+            return QueryExecutor::executeQuery($delete_combo_query);
         } catch (Exception $exception) {
             echo $exception->getMessage();
         }
 
-        $delete_include_query = "DELETE FROM includes WHERE ComboID = $entityID";
+        return null;
+    }
+
+    public static function deleteInclude($ComboID)
+    {
+        $delete_include_query = "DELETE FROM includes WHERE ComboID = $ComboID";
         try {
             return QueryExecutor::executeQuery($delete_include_query);
         } catch (Exception $exception) {
             echo $exception->getMessage();
         }
 
+        return null;
+    }
+
+    public static function deleteCategoryTag($ComboID) {
+        $query = "DELETE FROM category_tag WHERE ComboID = $ComboID;";
+        try {
+            return QueryExecutor::executeQuery($query);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
         return null;
     }
 }
