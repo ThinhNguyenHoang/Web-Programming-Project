@@ -27,11 +27,10 @@ class ConnectionSingleton extends Singleton
             self::$mySqlConnection = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE_NAME);
         } catch (Exception $e) {
             try {
-                error_log("FAILED LOGIN WITH THUAN ACCOUNT. LOGIN WITH THINH ACCOUNT" . $e->getMessage());
-
                 self::$mySqlConnection = new mysqli(DB_HOST1, DB_USERNAME1, DB_PASSWORD1, DB_DATABASE_NAME1);
             }
             catch (Exception $e) {
+                error_log("FAILED LOGIN WITH THUAN ACCOUNT. LOGIN WITH THINH ACCOUNT" . $e->getMessage());
                 throw new Exception("Cannot connect to mysql: " . $e->getMessage());
             }
         }

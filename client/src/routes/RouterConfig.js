@@ -9,6 +9,7 @@ import ClientManagement from "../pages/ClientManagement";
 import HomePage from "../pages/HomePage";
 import {WithHeader} from "../components/header/Header";
 import AboutUs from "../pages/AboutUs";
+import AccountManagement from "../pages/AccountManagement";
 
 const baseUrl = process.env.FAKE_SERVER_HOST;
 export const ROUTING_CONSTANTS = {
@@ -125,6 +126,9 @@ export const RouterConfig = () => {
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.NEWS}>
                     <News/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.ACCOUNT}>
+                    <AccountManagement/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.RECOMMENDATION}>
                     <Recommendations/>
