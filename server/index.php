@@ -11,7 +11,7 @@ require_once  __DIR__ . '/../../vendor/autoload.php';
 require_once  __DIR__ . '/../../../vendor/autoload.php';
  */
 //header('Access-Control-Allow-Origin: *');
-//header('Access-Control-Allow-Methods: *');
+
 
 use src\combo\controller\ComboController;
 use src\food\controller\FoodController;
@@ -23,7 +23,8 @@ use src\wish_list\controller\WishListController;
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Headers:Access-Control-Allow-Headers, Access-Control-Allow-Origin, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,Authorization,ResponseType,X-Request-Id");
+header('Access-Control-Allow-Methods: *');
+header("Access-Control-Allow-Headers:Access-Control-Allow-Headers,access-control-allow-methods, Access-Control-Allow-Origin, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,Authorization,ResponseType,X-Request-Id");
 
 require_once './vendor/autoload.php';
 

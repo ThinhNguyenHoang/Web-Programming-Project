@@ -1,6 +1,6 @@
 import { Typography,Box,TableContainer,TableBody,TableRow,TableHead,Table } from '@mui/material';
 import * as React from 'react';
-import { food_management, selectors } from '../redux/slices/food/FoodSlice';
+import { add_material, food_management, selectors } from '../redux/slices/food/FoodSlice';
 import Grid from '@mui/material/Grid';
 import { useDispatch,useSelector } from 'react-redux';
 import { chainPropTypes } from '@mui/utils';
@@ -57,7 +57,6 @@ function FoodItemManagement(){
     const dispatch = useDispatch();
     const food_manageData= useSelector(selectors.getFoodManagement);
     const food_list=food_manageData.food_list;
-    console.log("pages foo_list",food_list);
     const tag_list=food_manageData.tag_list;
     const material_list=food_manageData.material_list;
 
@@ -82,8 +81,8 @@ function FoodItemManagement(){
         setOpen(false);
     };
     const handleCreate=()=>{
-        // dispatch({type:add_material.loading,payload:{MaterialName:material_name,Picture:material_img}});
-        console.log("dfds",{MaterialName:material_name,Picture:material_img});
+        dispatch({type:add_material.loading,payload:{MaterialName:material_name,Picture:material_img}});
+        setOpen(false);
     }
     
     return(
@@ -167,7 +166,7 @@ function FoodItemManagement(){
                     <Typography variant="h4" sx={{color: 'elevation.layer1.contrast'}}>Tag</Typography>
                 </Divider>
                 <Stack direction="row" spacing={1} paddingTop={3}>
-                    {tag_list.map((tag)=>{return <Chip color="secondary" label={tag.TagName} variant="outlined" onDelete={()=>deleteTag(tag.TagID)} />;})}
+                    {tag_list.map((tag)=>{return <Chip color="secondary" label={tag.TagName} variant="outlined" onDelete={()=>deleteTag(tag.TagID)} key={tag.TagID} />;})}
                 </Stack>
                 <IconButton aria-label="addtag" size="large">
                     <AddCircleIcon fontSize="inherit" />
@@ -179,7 +178,7 @@ function FoodItemManagement(){
                 </Divider>
                 <Grid wrap="nowrap" sx={{display:`flex`, flexDirection:"row", columnGap: 2, paddingTop:5}}>
                     {material_list.map((material)=>{
-                        return <MaterialCard key={material.MaterialID} image={material.Picture} name={material.MaterialName}/>
+                        return <MaterialCard key={material.MaterialID} image={material.Picture} name={material.MaterialName} id={material.MaterialID}/>
                     })}
                     <div>
                         <IconButton onClick={handleClickOpen} aria-label="addmaterial" size="large" sx={{height:"fit-content", alignSelf:"center"}} >
@@ -197,7 +196,7 @@ function FoodItemManagement(){
                             type="name"
                             fullWidth
                             variant="standard"
-                            onchange={(e)=>setMaterialName(e.target.value)}
+                            onChange={(e)=>setMaterialName(e.target.value)}
                         />
                         </DialogContent>
                         <DialogActions>

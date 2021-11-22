@@ -116,7 +116,7 @@ function* addFoodSaga({payload}){
 }
 function* updateFoodSaga({payload}){
     try{
-        const res=yield call(updateFoodSaga,payload);
+        const res=yield call(updateFoodService,payload);
         yield put({type:update_food.success,payload:res});
         yield put({type:food_management.loading,payload:""});
         Toaster.toastSuccessful("Update food success");
@@ -150,7 +150,7 @@ function* addMaterialSaga({payload}){
 function* deleteMaterialSaga({payload}){
     try{
         const res=yield call(deleteMaterialService,payload);
-        yield put({type:delete_material.success,payload:res});
+        yield put({type:"delete_exist_material.success",payload:res});
         yield put({type:food_management.loading,payload:""});
         Toaster.toastSuccessful("Delete material success");
     }catch(e){

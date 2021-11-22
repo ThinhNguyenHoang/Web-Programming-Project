@@ -145,9 +145,10 @@ export const addMaterialService=async (payload)=>{
                         .catch((e)=>e);
 }
 export const deleteMaterialService=async (payload)=>{
-    return await request.deleteAsync(api_endpoints.material+"/"+payload)
-                        .then((res)=>res)
-                        .catch((e)=>e);
+
+    return await request.deleteAsync(api_endpoints.material.concat("/",payload))
+                        .then((res)=>res.data)
+                        .catch(e=>e);
 }
 
 

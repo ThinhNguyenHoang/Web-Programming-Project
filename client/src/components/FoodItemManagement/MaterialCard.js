@@ -7,14 +7,16 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import { delete_material } from '../../redux/slices/food/FoodSlice';
+import { useDispatch } from 'react-redux';
 
 export default function MaterialCard(props) {
+  const dispatch = useDispatch();
   return (
     <Card sx={{ width: 130 }}>
       <CardMedia
         component="img"
-        height="140"
+        height="140px"
         image={props.image}
       />
       <CardContent sx={{bgcolor:'elevation.layer1.main', color: 'elevation.layer1.contrast'}}>
@@ -23,7 +25,7 @@ export default function MaterialCard(props) {
         </Typography>
       </CardContent>
       <CardActions sx={{bgcolor:'elevation.layer1.main', justifyContent:"center"}}>
-        <IconButton aria-label="delete" size="small" sx={{color:'button.outlined.main'}}>
+        <IconButton aria-label="delete" size="small" sx={{color:'button.outlined.main'}} onClick={()=>dispatch({type:delete_material.loading,payload:props.id})}>
           <DeleteIcon fontSize="small" />
         </IconButton>
       </CardActions>
