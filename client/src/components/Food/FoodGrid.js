@@ -55,8 +55,9 @@ const food_list_test = [
         material: []
     }
 ]
-const FoodRecommendation = ({food_list}) => {
+const FoodGrid = ({food_list}) => {
     // TODO: Change this to real food api
+
     const list_food = food_list ? food_list : food_list_test;
     return (
             <Box sx={{display:'flex',flexDirection: {xs:'column',sm:'column',md:`row`}, alignItems:'center',justifyContent:`center` }}>
@@ -69,4 +70,4 @@ const FoodRecommendation = ({food_list}) => {
     );
 };
 
-export default FoodRecommendation;
+export default FoodGrid;

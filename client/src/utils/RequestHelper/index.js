@@ -54,6 +54,9 @@ class RequestHelper {
         console.log("RESPONSE IN HANDLE RESPONSE: ", response);
         const responseMessage = response.data.message.toLowerCase() || "NO MESSAGE IN Response";
         console.log("Response from server with message: ", responseMessage);
+        // if(response.code != 200){
+        //
+        // }
         if (!response || !responseMessage.includes("success")) {
             throw new LogicError(
                 response?.data.message || 'Something went wrong. Please contact us',
@@ -73,6 +76,8 @@ class RequestHelper {
 
     async getAsync(endPoint, payload, headers = {}) {
         this.prepareHeaders(headers);
+        console.log("GETTING FROM:", `${this.baseUrl}${endPoint}`, payload);
+
         return axios
             .get(`${this.baseUrl}${endPoint}${this.prepareParams(payload)}`, {
                 ...this.defaultConfig,

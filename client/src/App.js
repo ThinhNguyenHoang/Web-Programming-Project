@@ -15,6 +15,7 @@ import Map from './components/Map/Map'
 import Toaster from "./utils/Toaster/Toaster";
 import ReactFirebaseFileUpload from "./utils/UploadFile/FileUploader";
 import MyImageMasonry from "./components/ImageMasonry/MyImageMasonry";
+import ImageDrawerUpdater from "./components/ImageDrawerUpdater/ImageDrawerUpdater";
 require('dotenv').config();
 // function TestComponent(){}
 
@@ -32,7 +33,7 @@ function App() {
         console.log("Changing language to:", e.target.value);
         i18n.changeLanguage(e.target.value);
     }
-
+    const [image,setImage] = useState(null);
     const navigateToLoginPage = () => history.push(ROUTING_CONSTANTS.LOGIN);
     const navigateToRegisterPage = () => history.push(ROUTING_CONSTANTS.REGISTER);
     ///////////////test
@@ -131,14 +132,19 @@ function App() {
                     {/* //////////////test */}
                 </Grid>
             </header>
+            <ImageDrawerUpdater trigger={<img src={image ? image : `https://i.stack.imgur.com/ly34R.jpg?s=96`} alt={`test`}/>} img_uri_callback={(img_uri) => {
+                console.log("SET IMAGE FROM THE OUST SIDE",img_uri);
+                setImage(img_uri)
+            }} additionalStyle={{}}/>
             {/*<Map*/}
             {/*    googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAMeYALPFuQ_klstxu-M8WDNUmR4hoEJZM&callback=initMap`}*/}
             {/*    loadingElement={<div style={{ height: `100%` }} />}*/}
             {/*    containerElement={<div style={{ height: `90vh`, margin: `auto`, border: '2px solid black' }} />}*/}
             {/*    mapElement={<div style={{ height: `100%` }} />}*/}
             {/*/>*/}
-            <ReactFirebaseFileUpload/>
-            <MyImageMasonry/>
+            {/*<ReactFirebaseFileUpload/>*/}
+            {/*<MyImageMasonry/>*/}
+
         </div>
     );
 }

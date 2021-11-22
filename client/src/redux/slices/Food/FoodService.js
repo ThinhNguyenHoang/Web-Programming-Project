@@ -8,8 +8,9 @@ const api_endpoints = {
     voucher:"/voucher",
     cart:"/cart",
     combo:"/combo",
-    nofication:"/nofication"
-
+    nofication:"/nofication",
+    recommendations: "/notification",
+    wish_list: "/wish_list"
 }
 const baseURL="http://localhost:3001";
 const base2URL="https://api.jsonbin.io/b/6188c8584a56fb3dee0b22a4";
@@ -92,4 +93,14 @@ export const GetCartService = async  (payload)=>{
             voucher_list:VoucherData2VoucherList(voucherData),
         }
 }
+
+export const getFoodRecommendation = (payload) => {
+    return request.getAsync(api_endpoints.recommendations, payload);
+}
+
+
+export const getWishList = (payload) => {
+    return request.getAsync(api_endpoints.wish_list, payload);
+}
+
 

@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import {Typography} from "@mui/material";
 import FoodItemCard from "./FoodItemCard";
 import Carousel from "react-material-ui-carousel";
-import FoodRecommendation from "./FoodRecommendation";
+import FoodGrid from "./FoodGrid";
 // ? Food Item Schema
 // const food_item = {
 //     id: "",
@@ -116,7 +116,7 @@ const FoodListCarousel = () => {
             <Carousel>
                 {
                     list_of_food_list.map((item,index) => {
-                        return <FoodRecommendation food_list={item} key={index.toString()}/>
+                        return <FoodGrid food_list={item} key={index.toString()}/>
                     })
                 }
             </Carousel>

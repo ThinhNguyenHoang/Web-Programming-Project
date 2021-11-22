@@ -1,11 +1,15 @@
 import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 
-import {useState} from "react";
+import React, {useState} from "react";
 
-
+import default_user from "../../assets/images/user_default.jpg"
 import {initializeApp} from "firebase/app";
 import {selectors} from "../../redux/slices/auth/AuthSlice";
 import {useSelector} from "react-redux";
+import {Box, Button, CardActionArea, CardContent, CardMedia, Typography} from "@mui/material";
+import Card from "@mui/material/Card";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
 
 // Set the configuration for your
 // gs://bk-food-sale.appspot.com
@@ -40,6 +44,82 @@ const firebaseApp = initializeApp(firebaseConfig);
 
 
 export const storage = getStorage(firebaseApp);
+
+export const ImageUploader = ({additionalStyle,callback}, ...props) => {
+    const [image, setImage] = useState(default_user);
+    const [preview,setPreview] = useState(default_user);
+    const userName = useSelector(selectors.getUserName)
+    const onchange = (e) => {
+        if (e.target.files[0]) {
+            console.log("IMG CHANGED TO: ",e.target.files[0]);
+            setImage(e.target.files[0]);
+            setPreview(URL.createObjectURL(e.target.files[0]));
+        }
+
+    }
+    const handleUpload = () => {
+        const storageRef = ref(storage, `images/${userName ? userName : "default_user"}/${image.name}`)
+        const uploadTask = uploadBytesResumable(storageRef, image)
+        uploadTask.on('state_changed',
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+                switch (snapshot.state) {
+                    case 'paused':
+                        console.log('Upload is paused');
+                        break;
+                    case 'running':
+                        console.log('Upload is running');
+                        break;
+                }
+            },
+            (error) => {
+                console.log("UNABLE TO UPLOAD FILE", error.message);
+            },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref)
+                    .then((downloadUrl) => {
+                        console.log("File availabel at", downloadUrl);
+                        const image_item = {
+                            img:downloadUrl,
+                            title:`firebase img`
+                        }
+                        if(callback){
+                            callback(image_item);
+                        }
+                    })
+            }
+        )
+    }
+    return (
+        <Card sx={{maxWidth: 345, ...additionalStyle}}>
+            <CardActionArea>
+                <CardMedia
+                    component="img"
+                    height="140"
+                    image={preview ? preview : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFjfM7leb7aPxmG4Lo_F1nQE_ALUv_b7KZrw&usqp=CAU"}
+                    alt="green iguana"
+                />
+                <CardContent>
+                    <input
+                        style={{ display: "none" }}
+                        id="contained-button-file"
+                        type="file"
+                        onChange={onchange}
+                    />
+                    <label htmlFor="contained-button-file">
+                        <Button variant="contained" color="primary" component="span">
+                            Choose File
+                        </Button>
+                        <Button sx={{mx:2}} variant={`contained`} color={`primary`} onClick={handleUpload} >
+                            Upload
+                        </Button>
+                    </label>
+                </CardContent>
+            </CardActionArea>
+        </Card>
+    );
+}
 
 // TODO: Restyle the file uploader
 const ReactFirebaseFileUpload = () => {
@@ -96,7 +176,7 @@ const ReactFirebaseFileUpload = () => {
             <br/>
             {url}
             <br/>
-            <img src={url || image || "http://via.placeholder.com/300"} alt="firebase-image"/>
+            <img src={image ? image : "http://via.placeholder.com/300"} alt="firebase-image"/>
         </div>
     );
 };

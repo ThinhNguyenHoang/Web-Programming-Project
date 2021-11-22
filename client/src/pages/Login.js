@@ -61,7 +61,6 @@ function Login() {
             type: login_actions.loading,
             payload: {username, password},
         });
-        setSubmitting(false);
     };
 
     return (

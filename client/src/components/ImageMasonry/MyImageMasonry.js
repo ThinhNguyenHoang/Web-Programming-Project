@@ -97,6 +97,7 @@ const MyImageMasonry = () => {
     const currentUserName = useSelector(selectors.getUserName);
     const listRef = ref(storage,`images/${currentUserName?currentUserName:"default_user"}`)
     const [listImage, setListImage] = useState([]);
+    const list_image = [];
     useEffect(() => {
         listAll(listRef)
             .then((res) => {
@@ -105,6 +106,8 @@ const MyImageMasonry = () => {
                     // You may call listAll() recursively on them.
                     console.log(folderRef);
                 });
+                const count = res.items.length;
+                let start = 0;
                 res.items.forEach((itemRef) => {
                     // All the items under listRef.
                     getDownloadURL(itemRef)
@@ -114,17 +117,28 @@ const MyImageMasonry = () => {
                                 img: url,
                                 title: "Firebase Loaded Image"
                             }
-                            setListImage(listImage.concat(image_item));
+                            // setListImage(listImage.concat(image_item));
+                            list_image.push(image_item);
+                            start = start + 1;
+                            console.log("COUNT IS: ",start);
+                            if(start === count) {
+                                setListImage(list_image);
+                            }
                         })
                         .catch((err) => {
                             console.log("ERROR LOADIGN IAMGE FROM FIREBASE",err.message())
                         })
-
-                    console.log(itemRef);
                 });
-            }).catch((error) => {
+            })
+            // .then(
+            //     (image_list) => {
+            //         console.log("Image LIST:",image_list);
+            //     }
+            // )
+            .catch((error) => {
             // Uh-oh, an error occurred!
             console.log("ERROR GETTING FILE LIST FROM FIREBASE FOR REF:",listRef.name)
+
         });
 
         return () => {

@@ -10,6 +10,7 @@ import HomePage from "../pages/HomePage";
 import {WithHeader} from "../components/header/Header";
 import AboutUs from "../pages/AboutUs";
 import AccountManagement from "../pages/AccountManagement";
+import FoodRecommendationPage from "../pages/FoodRecommendationPage";
 
 const baseUrl = process.env.FAKE_SERVER_HOST;
 export const ROUTING_CONSTANTS = {
@@ -57,10 +58,8 @@ export const ROUTING_TAB_ITEMS = [
     generateTabLinkItem("Manage User", ROUTING_CONSTANTS.MANAGE_USERS, "Manager"),
     generateTabLinkItem("Manage Item Info", "Manager"),
     generateTabLinkItem("Manage User", ROUTING_CONSTANTS.MANAGE_BILL, "Manager"),
-    generateTabLinkItem("Manage User", ROUTING_CONSTANTS.MANAGE_ITEM_LIST, "Manager"),
     generateTabLinkItem("Login", ROUTING_CONSTANTS.LOGIN),
     generateTabLinkItem("Register", ROUTING_CONSTANTS.REGISTER),
-
 ]
 
 
@@ -131,7 +130,7 @@ export const RouterConfig = () => {
                     <AccountManagement/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.RECOMMENDATION}>
-                    <Recommendations/>
+                    <FoodRecommendationPage/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.ITEM_CART}>
                     <FoodCart/>
