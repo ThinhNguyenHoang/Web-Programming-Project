@@ -3,30 +3,51 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 import { error, generateSagaLifecycleNames, generateStatus, loading, success } from "../../../utils/reduxGenerate";
 import { UpdateDiscount,UpdateSubtotal, UpdateQuantity } from "./FoodHelper";
 
-const food_item_cart={
-    id:0,
-    name:"",
-    price:0,
-    quantity:0,
-    img:"",
+
+//* const food_item={
+//     FoodID:"",
+//     FoodName:"",
+//     Picture:"",
+//     Price:"",
+//     Description:"",
+//     Instruct:"",
+//     Material:[],
+//     Tags:[],
+// }
+const tag={
+    TagID:"",
+    TagName:"",
+
 }
-const food_combo_item_news={
-    id:0,
-    name:"",
-    price:"",
-    decrip:"",
-    img:"",
+const material={
+    MaterialID:"",
+    MaterialName:"",
+    Picture:""
 }
-const nofi_item_news={
-    id:0,
-    name:"",
-    content:"",
-}
-const voucher={
-    id:0,
-    name:"",
-    discount:0,
-}
+// const food_item_cart={
+//     id:0,
+//     name:"",
+//     price:0,
+//     quantity:0,
+//     img:"",
+// }
+// const food_combo_item_news={
+//     id:0,
+//     name:"",
+//     price:"",
+//     decrip:"",
+//     img:"",
+// }
+// const nofi_item_news={
+//     id:0,
+//     name:"",
+//     content:"",
+// }
+// const voucher={
+//     id:0,
+//     name:"",
+//     discount:0,
+// }
 const food_item = {
     id: "",
     name: "",
@@ -42,7 +63,6 @@ const food_item = {
     material: []
 }
 const initialValue={
-    user_id:1,
     cart:{
         food_list:[],
         voucher_list:[],
@@ -61,6 +81,25 @@ const initialValue={
         get_status:generateStatus(),
         addCart_status:generateStatus(),
     },
+    
+    food_manage:{
+        food_list:[],//list các fooditem trên
+        tag_list:[],
+        material_list:[],
+        get_foodManage_status:generateStatus()
+        // get_food:generateStatus(),//*lấy tất cả food
+        // add_food:generateStatus(),//?add 1 food to db ,bao gồm tag, material
+        // update_food:generateStatus(),//?update 1 food
+        // delete_food:generateStatus(),//?
+        // get_tag:generateStatus(),//lấy tất cả tag
+        // add_tag:generateStatus(),//add 1 tag
+        // delete_tag:generateStatus(),//delete 1 tag
+        // get_material:generateStatus(),//get all materials
+        // delete_material:generateStatus(),//xóa 1 materiasls
+        // update_material:generateStatus(),//update //*:có thể ko dùng
+
+
+    },
     recommendations: [],
     food_item_detail: food_item
 }
@@ -73,6 +112,9 @@ export const selectors={
     getFoodList:state=>state.food.news.food_list,
     getComboList:state=>state.food.news.combo_list,
     getNofiList: state=>state.food.news.nofi_list,
+    //food mangement
+    getFoodManagement:state=>state.food.food_manage,
+
 }
 
 //Cart action
@@ -96,6 +138,9 @@ export const back_nofi_news = "back_nofication";
 
 // Food Item Action
 export const food_item_detail = generateSagaLifecycleNames("food_item_detail");
+//
+//Food manage :get food list, get tag list, get material list
+export const food_management=generateSagaLifecycleNames("food_management");
 
 
 const FoodSlice= createSlice({
@@ -230,7 +275,19 @@ const FoodSlice= createSlice({
         },
         [food_item_detail.loading]:(state,action) =>{
             state.food_item_detail.status = error();
-        }
+        },
+        [food_management.loading]:(state,action)=>{
+            state.food_manage.get_foodManage_status=loading();
+        },
+        [food_management.success]:(state,action)=>{
+            state.food_manage.food_list=action.payload.food_list;
+            state.food_manage.tag_list=action.payload.tag_list;
+            state.food_manage.material_list=action.payload.material_list;
+            state.food_manage.get_foodManage_status=success();
+        },
+        [food_management.error]:(state,action)=>{
+            state.food_manage.get_foodManage_status=error();
+        }   
 
     }
 });
