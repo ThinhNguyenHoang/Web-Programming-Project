@@ -17,7 +17,7 @@ import MaterialCard from '../components/FoodItemManagement/MaterialCard';
 import { styled } from '@mui/material/styles';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import CircularProgress from '@mui/material/CircularProgress';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddIcon from '@mui/icons-material/Add';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -87,7 +87,6 @@ function FoodItemManagement(){
     }
     
     return(
-        
         <Box sx={{display:`flex`,flexDirection:`column`,bgcolor:'elevation.layer0.main', flexGrow: 1, overflow: 'hidden', px: 10}}>
             <Grid sx={{ width: 1500, my: 1, mx: 'auto', p: 2, paddingBottom:5 }}>
                 <Divider>
@@ -162,50 +161,57 @@ function FoodItemManagement(){
                     </Box>
                 </TableContainer>
             </Grid>
-            <Grid sx={{ width: 1000, my: 1, mx: 'auto', p: 2, bgcolor:"elevation.layer0.main", paddingBottom:5}}>
+            <Grid sx={{maxWidth:1500, flexGrow: 1, alignSelf:"center", paddingBottom:15}}>
                 <Divider>
                     <Typography variant="h4" sx={{color: 'elevation.layer1.contrast'}}>Tag</Typography>
                 </Divider>
-                <Stack direction="row" spacing={1} paddingTop={3}>
-                    {tag_list.map((tag)=>{return <Chip color="secondary" label={tag.TagName} variant="outlined" onDelete={()=>deleteTag(tag.TagID)} />;})}
-                </Stack>
-                <IconButton aria-label="addtag" size="large">
-                    <AddCircleIcon fontSize="inherit" />
-                </IconButton>
+                <Grid container spacing={{ xs: 5, md: 5 }} columns={{ xs: 3, sm: 8, md: 12 }}>
+                    {tag_list.map((tag)=> (
+                        <Grid item>
+                            <Chip color="secondary" label={tag.TagName} variant="outlined" onDelete={()=>deleteTag(tag.TagID)} />
+                        </Grid>
+                    ))}
+                    <Grid item>
+                    <IconButton aria-label="addmaterial" size="large" sx={{height:"fit-content", alignSelf:"center"}} >
+                        <AddIcon fontSize="large" />
+                    </IconButton>
+                    </Grid>
+                </Grid>
             </Grid>
-            <Grid sx={{ width: 1500, my: 1, mx: 'auto', p: 2 , paddingBottom:10}}>
+            <Grid sx={{maxWidth:1500, flexGrow: 1, alignSelf:"center", paddingBottom:15}}>
                 <Divider>
                     <Typography variant="h4" sx={{color: `red`}}>Nguyên liệu</Typography>
                 </Divider>
-                <Grid wrap="nowrap" sx={{display:`flex`, flexDirection:"row", columnGap: 2, paddingTop:5}}>
-                    {material_list.map((material)=>{
-                        return <MaterialCard key={material.MaterialID} image={material.Picture} name={material.MaterialName}/>
-                    })}
-                    <div>
-                        <IconButton onClick={handleClickOpen} aria-label="addmaterial" size="large" sx={{height:"fit-content", alignSelf:"center"}} >
-                            <AddCircleIcon fontSize="inherit" />
-                        </IconButton>
-                        <Dialog open={open} onClose={handleClose}>
-                        <DialogTitle sx={{textAlign:"center"}}>Nguyên liệu</DialogTitle>
-                        <DialogContent>
-                        <ReactFirebaseFileUpload2 setMaterialImg={setMaterialImg}/>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Tên nguyên liệu"
-                            type="name"
-                            fullWidth
-                            variant="standard"
-                            onchange={(e)=>setMaterialName(e.target.value)}
-                        />
-                        </DialogContent>
-                        <DialogActions>
-                        <Button onClick={handleClose}>Hủy bỏ</Button>
-                        <Button onClick={handleCreate}>Tạo</Button>
-                        </DialogActions>
+                <Grid container spacing={{ xs: 5, md: 5 }} columns={{ xs: 3, sm: 8, md: 12 }} sx={{paddingTop:3}}>
+                    {material_list.map((material)=>(
+                        <Grid item>
+                            <MaterialCard key={material.MaterialID} image={material.Picture} name={material.MaterialName}/>
+                        </Grid>
+                    ))}
+                    <IconButton onClick={handleClickOpen} aria-label="addmaterial" size="large" sx={{height:"fit-content", alignSelf:"center"}} >
+                        <AddIcon fontSize="large" />
+                    </IconButton>
+                    <Dialog open={open} onClose={handleClose}>
+                    <DialogTitle sx={{textAlign:"center"}}>Nguyên liệu</DialogTitle>
+                    <DialogContent>
+                    <ReactFirebaseFileUpload2 setMaterialImg={setMaterialImg}/>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Tên nguyên liệu"
+                        type="name"
+                        fullWidth
+                        variant="standard"
+                        onchange={(e)=>setMaterialName(e.target.value)}
+                    />
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={handleClose}>Hủy bỏ</Button>
+                    <Button onClick={handleCreate}>Tạo</Button>
+                    </DialogActions>
                     </Dialog>
-                    </div>
+                    
                 </Grid>
             </Grid>
         </Box>
