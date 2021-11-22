@@ -112,4 +112,43 @@ export const getFoodManageService = async (payload)=>{
         tag_list:tag_list,
         material_list:material_list
     }
- }
+}
+
+export const deleteTagService=async (payload)=>{
+    return await request.deleteAsync(api_endpoints.tag+"/"+payload)
+                        .then((res)=>res)
+                        .catch((e)=>e);
+}
+export const addTagService=async (payload)=>{
+    return await request.postAsync(api_endpoints.tag,payload)
+                        .then((res)=>res)
+                        .catch((e)=>e);
+}
+export const addFoodService=async (payload)=>{
+    return await request.postAsync(api_endpoints.tag,payload)
+                        .then((res)=>res)
+                        .catch((e)=>e);
+}
+export const updateFoodService=async (payload)=>{
+    return await request.putAsync(api_endpoints.food+"/"+payload.FoodID,payload)
+                        .then((res)=>res)
+                        .catch((e)=>e);
+}
+export const deleteFoodService=async (payload)=>{
+    return await request.deleteAsync(api_endpoints.food+"/"+payload)
+                        .then((res)=>res)
+                        .catch((e)=>e);
+}
+export const addMaterialService=async (payload)=>{
+    return await request.postAsync(api_endpoints.material,payload)
+                        .then((res)=>res.data)
+                        .catch((e)=>e);
+}
+export const deleteMaterialService=async (payload)=>{
+    return await request.deleteAsync(api_endpoints.material+"/"+payload)
+                        .then((res)=>res)
+                        .catch((e)=>e);
+}
+
+
+

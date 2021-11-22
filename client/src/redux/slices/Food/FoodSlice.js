@@ -86,17 +86,17 @@ const initialValue={
         food_list:[],//list các fooditem trên
         tag_list:[],
         material_list:[],
-        get_foodManage_status:generateStatus()
+        get_foodManage_status:generateStatus(),
         // get_food:generateStatus(),//*lấy tất cả food
-        // add_food:generateStatus(),//?add 1 food to db ,bao gồm tag, material
-        // update_food:generateStatus(),//?update 1 food
-        // delete_food:generateStatus(),//?
+        add_food:generateStatus(),//?add 1 food to db ,bao gồm tag, material
+        update_food:generateStatus(),//?update 1 food
+        delete_food:generateStatus(),//?
         // get_tag:generateStatus(),//lấy tất cả tag
-        // add_tag:generateStatus(),//add 1 tag
-        // delete_tag:generateStatus(),//delete 1 tag
+        add_tag:generateStatus(),//add 1 tag
+        delete_tag:generateStatus(),//delete 1 tag
         // get_material:generateStatus(),//get all materials
-        // delete_material:generateStatus(),//xóa 1 materiasls
-        // update_material:generateStatus(),//update //*:có thể ko dùng
+        delete_material:generateStatus(),//xóa 1 materiasls
+        add_material:generateStatus(),//update //*:có thể ko dùng
 
 
     },
@@ -114,6 +114,7 @@ export const selectors={
     getNofiList: state=>state.food.news.nofi_list,
     //food mangement
     getFoodManagement:state=>state.food.food_manage,
+
 
 }
 
@@ -141,6 +142,14 @@ export const food_item_detail = generateSagaLifecycleNames("food_item_detail");
 //
 //Food manage :get food list, get tag list, get material list
 export const food_management=generateSagaLifecycleNames("food_management");
+export const delete_tag=generateSagaLifecycleNames("delete_tag");
+export const add_tag=generateSagaLifecycleNames("add_tag");
+export const add_food=generateSagaLifecycleNames("add_new_food");
+export const delete_food=generateSagaLifecycleNames("delete_exist_food");
+export const update_food=generateSagaLifecycleNames("update_exist_food");
+export const add_material=generateSagaLifecycleNames("add_new_material");
+export const delete_material=generateSagaLifecycleNames("delete_exist_material");
+
 
 
 const FoodSlice= createSlice({
@@ -287,7 +296,74 @@ const FoodSlice= createSlice({
         },
         [food_management.error]:(state,action)=>{
             state.food_manage.get_foodManage_status=error();
-        }   
+        },
+        [delete_tag.loading]:(state,action)=>{
+            state.food_manage.delete_tag=loading();
+        },
+        [delete_tag.success]:(state,action)=>{
+            state.food_manage.delete_tag=success();
+        },
+        [delete_tag.error]:(state,action)=>{
+            state.food_manage.delete_tag=error();
+        },
+        [add_tag.loading]:(state,action)=>{
+            state.food_manage.add_tag =loading();
+        },
+        [add_tag.success]:(state,action)=>{
+            state.food_manage.add_tag =success();
+        },
+        [add_tag.error]:(state,action)=>{
+            state.food_manage.add_tag =error();
+        },
+        [add_food.loading]:(state,action)=>{
+            state.food_manage.add_food =loading();
+        },
+        [add_food.success]:(state,action)=>{
+            state.food_manage.add_food =success();
+        },
+        [add_food.error]:(state,action)=>{
+            state.food_manage.add_food =error();
+        },
+        [update_food.loading]:(state,action)=>{
+            state.food_manage.update_food =loading();
+        },
+        [update_food.success]:(state,action)=>{
+            state.food_manage.update_food =success();
+        },
+        [update_food.error]:(state,action)=>{
+            state.food_manage.update_food =error();
+        },
+        [delete_food.loading]:(state,action)=>{
+            state.food_manage.delete_food =loading();
+        },
+        [delete_food.success]:(state,action)=>{
+            state.food_manage.delete_food =success();
+        },
+        [delete_food.error]:(state,action)=>{
+            state.food_manage.delete_food =error();
+        },
+        [add_material.loading]:(state,action)=>{
+            state.food_manage.add_material =loading();
+        },
+        [add_material.success]:(state,action)=>{
+            state.food_manage.add_material =success();
+        },
+        [add_material.error]:(state,action)=>{
+            state.food_manage.add_material =error();
+        },
+        [delete_material.loading]:(state,action)=>{
+            state.food_manage.delete_material =loading();
+        },
+        [delete_material.success]:(state,action)=>{
+            state.food_manage.delete_material =success();
+        },
+        [delete_material.error]:(state,action)=>{
+            state.food_manage.delete_material =error();
+        },
+        
+        
+
+        
 
     }
 });

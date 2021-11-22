@@ -5,22 +5,27 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 export default function MaterialCard(props) {
   return (
-    <Card sx={{ maxWidth: 150 }}>
+    <Card sx={{ width: 130 }}>
       <CardMedia
         component="img"
         height="140"
         image={props.image}
       />
-      <CardContent>
+      <CardContent sx={{bgcolor:'elevation.layer1.main', color: 'elevation.layer1.contrast'}}>
         <Typography gutterBottom variant="h5" component="div" sx={{textAlign:"center"}}>
           {props.name}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">DELETE</Button>
+      <CardActions sx={{bgcolor:'elevation.layer1.main', justifyContent:"center"}}>
+        <IconButton aria-label="delete" size="small" sx={{color:'button.outlined.main'}}>
+          <DeleteIcon fontSize="small" />
+        </IconButton>
       </CardActions>
     </Card>
   );
