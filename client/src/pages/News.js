@@ -5,8 +5,6 @@ import {useHistory} from 'react-router-dom';
 import {useTranslation} from "react-i18next";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import FoodCard from '../components/News/FoodCard';
-import Nofication from '../components/News/Nofication';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton } from '@mui/material';
 import { get_news_actions,selectors } from '../redux/slices/food/FoodSlice'
@@ -21,7 +19,9 @@ const fake_news = {
 
 function News (){
     return (
-        
+        <Box>
+            {[1,2,3,4,5,6,7,8].map(idx=> <NewsCard key={idx} news={fake_news}/>)}
+        </Box>
     );
 }
 

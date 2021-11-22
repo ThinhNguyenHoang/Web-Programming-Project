@@ -1,7 +1,6 @@
 import request from "../../../utils/RequestHelper";
 import {CartData2FoodCart,FoodCart2CartData,VoucherData2VoucherList} from './FoodHelper';
 import axios from "axios";
-import Nofication from "../../../components/News/Nofication";
 import { appendOwnerState } from "@mui/core";
 const api_endpoints = {
     food:"/foods",
