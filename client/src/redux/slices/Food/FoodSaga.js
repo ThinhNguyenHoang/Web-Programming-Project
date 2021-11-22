@@ -1,8 +1,9 @@
 import {call, put, takeLatest,putResolve} from "redux-saga/effects";
-import { UpdateCart,GetCart,GetNews, AddCartService, GetNewsService } from "./FoodService";
-import { update_cart_actions,get_cart_actions,get_news_actions, delete_cart_actions, add_cart_actions } from "./FoodSlice";
+import { UpdateCart,GetCart,GetNews, AddCartService, GetNewsService, getFoodManageService } from "./FoodService";
+import { update_cart_actions,get_cart_actions,get_news_actions, delete_cart_actions, add_cart_actions, food_management } from "./FoodSlice";
 import Toaster from "../../../utils/Toaster/Toaster";
 import {GetCartService,GetFoodService,GetVoucherService,UpdateCartService,DeleteCartService} from './FoodService';
+import { loading } from "../../../utils/reduxGenerate";
 
 function* UpdateCartSaga({payload}){
 
@@ -16,7 +17,7 @@ function* UpdateCartSaga({payload}){
         yield put({type: update_cart_actions.error, payload: e.message});
 
     }
-    //TODO
+    
 }
 
 function* GetCartSaga({payload}){
@@ -68,6 +69,16 @@ function* GetNewsSaga({payload}){
         yield put({type:get_news_actions.error});
     }
 }
+function* getFoodManage({payload}){
+    try{
+        const res=yield call(getFoodManageService,payload);
+        yield put({type: food_management.success,payload:res});
+        Toaster.toastSuccessful("Get data success")
+    }catch(e){
+        Toaster.toastError("Get data fail"+e.message);
+        yield put({type:food_management.error});
+    }
+}
 
 const watchersFood = function* (){
     yield takeLatest(update_cart_actions.loading, UpdateCartSaga);
@@ -75,5 +86,6 @@ const watchersFood = function* (){
     yield takeLatest(get_news_actions.loading,GetNewsSaga);
     yield takeLatest(delete_cart_actions.loading,DeleteCartSaga);
     yield takeLatest(add_cart_actions.loading,AddCartSaga);
+    yield takeLatest(food_management.loading,getFoodManage);
 }
 export default watchersFood;

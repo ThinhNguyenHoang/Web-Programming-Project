@@ -2,16 +2,21 @@ import request from "../../../utils/RequestHelper";
 import {CartData2FoodCart,FoodCart2CartData,VoucherData2VoucherList} from './FoodHelper';
 import axios from "axios";
 import { appendOwnerState } from "@mui/core";
+
+const baseURL="sfsd";
+const base2URL="fsdf";
 const api_endpoints = {
-    food:"/foods",
+    food:"/food",
+    tag:"/tag",
+    material:"/material",
     voucher:"/voucher",
     cart:"/cart",
     combo:"/combo",
-    nofication:"/nofication"
+    nofication:"/nofication",
+
 
 }
-const baseURL="http://localhost:3001";
-const base2URL="https://api.jsonbin.io/b/6188c8584a56fb3dee0b22a4";
+
 
 
 export const UpdateCartService= (payload)=>{
@@ -92,3 +97,19 @@ export const GetCartService = async  (payload)=>{
         }
 }
 
+export const getFoodManageService = async (payload)=>{
+    const food_list= await request.getAsync(api_endpoints.food)
+                                .then((response)=>response.data)
+                                .catch((error)=>console.log("fail at food service ",error));
+    const tag_list=await request.getAsync(api_endpoints.tag)
+                                    .then((response)=>response.data)
+                                    .catch((error)=>console.log("fail at food service ",error));
+    const material_list=await request.getAsync(api_endpoints.material)
+                                    .then((response)=>response.data)
+                                    .catch((error)=>console.log("fail at food service ",error));
+    return {
+        food_list:food_list,
+        tag_list:tag_list,
+        material_list:material_list
+    }
+ }
