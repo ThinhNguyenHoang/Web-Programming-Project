@@ -1,4 +1,4 @@
-import {createTheme} from "@mui/material";
+import {alpha, createTheme} from "@mui/material";
 
 
 export const lightTheme = createTheme({
@@ -29,7 +29,31 @@ export const lightTheme = createTheme({
         },
         background:{
             default: '#ffffff'
+        },
+        button:{
+            outlined: {
+                main:'#fd0808'
+            }
+        },
+        elevation:{
+            layer0: {
+                main: '#fff',
+                contrast: '#000'
+            }, // For the deepest level background
+            layer1: {
+                main: '#ffffff',
+                contrast: '#000'
+            }, // Item containers , header, footer
+            layer2: {
+                main: '#ffffff',
+                contrast: '#000'
+            }, // Item above the container
+            layer3: {
+                main: '#fff',
+                contrast: '#000'
+            }, // popup,...
         }
+
     },
 
 })

@@ -1,6 +1,7 @@
 <?php
 namespace src\user\service;
 
+use Firebase\JWT\ExpiredException;
 use JetBrains\PhpStorm\NoReturn;
 use src\common\utils\RequestHelper;
 use src\common\utils\ResponseHelper;
@@ -20,10 +21,17 @@ require_once  __DIR__ . '/../../../vendor/autoload.php';
 class UserService
 {
     public static function getUserList(){
+        $token = null;
+        try{
+            $token = RequestHelper::validate_jwt_token();
+        }
+        catch(ExpiredException $exception){
+            ResponseHelper::error_server("Invalid Token: Token Expired. Try renew it");
+        }
+        if(!$token) die();
         $token = RequestHelper::validate_jwt_token();
         ResponseHelper::success(UserMessage::getMessages()->readSuccess,UserRepository::listUserAccount());
     }
-
 
     public static function registerUser(){
         $request = RequestHelper::getRequestBody();
@@ -82,8 +90,8 @@ class UserService
         $body->token=RequestHelper::generate_jwt_token($user_found);
         $body->username = $user->username;
         $body->user_profile = UserRepository::getUserProfile($user_found->id);
-        error_log("LOGIN SUCCESS: " . $body->token, 0);
-        error_log("LOGIN SUCCESS::USER_PROFILE:: " . $body->token, 0);
+        error_log("LOGIN SUCCESS: " . $body->username, 0);
+        error_log("LOGIN SUCCESS::USER_PROFILE:: " . json_encode($body->user_profile), 0);
         ResponseHelper::success("Login success", $body);
         die();
     }
@@ -141,9 +149,16 @@ class UserService
     }
 
     public static function setNewPassword(){
+        $token = null;
+        try{
+            $token = RequestHelper::validate_jwt_token();
+        }
+        catch(ExpiredException $exception){
+            ResponseHelper::error_server("Invalid Token: Token Expired. Try renew it");
+        }
         $token = RequestHelper::validate_jwt_token();
+        if(!$token) die();
         $request = RequestHelper::getRequestBody();
-        error_log("USER_SERVICE::REGISTER::" . $request,0);
         // Find user with the username in database
         $user = new \stdClass();
         $user->username = $token->data->username;
@@ -157,6 +172,7 @@ class UserService
             ResponseHelper::error_client("Account doesn't exist");
         }
         // Create user account
+        error_log("Change password to" . $request->password,0);
         $user->password = password_hash($request->password,PASSWORD_DEFAULT);
         $result = UserRepository::update($user_found->id,$user);
         if($result){
@@ -164,4 +180,68 @@ class UserService
         }
         ResponseHelper::error_server(UserMessage::getMessages()->updateError);
     }
+
+    public static function updateUserProfile(){
+        $token = null;
+        try{
+            $token = RequestHelper::validate_jwt_token();
+        }
+        catch(ExpiredException $exception){
+            ResponseHelper::error_server("Invalid Token: Token Expired. Try renew it");
+        }
+        if(!$token) die();
+        $request = RequestHelper::getRequestBody();
+        // Find user with the username in database
+        $user = new \stdClass();
+        $user->username = $token->data->username;
+        if(!$user->username){
+            error_log("USER_NAME_FROM_TOKEN:" . $user->username,0);
+            die();
+        }
+        $user_found = UserRepository::findUserByName($user->username);
+        if(!$user_found){
+            // Throw error notifying username already taken
+            ResponseHelper::error_client("Account doesn't exist");
+        }
+        $user_profile = UserMapper::mapUserProfileFromRequest($request);
+        $result = UserRepository::updateUserProfile($user_found->id,$user_profile);
+        if($result){
+            ResponseHelper::success(UserMessage::getMessages()->updateSuccess,$result);
+        }
+        ResponseHelper::error_server(UserMessage::getMessages()->updateError);
+    }
+
+
+    public static function getUserProfile()
+    {
+        $token = RequestHelper::validate_jwt_token();
+        if(!$token) die();
+        $request = RequestHelper::getRequestBody();
+        error_log("Get User Profile: " . $request, 0);
+        // Find user with the username in database
+        $user = new \stdClass();
+        $user->username = $token->data->username;
+        if (!$user->username) {
+            error_log("CANNOT FIND USER_NAME_FROM_TOKEN:" . $user->username, 0);
+            die();
+        }
+        if(!$user->username){
+            error_log("USER_NAME_FROM_TOKEN:" . $user->username,0);
+            die();
+        }
+        $user_found = UserRepository::findUserByName($user->username);
+        error_log("USER_NAME_FROM_TOKEN FOUND USER:" .json_encode($user->username),0);
+        if(!$user_found){
+            // Throw error notifying username already taken
+            ResponseHelper::error_client("Account doesn't exist");
+        }
+        $user_profile = UserRepository::getUserProfile($user_found->id);
+        if($user_profile){
+            ResponseHelper::success(UserMessage::getMessages()->readSuccess,$user_profile);
+        }
+        ResponseHelper::error_server(UserMessage::getMessages()->readError);
+
+    }
+
+
 }

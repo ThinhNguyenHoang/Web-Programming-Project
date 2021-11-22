@@ -5,6 +5,7 @@ namespace src\common\utils;
 require_once  __DIR__ . '/../../../vendor/autoload.php';
 
 use DateTimeImmutable;
+use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
 
 // show error reporting
@@ -131,7 +132,7 @@ class RequestHelper
         return JWT::encode($payload, $key, 'HS512');
     }
 
-    public static function validate_jwt_token(): object
+    public static function validate_jwt_token(): ?object
     {
         $key = "example_key";
         $issuer = "http://localhost/CodeOfaN";
@@ -144,13 +145,18 @@ class RequestHelper
             ResponseHelper::error_client("Unauthorized. Suck Ass Token. Stop being an Imposter");
             exit;
         }
-        $token = JWT::decode($jwt, $key, ['HS512']);
-        $now = new DateTimeImmutable();
-
-        if (
-            $token->iss !== $issuer ||
-            $token->exp < $now->getTimestamp()
-        ) {
+        $token = null;
+        try{
+            $token = JWT::decode($jwt,$key , ['HS512']);
+            $now = new DateTimeImmutable();
+        }
+        catch(ExpiredException $exception) {
+            ResponseHelper::error_client("Expired Token: Please try renew the token");
+            return null;
+        }
+        if ($token->iss !== $issuer ||
+            $token->exp < $now->getTimestamp())
+        {
             header('HTTP/1.1 401 Unauthorized');
             exit;
         }

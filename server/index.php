@@ -23,6 +23,7 @@ use src\wish_list\controller\WishListController;
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: GET,PUT,POST,DELETE,PATCH,OPTIONS");
 header("Access-Control-Allow-Headers:Access-Control-Allow-Headers, Access-Control-Allow-Origin, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,Authorization,ResponseType,X-Request-Id");
 
 require_once './vendor/autoload.php';
@@ -37,6 +38,10 @@ error_log("ENDOINT ĐƯỢC XỬ LÝ: " . $endpoint, 0);
 
 //// TODO: Parse the token for protected endpoints before assigning the request to the controller
 //// TODO: Thịnh thêm code xác thực trước khi chuyển request cho các controller
+///
+
+
+
 switch ($endpoint) {
     case "food":
         $foodController = new FoodController();

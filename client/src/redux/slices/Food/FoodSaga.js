@@ -1,8 +1,24 @@
 import {call, put, takeLatest,putResolve} from "redux-saga/effects";
-import { UpdateCart,GetCart,GetNews, AddCartService, GetNewsService } from "./FoodService";
-import { update_cart_actions,get_cart_actions,get_news_actions, delete_cart_actions, add_cart_actions } from "./FoodSlice";
+import {
+    UpdateCart,
+    GetCart,
+    GetNews,
+    AddCartService,
+    GetNewsService,
+    getFoodRecommendation,
+    getWishList
+} from "./FoodService";
+import {
+    update_cart_actions,
+    get_cart_actions,
+    get_news_actions,
+    delete_cart_actions,
+    add_cart_actions,
+    food_recommendation_actions, food_wish_list_actions
+} from "./FoodSlice";
 import Toaster from "../../../utils/Toaster/Toaster";
 import {GetCartService,GetFoodService,GetVoucherService,UpdateCartService,DeleteCartService} from './FoodService';
+import {stringify} from "query-string";
 
 function* UpdateCartSaga({payload}){
 
@@ -66,6 +82,26 @@ function* GetNewsSaga({payload}){
     }catch (e){
         Toaster.toastError("Get news data faild: " + e.message);
         yield put({type:get_news_actions.error});
+    }
+}
+
+function* getFoodRecommendationSaga({payload}){
+    try{
+        const res = yield call(getFoodRecommendation,payload ? payload : {});
+        yield put({type:food_recommendation_actions.success, payload: res})
+    }
+    catch (e) {
+        yield put({type:food_recommendation_actions.error,payload:JSON.stringify(e)});
+    }
+}
+
+function* getWishListSaga({payload}){
+    try{
+        const res = yield call(getWishList,payload ? payload : {});
+        yield put({type:food_wish_list_actions.success, payload: res})
+    }
+    catch (e) {
+        yield put({type:food_wish_list_actions.error,payload:JSON.stringify(e)});
     }
 }
 
