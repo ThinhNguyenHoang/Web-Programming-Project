@@ -1,6 +1,6 @@
 import { Typography,Box,TableContainer,TableBody,TableRow,TableHead,Table } from '@mui/material';
 import * as React from 'react';
-import { food_management, selectors } from '../redux/slices/food/FoodSlice';
+import { add_material, delete_tag, food_management, selectors } from '../redux/slices/food/FoodSlice';
 import Grid from '@mui/material/Grid';
 import { useDispatch,useSelector } from 'react-redux';
 import { chainPropTypes } from '@mui/utils';
@@ -57,7 +57,6 @@ function FoodItemManagement(){
     const dispatch = useDispatch();
     const food_manageData= useSelector(selectors.getFoodManagement);
     const food_list=food_manageData.food_list;
-    console.log("pages foo_list",food_list);
     const tag_list=food_manageData.tag_list;
     const material_list=food_manageData.material_list;
 
@@ -82,8 +81,8 @@ function FoodItemManagement(){
         setOpen(false);
     };
     const handleCreate=()=>{
-        // dispatch({type:add_material.loading,payload:{MaterialName:material_name,Picture:material_img}});
-        console.log("dfds",{MaterialName:material_name,Picture:material_img});
+        dispatch({type:add_material.loading,payload:{MaterialName:material_name,Picture:material_img}});
+        setOpen(false);
     }
     
     return(
@@ -168,7 +167,7 @@ function FoodItemManagement(){
                 <Grid container spacing={{ xs: 5, md: 5 }} columns={{ xs: 3, sm: 8, md: 12 }}>
                     {tag_list.map((tag)=> (
                         <Grid item>
-                            <Chip color="secondary" label={tag.TagName} variant="outlined" onDelete={()=>deleteTag(tag.TagID)} />
+                            <Chip color="secondary" label={tag.TagName} variant="outlined" onDelete={()=>dispatch({type:delete_tag.loading,payload:tag.TagID})} />
                         </Grid>
                     ))}
                     <Grid item>
