@@ -77,7 +77,7 @@ const ReactFirebaseFileUpload2 = (props) => {
             () => {
                 getDownloadURL(uploadTask.snapshot.ref)
                     .then((downloadUrl) => {
-                        props.setImage(downloadUrl);
+                        props.setImageURL(downloadUrl);
                     })
             }
         )

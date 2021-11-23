@@ -63,14 +63,14 @@ function FoodItemManagement(){
     const food_list=food_manageData.food_list;
     const tag_list=food_manageData.tag_list;
     const material_list=food_manageData.material_list;
-
+    console.log("food_list",food_list);
     
-
-    var food_render_list=[1,2,3,4,5,6,7,8,9,10];
     const foodMaxPage=food_list.length % 10===0 ? food_list.length/10 : Math.floor(food_list.length/10)+1;
     const [foodCurrPage,setFoodPage]=React.useState(1);
+    const [food_render_list,setFoodRenderList]=React.useState([1,2,3,4,5,6,7,8,9,10]);
     React.useEffect(() => {
-        food_render_list=[...Array(10).keys()].map(i=>i+1+(foodCurrPage-1)*10);
+        setFoodRenderList([...Array(10).keys()].map(i=>i+1+(foodCurrPage-1)*10));
+        
     }, [foodCurrPage]);
 
     const [open, setOpen] = React.useState(false);
@@ -104,17 +104,21 @@ function FoodItemManagement(){
 
     
     return(
-        <Box sx={{display:`flex`,flexDirection:`column`,bgcolor:'elevation.layer0.main', flexGrow: 1, overflow: 'hidden', px: 10}}>
-            <Grid sx={{ my: 1, py: 2, paddingBottom:5 }}>
+        <Box sx={{display:`flex`,flexDirection:`column`,justifyContent:"center",bgcolor:'elevation.layer0.main', flexGrow: 1, overflow: 'hidden', px: 10}}>
+            <Grid sx={{width:"1000",paddingBottom:5 }}>
                 <Divider>
                     <Typography variant="h3" sx={{color: `red`}}>Danh sách món ăn</Typography>
                 </Divider>
+                <Button variant="contained" onClick={()=>{
+                    dispatch({type:setFoodEdit,payload:""});
+                    history.push(ROUTING_CONSTANTS.EDITFOOD);
+                }}>Thêm món ăn</Button>
                 {food_manageData.get_foodManage_status.isLoangding ?
                 (<Box sx={{ display: 'flex',justifyContent:'center', paddingTop:3 }}>
                     <CircularProgress />
                 </Box>
                 ):(
-                <TableContainer component={Paper}>
+                <TableContainer component={Paper} sx={{width:"1000"}}>
                     <Table aria-label="a dense table">
                         <TableHead>
                             <TableRow>
@@ -128,7 +132,7 @@ function FoodItemManagement(){
                         <TableBody>
                          
                             {food_render_list.map((idx)=>{
-                                if (idx>=food_list.length){
+                                if (idx>food_list.length){
                                     return(
                                         <StyledTableRow style={{ height: 53  }} key={idx}>
                                             <StyledTableCell colSpan={5} />
@@ -224,7 +228,7 @@ function FoodItemManagement(){
             </Grid>
             <Grid sx={{height:500 ,maxWidth:1500, flexGrow: 1, alignSelf:"center", paddingBottom:15}}>
                 <Divider>
-                    <Typography variant="h4" sx={{color: `red`}}>Nguyên liệu</Typography>
+                    <Typography variant="h4" sx={{color: 'button.outlined.main'}}>Nguyên liệu</Typography>
                 </Divider>
                 {food_manageData.get_foodManage_status.isLoangding?
                 (<Box sx={{ display: 'flex',justifyContent:'center', paddingTop:3 }}>
@@ -244,7 +248,7 @@ function FoodItemManagement(){
                     <Dialog open={open} onClose={handleClose} PaperProps={{style: {backgroundColor: 'primary.main',boxShadow: 'none'}}}>
                     <DialogTitle sx={{textAlign:"center", color:'elevation.layer3.contrast'}}>Thêm nguyên liệu</DialogTitle>
                     <DialogContent>
-                    <ReactFirebaseFileUpload2 setMaterialImg={setMaterialImg}/>
+                    <ReactFirebaseFileUpload2 setImageURL={setMaterialImg}/>
                     <TextField
                         autoFocus
                         margin="dense"
