@@ -165,7 +165,9 @@ function FoodItemManagement(){
                 <Grid container spacing={{ xs: 5, md: 5 }} columns={{ xs: 3, sm: 8, md: 12 }} sx={{display:`flex`,paddingTop:3, justifyContent: 'center'}}>
                     {tag_list.map((tag)=> (
                         <Grid item>
-                            <Chip color="secondary" label={tag.TagName} variant="outlined" onDelete={()=>dispatch({type:delete_tag.loading,payload:tag.TagID})} />
+                            <Box>
+                                <Chip color="secondary" label={tag.TagName} variant="outlined" onDelete={()=>dispatch({type:delete_tag.loading,payload:tag.TagID})} />
+                            </Box>
                         </Grid>
                     ))}
                     <Grid item>
