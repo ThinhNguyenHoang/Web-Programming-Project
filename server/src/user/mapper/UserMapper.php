@@ -32,6 +32,7 @@ class UserMapper
             return null;
         }
         return (object) array(
+            "username" => $row["username"],
             "account_id" => $row["account_id"],
             "dob" => $row["dob"],
             "email" => $row["email"],
@@ -40,8 +41,10 @@ class UserMapper
             "address" => $row["address"],
             "phone_number" => $row["phone_number"],
             "full_name" => $row["full_name"],
+            "role" => $row["role"]
         );
     }
+//
 
     public static function mapBankAccountFromDatabaseRow($row): object
     {
@@ -65,7 +68,7 @@ class UserMapper
         $user->point = $request->point;
         $user->avatar = $request->avatar;
         $user->address = $request->address;
-        $user->full_name = $request->fullname;
+        $user->full_name = $request->full_name;
         $user->phone_number = $request->phone_number;
         return $user;
     }

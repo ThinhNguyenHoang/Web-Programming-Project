@@ -1,4 +1,5 @@
 import {call, put, takeLatest,putResolve} from "redux-saga/effects";
+<<<<<<< HEAD
 import { UpdateCart,GetCart,GetNews, AddCartService, GetNewsService, getFoodManageService } from "./FoodService";
 import { update_cart_actions,get_cart_actions,get_news_actions, delete_cart_actions, add_cart_actions, 
     food_management,delete_tag,add_tag,add_food,update_food,delete_food,add_material,delete_material } from "./FoodSlice";
@@ -6,6 +7,28 @@ import Toaster from "../../../utils/Toaster/Toaster";
 import {GetCartService,GetFoodService,GetVoucherService,UpdateCartService,DeleteCartService,
     deleteTagService,addTagService,addFoodService,updateFoodService,deleteFoodService,addMaterialService,deleteMaterialService} from './FoodService';
 import { loading } from "../../../utils/reduxGenerate";
+=======
+import {
+    UpdateCart,
+    GetCart,
+    GetNews,
+    AddCartService,
+    GetNewsService,
+    getFoodRecommendationService,
+    getWishList, addFoodToWishtListService, removeFoodFromWishtListService
+} from "./FoodService";
+import {
+    update_cart_actions,
+    get_cart_actions,
+    get_news_actions,
+    delete_cart_actions,
+    add_cart_actions,
+    food_recommendation_actions, food_wish_list_actions, add_to_wish_list_actions, remove_from_wish_list_actions
+} from "./FoodSlice";
+import Toaster from "../../../utils/Toaster/Toaster";
+import {GetCartService,GetFoodService,GetVoucherService,UpdateCartService,DeleteCartService} from './FoodService';
+import {stringify} from "query-string";
+>>>>>>> test3
 
 function* UpdateCartSaga({payload}){
 
@@ -162,12 +185,54 @@ function* deleteMaterialSaga({payload}){
 
 
 
+function* getFoodRecommendationSaga({payload}){
+    try{
+        const res = yield call(getFoodRecommendationService,payload);
+        Toaster.toastSuccessful("SAGA RECOM:",res);
+        yield put({type:food_recommendation_actions.success, payload: res})
+    }
+    catch (e) {
+        Toaster.toastError("SAGA RECOM-ERR:",JSON.stringify(e));
+        yield put({type:food_recommendation_actions.error,payload:JSON.stringify(e)});
+    }
+}
+
+function* getWishListSaga({payload}){
+    try{
+        const res = yield call(getWishList,payload);
+        yield put({type:food_wish_list_actions.success, payload: res})
+    }
+    catch (e) {
+        yield put({type:food_wish_list_actions.error,payload:JSON.stringify(e)});
+    }
+}
+
+function* addItemToWishListSaga({payload}){
+    try{
+        const res = yield call(addFoodToWishtListService,payload);
+        yield put({type:add_to_wish_list_actions.success, payload: res})
+    }
+    catch (e) {
+        yield put({type:add_to_wish_list_actions.error,payload:JSON.stringify(e)});
+    }
+}
+function* removeItemFromWishListSaga({payload}){
+    try{
+        const res = yield call(removeFoodFromWishtListService,payload);
+        yield put({type:remove_from_wish_list_actions.success, payload: res})
+    }
+    catch (e) {
+        yield put({type:remove_from_wish_list_actions.error,payload:JSON.stringify(e)});
+    }
+}
+
 const watchersFood = function* (){
     yield takeLatest(update_cart_actions.loading, UpdateCartSaga);
     yield takeLatest(get_cart_actions.loading,GetCartSaga);
     yield takeLatest(get_news_actions.loading,GetNewsSaga);
     yield takeLatest(delete_cart_actions.loading,DeleteCartSaga);
     yield takeLatest(add_cart_actions.loading,AddCartSaga);
+<<<<<<< HEAD
     yield takeLatest(food_management.loading,getFoodManageSaga);
     yield takeLatest(delete_tag.loading,deleteTagSaga);
     yield takeLatest(add_tag.loading,addTagSaga);
@@ -176,5 +241,12 @@ const watchersFood = function* (){
     yield takeLatest(delete_food.loading,deleteFoodSaga);
     yield takeLatest(add_material.loading,addMaterialSaga);
     yield takeLatest(delete_material.loading,deleteMaterialSaga);
+=======
+    yield takeLatest(food_recommendation_actions.loading,getFoodRecommendationSaga);
+    yield takeLatest(food_wish_list_actions.loading,getWishListSaga);
+    yield takeLatest(add_to_wish_list_actions.loading,addItemToWishListSaga);
+    yield takeLatest(remove_from_wish_list_actions.loading,removeItemFromWishListSaga);
+
+>>>>>>> test3
 }
 export default watchersFood;

@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Box from "@mui/material/Box";
 import {Typography} from "@mui/material";
 import FoodItemCard from "./FoodItemCard";
 import Carousel from "react-material-ui-carousel";
-import FoodRecommendation from "./FoodRecommendation";
+import FoodGrid from "./FoodGrid";
+import {food_recommendation_actions, selectors} from "../../redux/slices/food/FoodSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {array_to_chunks} from "../../utils";
 // ? Food Item Schema
 // const food_item = {
 //     id: "",
@@ -18,90 +21,16 @@ import FoodRecommendation from "./FoodRecommendation";
 //     material: []
 // }
 
-const food_list_test_1 = [
-    {
-        id: "0",
-        name: "Food Name",
-        picture_uri: "https://www.themealdb.com/images/media/meals/g373701551450225.jpg",
-        price: "500",
-        description: "Heat the oil in a frying pan that has a lid, then soften the onions, chilli, garlic and coriander stalks for 5 mins until soft.",
-        // status: generateStatus(),
-        sale_value: "12",
-        instruct: "Heat the oil in a frying pan that has a lid, then soften the onions, chilli, garlic and coriander stalks for 5 mins until soft.",
-        tags: [],
-        material: []
-    },
-    {
-        id: "1",
-        name: "Moroccan Carrot Soup",
-        picture_uri: "https://www.themealdb.com/images/media/meals/jcr46d1614763831.jpg",
-        price: "500",
-        description: "Heat the oil in a frying pan that has a lid, then soften the onions, chilli, garlic and coriander stalks for 5 mins until soft.",
-        // status: generateStatus(),
-        sale_value: "12",
-        instruct: "Heat the oil in a frying pan that has a lid, then soften the onions, chilli, garlic and coriander stalks for 5 mins until soft.",
-        tags: [],
-        material: []
-    },
-    {
-        id: "2",
-        name: "Kung Pao Chicken",
-        picture_uri: "https://www.themealdb.com/images/media/meals/1525872624.jpg",
-        price: "500",
-        description: "Heat the oil in a frying pan that has a lid, then soften the onions, chilli, garlic and coriander stalks for 5 mins until soft.",
-        // status: generateStatus(),
-        sale_value: "12",
-        instruct: "Heat the oil in a frying pan that has a lid, then soften the onions, chilli, garlic and coriander stalks for 5 mins until soft.",
-        tags: [],
-        material: []
-    }
-]
-// TODO:  Quyền hiển thị cái list này lên giùm
-const food_list_test_2 = [
-    {
-        id: "5",
-        name: "Kung Pao Chicken",
-        picture_uri: "https://www.themealdb.com/images/media/meals/wxuvuv1511299147.jpg",
-        price: "500",
-        description: "Heat the oil in a frying pan that has a lid, then soften the onions, chilli, garlic and coriander stalks for 5 mins until soft.",
-        // status: generateStatus(),
-        sale_value: "12",
-        instruct: "Heat the oil in a frying pan that has a lid, then soften the onions, chilli, garlic and coriander stalks for 5 mins until soft.",
-        tags: [],
-        material: []
-    },
-
-    {
-        id: "3",
-        name: "Food Name",
-        picture_uri: "https://www.themealdb.com/images/media/meals/z0ageb1583189517.jpg",
-        price: "500",
-        description: "Heat the oil in a frying pan that has a lid, then soften the onions, chilli, garlic and coriander stalks for 5 mins until soft.",
-        // status: generateStatus(),
-        sale_value: "12",
-        instruct: "Heat the oil in a frying pan that has a lid, then soften the onions, chilli, garlic and coriander stalks for 5 mins until soft.",
-        tags: [],
-        material: []
-    },
-    {
-        id: "4",
-        name: "Moroccan Carrot Soup",
-        picture_uri: "https://www.themealdb.com/images/media/meals/ewcikl1614348364.jpg",
-        price: "500",
-        description: "Heat the oil in a frying pan that has a lid, then soften the onions, chilli, garlic and coriander stalks for 5 mins until soft.",
-        // status: generateStatus(),
-        sale_value: "12",
-        instruct: "Heat the oil in a frying pan that has a lid, then soften the onions, chilli, garlic and coriander stalks for 5 mins until soft.",
-        tags: [],
-        material: []
-    },
-]
-
-const list_of_food_list= [food_list_test_1,food_list_test_2]
-
 const FoodListCarousel = () => {
     // TODO: Change this to real food api
-    // const food_list = food_list_test;
+    const recommendation = useSelector(selectors.getRecommendationList);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch({type:food_recommendation_actions.loading})
+        return () => {
+
+        };
+    }, []);
     return (
         <Box sx={{display:`flex`,flexDirection:`column`}}>
             <Typography sx={{
@@ -115,8 +44,8 @@ const FoodListCarousel = () => {
             </Typography>
             <Carousel>
                 {
-                    list_of_food_list.map((item,index) => {
-                        return <FoodRecommendation food_list={item} key={index.toString()}/>
+                    array_to_chunks(recommendation,3).map((item,index) => {
+                        return <FoodGrid food_list={item} key={index.toString()}/>
                     })
                 }
             </Carousel>

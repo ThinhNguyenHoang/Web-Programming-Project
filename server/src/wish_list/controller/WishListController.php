@@ -19,10 +19,11 @@ class WishListController extends BaseController implements RequestHandler
     {
         $method = strtolower(RequestHelper::getRequestMethod());
         error_log("WishList controller::METHOD::" . $method);
-        $token = RequestHelper::validate_jwt_token();
         $relative_path = RequestHelper::get_ith_path_item(1);
         switch ($method) {
             case "get":
+                $token = RequestHelper::validate_jwt_token();
+
                 if ($relative_path == null) {
                     error_log("WISH_LIST_CONTROLLER::GET WISH_LIST ENDPOINT::" . $relative_path);
                     WishListService::getWishListList();
@@ -31,6 +32,8 @@ class WishListController extends BaseController implements RequestHandler
                 }
                 break;
             case "post":
+                $token = RequestHelper::validate_jwt_token();
+
                 if ($relative_path == null) {
                     error_log("WISH_LIST_CONTROLLER::ADD WISH_LIST ENDPOINT::" . $relative_path);
                     WishListService::addWishList();
@@ -39,6 +42,8 @@ class WishListController extends BaseController implements RequestHandler
                 }
                 break;
             case "delete":
+                $token = RequestHelper::validate_jwt_token();
+
                 if (is_numeric($relative_path)) {
                     error_log("WISH_LIST_CONTROLLER::DELETE WISH_LIST ENDPOINT::" . $relative_path);
                     WishListService::deleteWishList($relative_path);
@@ -46,6 +51,9 @@ class WishListController extends BaseController implements RequestHandler
                     ResponseHelper::error_client("Invalid path in wish_list endpoint");
                 }
                 break;
+    //            case "options":
+    //                ResponseHelper::success("Success");
+    //                break;
             default:
                 return false;
         }

@@ -68,16 +68,6 @@ class UserRepository implements Repository
         return null;
     }
 
-    public static function getUserProfile(int $userId) : ?object{
-        $query = "select fullname as full_name,accountID as account_id, avatarURI as avatar ,dob,email,point,address,phonenumber as phone_number,role from user_profile, user_account where user_profile.AccountID = user_account.Id and user_account.Id = $userId";
-        try {
-            $result = QueryExecutor::executeQuery($query);
-            return UserMapper::mapUserProfileFromResult($result);
-        } catch (Exception $exception) {
-            echo $exception->getMessage();
-        }
-        return null;
-    }
     /**
      * @param UserAccount|null $entity
      */
@@ -106,7 +96,7 @@ class UserRepository implements Repository
 
     public static function update(int $entityID = null, object $entity = null)
     {
-        $query = "UPDATE USER_ACCOUNT SET USERNAME=$entity->username, PASSWORD=$entity->password WHERE ID=$entityID";
+        $query = "UPDATE USER_ACCOUNT SET USERNAME='$entity->username', PASSWORD='$entity->password' WHERE ID=$entityID";
         return QueryExecutor::executeQuery($query);
     }
 
@@ -170,11 +160,37 @@ class UserRepository implements Repository
         return null;
     }
 
-    public static function updateUserProfile($user_id,$user_profile): object{
-        $query = "UPDATE USER_PROFILE SET FULLNAME=$user_profile->fullname, DOB=$user_profile->dob, EMAIL=$user_profile->email,Address=$user_profile->address,PHONENUMBER=$user_profile->phone_number,WHERE ACCOUNT_ID=$user_profile->account_id";
+    public static function findUserProfileByName(string $user_name)
+    {
+        $query = "SELECT select fullname as full_name,accountID as account_id, avatarURI as avatar ,dob,email,point,address,phonenumber as phone_number,role FROM user_account, user_profile WHERE user_account.Username =$user_name and user_account.Id=user_profile.AccountID;";
+        try {
+            $result = QueryExecutor::executeQuery($query);
+            return UserMapper::mapUserProfileFromResult($result);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+        return null;
+    }
+
+    public static function getUserProfile(int $userId) : ?object{
+        $query = "select username,fullname as full_name,accountID as account_id, avatarURI as avatar ,dob,email,point,address,phonenumber as phone_number,role from user_profile, user_account where user_profile.AccountID = user_account.Id and user_account.Id = $userId";
+        try {
+            $result = QueryExecutor::executeQuery($query);
+            return UserMapper::mapUserProfileFromResult($result);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+        return null;
+    }
+
+
+    public static function updateUserProfile($user_id,$user_profile): ?object{
+        $query = "UPDATE USER_PROFILE SET FULLNAME='$user_profile->full_name', DOB='$user_profile->dob', EMAIL='$user_profile->email',Address='$user_profile->address',PHONENUMBER='$user_profile->phone_number',AVATARURI='$user_profile->avatar' WHERE ACCOUNTID=$user_profile->account_id";
         try {
             $result = QueryExecutor::executeQuery($query);
             $updated_profile = self::getUserProfile($user_id);
+            error_log("Updated Profile To: " . json_encode($updated_profile), 0);
+            return $updated_profile;
         } catch (Exception $exception) {
             echo $exception->getMessage();
         }

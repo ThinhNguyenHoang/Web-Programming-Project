@@ -1,4 +1,4 @@
-const USER_CONSTANTS = {
+export const USER_CONSTANTS = {
     ROLE: {
         MANAGER: 'MANAGER',
         CUSTOMER: 'CUSTOMER'

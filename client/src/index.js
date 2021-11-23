@@ -10,6 +10,7 @@ import { BrowserRouter } from "react-router-dom";
 import { RouterConfig } from "./routes/RouterConfig";
 import {toast, ToastContainer} from "react-toastify";
 
+
 ReactDOM.render(
     <React.StrictMode>
         <CustomThemeProvider>

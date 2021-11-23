@@ -10,7 +10,12 @@ import HomePage from "../pages/HomePage";
 import {WithHeader} from "../components/header/Header";
 import AboutUs from "../pages/AboutUs";
 import AccountManagement from "../pages/AccountManagement";
+<<<<<<< HEAD
 import FoodItemManagement from "../pages/FoodItemManagement";
+=======
+import FoodRecommendationPage from "../pages/FoodRecommendationPage";
+import WishListPage from "../pages/WishListPage";
+>>>>>>> test3
 
 const baseUrl = process.env.FAKE_SERVER_HOST;
 export const ROUTING_CONSTANTS = {
@@ -24,6 +29,7 @@ export const ROUTING_CONSTANTS = {
     NEWS: "/news",
     ITEM_CART: "/cart",
     RECOMMENDATION: "/recommendations",
+    WISH_LIST: "/wish_list",
     ACCOUNT: "/account",
     MANAGE_USERS: "/manage-user",
     MANAGE_ITEM_LIST: "/manage-item-info",
@@ -58,10 +64,9 @@ export const ROUTING_TAB_ITEMS = [
     generateTabLinkItem("Manage User", ROUTING_CONSTANTS.MANAGE_USERS, "Manager"),
     generateTabLinkItem("Manage Item Info",ROUTING_CONSTANTS.MANAGE_ITEM_LIST, "Manager"),
     generateTabLinkItem("Manage User", ROUTING_CONSTANTS.MANAGE_BILL, "Manager"),
-    generateTabLinkItem("Manage User", ROUTING_CONSTANTS.MANAGE_ITEM_LIST, "Manager"),
     generateTabLinkItem("Login", ROUTING_CONSTANTS.LOGIN),
     generateTabLinkItem("Register", ROUTING_CONSTANTS.REGISTER),
-
+    generateTabLinkItem("Wishlist", ROUTING_CONSTANTS.WISH_LIST),
 ]
 
 
@@ -132,7 +137,7 @@ export const RouterConfig = () => {
                     <AccountManagement/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.RECOMMENDATION}>
-                    <Recommendations/>
+                    <FoodRecommendationPage/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.ITEM_CART}>
                     <FoodCart/>
@@ -142,6 +147,9 @@ export const RouterConfig = () => {
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.ORDER}>
                     <OrderMangament/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.WISH_LIST}>
+                    <WishListPage/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.TESTING}>
                     <App/>

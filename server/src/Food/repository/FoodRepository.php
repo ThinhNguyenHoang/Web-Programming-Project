@@ -101,13 +101,15 @@ class FoodRepository implements Repository
                 ON ref_tag.TagID=category_tag.TagID 
                 WHERE ref_tag.UserID=$UserID AND category_tag.ComboID=0
                  ORDER BY ref_tag.Count DESC LIMIT $tag_limit";
-
+        $result = null;
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
             error_log($e->getMessage());
         }
-
+        if(!$result){
+            return null;
+        }
         $top_tag = array();
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
             error_log(json_encode($row), 0);
