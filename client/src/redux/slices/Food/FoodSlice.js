@@ -4,7 +4,7 @@ import { error, generateSagaLifecycleNames, generateStatus, loading, success } f
 import { UpdateDiscount,UpdateSubtotal, UpdateQuantity } from "./FoodHelper";
 
 
-//* const food_item={
+// * const food_item={
 //     FoodID:"",
 //     FoodName:"",
 //     Picture:"",
@@ -86,6 +86,7 @@ const initialValue={
         food_list:[],//list các fooditem trên
         tag_list:[],
         material_list:[],
+        tempFoodID:"",
         get_foodManage_status:generateStatus(),
         // get_food:generateStatus(),//*lấy tất cả food
         add_food:generateStatus(),//?add 1 food to db ,bao gồm tag, material
@@ -114,6 +115,7 @@ export const selectors={
     getNofiList: state=>state.food.news.nofi_list,
     //food mangement
     getFoodManagement:state=>state.food.food_manage,
+
 
 
 }
@@ -149,6 +151,7 @@ export const delete_food=generateSagaLifecycleNames("delete_exist_food");
 export const update_food=generateSagaLifecycleNames("update_exist_food");
 export const add_material=generateSagaLifecycleNames("add_new_material");
 export const delete_material=generateSagaLifecycleNames("delete_exist_material");
+export const setFoodEdit= "setFoodEdit";
 
 
 
@@ -360,7 +363,9 @@ const FoodSlice= createSlice({
         [delete_material.error]:(state,action)=>{
             state.food_manage.delete_material =error();
         },
-        
+        [setFoodEdit]:(state,action)=>{
+            state.food_manage.tempFoodID=action.payload;
+        }
         
 
         

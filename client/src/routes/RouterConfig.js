@@ -11,6 +11,7 @@ import {WithHeader} from "../components/header/Header";
 import AboutUs from "../pages/AboutUs";
 import AccountManagement from "../pages/AccountManagement";
 import FoodItemManagement from "../pages/FoodItemManagement";
+import EditFoodItem from "../pages/EditFoodItem";
 
 const baseUrl = process.env.FAKE_SERVER_HOST;
 export const ROUTING_CONSTANTS = {
@@ -32,6 +33,7 @@ export const ROUTING_CONSTANTS = {
     CLIENT: "/clients",
     ORDER: "/orders",
     TESTING: "/test",
+    EDITFOOD:"/editfood",
 }
 
 const generateTabLinkItem = (label_name, nav_to, require_auth) => {
@@ -148,6 +150,9 @@ export const RouterConfig = () => {
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.MANAGE_ITEM_LIST}>
                     <FoodItemManagement/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.EDITFOOD}>
+                    <EditFoodItem/>
                 </Route>
             </Switch>
         </WithHeader>
