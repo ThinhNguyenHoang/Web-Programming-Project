@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux';
 export default function MaterialCard(props) {
   const dispatch = useDispatch();
   return (
-    <Card sx={{ width: 130 }}>
+    <Card sx={{ width: 130, maxWidth:200 , minWidth: 200}}>
       <CardMedia
         component="img"
         height="140px"

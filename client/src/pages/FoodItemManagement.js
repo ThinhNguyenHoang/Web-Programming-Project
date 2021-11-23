@@ -87,12 +87,12 @@ function FoodItemManagement(){
     
     return(
         <Box sx={{display:`flex`,flexDirection:`column`,bgcolor:'elevation.layer0.main', flexGrow: 1, overflow: 'hidden', px: 10}}>
-            <Grid sx={{ width: 1500, my: 1, mx: 'auto', p: 2, paddingBottom:5 }}>
+            <Grid sx={{ my: 1, py: 2, paddingBottom:5 }}>
                 <Divider>
                     <Typography variant="h3" sx={{color: `red`}}>Danh sách món ăn</Typography>
                 </Divider>
-                <TableContainer component={Paper} sx={{mt:4}}>
-                    <Table sx={{ minWidth: 650 }} size= "small" aria-label="a dense table">
+                <TableContainer component={Paper}>
+                    <Table aria-label="a dense table">
                         <TableHead>
                             <TableRow>
                                 <StyledTableCell align="left">STT</StyledTableCell>
@@ -133,8 +133,6 @@ function FoodItemManagement(){
                                 );
                                 }
                             ))}
-                            
-                        
                         </TableBody>
                     </Table>
                     <Box sx={{display:"flex",flexDirection:"row",justifyContent:"flex-end"}}>
@@ -164,7 +162,7 @@ function FoodItemManagement(){
                 <Divider>
                     <Typography variant="h4" sx={{color: 'elevation.layer1.contrast'}}>Tag</Typography>
                 </Divider>
-                <Grid container spacing={{ xs: 5, md: 5 }} columns={{ xs: 3, sm: 8, md: 12 }}>
+                <Grid container spacing={{ xs: 5, md: 5 }} columns={{ xs: 3, sm: 8, md: 12 }} sx={{display:`flex`,paddingTop:3, justifyContent: 'center'}}>
                     {tag_list.map((tag)=> (
                         <Grid item>
                             <Chip color="secondary" label={tag.TagName} variant="outlined" onDelete={()=>dispatch({type:delete_tag.loading,payload:tag.TagID})} />
@@ -177,21 +175,22 @@ function FoodItemManagement(){
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid sx={{maxWidth:1500, flexGrow: 1, alignSelf:"center", paddingBottom:15}}>
+            <Grid sx={{height:500 ,maxWidth:1500, flexGrow: 1, alignSelf:"center", paddingBottom:15}}>
                 <Divider>
                     <Typography variant="h4" sx={{color: `red`}}>Nguyên liệu</Typography>
                 </Divider>
-                <Grid container spacing={{ xs: 5, md: 5 }} columns={{ xs: 3, sm: 8, md: 12 }} sx={{paddingTop:3}}>
+                <Grid container spacing={{ xs: 5, md: 5 }} columns={{ xs: 3, sm: 8, md: 12 }} sx={{display:`flex`,paddingTop:3, justifyContent: 'center'}}>
                     {material_list.map((material)=>(
                         <Grid item>
-                            <MaterialCard key={material.MaterialID} image={material.Picture} name={material.MaterialName}/>
+                            <MaterialCard id = {material.MaterialID} key={material.MaterialID} image={material.Picture} name={material.MaterialName}/>
                         </Grid>
                     ))}
-                    <IconButton onClick={handleClickOpen} aria-label="addmaterial" size="large" sx={{height:"fit-content", alignSelf:"center"}} >
+                    <Grid item>
+                    <IconButton onClick={handleClickOpen} aria-label="addmaterial" size="large" sx={{color:"elevation.layer0.contrast",display:`flex`,height:"fit-content", alignItems: 'stretch'}} >
                         <AddIcon fontSize="large" />
                     </IconButton>
-                    <Dialog open={open} onClose={handleClose}>
-                    <DialogTitle sx={{textAlign:"center"}}>Nguyên liệu</DialogTitle>
+                    <Dialog open={open} onClose={handleClose} PaperProps={{style: {backgroundColor: 'primary.main',boxShadow: 'none'}}}>
+                    <DialogTitle sx={{textAlign:"center", color:'elevation.layer3.contrast'}}>Thêm nguyên liệu</DialogTitle>
                     <DialogContent>
                     <ReactFirebaseFileUpload2 setMaterialImg={setMaterialImg}/>
                     <TextField
@@ -202,15 +201,15 @@ function FoodItemManagement(){
                         type="name"
                         fullWidth
                         variant="standard"
-                        onchange={(e)=>setMaterialName(e.target.value)}
+                        onChange={(e)=>setMaterialName(e.target.value)}
                     />
                     </DialogContent>
                     <DialogActions>
-                    <Button onClick={handleClose}>Hủy bỏ</Button>
+                    <Button onClick={handleClose} sx={{color:'button.outlined.main'}}>Hủy bỏ</Button>
                     <Button onClick={handleCreate}>Tạo</Button>
                     </DialogActions>
                     </Dialog>
-                    
+                    </Grid>
                 </Grid>
             </Grid>
         </Box>
