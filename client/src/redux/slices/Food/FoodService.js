@@ -106,4 +106,12 @@ export const getWishList = (payload) => {
     return request.getAsync(api_endpoints.wish_list, payload);
 }
 
+export const addFoodToWishtListService = (payload)=>{
+    console.log("WISHLIST_SERVICE::ADD ",payload);
+    return request.postAsync(api_endpoints.wish_list,payload);
+}
 
+export const removeFoodFromWishtListService = (payload)=>{
+    console.log("WISHLIST_SERVICE::REMOVE ",payload);
+    return request.deleteAsync(api_endpoints.wish_list,payload);
+}

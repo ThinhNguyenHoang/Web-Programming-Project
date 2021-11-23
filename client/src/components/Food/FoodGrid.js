@@ -56,14 +56,12 @@ const food_list_test = [
     }
 ]
 const FoodGrid = ({food_list}) => {
-    // TODO: Change this to real food api
-
     const list_food = food_list ? food_list : food_list_test;
     return (
-            <Box sx={{display:'flex',flexDirection: {xs:'column',sm:'column',md:`row`}, alignItems:'center',justifyContent:`center` }}>
+            <Box sx={{display:'flex',flexDirection: {xs:'column',sm:'column',md:`row`}, alignItems:'stretch',justifyContent:`center` }}>
                 {
                     list_food.map((item,index) => {
-                        return <FoodItemCard food_item={item} key={index.toString()} mx={{xs:1,sm:2,md:3}}/>
+                        return <FoodItemCard allow_expansion={false} food_item={item} key={index.toString()} mx={{xs:1,sm:2,md:3}}/>
                     })
                 }
             </Box>

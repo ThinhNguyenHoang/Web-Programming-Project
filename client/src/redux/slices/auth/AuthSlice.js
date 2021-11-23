@@ -234,6 +234,7 @@ const authSlice = createSlice({
             console.log("AUTH SLICE GET PROFILE ERROR: ",action.payload);
             console.log("CLEARING LOCAL STORAGE");
             Toaster.toastError(action.payload + ` Your session has expired. Please Login again :)`);
+            localStorage.clear();
             state.currentUser.read_profile_status = error()
         }
 

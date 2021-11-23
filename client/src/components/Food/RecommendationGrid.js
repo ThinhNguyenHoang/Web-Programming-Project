@@ -17,12 +17,12 @@ export const RecommendationGrid = () => {
     }, []);
 
     return (
-        <Box sx={{flexGrow: 1}}>
+        <Box sx={{flexGrow: 1,m:4}}>
             {
                 recommendation_list ?
                     <Grid
                         container
-                        spacing={{xs: 2, md: 3}}
+                        spacing={{xs: 2, md: 2}}
                         columns={{xs: 4, sm: 8, md: 12}}
                     >
                         {recommendation_list.map((item, index) => (

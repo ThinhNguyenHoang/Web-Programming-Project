@@ -42,6 +42,23 @@ const food_item = {
     tags: [],
     material: []
 }
+
+
+
+const mapFoodItemFromResponse = (item) => {
+    return {
+        id: item.FoodID,
+        name: item.FoodName,
+        picture_uri: item.Picture,
+        price: item.Price,
+        // ! CHANGE THIS TO REAL SALE VALUE FROM REQUEST
+        sale_value: 0,
+        description: item.Description,
+        instruct: item.Instruct,
+        material: [...item.Material],
+        tags: [...item.Tags],
+    }
+}
 const initialValue = {
     user_id: 1,
     cart: {
@@ -70,7 +87,8 @@ const initialValue = {
         status: generateStatus(),
         food_list: [],
     },
-
+    add_to_wishlist: generateStatus(),
+    remove_from_wish_list: generateStatus(),
     food_item_detail: food_item
 }
 
@@ -118,10 +136,13 @@ export const back_nofi_news = "back_nofication";
 // Food Item Action
 export const food_item_detail = generateSagaLifecycleNames("food_item_detail");
 
-
+// Food Wishlist action
+export const add_to_wish_list_actions = generateSagaLifecycleNames("add_wish_list");
+export const remove_from_wish_list_actions = generateSagaLifecycleNames("remove_wish_list");
 // * Food Recommendation Actions:
 export const food_recommendation_actions = generateSagaLifecycleNames("food_recommendation");
 export const food_wish_list_actions = generateSagaLifecycleNames("wish_list");
+
 
 const FoodSlice = createSlice({
     name: "food",
@@ -259,7 +280,7 @@ const FoodSlice = createSlice({
         [food_recommendation_actions.success]: (state, action) => {
             // Expect the list of food
             Toaster.toastSuccessful("FOOD RECOMMENDATION: " + JSON.stringify(action.payload));
-            state.recommendations.food_list = action.payload.data;
+            state.recommendations.food_list = action.payload.data.map(item => mapFoodItemFromResponse(item));
             state.recommendations.status = success();
         },
         [food_recommendation_actions.error]: (state, action) => {
@@ -280,6 +301,31 @@ const FoodSlice = createSlice({
         },
         [food_wish_list_actions.loading]: (state, action) => {
             state.wish_list.status = loading();
+        },
+
+        [add_to_wish_list_actions.success]: (state, action) => {
+            console.log("FOOD SLICE::WISHLIST::ADD ",action.payload);
+            state.add_to_wishlist.status = success();
+        },
+        [add_to_wish_list_actions.error]: (state, action) => {
+            Toaster.toastError(JSON.stringify(action.payload));
+            state.add_to_wishlist.status = error();
+        },
+        [add_to_wish_list_actions.loading]: (state, action) => {
+            state.add_to_wishlist.status = loading();
+        },
+
+        [remove_from_wish_list_actions.success]: (state, action) => {
+            console.log("FOOD SLICE::REMOVE:: ",action.payload);
+            state.remove_from_wish_list.status = success();
+        },
+        [remove_from_wish_list_actions.error]: (state, action) => {
+            Toaster.toastError(JSON.stringify(action.payload));
+            state.recommendations.status = error();
+            state.remove_from_wish_list.status = error();
+        },
+        [remove_from_wish_list_actions.loading]: (state, action) => {
+            state.remove_from_wish_list.status = loading();
         },
 
 

@@ -6,7 +6,7 @@ import {
     AddCartService,
     GetNewsService,
     getFoodRecommendationService,
-    getWishList
+    getWishList, addFoodToWishtListService, removeFoodFromWishtListService
 } from "./FoodService";
 import {
     update_cart_actions,
@@ -14,7 +14,7 @@ import {
     get_news_actions,
     delete_cart_actions,
     add_cart_actions,
-    food_recommendation_actions, food_wish_list_actions
+    food_recommendation_actions, food_wish_list_actions, add_to_wish_list_actions, remove_from_wish_list_actions
 } from "./FoodSlice";
 import Toaster from "../../../utils/Toaster/Toaster";
 import {GetCartService,GetFoodService,GetVoucherService,UpdateCartService,DeleteCartService} from './FoodService';
@@ -99,11 +99,30 @@ function* getFoodRecommendationSaga({payload}){
 
 function* getWishListSaga({payload}){
     try{
-        const res = yield call(getWishList,payload ? payload : {});
+        const res = yield call(getWishList,payload);
         yield put({type:food_wish_list_actions.success, payload: res})
     }
     catch (e) {
         yield put({type:food_wish_list_actions.error,payload:JSON.stringify(e)});
+    }
+}
+
+function* addItemToWishListSaga({payload}){
+    try{
+        const res = yield call(addFoodToWishtListService,payload);
+        yield put({type:add_to_wish_list_actions.success, payload: res})
+    }
+    catch (e) {
+        yield put({type:add_to_wish_list_actions.error,payload:JSON.stringify(e)});
+    }
+}
+function* removeItemFromWishListSaga({payload}){
+    try{
+        const res = yield call(removeFoodFromWishtListService,payload);
+        yield put({type:remove_from_wish_list_actions.success, payload: res})
+    }
+    catch (e) {
+        yield put({type:remove_from_wish_list_actions.error,payload:JSON.stringify(e)});
     }
 }
 
@@ -115,5 +134,8 @@ const watchersFood = function* (){
     yield takeLatest(add_cart_actions.loading,AddCartSaga);
     yield takeLatest(food_recommendation_actions.loading,getFoodRecommendationSaga);
     yield takeLatest(food_wish_list_actions.loading,getWishListSaga);
+    yield takeLatest(add_to_wish_list_actions.loading,addItemToWishListSaga);
+    yield takeLatest(remove_from_wish_list_actions.loading,removeItemFromWishListSaga);
+
 }
 export default watchersFood;

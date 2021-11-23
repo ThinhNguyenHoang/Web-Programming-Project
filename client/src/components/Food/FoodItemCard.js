@@ -21,6 +21,8 @@ import {useState} from "react";
 import {ThemedOutlineButton} from "../Buttons/ThemedButton/ThemedButton";
 import Box from "@mui/material/Box";
 import {ThemeContext} from "../../theme";
+import {useDispatch} from "react-redux";
+import {add_to_wish_list_actions, remove_from_wish_list_actions} from "../../redux/slices/food/FoodSlice";
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -33,12 +35,13 @@ const ExpandMore = styled((props) => {
     })
 }));
 // sx={{color:`${ isClicked ? 'primary.main' : 'grey.500'}`}}
-const HeartIconButton = ({isClicked}) =>{
+const HeartIconButton = ({isClicked,callback}) =>{
     // TODO: Remember to change the initial state to isClicked
     const [clicked, setClicked] = useState(false);
     return <IconButton aria-label="add to favorites" onClick={() => {
-            console.log("CLICKED IS: ",clicked)
             setClicked(!clicked);
+            callback(clicked);
+            console.log("CLICKED IS: ",clicked)
         }
     }>
         {clicked ? <FavoriteIcon  color={`primary`}/> : <FavoriteIcon color={`grey:500`}/>
@@ -58,8 +61,10 @@ const HeartIconButton = ({isClicked}) =>{
 //     tags: [],
 //     material: []
 // }
-export default function FoodItemCard({food_item,mx},...props) {
+export default function FoodItemCard({food_item,mx,allow_expansion=true},...props) {
     const [expanded, setExpanded] = React.useState(false);
+
+    const dispatch = useDispatch();
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
@@ -75,16 +80,30 @@ export default function FoodItemCard({food_item,mx},...props) {
             <CardHeader
                 sx={{color:'elevation.layer2.contrast'}}
                 action={
-                    <HeartIconButton/>
+                    <HeartIconButton callback={(clicked) => {
+                            const food_item_wishlist = {
+                                FoodID:food_item.id,
+                            }
+                            console.log("OUTSIDE SEE CLICKED ON ITEM: ",food_item.id,clicked);
+                            if(!clicked){
+                                console.log("ADD TO WISHLIST UI");
+                                dispatch({type:add_to_wish_list_actions.loading,payload:food_item_wishlist})
+                            }
+                            else{
+                                console.log("Remove from wishlist ui");
+                                dispatch({type:remove_from_wish_list_actions.loading,payload:food_item_wishlist})
+                            }
+                        }
+                    }/>
                 }
                 title={food_item.name ? food_item.name : "No food name info"}
                 subheader={<Typography variant={`h5`} color={`primary.main`}>
-                    {food_item.price ? `${food_item.price} K` : `Not available`}
+                    {food_item.price ? `${food_item.price.substring(0,food_item.price.length-3)} K` : `Not available`}
                 </Typography>}
             />
 
             <CardContent>
-                <Typography  variant="body2" color="elevation.layer2.contrast">
+                <Typography  variant="body2" color="elevation.layer2.contrast" noWrap={true}>
                     {food_item.description ? food_item.description : "No food description"}
                 </Typography>
             </CardContent>
@@ -104,15 +123,18 @@ export default function FoodItemCard({food_item,mx},...props) {
                 <Typography variant={`h5`} color={`primary.main`} sx={{display:{xs:`none`,sm:`none`}}}>
                     {food_item.price ? `${food_item.price} K` : `500K`}
                 </Typography>
-                <ExpandMore
-                    sx={{color:`elevation.layer2.contrast`}}
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                >
-                    <ExpandMoreIcon />
-                </ExpandMore>
+                {
+                    allow_expansion &&                 <ExpandMore
+                        sx={{color:`elevation.layer2.contrast`}}
+                        expand={expanded}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="show more"
+                    >
+                        <ExpandMoreIcon />
+                    </ExpandMore>
+
+                }
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent  sx={{color:'elevation.layer2.contrast'}}>

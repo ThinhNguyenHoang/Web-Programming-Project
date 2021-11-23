@@ -60,6 +60,7 @@ const Header = (props) => {
         ROUTING_CONSTANTS.REGISTER
     ]
     const LoggedInTabs = [
+        ROUTING_CONSTANTS.WISH_LIST,
         ROUTING_CONSTANTS.RECOMMENDATION,
         ROUTING_CONSTANTS.ACCOUNT,
     ];
