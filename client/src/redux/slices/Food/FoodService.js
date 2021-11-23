@@ -3,13 +3,16 @@ import {CartData2FoodCart,FoodCart2CartData,VoucherData2VoucherList} from './Foo
 import axios from "axios";
 import Nofication from "../../../components/News/Nofication";
 import { appendOwnerState } from "@mui/core";
+
+const food_local_base = '/food'
+
 const api_endpoints = {
     food:"/foods",
     voucher:"/voucher",
     cart:"/cart",
     combo:"/combo",
     nofication:"/nofication",
-    recommendations: "/notification",
+    recommendations: `${food_local_base}/recommendation`,
     wish_list: "/wish_list"
 }
 const baseURL="http://localhost:3001";
@@ -94,7 +97,7 @@ export const GetCartService = async  (payload)=>{
         }
 }
 
-export const getFoodRecommendation = (payload) => {
+export const getFoodRecommendationService = (payload) => {
     return request.getAsync(api_endpoints.recommendations, payload);
 }
 

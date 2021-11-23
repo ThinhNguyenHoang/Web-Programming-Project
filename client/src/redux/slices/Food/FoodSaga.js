@@ -5,7 +5,7 @@ import {
     GetNews,
     AddCartService,
     GetNewsService,
-    getFoodRecommendation,
+    getFoodRecommendationService,
     getWishList
 } from "./FoodService";
 import {
@@ -87,10 +87,12 @@ function* GetNewsSaga({payload}){
 
 function* getFoodRecommendationSaga({payload}){
     try{
-        const res = yield call(getFoodRecommendation,payload ? payload : {});
+        const res = yield call(getFoodRecommendationService,payload);
+        Toaster.toastSuccessful("SAGA RECOM:",res);
         yield put({type:food_recommendation_actions.success, payload: res})
     }
     catch (e) {
+        Toaster.toastError("SAGA RECOM-ERR:",JSON.stringify(e));
         yield put({type:food_recommendation_actions.error,payload:JSON.stringify(e)});
     }
 }
@@ -111,5 +113,7 @@ const watchersFood = function* (){
     yield takeLatest(get_news_actions.loading,GetNewsSaga);
     yield takeLatest(delete_cart_actions.loading,DeleteCartSaga);
     yield takeLatest(add_cart_actions.loading,AddCartSaga);
+    yield takeLatest(food_recommendation_actions.loading,getFoodRecommendationSaga);
+    yield takeLatest(food_wish_list_actions.loading,getWishListSaga);
 }
 export default watchersFood;

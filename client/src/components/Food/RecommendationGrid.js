@@ -1,6 +1,6 @@
-import React from 'react';
-import {selectors} from "../../redux/slices/food/FoodSlice";
-import {useSelector} from "react-redux";
+import React, {useEffect} from 'react';
+import {food_recommendation_actions, selectors} from "../../redux/slices/food/FoodSlice";
+import {useDispatch, useSelector} from "react-redux";
 import Grid from "@mui/material/Grid";
 import FoodItemCard from "./FoodItemCard";
 import Box from "@mui/material/Box";
@@ -8,6 +8,14 @@ import Typography from "@mui/material/Typography";
 
 export const RecommendationGrid = () => {
     const recommendation_list = useSelector(selectors.getRecommendationList);
+    const dispatch =useDispatch();
+    useEffect(() => {
+        dispatch({type:food_recommendation_actions.loading})
+        return () => {
+
+        };
+    }, []);
+
     return (
         <Box sx={{flexGrow: 1}}>
             {

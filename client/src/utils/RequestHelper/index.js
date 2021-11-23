@@ -27,6 +27,7 @@ class RequestHelper {
         this.defaultConfig = {};
         this.defaultHeaders = {
             'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods':'*',
             responseType: 'application/json'
         };
     }

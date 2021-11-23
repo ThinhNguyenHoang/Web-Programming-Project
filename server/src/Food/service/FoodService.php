@@ -42,6 +42,10 @@ class FoodService
     public static function getFoodRecomendation()
     {
         $top_tag = FoodRepository::getTopTagFood();
+        if(!$top_tag){
+            ResponseHelper::error_server("No Recommendation Yet");
+            die();
+        }
         $list_food = array();
         foreach($top_tag as $tag) {
             // echo json_encode($tag);die();

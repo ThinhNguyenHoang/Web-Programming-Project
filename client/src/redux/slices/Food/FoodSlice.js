@@ -83,7 +83,7 @@ export const selectors = {
     getComboList: state => state.food.news.combo_list,
     getNofiList: state => state.food.news.nofi_list,
 
-    // * Food recommendation
+    // * Food recommendationa
     getRecommendationList: state => state.food.recommendations.food_list,
     getRecommendationSuccess: state => state.food.recommendations.status.isSuccess,
     getRecommendationLoading: state => state.food.recommendations.status.isSuccess,
@@ -258,6 +258,7 @@ const FoodSlice = createSlice({
 
         [food_recommendation_actions.success]: (state, action) => {
             // Expect the list of food
+            Toaster.toastSuccessful("FOOD RECOMMENDATION: " + JSON.stringify(action.payload));
             state.recommendations.food_list = action.payload.data;
             state.recommendations.status = success();
         },

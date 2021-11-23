@@ -34,7 +34,7 @@ class FoodController extends BaseController implements RequestHandler
                     if ($UserID) {
                         TagRepository::increaseTagCount($UserID, $food["Tags"]);
                     }
-                } else if ($relative_path == "recomendation") {
+                } else if ($relative_path == "recommendation") {
                     $token = RequestHelper::validate_jwt_token();
                     error_log("FOOD_CONTROLLER::GET FOOD RECOMENDATION ENDPOINT::" . $relative_path);
                     FoodService::getFoodRecomendation();
