@@ -44,12 +44,10 @@ ALTER TABLE user_profile drop UserName;
 -- User Profile: UserID --> UserAccounservicet: UserId 
 DROP TABLE IF EXISTS USER_ACCOUNT; 
 CREATE TABLE USER_ACCOUNT(Id BIGINT(8) NOT NULL auto_increment, Username VARCHAR(255), Password Varchar(255),Role Varchar(255), PRIMARY KEY (Id)); 
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('thinhhaha13','asdjklsadfjlksadf','CUSTOMER');
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('asdfasfdasdf','asdjklsadfjlksadf','CUSTOMER');
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('asdasdasdasd','asdjklsadfjlksadf','CUSTOMER');
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('zxczxczxc','asdjklsadfjlksadf','CUSTOMER');
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('qweqweqwe','asdjklsadfjlksadf','CUSTOMER');
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('xasxas','asdjklsadfjlksadf','ADMIN');
+INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('zxcvzxcvzxcv','$2y$10$MXYHr/kmXibWR9mNtKMcIe0FQO9DOHyFXnrQFj/wBk7K331v60QTi','ADMIN');
+INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('asdfasdfasdf','$2y$10$nW6P2JVt2VYNYvXoZ5Vzp.pTChzMgOifg1Si3pyFymdgdtpp9AUMO','CUSTOMER');
+INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('admin','$2y$10$wM.ULD391HU3QTHVcacpt.MyplIDjGIb3tuWi6A4ZTf/dUwp4QRdC','ADMIN');
+INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('customer','$2y$10$vSETY0yhweJ9Mo6SkTHIF.3x0fLwjmyrefl9.1WF0sv3M2js2MPA2','CUSTOMER');
 
 -- DROP TABLE IF EXISTS USER_OWNS_BANK_ACCOUNT; 
 -- CREATE TABLE USER_OWNS_BANK_ACCOUNT(Id BIGINT(8) NOT NULL auto_increment, UserID BIGINT(8), BankAccountID BIGINT(8), PRIMARY KEY (Id)); 
