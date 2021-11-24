@@ -35,7 +35,10 @@ class VoucherRepository implements Repository
     public static function listVoucher(): array
     {
         $UserID = RequestHelper::getUserIDFromToken();
-        $query = "SELECT * FROM voucher WHERE UserID='$UserID' ORDER BY VoucherID;";
+        $query = "SELECT * FROM voucher AS voucher
+                    INNER JOIN apply_for AS apply_for
+                    ON voucher.VoucherID=apply_for.VoucherID
+                     WHERE UserID='$UserID' ORDER BY voucher.VoucherID;";
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
@@ -55,7 +58,10 @@ class VoucherRepository implements Repository
     public static function findVoucherByID(int $VoucherID)
     {
         $UserID = RequestHelper::getUserIDFromToken();
-        $query = "SELECT * FROM voucher WHERE VoucherID=$VoucherID AND UserID=$UserID;";
+        $query = "SELECT * FROM voucher AS voucher
+                    INNER JOIN apply_for AS apply_for
+                    ON voucher.VoucherID=apply_for.VoucherID
+                    WHERE voucher.VoucherID=$VoucherID AND voucher.UserID=$UserID;";
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {

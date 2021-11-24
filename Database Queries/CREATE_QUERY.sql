@@ -1,5 +1,12 @@
 DROP TABLE IF EXISTS VOUCHER; 
-CREATE TABLE VOUCHER (VoucherID BIGINT(8), ExpirationDate DATE, Description TEXT, VoucherName VARCHAR(255), UserID BIGINT(8), PRIMARY KEY(VoucherID));
+CREATE TABLE VOUCHER (
+	VoucherID BIGINT(8) NOT NULL AUTO_INCREMENT,
+    ExpirationDate DATE, 
+    Description TEXT, 
+    VoucherName VARCHAR(255), 
+    UserID BIGINT(8), 
+    PRIMARY KEY(VoucherID)
+);
 INSERT INTO VOUCHER(VoucherID, ExpirationDate, Description, VoucherName, UserID) VALUES (1,'2021-01-01','Voucher description ID 1', 'Weeken Voucher',1);
 INSERT INTO VOUCHER(VoucherID, ExpirationDate, Description, VoucherName, UserID) VALUES (2,'2020-01-01','Voucher description ID 2', 'Wednesday Voucher',1);
 INSERT INTO VOUCHER(VoucherID, ExpirationDate, Description, VoucherName, UserID) VALUES (3,'2020-11-11','Voucher description ID 3', 'Tuesday Voucher',1);
@@ -37,12 +44,10 @@ ALTER TABLE user_profile drop UserName;
 -- User Profile: UserID --> UserAccounservicet: UserId 
 DROP TABLE IF EXISTS USER_ACCOUNT; 
 CREATE TABLE USER_ACCOUNT(Id BIGINT(8) NOT NULL auto_increment, Username VARCHAR(255), Password Varchar(255),Role Varchar(255), PRIMARY KEY (Id)); 
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('thinhhaha13','asdjklsadfjlksadf','CUSTOMER');
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('asdfasfdasdf','asdjklsadfjlksadf','CUSTOMER');
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('asdasdasdasd','asdjklsadfjlksadf','CUSTOMER');
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('zxczxczxc','asdjklsadfjlksadf','CUSTOMER');
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('qweqweqwe','asdjklsadfjlksadf','CUSTOMER');
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('xasxas','asdjklsadfjlksadf','ADMIN');
+INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('zxcvzxcvzxcv','$2y$10$MXYHr/kmXibWR9mNtKMcIe0FQO9DOHyFXnrQFj/wBk7K331v60QTi','ADMIN');
+INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('asdfasdfasdf','$2y$10$nW6P2JVt2VYNYvXoZ5Vzp.pTChzMgOifg1Si3pyFymdgdtpp9AUMO','CUSTOMER');
+INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('admin','$2y$10$wM.ULD391HU3QTHVcacpt.MyplIDjGIb3tuWi6A4ZTf/dUwp4QRdC','ADMIN');
+INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('customer','$2y$10$vSETY0yhweJ9Mo6SkTHIF.3x0fLwjmyrefl9.1WF0sv3M2js2MPA2','CUSTOMER');
 
 -- DROP TABLE IF EXISTS USER_OWNS_BANK_ACCOUNT; 
 -- CREATE TABLE USER_OWNS_BANK_ACCOUNT(Id BIGINT(8) NOT NULL auto_increment, UserID BIGINT(8), BankAccountID BIGINT(8), PRIMARY KEY (Id)); 
@@ -286,8 +291,8 @@ INSERT INTO user_ref_tag VALUES (6, 7, 3);
 DROP TABLE IF EXISTS category_tag;
 CREATE TABLE category_tag (
 	TagID BIGINT(8) NOT NULL,
-    FoodID BIGINT(8) NOT NULL,
-    ComboID BIGINT(8) ,
+    FoodID BIGINT(8),
+    ComboID BIGINT(8),
     PRIMARY KEY (TagID, FoodID, ComboID)
 );
 
@@ -311,3 +316,33 @@ INSERT INTO category_tag VALUES (2,0,4);
 INSERT INTO category_tag VALUES (3,0,4);
 INSERT INTO category_tag VALUES (4,0,5);
 INSERT INTO category_tag VALUES (5,0,5);
+
+
+DROP TABLE IF EXISTS wish_list;
+CREATE TABLE wish_list (
+    UserID BIGINT(8) NOT NULL,
+    ComboID BIGINT(8),
+    FoodID BIGINT(8),
+    PRIMARY KEY (UserID, FoodID, ComboID)
+);
+
+INSERT INTO wish_list VALUES (7,1,0);
+INSERT INTO wish_list VALUES (7,2,0);
+INSERT INTO wish_list VALUES (7,3,0);
+INSERT INTO wish_list VALUES (7,4,0);
+INSERT INTO wish_list VALUES (7,5,0);
+INSERT INTO wish_list VALUES (8,1,0);
+INSERT INTO wish_list VALUES (8,2,0);
+INSERT INTO wish_list VALUES (8,3,0);
+INSERT INTO wish_list VALUES (8,4,0);
+INSERT INTO wish_list VALUES (7,0,1);
+INSERT INTO wish_list VALUES (7,0,2);
+INSERT INTO wish_list VALUES (7,0,3);
+INSERT INTO wish_list VALUES (7,0,4);
+INSERT INTO wish_list VALUES (7,0,5);
+INSERT INTO wish_list VALUES (8,0,1);
+INSERT INTO wish_list VALUES (8,0,2);
+INSERT INTO wish_list VALUES (8,0,3);
+INSERT INTO wish_list VALUES (8,0,4);
+INSERT INTO wish_list VALUES (8,0,5);
+
