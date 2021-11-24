@@ -81,7 +81,7 @@ function Register() {
                         password: yup
                             .string(t(base_keys.form.password_prompt))
                             .min(8, t(base_keys.form.password_min_8_requirement))
-                            .required(t(base_keys.form.password_required_prompt)),
+                                .required(t(base_keys.form.password_required_prompt)),
                         confirm_password: yup
                             .string(t(base_keys.form.confirm_password))
                             .oneOf([yup.ref('password'), null], t(`${base_keys.form.confirm_password_correct_prompt}`))

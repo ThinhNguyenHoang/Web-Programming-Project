@@ -31,14 +31,14 @@ INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Statu
 
 DROP TABLE IF EXISTS USER; 
 DROP TABLE IF EXISTS USER_PROFILE; 
-CREATE TABLE USER_PROFILE(Id BIGINT(8) NOT NULL auto_increment,AccountID BIGINT(8), FullName VARCHAR(255), UserName VARCHAR(255), DOB DATE, Email VARCHAR(255), Point BIGINT(8),BankAccountID BIGINT(8) ,Address VARCHAR(255), PhoneNumber VARCHAR(255), PRIMARY KEY (Id)); 
-INSERT INTO USER_PROFILE(AccountID , FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(1,'Nguyen Hoang Thinh', 'thinhhaha13','2000-01-01', 'thinh@gmail.com', 13, 3,'Số 85-87 Trần Hưng Đạo, Hoàn Kiếm, TP. Hà Nội','099761235');
-INSERT INTO USER_PROFILE(AccountID , FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(2,'Tran Hoang Khoi', 'khoi1213','2012-01-01', 'khoi@gmail.com', 13, 3,'Số 268 Trần Hưng Đạo, P. Nguyễn Cư Trinh, Q.1, TP. HCM','099761235');
-INSERT INTO USER_PROFILE(AccountID , FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(3,'Hua Phuoc Thuan', 'thuan33','2011-01-01', 'thuan@gmail.com', 14, 3,'Số 80 Lê Lợi - Thành phố Đà Nẵng','099761235');
-INSERT INTO USER_PROFILE(AccountID , FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(4,'Khong Manh Quyen', 'quyenhaha13','2002-01-01', 'quyen@gmail.com', 12, 3,'Số 9A Trần Phú, P. Cái Khế, Q. Ninh Kiều, TP. Cần Thơ','099761235');
-INSERT INTO USER_PROFILE(AccountID , FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(5,'Le Huu Hieu', 'hieuhaha13','2011-01-01', 'hieu@gmail.com', 16, 3,'Số 2 Thống Nhất, P.1, Tp. Vũng Tàu','099761235');
-INSERT INTO USER_PROFILE(AccountID , FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(6,'Huu Hieu', 'asdhaha13','2011-01-12', 'hieu@gmail.com', 16, 3,'Số 2 Thống Nhất, P.1, Tp. Vũng Tàu','099761235');
-INSERT INTO USER_PROFILE(AccountID , FullName, UserName, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(7,'Huu HieASDu', 'asfdasdhaha13','2011-01-12', 'hieu@gmail.com', 16, 3,'Số 2 Thống Nhất, P.1, Tp. Vũng Tàu','099761235');
+CREATE TABLE USER_PROFILE(Id BIGINT(8) NOT NULL auto_increment,AccountID BIGINT(8),AvatarURI TEXT, FullName VARCHAR(255), UserName VARCHAR(255), DOB DATE, Email VARCHAR(255), Point BIGINT(8),BankAccountID BIGINT(8) ,Address VARCHAR(255), PhoneNumber VARCHAR(255), PRIMARY KEY (Id)); 
+INSERT INTO USER_PROFILE(AccountID , FullName, UserName, AvatarURI, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(1,'Nguyen Hoang Thinh', 'thinhhaha13','','2000-01-01', 'thinh@gmail.com', 13, 3,'Số 85-87 Trần Hưng Đạo, Hoàn Kiếm, TP. Hà Nội','099761235');
+INSERT INTO USER_PROFILE(AccountID , FullName, UserName,  AvatarURI, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(2,'Tran Hoang Khoi', 'khoi1213','','2012-01-01', 'khoi@gmail.com', 13, 3,'Số 268 Trần Hưng Đạo, P. Nguyễn Cư Trinh, Q.1, TP. HCM','099761235');
+INSERT INTO USER_PROFILE(AccountID , FullName, UserName, AvatarURI, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(3,'Hua Phuoc Thuan', 'thuan33','','2011-01-01', 'thuan@gmail.com', 14, 3,'Số 80 Lê Lợi - Thành phố Đà Nẵng','099761235');
+INSERT INTO USER_PROFILE(AccountID , FullName, UserName,  AvatarURI,DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(4,'Khong Manh Quyen', 'quyenhaha13','','2002-01-01', 'quyen@gmail.com', 12, 3,'Số 9A Trần Phú, P. Cái Khế, Q. Ninh Kiều, TP. Cần Thơ','099761235');
+INSERT INTO USER_PROFILE(AccountID , FullName, UserName, AvatarURI, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(5,'Le Huu Hieu', 'hieuhaha13','','2011-01-01', 'hieu@gmail.com', 16, 3,'Số 2 Thống Nhất, P.1, Tp. Vũng Tàu','099761235');
+INSERT INTO USER_PROFILE(AccountID , FullName, UserName, AvatarURI, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(6,'Huu Hieu', 'asdhaha13','','2011-01-12', 'hieu@gmail.com', 16, 3,'Số 2 Thống Nhất, P.1, Tp. Vũng Tàu','099761235');
+INSERT INTO USER_PROFILE(AccountID , FullName, UserName, AvatarURI, DOB, Email, Point, BankAccountID, Address, PhoneNumber) VALUES(7,'Huu HieASDu', 'asfdasdhaha13','','2011-01-12', 'hieu@gmail.com', 16, 3,'Số 2 Thống Nhất, P.1, Tp. Vũng Tàu','099761235');
 ALTER TABLE user_profile drop BankAccountID;
 ALTER TABLE user_profile drop UserName;
 -- User Profile: UserID --> UserAccounservicet: UserId 
@@ -50,8 +50,6 @@ INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('asdasdasdasd','asdjklsa
 INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('zxczxczxc','asdjklsadfjlksadf','CUSTOMER');
 INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('qweqweqwe','asdjklsadfjlksadf','CUSTOMER');
 INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('xasxas','asdjklsadfjlksadf','ADMIN');
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('thuandeptrai','$2y$10$.GHMTbGKvu14eayGWhVHq.vO5cwzeAcV1mpxAPmintOeOng1cUnlq','ADMIN');
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('thuandeptrai','$2y$10$.GHMTbGKvu14eayGWhVHq.vO5cwzeAcV1mpxAPmintOeOng1cUnlq','CUSTOMER');
 
 -- DROP TABLE IF EXISTS USER_OWNS_BANK_ACCOUNT; 
 -- CREATE TABLE USER_OWNS_BANK_ACCOUNT(Id BIGINT(8) NOT NULL auto_increment, UserID BIGINT(8), BankAccountID BIGINT(8), PRIMARY KEY (Id)); 
@@ -67,7 +65,6 @@ INSERT INTO BANK_ACCOUNT(UserID,BankAccountNumber, AccountOwner, BankAccountType
 INSERT INTO BANK_ACCOUNT(UserID,BankAccountNumber, AccountOwner, BankAccountType,Balance, ValidStart, ValidEnd) VALUES(2,'900119771114','Thinh Nguyen Hoang','Vietcombank','2250000','2000-01-01','2025-10-01');
 INSERT INTO BANK_ACCOUNT(UserID,BankAccountNumber, AccountOwner, BankAccountType,Balance, ValidStart, ValidEnd) VALUES(3,'900148974454','Hoang THinh Nguyen','BIDV','150000','112000-01-01','2025-10-01');
 INSERT INTO BANK_ACCOUNT(UserID,BankAccountNumber, AccountOwner, BankAccountType,Balance, ValidStart, ValidEnd) VALUES(4,'80119775222544','Thinh Thinh Thinh','Algribank','1150000','2000-01-01','2025-10-01');
-
 
 /*
 DROP TABLE IF EXISTS cart; 

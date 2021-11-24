@@ -67,7 +67,7 @@ export const TRANSLATIONS_EN = {
     //manage
     [base_keys.manage.client_management]:"Client Management",
     [base_keys.manage.order_management]:"Order Management",
-    [base_keys.manage.search_by_name]:"Search by name",
+    [base_keys.manage.search_by_name]:"SearchBar by name",
     [base_keys.manage.export]:"Export data",
 
 };

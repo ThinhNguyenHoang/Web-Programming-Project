@@ -8,6 +8,10 @@ import OrderMangament from "../pages/OrderManagement";
 import ClientManagement from "../pages/ClientManagement";
 import HomePage from "../pages/HomePage";
 import {WithHeader} from "../components/header/Header";
+import AboutUs from "../pages/AboutUs";
+import AccountManagement from "../pages/AccountManagement";
+import FoodRecommendationPage from "../pages/FoodRecommendationPage";
+import WishListPage from "../pages/WishListPage";
 
 const baseUrl = process.env.FAKE_SERVER_HOST;
 export const ROUTING_CONSTANTS = {
@@ -21,6 +25,7 @@ export const ROUTING_CONSTANTS = {
     NEWS: "/news",
     ITEM_CART: "/cart",
     RECOMMENDATION: "/recommendations",
+    WISH_LIST: "/wish_list",
     ACCOUNT: "/account",
     MANAGE_USERS: "/manage-user",
     MANAGE_ITEM_LIST: "/manage-item-info",
@@ -46,8 +51,6 @@ function ManageUser() {
 
 export const ROUTING_TAB_ITEMS = [
     generateTabLinkItem("Home Page", ROUTING_CONSTANTS.HOMEPAGE),
-    generateTabLinkItem("Login", ROUTING_CONSTANTS.LOGIN),
-    generateTabLinkItem("Register", ROUTING_CONSTANTS.REGISTER),
     generateTabLinkItem("About Us", ROUTING_CONSTANTS.ABOUT_US),
     generateTabLinkItem("News", ROUTING_CONSTANTS.NEWS),
     generateTabLinkItem("My Cart", ROUTING_CONSTANTS.ITEM_CART),
@@ -57,7 +60,9 @@ export const ROUTING_TAB_ITEMS = [
     generateTabLinkItem("Manage User", ROUTING_CONSTANTS.MANAGE_USERS, "Manager"),
     generateTabLinkItem("Manage Item Info", "Manager"),
     generateTabLinkItem("Manage User", ROUTING_CONSTANTS.MANAGE_BILL, "Manager"),
-    generateTabLinkItem("Manage User", ROUTING_CONSTANTS.MANAGE_ITEM_LIST, "Manager"),
+    generateTabLinkItem("Login", ROUTING_CONSTANTS.LOGIN),
+    generateTabLinkItem("Register", ROUTING_CONSTANTS.REGISTER),
+    generateTabLinkItem("Wishlist", ROUTING_CONSTANTS.WISH_LIST),
 ]
 
 
@@ -93,9 +98,6 @@ function Topics() {
     return null;
 }
 
-function AboutUs() {
-    return null;
-}
 
 // function News() {
 //     return null;
@@ -127,8 +129,11 @@ export const RouterConfig = () => {
                 <Route exact path={ROUTING_CONSTANTS.NEWS}>
                     <News/>
                 </Route>
+                <Route exact path={ROUTING_CONSTANTS.ACCOUNT}>
+                    <AccountManagement/>
+                </Route>
                 <Route exact path={ROUTING_CONSTANTS.RECOMMENDATION}>
-                    <Recommendations/>
+                    <FoodRecommendationPage/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.ITEM_CART}>
                     <FoodCart/>
@@ -138,6 +143,9 @@ export const RouterConfig = () => {
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.ORDER}>
                     <OrderMangament/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.WISH_LIST}>
+                    <WishListPage/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.TESTING}>
                     <App/>

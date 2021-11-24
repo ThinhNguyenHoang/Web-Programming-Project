@@ -6,7 +6,7 @@ const auth = {
     LOGIN: {
         LOGGED: "LOGGED_IN",
         NOT_LOGGED: "NOT_LOGGED",
-    }
+    },
 }
 
 export const constants ={

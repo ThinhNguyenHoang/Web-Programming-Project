@@ -3,13 +3,17 @@ import {CartData2FoodCart,FoodCart2CartData,VoucherData2VoucherList} from './Foo
 import axios from "axios";
 import Nofication from "../../../components/News/Nofication";
 import { appendOwnerState } from "@mui/core";
+
+const food_local_base = '/food'
+
 const api_endpoints = {
     food:"/foods",
     voucher:"/voucher",
     cart:"/cart",
     combo:"/combo",
-    nofication:"/nofication"
-
+    nofication:"/nofication",
+    recommendations: `${food_local_base}/recommendation`,
+    wish_list: "/wish_list"
 }
 const baseURL="http://localhost:3001";
 const base2URL="https://api.jsonbin.io/b/6188c8584a56fb3dee0b22a4";
@@ -93,3 +97,21 @@ export const GetCartService = async  (payload)=>{
         }
 }
 
+export const getFoodRecommendationService = (payload) => {
+    return request.getAsync(api_endpoints.recommendations, payload);
+}
+
+
+export const getWishList = (payload) => {
+    return request.getAsync(api_endpoints.wish_list, payload);
+}
+
+export const addFoodToWishtListService = (payload)=>{
+    console.log("WISHLIST_SERVICE::ADD ",payload);
+    return request.postAsync(api_endpoints.wish_list,payload);
+}
+
+export const removeFoodFromWishtListService = (payload)=>{
+    console.log("WISHLIST_SERVICE::REMOVE ",payload);
+    return request.deleteAsync(api_endpoints.wish_list,payload);
+}

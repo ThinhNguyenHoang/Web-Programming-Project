@@ -9,8 +9,8 @@ const api_endpoints = {
     log_out: `${userLocalBase}/logout`,
     reset_password: `${userLocalBase}/forget-password`,
     change_password: `${userLocalBase}/change-password`,
-    renew_token: `${userLocalBase}/renew-token`
-
+    renew_token: `${userLocalBase}/renew-token`,
+    profile: `${userLocalBase}/profile`
 }
 
 
@@ -46,5 +46,20 @@ export const resetPasswordService = (payload) => {
 }
 
 export const changePasswordService = (payload) => {
-    return request.putAsync(api_endpoints.change_password, payload);
+    console.log("CHANGE PASS SERVICE",payload);
+    const data = {
+        password:payload
+    }
+    return request.putAsync(api_endpoints.change_password, data);
 }
+
+export const updateUserProfileService = (payload) => {
+    console.log("FOUND TOKEN, CALLING UPDATE_PROFILE",payload);
+    return request.putAsync(api_endpoints.profile, payload);
+}
+
+export const getUserProfileService = (payload) => {
+    console.log("FOUND TOKEN, CALLING GET_PROFILE");
+    return request.getAsync(api_endpoints.profile,payload);
+}
+

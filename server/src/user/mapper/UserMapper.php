@@ -32,16 +32,19 @@ class UserMapper
             return null;
         }
         return (object) array(
-            "id" => $row["id"],
+            "username" => $row["username"],
             "account_id" => $row["account_id"],
             "dob" => $row["dob"],
             "email" => $row["email"],
             "point" => $row["point"],
+            "avatar" => $row["avatar"],
             "address" => $row["address"],
             "phone_number" => $row["phone_number"],
             "full_name" => $row["full_name"],
+            "role" => $row["role"]
         );
     }
+//
 
     public static function mapBankAccountFromDatabaseRow($row): object
     {
@@ -54,6 +57,19 @@ class UserMapper
         $user = new UserAccount();
         $user->username = $request->username;
         $user->password = $request->password;
+        return $user;
+    }
+    // Map a user profile from request
+    #[Pure] public static function mapUserProfileFromRequest($request):object{
+        $user = new \stdClass();
+        $user->account_id = $request->account_id;
+        $user->dob = $request->dob;
+        $user->email = $request->email;
+        $user->point = $request->point;
+        $user->avatar = $request->avatar;
+        $user->address = $request->address;
+        $user->full_name = $request->full_name;
+        $user->phone_number = $request->phone_number;
         return $user;
     }
     // Map a user create request body to in memory user r

@@ -1,12 +1,19 @@
 import {call, put, takeLatest} from "redux-saga/effects";
 import {
     changePasswordService,
-    deleteUserAccountService,
+    deleteUserAccountService, getUserProfileService,
     loginService,
     registerService,
-    updateUserAccountService
+    updateUserAccountService, updateUserProfileService
 } from "./AuthService";
-import {login_actions, register_actions,change_pass_actions,update_account_actions,delete_account_actions} from "./AuthSlice";
+import {
+    login_actions,
+    register_actions,
+    change_pass_actions,
+    update_account_actions,
+    delete_account_actions,
+    update_user_profile_actions, read_user_profile_actions
+} from "./AuthSlice";
 import Toaster from "../../../utils/Toaster/Toaster";
 
 function* loginUserSaga({ payload }) {
@@ -53,11 +60,41 @@ function* deleteUserSaga({ payload }) {
 function* changeUserPasswordSaga({payload}) {
     try{
         const res = yield call(changePasswordService, payload);
+        console.log("CHANGE PASS SAGA: ",res);
         yield put({type: change_pass_actions.success,payload:res})
     }
     catch (e){
         console.log(e);
         yield put({type:change_pass_actions.error, e})
+    }
+}
+
+function* updateUserProfileSaga({payload}) {
+    try{
+        const res = yield call(updateUserProfileService, payload);
+        yield put({type: update_user_profile_actions.success,payload:res})
+        Toaster.toastSuccessful("Update User Information Successfully");
+    }
+    catch (e){
+        console.log(e);
+        yield put({type:update_user_profile_actions.error, e})
+    }
+}
+
+function* getUserProfileSaga(){
+    try{
+        const res = yield call(getUserProfileService);
+        console.log("SAGA GETTING USER PROFILE SUCCESS WITH RES: ",res);
+
+        yield put({type: read_user_profile_actions.success,payload:res})
+    }
+    catch (e){
+        console.log("GET PROFILE ERROR:",e.message);
+        window.localStorage.removeItem("token");
+        window.localStorage.clear();
+        console.log("SAGA CLEARING LOCAL STORAGE");
+
+        yield put({type:read_user_profile_actions.error, payload:e.message})
     }
 }
 
@@ -68,6 +105,8 @@ const watchers = function* (){
     yield takeLatest(update_account_actions.loading, updateUserSaga);
     yield takeLatest(delete_account_actions.loading, deleteUserSaga);
 
+    yield takeLatest(update_user_profile_actions.loading, updateUserProfileSaga);
+    yield takeLatest(read_user_profile_actions.loading, getUserProfileSaga);
 }
 
 export default watchers;

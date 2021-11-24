@@ -1,11 +1,11 @@
 <?php
 namespace src\common\utils;
 require_once  __DIR__ . '/../../../vendor/autoload.php';
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: GET,PUT,POST,DELETE,PATCH,OPTIONS");
-header("Access-Control-Allow-Headers:Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,Authorization");
-
+header('Access-Control-Allow-Methods: *');
+header("Access-Control-Allow-Headers:Access-Control-Allow-Headers, Access-Control-Allow-Origin, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,Authorization,ResponseType,X-Request-Id,Access-Control-Allow-Methods");
 
 /*
  * This class is supposed to help packing the response request:
