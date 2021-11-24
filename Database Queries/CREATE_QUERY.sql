@@ -320,6 +320,7 @@ INSERT INTO category_tag VALUES (5,0,5);
 
 DROP TABLE IF EXISTS wish_list;
 CREATE TABLE wish_list (
+    WishListID BIGINT(8) NOT NULL AUTO_INCREMENT,
     UserID BIGINT(8) NOT NULL,
     ComboID BIGINT(8),
     FoodID BIGINT(8),
