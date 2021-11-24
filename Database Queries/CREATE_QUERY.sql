@@ -1,5 +1,12 @@
 DROP TABLE IF EXISTS VOUCHER; 
-CREATE TABLE VOUCHER (VoucherID BIGINT(8), ExpirationDate DATE, Description TEXT, VoucherName VARCHAR(255), UserID BIGINT(8), PRIMARY KEY(VoucherID));
+CREATE TABLE VOUCHER (
+	VoucherID BIGINT(8) NOT NULL AUTO_INCREMENT,
+    ExpirationDate DATE, 
+    Description TEXT, 
+    VoucherName VARCHAR(255), 
+    UserID BIGINT(8), 
+    PRIMARY KEY(VoucherID)
+);
 INSERT INTO VOUCHER(VoucherID, ExpirationDate, Description, VoucherName, UserID) VALUES (1,'2021-01-01','Voucher description ID 1', 'Weeken Voucher',1);
 INSERT INTO VOUCHER(VoucherID, ExpirationDate, Description, VoucherName, UserID) VALUES (2,'2020-01-01','Voucher description ID 2', 'Wednesday Voucher',1);
 INSERT INTO VOUCHER(VoucherID, ExpirationDate, Description, VoucherName, UserID) VALUES (3,'2020-11-11','Voucher description ID 3', 'Tuesday Voucher',1);
@@ -314,3 +321,33 @@ INSERT INTO category_tag VALUES (2,0,4);
 INSERT INTO category_tag VALUES (3,0,4);
 INSERT INTO category_tag VALUES (4,0,5);
 INSERT INTO category_tag VALUES (5,0,5);
+
+
+DROP TABLE IF EXISTS wish_list;
+CREATE TABLE wish_list (
+    UserID BIGINT(8) NOT NULL,
+    ComboID BIGINT(8),
+    FoodID BIGINT(8),
+    PRIMARY KEY (UserID, FoodID, ComboID)
+);
+
+INSERT INTO wish_list VALUES (7,1,0);
+INSERT INTO wish_list VALUES (7,2,0);
+INSERT INTO wish_list VALUES (7,3,0);
+INSERT INTO wish_list VALUES (7,4,0);
+INSERT INTO wish_list VALUES (7,5,0);
+INSERT INTO wish_list VALUES (8,1,0);
+INSERT INTO wish_list VALUES (8,2,0);
+INSERT INTO wish_list VALUES (8,3,0);
+INSERT INTO wish_list VALUES (8,4,0);
+INSERT INTO wish_list VALUES (7,0,1);
+INSERT INTO wish_list VALUES (7,0,2);
+INSERT INTO wish_list VALUES (7,0,3);
+INSERT INTO wish_list VALUES (7,0,4);
+INSERT INTO wish_list VALUES (7,0,5);
+INSERT INTO wish_list VALUES (8,0,1);
+INSERT INTO wish_list VALUES (8,0,2);
+INSERT INTO wish_list VALUES (8,0,3);
+INSERT INTO wish_list VALUES (8,0,4);
+INSERT INTO wish_list VALUES (8,0,5);
+
