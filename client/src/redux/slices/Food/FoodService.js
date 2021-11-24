@@ -136,7 +136,7 @@ export const addTagService=async (payload)=>{
                         .catch((e)=>e);
 }
 export const addFoodService=async (payload)=>{
-    return await request.postAsync(api_endpoints.tag,payload)
+    return await request.postAsync(api_endpoints.food,payload)
                         .then((res)=>res)
                         .catch((e)=>e);
 }
