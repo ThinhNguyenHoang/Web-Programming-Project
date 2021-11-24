@@ -1,12 +1,9 @@
 import React from 'react';
 import default_company_logo from "../../assets/images/default_company_logo.jpeg";
 import Box from "@mui/material/Box";
-import {Typography} from "@mui/material";
 import Carousel from "react-material-ui-carousel";
-import CustomerReviewList from "../CustomerReview/CustomerReviewList";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
-import default_food_image from "../../assets/images/defaul_food_image.jpg";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
@@ -14,6 +11,7 @@ import {ThemedOutlineButton} from "../Buttons/ThemedButton/ThemedButton";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Collapse from "@mui/material/Collapse";
 import {array_to_chunks} from "../../utils";
+import Typography from '@mui/material/Typography';
 
 const involved_company_init = [
     {
@@ -56,38 +54,37 @@ const involved_company_init = [
         logo: "https://thumbs.dreamstime.com/z/food-logo-smile-label-company-grocery-store-friendly-vector-illustration-smiling-mouth-symbol-135565322.jpg",
         name: 'Company 2'
     },
-    // {
-    //     id: "9",
-    //     logo: "https://i.pinimg.com/600x315/fc/59/3b/fc593b7131868f87ac0a52fa1a496e1d.jpg",
-    //     name: 'Company 4'
-    // },
+    {
+        id: "9",
+        logo: "https://i.pinimg.com/600x315/fc/59/3b/fc593b7131868f87ac0a52fa1a496e1d.jpg",
+        name: 'Company 4'
+    },
 ]
 export const CompanyItem = ({company, mx,sx},...props) => {
     return (
-        <Card sx={{
-            display: "flex",
-            flexDirection: "column",
-            maxWidth: 345,
-            mx: mx ? mx : 0,
-            bgcolor: `elevation.layer0.main`
-        }}>
-            <CardMedia
-                sx={sx}
-                component="img"
-                height="194"
-                image={company.logo ? company.logo : default_company_logo}
-                alt={company.name ? company.name : "No info"}
-            />
+        <Card sx={{ width: 130, maxWidth:200 , minWidth: 200}}>
+          <CardMedia
+            component="img"
+            height="140px"
+            image={company.logo ? company.logo : default_company_logo}
+            alt={company.name ? company.name : "No info"}
+          />
+          <CardContent sx={{bgcolor:'elevation.layer1.main', color: 'elevation.layer1.contrast'}}>
+            <Typography gutterBottom variant="h5" component="div" sx={{textAlign:"center"}}>
+              {company.name}
+            </Typography>
+          </CardContent>
         </Card>
-    );
+      );
 }
 export const InvolvedCompaniesSlice = ({company_list}) => {
     return (
         <Box sx={{
             display: 'flex',
             flexDirection: {xs: 'column', sm: 'column', md: `row`},
-            // alignItems: 'center',
-            // justifyContent: `center`
+            alignItems: 'center',
+            justifyContent: `space-evenly`,
+            // columnGap:"30px"
         }}>
             {company_list.map((item, index) => {
                 return <CompanyItem company={item} key={index.toString()} sx={{mx:4}}/>
@@ -95,22 +92,12 @@ export const InvolvedCompaniesSlice = ({company_list}) => {
         </Box>
     )
 }
-const InvolvedCompanyCarousel = () => {
+const MaterialListCarousel = () => {
     // TODO: Code use Effect to get the involved company logo
-    const list_of_list = array_to_chunks(involved_company_init,2);
+    const list_of_list = array_to_chunks(involved_company_init,5);
     console.log("COMPANY LIST: ",list_of_list)
     return (
         <Box sx={{display: `flex`, flexDirection: `column`,mb:6}}>
-            <Typography sx={{
-                fontSize: {
-                    lg: 50,
-                    md: 40,
-                    sm: 30,
-                    xs: 20
-                }
-            }} p={2} variant={`h2`} color={`primary.main`} justifySelf={`center`} alignSelf={`center`}>
-                Involved Companies
-            </Typography>
             <Carousel>
                 {
                     list_of_list.map((item, index) =>{
@@ -125,4 +112,4 @@ const InvolvedCompanyCarousel = () => {
 };
 
 
-export default InvolvedCompanyCarousel;
+export default MaterialListCarousel;

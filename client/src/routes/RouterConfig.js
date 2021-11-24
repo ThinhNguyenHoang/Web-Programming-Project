@@ -14,6 +14,7 @@ import FoodItemManagement from "../pages/FoodItemManagement";
 import FoodRecommendationPage from "../pages/FoodRecommendationPage";
 import WishListPage from "../pages/WishListPage";
 import EditFoodItem from "../pages/EditFoodItem";
+import FoodDetails from "../pages/FoodDetails";
 
 
 const baseUrl = process.env.FAKE_SERVER_HOST;
@@ -159,7 +160,8 @@ export const RouterConfig = () => {
                     <FoodItemManagement/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.EDITFOOD}>
-                    <EditFoodItem/>
+                    {/* <EditFoodItem/> */}
+                    <FoodDetails/>
                 </Route>
             </Switch>
         </WithHeader>

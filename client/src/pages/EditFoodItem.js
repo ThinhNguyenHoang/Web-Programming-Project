@@ -149,7 +149,7 @@ function EditFoodItem(){
                         </Typography>
                         <Box sx={{display:`flex`, flexDirection:"row", flexWrap:"wrap", alignContent:"center"}}>
                             <Box sx={{bgcolor:"elevation.layer1.main"}}>
-                                <ReactFirebaseFileUpload2 setImageURL={setImage}/>
+                                <ReactFirebaseFileUpload2 setImageURL={setImage} picture={values.Picture}/>
                             </Box>
                             <Box maxWidth="100ch" >
                                 <form autoComplete="off">
@@ -259,14 +259,14 @@ function EditFoodItem(){
                                     <MaterialCardDelete key={material.MaterialID} material={material} setDeleteClick={setDeleteClick}/>
                                 </Grid>
                             ))}
-                            <Grid item>
+                            <Grid item sx={{display:"flex",alignItems:"center"}}>
                             <IconButton onClick={handleClickOpen} aria-label="addmaterial" size="large" sx={{color:"elevation.layer0.contrast",display:`flex`,height:"fit-content", alignItems: 'stretch'}} >
                                 <AddIcon fontSize="large" />
                             </IconButton>
                             <Dialog open={open} onClose={handleClose} PaperProps={{style: {backgroundColor: 'primary.main',boxShadow: 'none'}}}>
                             <DialogTitle sx={{textAlign:"center", color:'elevation.layer3.contrast'}}>Chọn nguyên liệu</DialogTitle>
                             <DialogContent>
-                                <Box sx={{display:`flex`, flexDirection:"row", flexWrap: "wrap",overflowY:"auto"}}>
+                                <Box sx={{display:`flex`, flexDirection:"row", flexWrap: "wrap",overflowY:"auto", columnGap: "40px"}}>
                                     {unchooseList.map((material)=>(
                                         <MaterialCardAdd key={material.MaterialID} material={material} setAddClick={setAddClick}/>
                                     ))}
@@ -310,11 +310,15 @@ function EditFoodItem(){
                             name="instruction"
                             multiline
                             rows={10}
-                            value={values.Instruct}
+                            defaultValue={values.Instruct}
                             onChange={(e)=>setValues({...values,Instruct:e.target.value})}
                             variant="outlined"
+                            required
                         />
-                        <Button sx={{width:"fit-content", alignSelf:"flex-end", mt:"20px"}} variant="contained" onClick={()=>handleCreatFood()}>HOÀN TẤT</Button>
+                        <Box sx={{display:`flex`, flexDirection:"row", alignSelf:"flex-end"}}>
+                            <Button sx={{width:"fit-content", mt:"20px", mr:"10px"}} variant="contained" onClick={()=>history.push(ROUTING_CONSTANTS.MANAGE_ITEM_LIST)}>HỦY BỎ</Button>
+                            <Button sx={{width:"fit-content", mt:"20px"}} variant="contained" onClick={()=>handleCreatFood()}>HOÀN TẤT</Button>
+                        </Box>
                     </Box>
                 </Grid>
             </Grid>

@@ -59,28 +59,6 @@ export const GetFoodDataService=(payload)=>{
     .then((response) => response.data)
     .catch((error) => console.log("fail food"));
 }
-export const GetComboDataService=(payload)=>{
-    return axios.get(`${baseURL}${api_endpoints.combo}`)
-    .then((response) => response.data)
-    .catch((error) => console.log("fail combo"));
-}
-export const GetNofiDataService=(payload)=>{
-    return axios.get(`${base2URL}`)
-    .then((response) => response.data)
-    .catch((error) => console.log("fail nofication"));
-}
-export const GetNewsService= async (payload)=>{
-    console.log("get News");
-    const FoodData= await GetFoodDataService(payload);
-    const ComboData= await GetComboDataService(payload);
-    const NofiData= await GetNofiDataService(payload);
-    //TODO
-    return {
-        food_list:'',
-        combo_list:'',
-        nofi_list:'',
-    }
-}
 
 export const AddCartService = async (payload) =>{
     console.log("add food to cart");

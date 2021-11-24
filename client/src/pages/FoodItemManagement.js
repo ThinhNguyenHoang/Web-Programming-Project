@@ -105,11 +105,11 @@ function FoodItemManagement(){
     
     return(
         <Box sx={{display:`flex`,flexDirection:`column`,justifyContent:"center",bgcolor:'elevation.layer0.main', flexGrow: 1, overflow: 'hidden', px: 10}}>
-            <Grid sx={{width:"1000",paddingBottom:5 }}>
+            <Box sx={{display:`flex`, flexDirection:"column", paddingBottom:5, width:"1000" }}>
                 <Divider>
-                    <Typography variant="h3" sx={{color: `red`}}>Danh sách món ăn</Typography>
+                    <Typography sx={{ fontSize: { lg: 50, md: 40, sm: 30, xs: 20 }, color: `red`}} p={2} variant={`h2`}>Danh sách món ăn</Typography>
                 </Divider>
-                <Button variant="contained" onClick={()=>{
+                <Button  sx={{width:"fit-content", alignSelf:"flex-end", mb:"20px"}} variant="contained" onClick={()=>{
                     dispatch({type:setFoodEdit,payload:""});
                     history.push(ROUTING_CONSTANTS.EDITFOOD);
                 }}>Thêm món ăn</Button>
@@ -118,7 +118,7 @@ function FoodItemManagement(){
                     <CircularProgress />
                 </Box>
                 ):(
-                <TableContainer component={Paper} sx={{width:"1000"}}>
+                <TableContainer component={Paper} width={1000}>
                     <Table aria-label="a dense table">
                         <TableHead>
                             <TableRow>
@@ -183,10 +183,10 @@ function FoodItemManagement(){
                         </IconButton>
                     </Box>
                 </TableContainer>)}
-            </Grid>
+            </Box>
             <Grid sx={{maxWidth:1500, flexGrow: 1, alignSelf:"center", paddingBottom:15}}>
                 <Divider>
-                    <Typography variant="h4" sx={{color: 'elevation.layer1.contrast'}}>Tag</Typography>
+                    <Typography variant="h4" sx={{color: 'red'}}>Tag</Typography>
                 </Divider>
                 {food_manageData.get_foodManage_status.isLoangding?
                 (<Box sx={{ display: 'flex',justifyContent:'center', paddingTop:3 }}>
@@ -196,11 +196,11 @@ function FoodItemManagement(){
                     {tag_list.map((tag)=> (
                         <Grid item >
                             <Box sx={{display:"flex", alignContent:"center",height:"100%"}}>
-                                <Chip color="secondary" label={tag.TagName} variant="outlined" onDelete={()=>dispatch({type:delete_tag.loading,payload:tag.TagID})}sx={{alignSelf:"center"}} />
+                                <Chip color="secondary" label={tag.TagName} variant="filled" onDelete={()=>dispatch({type:delete_tag.loading,payload:tag.TagID})}sx={{alignSelf:"center"}} />
                             </Box>
                         </Grid>
                     ))}
-                    <Grid item>
+                    <Grid item >
                     <IconButton onClick={handleClickOpenTag} aria-label="addtag" size="large" sx={{color:"elevation.layer0.contrast",display:`flex`,height:"fit-content", alignItems: 'stretch'}} >
                         <AddIcon fontSize="large" />
                     </IconButton>
@@ -226,7 +226,7 @@ function FoodItemManagement(){
                     </Grid>
                 </Grid>)}
             </Grid>
-            <Grid sx={{height:500 ,maxWidth:1500, flexGrow: 1, alignSelf:"center", paddingBottom:15}}>
+            <Grid sx={{height:"auto" ,maxWidth:1500, flexGrow: 1, alignSelf:"center", paddingBottom:15}}>
                 <Divider>
                     <Typography variant="h4" sx={{color: 'button.outlined.main'}}>Nguyên liệu</Typography>
                 </Divider>
@@ -237,11 +237,11 @@ function FoodItemManagement(){
                 ):(
                 <Grid container spacing={{ xs: 5, md: 5 }} columns={{ xs: 3, sm: 8, md: 12 }} sx={{paddingTop:3}}>
                     {material_list.map((material)=>(
-                        <Grid item>
+                        <Grid item sx={{display:"flex", alignContent:"center"}}>
                             <MaterialCard id = {material.MaterialID} key={material.MaterialID} image={material.Picture} name={material.MaterialName}/>
                         </Grid>
                     ))}
-                    <Grid item>
+                    <Grid item sx={{display:"flex",alignItems:"center"}}>
                     <IconButton onClick={handleClickOpen} aria-label="addmaterial" size="large" sx={{color:"elevation.layer0.contrast",display:`flex`,height:"fit-content", alignItems: 'stretch'}} >
                         <AddIcon fontSize="large" />
                     </IconButton>

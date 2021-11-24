@@ -76,17 +76,6 @@ function* AddCartSaga({payload}){
     }
 }
 
-function* GetNewsSaga({payload}){
-    try{
-        console.log("Get cart Saga");
-        const res= yield call(GetNewsService,payload);
-        yield put({type: get_news_actions.success,payload:res});
-        Toaster.toastSuccessful("Get news data success");
-    }catch (e){
-        Toaster.toastError("Get news data faild: " + e.message);
-        yield put({type:get_news_actions.error});
-    }
-}
 function* getFoodManageSaga({payload}){
     try{
         const res=yield call(getFoodManageService,payload);
@@ -222,7 +211,6 @@ function* removeItemFromWishListSaga({payload}){
 const watchersFood = function* (){
     yield takeLatest(update_cart_actions.loading, UpdateCartSaga);
     yield takeLatest(get_cart_actions.loading,GetCartSaga);
-    yield takeLatest(get_news_actions.loading,GetNewsSaga);
     yield takeLatest(delete_cart_actions.loading,DeleteCartSaga);
     yield takeLatest(add_cart_actions.loading,AddCartSaga);
     yield takeLatest(food_management.loading,getFoodManageSaga);

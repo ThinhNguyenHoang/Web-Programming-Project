@@ -1,11 +1,13 @@
 import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 
-import {useState} from "react";
+import {useState,useEffect} from "react";
 
 
 import {initializeApp} from "firebase/app";
 import {selectors} from "../../redux/slices/auth/AuthSlice";
 import {useSelector} from "react-redux";
+import { Button } from "@mui/material";
+
 
 // Set the configuration for your
 // gs://bk-food-sale.appspot.com
@@ -53,6 +55,13 @@ const ReactFirebaseFileUpload2 = (props) => {
             setImage(e.target.files[0]);
         }
     };
+    useEffect(()=>{
+        console.log("Sdfsdf");
+        if (typeof props.picture != "undefined" && props.picture != null ){
+            console.log("sdfsdfsd");
+            setUrl(props.picture);
+        }
+    },[]);
     // TODO: Write code to get the user name as path file to storage
     const handleUpload = () => {
 
@@ -78,6 +87,7 @@ const ReactFirebaseFileUpload2 = (props) => {
                 getDownloadURL(uploadTask.snapshot.ref)
                     .then((downloadUrl) => {
                         props.setImageURL(downloadUrl);
+                        setUrl(downloadUrl);
                     })
             }
         )
@@ -92,11 +102,10 @@ const ReactFirebaseFileUpload2 = (props) => {
             <br/>
             <br/>
             <input type="file" onChange={handleChange}/>
-            <button onClick={handleUpload}>Upload</button>
+            <Button onClick={handleUpload}>Upload</Button>
             <br/>
-            {url}
             <br/>
-            <img src={url || image || "http://via.placeholder.com/300"} alt="firebase-image"/>
+            <img src={url || image || "http://via.placeholder.com/300"} alt="firebase-image" width="300px" height="300px"/>
         </div>
     );
 };

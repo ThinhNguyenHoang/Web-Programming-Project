@@ -72,6 +72,32 @@ const voucher = {
 //     name:"",
 //     discount:0,
 // }
+const news={
+    NewsID:"",
+    Title:"",
+    Picture:"",
+    HighLight:"",
+    Content:"",
+    Author:"",
+    Comment:[],
+}
+const comments={
+    CommentID:"",
+    UserID:"",
+    UserName:"",
+    UserAvatar:"",
+    Content:"",
+    ImageList:[],
+    Reply:[]
+}
+const Reply={
+    ReplyID:"",
+    CommentID:"",
+    UserID:"",
+    UserName:"",
+    UserAvatar:"",
+    Content:"",
+}
 const food_item = {
     id: "",
     name: "",
@@ -117,11 +143,7 @@ const initialValue = {
         delete_status: generateStatus(),
     },
     news: {
-        food_list: [],
-        combo_list: [],
-        nofi_list: [],
-        get_status: generateStatus(),
-        addCart_status: generateStatus(),
+
     },
     recommendations: {
         status: generateStatus(),
@@ -266,24 +288,6 @@ const FoodSlice = createSlice({
             UpdateQuantity(state.cart);
             UpdateSubtotal(state.cart);
         },
-        [next_food_news]: (state, action) => {
-            state.news.food_list.push(state.news.food_list.shift());
-        },
-        [back_food_news]: (state, action) => {
-            state.news.food_list.unshift(state.news.food_list.pop());
-        },
-        [next_combo_news]: (state, action) => {
-            state.news.combo_list.push(state.news.combo_list.shift());
-        },
-        [back_combo_news]: (state, action) => {
-            state.news.combo_list.unshift(state.news.combo_list.pop());
-        },
-        [next_nofi_news]: (state, action) => {
-            state.news.nofi_list.push(state.news.nofi_list.splice(0, 3));
-        },
-        [back_nofi_news]: (state, action) => {
-            state.news.nofi_list.unshift(state.news.nofi_list.splice(-1, 3));
-        },
         [get_cart_actions.loading]: (state, action) => {
             state.cart.get_status = loading();
         },
@@ -320,19 +324,6 @@ const FoodSlice = createSlice({
         },
         [delete_cart_actions.error]: (state, action) => {
             state.cart.delete_status = error();
-        },
-        [get_news_actions.loading]: (state, action) => {
-            console.log("test here 2")
-            state.news.get_status = loading();
-        },
-        [get_news_actions.success]: (state, action) => {
-            state.news.get_status = success();
-            state.news.food_list = action.payload.food_list;
-            state.news.combo_list = action.payload.combo_list;
-            state.news.nofi_list = action.payload.nofi_list;
-        },
-        [get_news_actions.error]: (state, action) => {
-            state.news.get_status = error();
         },
         [add_cart_actions.loading]: (state, action) => {
             state.news.addCart_status = loading();
