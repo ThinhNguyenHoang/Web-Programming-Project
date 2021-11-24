@@ -263,8 +263,14 @@ BANK ACCOUNT:
                 "valid_start":"",
                 "valid_end":"",
         }
-
+        reponse_body: {
+            list_account đã update 
+        }
     DELETE: /bank_account/:id
+        reponse_body: {
+            list_account đã update 
+        }
+
 ```
 
 
