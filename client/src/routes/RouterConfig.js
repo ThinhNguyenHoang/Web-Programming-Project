@@ -34,6 +34,7 @@ export const ROUTING_CONSTANTS = {
     CLIENT: "/clients",
     ORDER: "/orders",
     TESTING: "/test",
+    PAYMENT:"/payment"
 }
 
 const generateTabLinkItem = (label_name, nav_to, require_auth) => {
@@ -107,6 +108,10 @@ function Recommendations() {
     return null;
 }
 
+function PaymentPage() {
+    return null;
+}
+
 export const RouterConfig = () => {
     return (
         <WithHeader>
@@ -149,6 +154,9 @@ export const RouterConfig = () => {
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.TESTING}>
                     <App/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.PAYMENT}>
+                    <PaymentPage></PaymentPage>
                 </Route>
             </Switch>
         </WithHeader>

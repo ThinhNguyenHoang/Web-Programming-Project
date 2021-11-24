@@ -3,6 +3,7 @@ import request from '../../../utils/RequestHelper';
 
 const userLocalBase = '/user'
 const api_endpoints = {
+    user_list:`${userLocalBase}`,
     login: `${userLocalBase}/authorize`,
     register: `${userLocalBase}/register`,
     update_account: `${userLocalBase}/`,
@@ -13,6 +14,10 @@ const api_endpoints = {
     profile: `${userLocalBase}/profile`
 }
 
+
+export const getUserListService = (payload) => {
+    return request.getAsync(api_endpoints.user_list,payload);
+}
 
 export const loginService = (payload) => {
     console.log("Register service called with payload:", payload);

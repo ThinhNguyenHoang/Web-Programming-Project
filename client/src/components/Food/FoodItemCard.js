@@ -39,7 +39,7 @@ const HeartIconButton = ({isClicked,callback}) =>{
     // TODO: Remember to change the initial state to isClicked
     const [clicked, setClicked] = useState(false);
     return <IconButton aria-label="add to favorites" onClick={() => {
-            setClicked(!clicked);
+            // setClicked(!clicked);
             callback(clicked);
             console.log("CLICKED IS: ",clicked)
         }
