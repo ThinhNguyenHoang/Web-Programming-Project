@@ -20,6 +20,7 @@ use src\user\controller\UserController;
 use src\tag\controller\TagController;
 use src\voucher\controller\VoucherController;
 use src\wish_list\controller\WishListController;
+use src\bank_account\controller\BankAccountController;
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -70,6 +71,10 @@ switch ($endpoint) {
     case "wish_list":
         $wishListController = new WishListController();
         $wishListController->handleRequest();
+        break;
+    case "bank_account":
+        $bankAccountController = new BankAccountController();
+        $bankAccountController->handleRequest();
         break;
     default:
         header("HTTP/1.1 404 Not Found");

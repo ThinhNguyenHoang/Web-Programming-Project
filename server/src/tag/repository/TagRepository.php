@@ -120,7 +120,7 @@ class TagRepository implements Repository
 
     public static function delete(int $entityID = null)
     {
-        $query = "DELETE FROM tag WHERE TagID=$entityID;;";
+        $query = "DELETE FROM tag WHERE TagID=$entityID;";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $exception) {

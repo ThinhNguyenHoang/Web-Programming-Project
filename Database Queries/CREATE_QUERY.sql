@@ -58,11 +58,21 @@ INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('customer','$2y$10$vSETY
 -- INSERT INTO USER_OWNS_BANK_ACCOUNT(UserID,BankAccountID) VALUES(3,7);
 
 DROP TABLE IF EXISTS BANK_ACCOUNT; 
-CREATE TABLE BANK_ACCOUNT(Id BIGINT(8) NOT NULL auto_increment, UserID BIGINT(8), BankAccountNumber VARCHAR(256), AccountOwner VARCHAR(256),BankAccountType VARCHAR(256), Balance VARCHAR(256), ValidStart VARCHAR(256),  ValidEnd VARCHAR(256),PRIMARY KEY (Id)); 
-INSERT INTO BANK_ACCOUNT(UserID,BankAccountNumber, AccountOwner, BankAccountType,Balance, ValidStart, ValidEnd) VALUES(1,'900119775222544','Nguyen Hoang THinh','OCB','150000','2000-01-01','2025-10-01');
-INSERT INTO BANK_ACCOUNT(UserID,BankAccountNumber, AccountOwner, BankAccountType,Balance, ValidStart, ValidEnd) VALUES(2,'900119771114','Thinh Nguyen Hoang','Vietcombank','2250000','2000-01-01','2025-10-01');
-INSERT INTO BANK_ACCOUNT(UserID,BankAccountNumber, AccountOwner, BankAccountType,Balance, ValidStart, ValidEnd) VALUES(3,'900148974454','Hoang THinh Nguyen','BIDV','150000','112000-01-01','2025-10-01');
-INSERT INTO BANK_ACCOUNT(UserID,BankAccountNumber, AccountOwner, BankAccountType,Balance, ValidStart, ValidEnd) VALUES(4,'80119775222544','Thinh Thinh Thinh','Algribank','1150000','2000-01-01','2025-10-01');
+CREATE TABLE BANK_ACCOUNT(
+	id BIGINT(8) NOT NULL auto_increment,
+    user_id BIGINT(8), 
+    bank_account_number VARCHAR(256), 
+    bank_account_owner VARCHAR(256),
+    bank_account_type VARCHAR(256), 
+    balance float, 
+    valid_start DATE,
+    valid_end DATE,
+    PRIMARY KEY (Id)
+); 
+INSERT INTO BANK_ACCOUNT(UserID,bank_account_number, bank_account_owner, bank_account_type, balance, valid_start, valid_end) VALUES(1,'900119775222544','Nguyen Hoang THinh','OCB','150000','2000-01-01','2025-10-01');
+INSERT INTO BANK_ACCOUNT(UserID,bank_account_number, bank_account_owner, bank_account_type, balance, valid_start, valid_end) VALUES(2,'900119771114','Thinh Nguyen Hoang','Vietcombank','2250000','2000-01-01','2025-10-01');
+INSERT INTO BANK_ACCOUNT(UserID,bank_account_number, bank_account_owner, bank_account_type, balance, valid_start, valid_end) VALUES(3,'900148974454','Hoang THinh Nguyen','BIDV','150000','2000-01-01','2025-10-01');
+INSERT INTO BANK_ACCOUNT(UserID,bank_account_number, bank_account_owner, bank_account_type, balance, valid_start, valid_end) VALUES(4,'80119775222544','Thinh Thinh Thinh','Algribank','1150000','2000-01-01','2025-10-01');
 
 /*
 DROP TABLE IF EXISTS cart; 
