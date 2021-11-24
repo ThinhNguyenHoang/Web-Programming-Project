@@ -71,7 +71,6 @@ function EditFoodItem(){
     const dispatch=useDispatch();
     const food_manage_data= useSelector(selectors.getFoodManagement);
     const tag_list=food_manage_data.tag_list;
-    console.log("tag_list",tag_list)
     const material_list=food_manage_data.material_list;
     var food_detail;
     
@@ -96,11 +95,8 @@ function EditFoodItem(){
     const [deleteClick,setDeleteClick]=useState();
     const unchooseMaterial=material_list.filter((mar)=>!existObject(mar,values.Material,compareMaterial));
     const [unchooseList,setUnchooseList]=useState(unchooseMaterial);
-    console.log("deleete",deleteClick);
-    const getDefaultTag=()=>{
-        return tag_list.filter((tag)=>existObject(tag,values.Tags,compareTag));
-    }
-
+    const defaultTag=tag_list.filter((tag)=>existObject(tag,values.Tags,compareTag));
+    
     React.useEffect(()=>{
         if(typeof addClick !== "undefined"){
             const newList=[...values.Material,addClick];
@@ -137,6 +133,7 @@ function EditFoodItem(){
             
             dispatch({type:update_food.loading,payload:values});
         } else {
+            console.log("init values",values);
             dispatch({type:add_food.loading,payload:values});
         }
         history.push(ROUTING_CONSTANTS.MANAGE_ITEM_LIST);
@@ -214,7 +211,7 @@ function EditFoodItem(){
                                                     <Autocomplete
                                                         fullWidth
                                                         multiple
-                                                        defaultValue={()=>getDefaultTag()}
+                                                        defaultValue={defaultTag}
                                                         onChange={(e,v)=>setValues({...values,Tags:v})}
                                                         id="checkboxes-tags-demo"
                                                         options={tag_list}
@@ -270,7 +267,6 @@ function EditFoodItem(){
                             <DialogTitle sx={{textAlign:"center", color:'elevation.layer3.contrast'}}>Chọn nguyên liệu</DialogTitle>
                             <DialogContent>
                                 <Box sx={{display:`flex`, flexDirection:"row", flexWrap: "wrap",overflowY:"auto"}}>
-                                    {console.log("unchosee ",unchooseList)}
                                     {unchooseList.map((material)=>(
                                         <MaterialCardAdd key={material.MaterialID} material={material} setAddClick={setAddClick}/>
                                     ))}

@@ -128,7 +128,8 @@ export const RouterConfig = () => {
                     <Register/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.ABOUT_US}>
-                    <AboutUs/>
+                    <FoodItemManagement/>
+                    {/* <AboutUs/> */}
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.NEWS}>
                     <News/>

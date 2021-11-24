@@ -133,7 +133,7 @@ function* addFoodSaga({payload}){
 function* updateFoodSaga({payload}){
     try{
         const res=yield call(updateFoodService,payload);
-        yield put({type:update_food.success,payload:res});
+        yield put({type:update_food.success});
         yield put({type:food_management.loading,payload:""});
         Toaster.toastSuccessful("Update food success");
     }catch(e){
