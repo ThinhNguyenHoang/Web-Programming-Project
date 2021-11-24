@@ -16,12 +16,52 @@ import Toaster from "./utils/Toaster/Toaster";
 import ReactFirebaseFileUpload from "./utils/UploadFile/FileUploader";
 import MyImageMasonry from "./components/ImageMasonry/MyImageMasonry";
 import ImageDrawerUpdater from "./components/ImageDrawerUpdater/ImageDrawerUpdater";
+import {AccountGrid, BankAccountItem, PaymentDrawer} from "./components/Payment/PaymentDrawer";
 require('dotenv').config();
 // function TestComponent(){}
 
 const api_key = process.env.MAP_API;
 const host = process.env.REACT_APP_PHP_PORT;
 console.log("MAP KEY IS: ",process.env.MAP_API,host);
+
+const bank_account_init = {
+    id: "",
+    bank_account_number:"",
+    bank_account_owner: "",
+    bank_account_type: "",
+    balance: "",
+    valid_start: "",
+    valid_end: "",
+}
+
+
+export const bank_account_init_list = [{
+    id: "",
+    bank_account_number: "",
+    bank_account_owner: "",
+    bank_account_type: "",
+    balance: "",
+    valid_start: "",
+    valid_end: "",
+},{
+    id: "",
+    bank_account_number: "",
+    bank_account_owner: "",
+    bank_account_type: "",
+    balance: "",
+    valid_start: "",
+    valid_end: "",
+},{
+    id: "",
+    bank_account_number: "",
+    bank_account_owner: "",
+    bank_account_type: "",
+    balance: "",
+    valid_start: "",
+    valid_end: "",
+}]
+
+
 function App() {
     // Test theme context:
     const setThemeName = useContext(ThemeContext);
@@ -132,10 +172,10 @@ function App() {
                     {/* //////////////test */}
                 </Grid>
             </header>
-            <ImageDrawerUpdater trigger={<img src={image ? image : `https://i.stack.imgur.com/ly34R.jpg?s=96`} alt={`test`}/>} img_uri_callback={(img_uri) => {
-                console.log("SET IMAGE FROM THE OUST SIDE",img_uri);
-                setImage(img_uri)
-            }} additionalStyle={{}}/>
+            {/*<ImageDrawerUpdater trigger={<img src={image ? image : `https://i.stack.imgur.com/ly34R.jpg?s=96`} alt={`test`}/>} img_uri_callback={(img_uri) => {*/}
+            {/*    console.log("SET IMAGE FROM THE OUST SIDE",img_uri);*/}
+            {/*    setImage(img_uri)*/}
+            {/*}} additionalStyle={{}}/>*/}
             {/*<Map*/}
             {/*    googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAMeYALPFuQ_klstxu-M8WDNUmR4hoEJZM&callback=initMap`}*/}
             {/*    loadingElement={<div style={{ height: `100%` }} />}*/}
@@ -144,7 +184,9 @@ function App() {
             {/*/>*/}
             {/*<ReactFirebaseFileUpload/>*/}
             {/*<MyImageMasonry/>*/}
-
+            {/*<BankAccountItem account_item={bank_account_init}/>*/}
+            {/*<AccountGrid bank_account_list={bank_account_init_list}/>*/}
+            <PaymentDrawer trigger={<Button variant={`contained`} color={`primary`}> PAY NOW</Button>} />
         </div>
     );
 }

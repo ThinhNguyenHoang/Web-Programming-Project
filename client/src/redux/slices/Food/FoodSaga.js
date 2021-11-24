@@ -1,4 +1,4 @@
-import {call, put, takeLatest,putResolve} from "redux-saga/effects";
+import {call, put, takeLatest,putResolve,takeEvery} from "redux-saga/effects";
 import {
     UpdateCart,
     GetCart,
@@ -109,6 +109,7 @@ function* getWishListSaga({payload}){
 
 function* addItemToWishListSaga({payload}){
     try{
+        console.log("SAGA ADD WISHLIST",payload);
         const res = yield call(addFoodToWishtListService,payload);
         yield put({type:add_to_wish_list_actions.success, payload: res})
     }
@@ -118,6 +119,7 @@ function* addItemToWishListSaga({payload}){
 }
 function* removeItemFromWishListSaga({payload}){
     try{
+        console.log("SAGA REMOVE WISHLIST",payload);
         const res = yield call(removeFoodFromWishtListService,payload);
         yield put({type:remove_from_wish_list_actions.success, payload: res})
     }
@@ -134,8 +136,8 @@ const watchersFood = function* (){
     yield takeLatest(add_cart_actions.loading,AddCartSaga);
     yield takeLatest(food_recommendation_actions.loading,getFoodRecommendationSaga);
     yield takeLatest(food_wish_list_actions.loading,getWishListSaga);
-    yield takeLatest(add_to_wish_list_actions.loading,addItemToWishListSaga);
-    yield takeLatest(remove_from_wish_list_actions.loading,removeItemFromWishListSaga);
+    yield takeEvery(add_to_wish_list_actions.loading,addItemToWishListSaga);
+    yield takeEvery(remove_from_wish_list_actions.loading,removeItemFromWishListSaga);
 
 }
 export default watchersFood;

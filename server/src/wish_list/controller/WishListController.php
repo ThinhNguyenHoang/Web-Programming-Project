@@ -33,7 +33,6 @@ class WishListController extends BaseController implements RequestHandler
                 break;
             case "post":
                 $token = RequestHelper::validate_jwt_token();
-
                 if ($relative_path == null) {
                     error_log("WISH_LIST_CONTROLLER::ADD WISH_LIST ENDPOINT::" . $relative_path);
                     WishListService::addWishList();
@@ -43,7 +42,6 @@ class WishListController extends BaseController implements RequestHandler
                 break;
             case "delete":
                 $token = RequestHelper::validate_jwt_token();
-
                 if (is_numeric($relative_path)) {
                     error_log("WISH_LIST_CONTROLLER::DELETE WISH_LIST ENDPOINT::" . $relative_path);
                     WishListService::deleteWishList($relative_path);
