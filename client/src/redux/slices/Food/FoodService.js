@@ -3,13 +3,10 @@ import {CartData2FoodCart,FoodCart2CartData,VoucherData2VoucherList} from './Foo
 import axios from "axios";
 import { appendOwnerState } from "@mui/core";
 
-<<<<<<< HEAD
 const baseURL="sfsd";
 const base2URL="fsdf";
-=======
 const food_local_base = '/food'
 
->>>>>>> test3
 const api_endpoints = {
     food:"/food",
     tag:"/tag",
@@ -18,13 +15,10 @@ const api_endpoints = {
     cart:"/cart",
     combo:"/combo",
     nofication:"/nofication",
-<<<<<<< HEAD
 
 
-=======
     recommendations: `${food_local_base}/recommendation`,
     wish_list: "/wish_list"
->>>>>>> test3
 }
 
 
@@ -107,7 +101,6 @@ export const GetCartService = async  (payload)=>{
         }
 }
 
-<<<<<<< HEAD
 export const getFoodManageService = async (payload)=>{
     const food_list= await request.getAsync(api_endpoints.food)
                                 .then((response)=>response.data)
@@ -164,7 +157,6 @@ export const deleteMaterialService=async (payload)=>{
 
 
 
-=======
 export const getFoodRecommendationService = (payload) => {
     return request.getAsync(api_endpoints.recommendations, payload);
 }
@@ -183,4 +175,3 @@ export const removeFoodFromWishtListService = (payload)=>{
     console.log("WISHLIST_SERVICE::REMOVE ",payload);
     return request.deleteAsync(api_endpoints.wish_list,payload);
 }
->>>>>>> test3

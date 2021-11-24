@@ -4,7 +4,6 @@ import {error, generateSagaLifecycleNames, generateStatus, loading, success} fro
 import {UpdateDiscount, UpdateSubtotal, UpdateQuantity} from "./FoodHelper";
 import Toaster from "../../../utils/Toaster/Toaster";
 
-<<<<<<< HEAD
 
 // * const food_item={
 //     FoodID:"",
@@ -24,8 +23,7 @@ const tag={
 const material={
     MaterialID:"",
     MaterialName:"",
-    Picture:""
-=======
+    Picture:""}
 const food_item_cart = {
     id: 0,
     name: "",
@@ -49,7 +47,6 @@ const voucher = {
     id: 0,
     name: "",
     discount: 0,
->>>>>>> test3
 }
 // const food_item_cart={
 //     id:0,
@@ -89,19 +86,6 @@ const food_item = {
     tags: [],
     material: []
 }
-<<<<<<< HEAD
-const initialValue={
-    cart:{
-        food_list:[],
-        voucher_list:[],
-        subtotal:0,
-        discount:0,
-        quantity:0,
-        voucher_id:0,
-        get_status:generateStatus(),
-        update_status:generateStatus(),
-        delete_status:generateStatus(),
-=======
 
 
 
@@ -142,13 +126,11 @@ const initialValue = {
     recommendations: {
         status: generateStatus(),
         food_list: [],
->>>>>>> test3
     },
     wish_list: {
         status: generateStatus(),
         food_list: [],
     },
-<<<<<<< HEAD
     
     food_manage:{
         food_list:[],//list các fooditem trên
@@ -169,26 +151,11 @@ const initialValue = {
 
 
     },
-    recommendations: [],
-    food_item_detail: food_item
-}
-
-export const selectors={
-    getCart: state=>state.food.cart,
-    getVoucher: state=>state.food.cart.voucher_list,
-    getUserId:state=>state.food.user_id,
-    getNews:state=>state.food.news,
-    getFoodList:state=>state.food.news.food_list,
-    getComboList:state=>state.food.news.combo_list,
-    getNofiList: state=>state.food.news.nofi_list,
-    //food mangement
-    getFoodManagement:state=>state.food.food_manage,
-
-=======
     add_to_wishlist: generateStatus(),
     remove_from_wish_list: generateStatus(),
     food_item_detail: food_item
 }
+
 
 export const selectors = {
     getCart: state => state.food.cart,
@@ -198,6 +165,8 @@ export const selectors = {
     getFoodList: state => state.food.news.food_list,
     getComboList: state => state.food.news.combo_list,
     getNofiList: state => state.food.news.nofi_list,
+    //food mangement
+    getFoodManagement:state=>state.food.food_manage,
 
     // * Food recommendationa
     getRecommendationList: state => state.food.recommendations.food_list,
@@ -209,7 +178,6 @@ export const selectors = {
     getWishListSuccess: state => state.food.wish_list.status.isSuccess,
     getWishListLoading: state => state.food.wish_list.status.isSuccess,
     getWishListError: state => state.food.wish_list.status.isError,
->>>>>>> test3
 
 
 }
@@ -388,7 +356,6 @@ const FoodSlice = createSlice({
         [food_item_detail.loading]: (state, action) => {
             state.food_item_detail.status = error();
         },
-<<<<<<< HEAD
         [food_management.loading]:(state,action)=>{
             state.food_manage.get_foodManage_status=loading();
         },
@@ -466,11 +433,10 @@ const FoodSlice = createSlice({
         },
         [setFoodEdit]:(state,action)=>{
             state.food_manage.tempFoodID=action.payload;
-        }
+        },
         
 
         
-=======
 
         [food_recommendation_actions.success]: (state, action) => {
             // Expect the list of food
@@ -523,7 +489,6 @@ const FoodSlice = createSlice({
             state.remove_from_wish_list.status = loading();
         },
 
->>>>>>> test3
 
     }
 });
