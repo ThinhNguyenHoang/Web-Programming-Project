@@ -52,6 +52,7 @@ class BankAccountController extends BaseController implements RequestHandler
                 }
                 break;
             case "delete":
+                $token = RequestHelper::validate_jwt_token();
                 if (is_numeric($relative_path)) {
                     error_log("BANK_ACCOUNT_CONTROLLER::DELETE BANK ACCOUNT ENDPOINT::" . $relative_path);
                     BankAccountService::deleteBankAccount($relative_path);

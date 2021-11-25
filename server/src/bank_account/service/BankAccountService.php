@@ -164,6 +164,24 @@ class BankAccountService
         ResponseHelper::error_server(BankAccountMessage::getMessages()->updateError);
     }
 
+    public static function reduceBankAccountBalance($bank_account_number, $amount)
+    {
+        $bank_account_found = BankAccountRepository::findBankAccountByBankAccountNumber($bank_account_number);
+
+        if (!$bank_account_found) {
+            // Throw error notifying id already taken
+            ResponseHelper::error_client("bank_account_number doesn't exist");
+            die();
+        }
+
+        $balance = $bank_account_found["balance"] - $amount;
+        $result = BankAccountRepository::updateBalance($bank_account_number, $balance);
+        if (!$result) {
+            ResponseHelper::error_client("reduceBankAccountBalance something when wrong");
+            die();
+        }
+    }
+
     public static function deleteBankAccount($id)
     {
         error_log("BANK_ACCOUNT_SERVICE::DELETE::", 0);
@@ -183,5 +201,17 @@ class BankAccountService
             return;
         }
         ResponseHelper::error_server(BankAccountMessage::getMessages()->deleteError);
+    }
+
+    public static function checkBankAccountBallance($bank_account_number, $amount) : bool
+    {
+        $bank_account_found = BankAccountRepository::findBankAccountByBankAccountNumber($bank_account_number);
+
+        if (!$bank_account_found) {
+            // Throw error notifying id already taken
+            ResponseHelper::error_client("bank_account_number doesn't exist");
+            die();
+        }
+        return $bank_account_found["balance"] >= $amount;
     }
 }

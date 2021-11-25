@@ -40,7 +40,7 @@ class BankAccountRepository implements Repository
             $query = "SELECT * FROM bank_account ORDER BY id;";
         } else {
             $UserID = RequestHelper::getUserIDFromToken();
-            $query = "SELECT * FROM bank_account WHERE UserID=$UserID ORDER BY id;";
+            $query = "SELECT * FROM bank_account WHERE user_id=$UserID ORDER BY id;";
         }
         $result=null;
         try {
@@ -70,8 +70,31 @@ class BankAccountRepository implements Repository
             $query = "SELECT * FROM bank_account WHERE id=$id;";
         } else {
             $UserID = RequestHelper::getUserIDFromToken();
-            $query = "SELECT * FROM bank_account WHERE id=$id AND UserID=$UserID;";
+            $query = "SELECT * FROM bank_account WHERE id=$id AND user_id=$UserID;";
         }
+
+        $result=null;
+        try {
+            $result = QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+        }
+
+        if (!$result) {
+            return null;
+        }
+
+        $bank_account = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        error_log(json_encode($bank_account), 0);
+
+        error_log("BANK_ACCOUNT_REPOSITORY::FETCH_LIST::", 0);
+        return $bank_account;
+    }
+
+    public static function findBankAccountByBankAccountNumber($bank_account_number)
+    {
+        $UserID = RequestHelper::getUserIDFromToken();
+        $query = "SELECT * FROM bank_account WHERE bank_account_number=$bank_account_number AND user_id=$UserID;";
 
         $result=null;
         try {
@@ -116,6 +139,18 @@ class BankAccountRepository implements Repository
         $query = "UPDATE bank_account SET bank_account_number='$entity->bank_account_number', bank_account_owner='$entity->bank_account_owner', 
                 bank_account_type='$entity->bank_account_type', balance='$entity->balance', valid_start='$entity->valid_start', valid_end='$entity->valid_end'
                 WHERE id=$entityID AND user_id='$user_id';";
+        try {
+            return QueryExecutor::executeQuery($query);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+        return null;
+    }
+
+    public static function updateBalance($bank_account_number, $balance) {
+        $user_id = RequestHelper::getUserIDFromToken();
+        $query = "UPDATE bank_account SET balance='$balance' WHERE bank_account_number='$bank_account_number' AND user_id=$user_id";
+
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $exception) {

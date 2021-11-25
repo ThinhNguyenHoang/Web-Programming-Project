@@ -22,12 +22,26 @@ INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (3,1,2, 1
 INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (3,1,3, 20); 
 
 DROP TABLE IF EXISTS TRANSACTION; 
-CREATE TABLE TRANSACTION (TransactionID BIGINT(8), TimeStamp TIMESTAMP, Description TEXT, PayAmount BIGINT(8), Status VARCHAR(255), Subject VARCHAR(255), PaymentMethod VARCHAR(255), OrderID BIGINT(8), UserID BIGINT(8), PRIMARY KEY (TransactionID)); 
-INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (1,'2021-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000,'Com True','Da tra tien', 'Vi dien tu', 1,1); 
-INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (2,'2018-05-03 00:00:01', 'Tra tien cho nguoi choi', 6000000, 'Hu tieu','Da tra tien', 'Vi dien tu', 1,1); 
-INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (3,'2019-11-01 00:00:01', 'Tra tien cho nguoi choi', 5000000, 'Hu tieu','Da tra tien', 'Vi dien tu', 1,1); 
-INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (4,'2020-11-01 00:00:01', 'Tra tien cho nguoi choi', 4000000, 'Hu tieu','Da tra tien', 'Vi dien tu', 1,1); 
-INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (5,'2022-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000, 'Hu tieu','Da tra tien', 'Vi dien tu', 1,1); 
+CREATE TABLE TRANSACTION (
+	id BIGINT(8) NOT NULL AUTO_INCREMENT, 
+    time TIMESTAMP, 
+    description TEXT, 
+    amount BIGINT(8), 
+    orderID BIGINT(8), 
+    userID BIGINT(8), 
+    PRIMARY KEY (id)
+); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2021-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000, 1,2); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2018-05-03 00:00:01', 'Tra tien cho nguoi choi', 6000000, 1,2); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2019-11-01 00:00:01', 'Tra tien cho nguoi choi', 5000000, 1,2); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2020-11-01 00:00:01', 'Tra tien cho nguoi choi', 4000000, 1,2); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2022-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000, 1,2); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2021-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000, 1,4); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2018-05-03 00:00:01', 'Tra tien cho nguoi choi', 6000000, 1,4); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2019-11-01 00:00:01', 'Tra tien cho nguoi choi', 5000000, 1,4); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2020-11-01 00:00:01', 'Tra tien cho nguoi choi', 4000000, 1,4); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2022-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000, 1,4); 
+
 
 DROP TABLE IF EXISTS USER; 
 DROP TABLE IF EXISTS USER_PROFILE; 
@@ -69,10 +83,10 @@ CREATE TABLE BANK_ACCOUNT(
     valid_end DATE,
     PRIMARY KEY (Id)
 ); 
-INSERT INTO BANK_ACCOUNT(UserID,bank_account_number, bank_account_owner, bank_account_type, balance, valid_start, valid_end) VALUES(1,'900119775222544','Nguyen Hoang THinh','OCB','150000','2000-01-01','2025-10-01');
-INSERT INTO BANK_ACCOUNT(UserID,bank_account_number, bank_account_owner, bank_account_type, balance, valid_start, valid_end) VALUES(2,'900119771114','Thinh Nguyen Hoang','Vietcombank','2250000','2000-01-01','2025-10-01');
-INSERT INTO BANK_ACCOUNT(UserID,bank_account_number, bank_account_owner, bank_account_type, balance, valid_start, valid_end) VALUES(3,'900148974454','Hoang THinh Nguyen','BIDV','150000','2000-01-01','2025-10-01');
-INSERT INTO BANK_ACCOUNT(UserID,bank_account_number, bank_account_owner, bank_account_type, balance, valid_start, valid_end) VALUES(4,'80119775222544','Thinh Thinh Thinh','Algribank','1150000','2000-01-01','2025-10-01');
+INSERT INTO BANK_ACCOUNT(user_id,bank_account_number, bank_account_owner, bank_account_type, balance, valid_start, valid_end) VALUES(1,'900119775222544','Nguyen Hoang THinh','OCB','150000','2000-01-01','2025-10-01');
+INSERT INTO BANK_ACCOUNT(user_id,bank_account_number, bank_account_owner, bank_account_type, balance, valid_start, valid_end) VALUES(2,'900119771114','Thinh Nguyen Hoang','Vietcombank','2250000','2000-01-01','2025-10-01');
+INSERT INTO BANK_ACCOUNT(user_id,bank_account_number, bank_account_owner, bank_account_type, balance, valid_start, valid_end) VALUES(3,'900148974454','Hoang THinh Nguyen','BIDV','150000','2000-01-01','2025-10-01');
+INSERT INTO BANK_ACCOUNT(user_id,bank_account_number, bank_account_owner, bank_account_type, balance, valid_start, valid_end) VALUES(4,'80119775222544','Thinh Thinh Thinh','Algribank','1150000','2000-01-01','2025-10-01');
 
 /*
 DROP TABLE IF EXISTS cart; 
