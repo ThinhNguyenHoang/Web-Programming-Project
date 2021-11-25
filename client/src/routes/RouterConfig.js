@@ -15,7 +15,8 @@ import FoodRecommendationPage from "../pages/FoodRecommendationPage";
 import WishListPage from "../pages/WishListPage";
 import EditFoodItem from "../pages/EditFoodItem";
 import FoodDetails from "../pages/FoodDetails";
-
+import NewsInfo from "../pages/NewsInfo";
+import NewsEdit from "../pages/NewsEdit";
 
 const baseUrl = process.env.FAKE_SERVER_HOST;
 export const ROUTING_CONSTANTS = {
@@ -123,10 +124,12 @@ export const RouterConfig = () => {
                     <HomePage/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.LOGIN}>
-                    <Login/>
+                    {/* <Login/> */}
+                    <NewsInfo/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.REGISTER}>
-                    <Register/>
+                    {/* <Register/> */}
+                    <NewsEdit/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.ABOUT_US}>
                     <FoodItemManagement/>

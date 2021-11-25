@@ -14,28 +14,34 @@ import NewsCarousel from '../components/News/NewsCarousel';
 import Divider from '@mui/material/Divider';
 
 const fake_news = {
-    title: "This is title",
+    title: "Sách góp phần phát huy trí tuệ, phẩm chất con người Việt Nam",
     img : "https://codelearn.io/Upload/Blog/database-change-notification-oracle-63742419191.3747.jpg",
-    description: "this is descriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
+    description: "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica"
 }
 
 function News (){
     return (
-        <Box sx={{display: `flex`, flexDirection: "column", justifyContent:"center"}}>
+        <Box sx={{display: `flex`, flexDirection: "column", flexWrap:"wrap"}} justifySelf="center">
             <Grid container xs={12} sx={{bgcolor:"elevation.layer0.main"}}>
                 <Grid item container xs={12} sx={{justifyContent:"center", paddingTop: 5, width:"100%"}}>
                     <Box sx={{display:`flex`, flexDirection:"column", justifyContent:"center", bgcolor:"elevation.layer0.main", borderRadius: 5 }} width={1100}>
-                        <Typography variant="h4" gutterBottom component="div" sx={{fontWeight:"bold",color:"red", ml:"10px", mt:"10px"}}>
+                        <Typography variant="h4" gutterBottom component="div" sx={{fontWeight:"bold",color:"red", ml:"50px", mt:"10px"}}>
                             Nổi bật
                         </Typography>
                         <NewsCarousel/>
                     </Box>
                 </Grid>
             </Grid>
-            <Divider variant="middle" />
-            <Box sx={{display: `flex`, flexDirection: "column", justifyContent:"center",bgcolor:"elevation.layer0.main"}}>
-            {[1,2,3,4,5,6,7,8].map(idx=> <NewsCard key={idx} news={fake_news}/>)}
-            </Box>
+            <Grid container xs={12} sx={{bgcolor:"elevation.layer0.main"}}>
+                <Grid item container xs={12} sx={{justifyContent:"center", paddingTop: 5, width:"100%"}}>
+                    <Box sx={{display: `flex`, flexDirection: "column",bgcolor:"elevation.layer0.main", width:"fit-content"}}>
+                        <Typography variant="h4" gutterBottom component="div" sx={{fontWeight:"bold",color:"red"}}>
+                            Tin chính
+                        </Typography>
+                        {[1,2,3,4,5,6,7,8].map(idx=> <NewsCard key={idx} news={fake_news}/>)}
+                    </Box>
+                </Grid>
+            </Grid>
         </Box>
     );
 }
