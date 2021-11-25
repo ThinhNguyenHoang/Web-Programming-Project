@@ -9,7 +9,7 @@ import LoyaltyIcon from '@mui/icons-material/Loyalty';
 import { Button } from "@mui/material";
 import { ButtonGroup } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import {change_voucher_cart,selectors} from "../../redux/slices/food/FoodSlice";
+import {change_voucher_cart,selectors} from "../../redux/slices/Food/FoodSlice";
 import { base_keys } from "../../locales/constants";
 import { useTranslation } from "react-i18next";
 

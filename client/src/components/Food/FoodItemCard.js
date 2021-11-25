@@ -22,7 +22,7 @@ import {ThemedOutlineButton} from "../Buttons/ThemedButton/ThemedButton";
 import Box from "@mui/material/Box";
 import {ThemeContext} from "../../theme";
 import {useDispatch} from "react-redux";
-import {add_to_wish_list_actions, remove_from_wish_list_actions} from "../../redux/slices/food/FoodSlice";
+import {add_to_wish_list_actions, remove_from_wish_list_actions} from "../../redux/slices/Food/FoodSlice";
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;

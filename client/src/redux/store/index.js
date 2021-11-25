@@ -1,6 +1,6 @@
 import {configureStore, getDefaultMiddleware} from '@reduxjs/toolkit'
 import authSlice from '../slices/auth/AuthSlice';
-import FoodSlice from '../slices/food/FoodSlice';
+import FoodSlice from '../slices/Food/FoodSlice';
 import paymentSlice from "../slices/payment/PaymentSlice";
 import createSagaMiddleware from 'redux-saga';
 

@@ -175,8 +175,7 @@ export const PaymentDrawer = (
                             </Button>
                             {/* Popover to add new bank account */}
                             <Popover
-                                id={id}
-                                open={open}
+                                open={false}
                                 anchorEl={anchorEl}
                                 onClose={closePopOver}
                                 anchorOrigin={{
