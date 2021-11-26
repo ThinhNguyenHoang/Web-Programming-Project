@@ -96,7 +96,7 @@ function* getFoodRecommendationSaga({payload}){
         yield put({type:food_recommendation_actions.error,payload:JSON.stringify(e)});
     }
 }
-
+// * WISH LIST
 function* getWishListSaga({payload}){
     try{
         const res = yield call(getWishList,payload);
@@ -135,7 +135,8 @@ const watchersFood = function* (){
     yield takeLatest(delete_cart_actions.loading,DeleteCartSaga);
     yield takeLatest(add_cart_actions.loading,AddCartSaga);
     yield takeLatest(food_recommendation_actions.loading,getFoodRecommendationSaga);
-    yield takeLatest(food_wish_list_actions.loading,getWishListSaga);
+
+    yield takeEvery(food_wish_list_actions.loading,getWishListSaga);
     yield takeEvery(add_to_wish_list_actions.loading,addItemToWishListSaga);
     yield takeEvery(remove_from_wish_list_actions.loading,removeItemFromWishListSaga);
 

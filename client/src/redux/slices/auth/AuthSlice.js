@@ -43,7 +43,7 @@ export const selectors = {
     getUserListLoading: (state) => state.auth.user_list.status.isLoading,
     getUserListError: (state) => state.auth.user_list.status.isError,
 
-    getUserAvatar: (state) => state.auth.currentUser.avatar,
+    getUserAvatar: (state) => state.auth.currentUser.profile.avatar,
     getUserName: (state) => state.auth.currentUser.profile.username,
     getUserState: (state) => state.auth.currentUser.profile.role,
     getUserProfile: (state) => state.auth.currentUser.profile,

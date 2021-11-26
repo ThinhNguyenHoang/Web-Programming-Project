@@ -3,6 +3,8 @@ import Box from "@mui/material/Box";
 import {Typography} from "@mui/material";
 import FoodItemCard from "./FoodItemCard";
 import Carousel from "react-material-ui-carousel";
+import {selectors} from "../../redux/slices/food/FoodSlice";
+import {useSelector} from "react-redux";
 // ? Food Item Schema
 // const food_item = {
 //     id: "",
