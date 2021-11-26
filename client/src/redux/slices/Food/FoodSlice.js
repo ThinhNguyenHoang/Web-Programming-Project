@@ -100,10 +100,56 @@ const mapFoodItemFromResponse = (item) => {
         sale_value: 0,
         description: item.Description,
         instruct: item.Instruct,
-        material: [...item.Material],
-        tags: [...item.Tags],
+        material: item.Material? [...item.Material] : [],
+        tags: item.Tags? [...item.Tags] : [],
     }
 }
+
+const mapComboFromResponse = (item) => {
+    const food_list = item.Food.map((item,index) => {
+        return mapFoodItemFromResponse(item);
+    })
+
+    return {
+        id: item.ComboID,
+        name: item.ComboName,
+        description: item.ComboDescrip,
+        price: item.Price,
+        food_in_combo: [...food_list]
+    }
+}
+
+const mapFoodItemFromResponseWithWishlist = (item) => {
+    return {
+        id_wish_list: item.WishListID,
+        id: item.FoodID,
+        name: item.FoodName,
+        picture_uri: item.Picture,
+        price: item.Price,
+        // ! CHANGE THIS TO REAL SALE VALUE FROM REQUEST
+        sale_value: 0,
+        description: item.Description,
+        instruct: item.Instruct,
+        material: item.Material? [...item.Material] : [],
+        tags: item.Tags? [...item.Tags] : [],
+    }
+}
+
+const mapComboFromResponseWithWishList = (item) => {
+    const food_list = item.Food.map((item,index) => {
+        return mapFoodItemFromResponse(item);
+    })
+
+    return {
+        id_wish_list: item.WishListID,
+        id: item.ComboID,
+        name: item.ComboName,
+        description: item.ComboDescrip,
+        price: item.Price,
+        food_in_combo: [...food_list]
+    }
+}
+
 const initialValue = {
     user_id: 1,
     cart: {
@@ -121,9 +167,11 @@ const initialValue = {
         status: generateStatus(),
         food_list: [],
     },
+    // * WISHLIST SLICE
     wish_list: {
         status: generateStatus(),
         food_list: [],
+        combo_list: [],
     },
     
     food_manage:{
@@ -167,7 +215,8 @@ export const selectors = {
     getRecommendationLoading: state => state.food.recommendations.status.isSuccess,
     getRecommendationError: state => state.food.recommendations.status.isError,
     // * Food WishList
-    getWishList: state => state.food.wish_list.food_list,
+    getWishListCombos: state => state.food.wish_list.combo_list,
+    getWishListFood: state => state.food.wish_list.food_list,
     getWishListSuccess: state => state.food.wish_list.status.isSuccess,
     getWishListLoading: state => state.food.wish_list.status.isSuccess,
     getWishListError: state => state.food.wish_list.status.isError,
@@ -201,12 +250,13 @@ export const delete_material_action=generateSagaLifecycleNames("delete_exist_mat
 export const setFoodEdit= "setFoodEdit";
 
 
-// Food Wishlist action
+// * Food Wishlist action
+export const food_wish_list_actions = generateSagaLifecycleNames("wish_list");
 export const add_to_wish_list_actions = generateSagaLifecycleNames("add_wish_list");
 export const remove_from_wish_list_actions = generateSagaLifecycleNames("remove_wish_list");
 // * Food Recommendation Actions:
 export const food_recommendation_actions = generateSagaLifecycleNames("food_recommendation");
-export const food_wish_list_actions = generateSagaLifecycleNames("wish_list");
+
 
 
 const FoodSlice = createSlice({
@@ -218,7 +268,6 @@ const FoodSlice = createSlice({
             console.log("change voucher");
             state.cart.voucher_id = action.payload;
             UpdateDiscount(state.cart);
-            //update to db ?
         },
         [increase_quantity_cart]: (state, action) => {
             state.cart.food_list.map((food) => {
@@ -397,12 +446,20 @@ const FoodSlice = createSlice({
             state.recommendations.status = loading();
         },
 
+
+        // * Food Wishlist Reducers
         [food_wish_list_actions.success]: (state, action) => {
+            Toaster.toastSuccessful(action.payload.message);
+            const original_list = action.payload.data;
+            const food_wish_list = original_list.filter((item) => item.FoodID !== "0").map((item) => mapFoodItemFromResponse(item.data));
+            const combo_wish_list = original_list.filter((item) => item.ComboID !== "0").map((item) => mapComboFromResponse(item.data));
+            state.wish_list.food_list = [...food_wish_list];
+            state.wish_list.combo_list = [...combo_wish_list];
             state.wish_list.status = success();
         },
+
         [food_wish_list_actions.error]: (state, action) => {
             Toaster.toastError(JSON.stringify(action.payload));
-            state.recommendations.status = error();
             state.wish_list.status = error();
         },
         [food_wish_list_actions.loading]: (state, action) => {
@@ -410,7 +467,6 @@ const FoodSlice = createSlice({
         },
 
         [add_to_wish_list_actions.success]: (state, action) => {
-            console.log("FOOD SLICE::WISHLIST::ADD ",action.payload);
             state.add_to_wishlist.status = success();
         },
         [add_to_wish_list_actions.error]: (state, action) => {
@@ -438,40 +494,4 @@ const FoodSlice = createSlice({
     }
 });
 export default FoodSlice;
-
-
-// //
-// const comment_init = {
-//     user_iamge: "",
-//     time: "",
-//     content: "",
-//     name: " ",
-// }
-// const Comment = () => {
-//     return (
-//
-//     );
-// }
-//
-// //
-// const review_init = {
-//     review: "",
-//     comments: []
-// }
-// const Review = () => {
-//     return (
-//         <Box>
-//             // Cái này là tiêu đề của cái review
-//             <Typography>
-//             </Typography>
-//             <Typography>
-//                 NỘi dung
-//                 {/*Có hình ảnh ở cuối cái review nếu có */}
-//             </Typography>
-//             <Box>
-//             {/*  LIst các comment lên trên bài review */}
-//             </Box>
-//         </Box>
-//     );
-// }
 

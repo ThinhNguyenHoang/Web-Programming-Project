@@ -109,9 +109,6 @@ const AccountManagement = () => {
                         <Typography variant={`h6`} sx={{m: 3}}>
                             {user_profile.username ? user_profile.username : "Guess"}
                         </Typography>
-                        <Button variant={`contained`} color={`primary`}>
-                            {"Update Avatar"}
-                        </Button>
                     </Box>
                     <Box sx={{
                         bgcolor: `white`,

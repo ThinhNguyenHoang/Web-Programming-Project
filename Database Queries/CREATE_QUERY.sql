@@ -358,26 +358,26 @@ CREATE TABLE wish_list (
     UserID BIGINT(8) NOT NULL,
     ComboID BIGINT(8),
     FoodID BIGINT(8),
-    PRIMARY KEY (UserID, FoodID, ComboID)
+    PRIMARY KEY (WishListID, UserID, FoodID, ComboID)
 );
 
-INSERT INTO wish_list VALUES (7,1,0);
-INSERT INTO wish_list VALUES (7,2,0);
-INSERT INTO wish_list VALUES (7,3,0);
-INSERT INTO wish_list VALUES (7,4,0);
-INSERT INTO wish_list VALUES (7,5,0);
-INSERT INTO wish_list VALUES (8,1,0);
-INSERT INTO wish_list VALUES (8,2,0);
-INSERT INTO wish_list VALUES (8,3,0);
-INSERT INTO wish_list VALUES (8,4,0);
-INSERT INTO wish_list VALUES (7,0,1);
-INSERT INTO wish_list VALUES (7,0,2);
-INSERT INTO wish_list VALUES (7,0,3);
-INSERT INTO wish_list VALUES (7,0,4);
-INSERT INTO wish_list VALUES (7,0,5);
-INSERT INTO wish_list VALUES (8,0,1);
-INSERT INTO wish_list VALUES (8,0,2);
-INSERT INTO wish_list VALUES (8,0,3);
-INSERT INTO wish_list VALUES (8,0,4);
-INSERT INTO wish_list VALUES (8,0,5);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,1,0);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,2,0);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,3,0);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,4,0);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,5,0);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,1,0);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,2,0);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,3,0);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,4,0);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,0,1);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,0,2);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,0,3);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,0,4);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,0,5);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,0,1);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,0,2);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,0,3);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,0,4);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,0,5);
 

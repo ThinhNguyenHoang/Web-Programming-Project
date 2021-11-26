@@ -17,6 +17,10 @@ import ReactFirebaseFileUpload from "./utils/UploadFile/FileUploader";
 import MyImageMasonry from "./components/ImageMasonry/MyImageMasonry";
 import ImageDrawerUpdater from "./components/ImageDrawerUpdater/ImageDrawerUpdater";
 import {AccountGrid, BankAccountItem, PaymentDrawer} from "./components/Payment/PaymentDrawer";
+import {selectors} from "./redux/slices/food/FoodSlice";
+import {useSelector} from "react-redux";
+import ComboItemCard from "./components/Food/ComboItemCard";
+import moment from "moment";
 require('dotenv').config();
 // function TestComponent(){}
 
@@ -62,6 +66,36 @@ export const bank_account_init_list = [{
 }]
 
 
+const combo =  {
+    id: '1',
+    name: 'Combo thứ 2',
+    description: 'Thịt lợn rim tiêu + Trứng đúc thịt',
+    price: '150000',
+    food_in_combo: [
+        {
+            id: '1',
+            name: 'Thịt lợn rim tiêu',
+            picture_uri: null,
+            price: '120000',
+            sale_value: 0,
+            description: 'Thịt kho là món mặn dùng chính trong bữa cơm của người Việt, bên cạnh món canh và món rau. Hôm nay bếp kho quẹt sẽ giới thiệu đến các bạn món thịt kho tiêu, cũng là món được các chị em thường xuyên chế biến, nhưng để làm đúng chuẩn về màu sắc và mùi vị thì chắc hẳn nhiều người còn bỏ ngỏ. Nào, còn chờ gì nữa, chúng ta bắt tay vào làm món thịt kho tiêu cho kịp bữa cơm chiều nhé!',
+            instruct: null,
+            material: [],
+            tags: []
+        },
+        {
+            id: '2',
+            name: 'Trứng đúc thịt',
+            picture_uri: null,
+            price: '80000',
+            sale_value: 0,
+            description: 'Món trứng đúc thịt là một món dễ làm, dễ ăn. Đặc biệt là trẻ em, gần như bé nào cũng thích ăn trứng nhưng đôi khi lại không thích ăn thịt vì dai. Với cách làm trứng đúc thịt này, thịt mềm và ngon, trứng rán vàng thơm lừng khắp cả nhà, hương vị rất kích thích với các bé. Hơn nữa vào những ngày bận rộn Bạn chỉ cần mất vài phút là đã có ngay một món ăn thơm ngon mà vẫn đầy đủ chất dinh dưỡng cho cả nhà rồi.',
+            instruct: null,
+            material: [],
+            tags: []
+        }
+    ]
+};
 function App() {
     // Test theme context:
     const setThemeName = useContext(ThemeContext);
@@ -82,6 +116,9 @@ function App() {
     const navigateToClient=()=>{history.push(ROUTING_CONSTANTS.CLIENT)};
     const navigateToOrder=()=>{history.push(ROUTING_CONSTANTS.ORDER)}
     ///////////////test
+
+    const combos = useSelector(selectors.getWishListCombos);
+    console.log("COMBO IS: ",combos);
     return (<div className="App">
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo"/>
@@ -186,9 +223,13 @@ function App() {
             {/*<MyImageMasonry/>*/}
             {/*<BankAccountItem account_item={bank_account_init}/>*/}
             {/*<AccountGrid bank_account_list={bank_account_init_list}/>*/}
-            <PaymentDrawer trigger={<Button variant={`contained`} color={`primary`}> PAY NOW</Button>} />
-        </div>
+            {/*<PaymentDrawer trigger={<Button variant={`contained`} color={`primary`}> PAY NOW</Button>} />*/}
+            <ComboItemCard combo_item={combo}/>
+    </div>
     );
 }
 
 export default App;
+
+
+
