@@ -59,7 +59,7 @@ function NewsInfo(){
 
     }
     const addComment=(comment)=>{
-
+        
     }
     
     return (
