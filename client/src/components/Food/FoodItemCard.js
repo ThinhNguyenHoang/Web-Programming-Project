@@ -6,23 +6,16 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import {generateStatus} from "../../utils/reduxGenerate";
 import default_food_image from "../../assets/images/defaul_food_image.jpg";
-import {Button} from "@mui/material";
-import {useState} from "react";
 import {ThemedOutlineButton} from "../Buttons/ThemedButton/ThemedButton";
-import Box from "@mui/material/Box";
-import {ThemeContext} from "../../theme";
-import {useDispatch} from "react-redux";
-import {add_to_wish_list_actions, remove_from_wish_list_actions} from "../../redux/slices/food/FoodSlice";
+
+import {useDispatch, useSelector} from "react-redux";
+import {add_to_wish_list_actions, remove_from_wish_list_actions, selectors} from "../../redux/slices/food/FoodSlice";
+
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -35,16 +28,15 @@ const ExpandMore = styled((props) => {
     })
 }));
 // sx={{color:`${ isClicked ? 'primary.main' : 'grey.500'}`}}
-const HeartIconButton = ({isClicked,callback}) =>{
+const HeartIconButton = ({callback,is_in_wish_list=false}) =>{
     // TODO: Remember to change the initial state to isClicked
-    const [clicked, setClicked] = useState(false);
     return <IconButton aria-label="add to favorites" onClick={() => {
-            // setClicked(!clicked);
-            callback(clicked);
-            console.log("CLICKED IS: ",clicked)
+            // // setClicked(!clicked);
+            callback(is_in_wish_list);
+            console.log("IN WISH LIST: ",is_in_wish_list)
         }
     }>
-        {clicked ? <FavoriteIcon  color={`primary`}/> : <FavoriteIcon color={`grey:500`}/>
+        {is_in_wish_list ? <FavoriteIcon  color={`primary`}/> : <FavoriteIcon color={`grey:500`}/>
         }
     </IconButton>
 }
@@ -63,7 +55,8 @@ const HeartIconButton = ({isClicked,callback}) =>{
 // }
 export default function FoodItemCard({food_item,mx,allow_expansion=true},...props) {
     const [expanded, setExpanded] = React.useState(false);
-
+    const wish_list_ids = useSelector(selectors.getWishListFood).map(item => item.id);
+    const is_in_wish_list = wish_list_ids.includes(food_item.id);
     const dispatch = useDispatch();
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -80,12 +73,12 @@ export default function FoodItemCard({food_item,mx,allow_expansion=true},...prop
             <CardHeader
                 sx={{color:'elevation.layer2.contrast'}}
                 action={
-                    <HeartIconButton callback={(clicked) => {
+                    <HeartIconButton is_in_wish_list={is_in_wish_list} callback={(clicked) => {
                             const food_item_wishlist = {
                                 FoodID:food_item.id,
                             }
                             console.log("OUTSIDE SEE CLICKED ON ITEM: ",food_item.id,clicked);
-                            if(!clicked){
+                            if(!is_in_wish_list){
                                 console.log("ADD TO WISHLIST UI");
                                 dispatch({type:add_to_wish_list_actions.loading,payload:food_item_wishlist})
                             }

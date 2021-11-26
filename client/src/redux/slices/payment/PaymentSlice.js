@@ -1,36 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { error, generateSagaLifecycleNames, generateStatus, loading, success } from "../../../utils/reduxGenerate";
-import {useSelector} from "react-redux";
-import userDefaultAvatar from "../../../assets/images/user_default.jpg"
-import {get_news_actions} from "../food/FoodSlice";
-import {ROUTING_CONSTANTS} from "../../../routes/RouterConfig";
-import Toaster from "../../../utils/Toaster/Toaster";
-
-// export const bank_account_init_list = [{
-//     id: "",
-//     bank_account_number: "",
-//     bank_account_owner: "",
-//     bank_account_type: "",
-//     balance: 150,
-//     valid_start: "",
-//     valid_end: "",
-// }, {
-//     id: "",
-//     bank_account_number: "",
-//     bank_account_owner: "",
-//     bank_account_type: "",
-//     balance: 0,
-//     valid_start: "",
-//     valid_end: "",
-// }, {
-//     id: "",
-//     bank_account_number: "",
-//     bank_account_owner: "",
-//     bank_account_type: "",
-//     balance: 130,
-//     valid_start: "",
-//     valid_end: "",
-// }]
 
 const initialValue = {
     make_payment_status: generateStatus(),

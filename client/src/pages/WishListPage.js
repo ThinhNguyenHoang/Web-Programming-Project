@@ -4,7 +4,7 @@ import {WishListGrid} from "../components/Food/RecommendationGrid";
 
 const WishListPage = () => {
     return (
-        <Box>
+        <Box bgcolor={`elevation.layer0.main`}>
             <WishListGrid/>
         </Box>
     );

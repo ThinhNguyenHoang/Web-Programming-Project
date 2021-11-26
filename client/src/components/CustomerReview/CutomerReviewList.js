@@ -3,8 +3,6 @@ import Box from "@mui/material/Box";
 import {Typography} from "@mui/material";
 import FoodItemCard from "./FoodItemCard";
 import Carousel from "react-material-ui-carousel";
-import {selectors} from "../../redux/slices/food/FoodSlice";
-import {useSelector} from "react-redux";
 // ? Food Item Schema
 // const food_item = {
 //     id: "",
@@ -57,17 +55,25 @@ const food_list_test = [
         material: []
     }
 ]
-const FoodGrid = ({food_list}) => {
+const FoodRecommendation = ({food_list}) => {
+    // TODO: Change this to real food api
     const list_food = food_list ? food_list : food_list_test;
     return (
-            <Box sx={{display:'flex',flexDirection: {xs:'column',sm:'column',md:`row`}, alignItems:'stretch',justifyContent:`center` }}>
+        <Box sx={{display:`flex`,flexDirection:`column`,flexWrap:'wrap'}}>
+            <Box sx={{display:'flex',flexDirection: {sx:'column',sm:'column',md:`row`}, alignItems:'center',justifyContent:`center` }}>
                 {
                     list_food.map((item,index) => {
-                        return <FoodItemCard allow_expansion={false} food_item={item} key={index.toString()} mx={{xs:1,sm:2,md:3}}/>
+                        return <FoodItemCard food_item={item} key={index.toString()} mx={{xs:1,sm:2,md:3,lg:4}}/>
                     })
                 }
             </Box>
+        </Box>
     );
 };
 
-export default FoodGrid;
+export default FoodRecommendation;
+// TODO: 
+/*
+    TODO: 
+    + Add list of list for review as well 
+*/

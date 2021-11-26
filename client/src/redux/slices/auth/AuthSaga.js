@@ -1,4 +1,4 @@
-import {call, put, takeLatest} from "redux-saga/effects";
+import {call, put, takeEvery, takeLatest} from "redux-saga/effects";
 import {
     changePasswordService,
     deleteUserAccountService, getUserProfileService,
@@ -102,7 +102,7 @@ const watchers = function* (){
     yield takeLatest(login_actions.loading, loginUserSaga);
     yield takeLatest(register_actions.loading, registerUserSaga);
     yield takeLatest(change_pass_actions.loading, changeUserPasswordSaga);
-    yield takeLatest(update_account_actions.loading, updateUserSaga);
+    yield takeEvery(update_account_actions.loading, updateUserSaga);
     yield takeLatest(delete_account_actions.loading, deleteUserSaga);
 
     yield takeLatest(update_user_profile_actions.loading, updateUserProfileSaga);

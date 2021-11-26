@@ -156,7 +156,7 @@ export const RouterConfig = () => {
                     <App/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.PAYMENT}>
-                    <PaymentPage></PaymentPage>
+                    <PaymentPage/>
                 </Route>
             </Switch>
         </WithHeader>
