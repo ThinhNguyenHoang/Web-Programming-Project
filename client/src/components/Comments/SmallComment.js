@@ -38,7 +38,7 @@ function SmallComment(props){
 
     const [isEdit,setEdit]=useState(false);
     const comment=props.comment;
-    const [content,setContent]=useState
+    const [content,setContent]=useState(comment.Content);
 
     return(
         <Box sx={{display:"flex",flexDirection:"column"}}>
@@ -62,7 +62,7 @@ function SmallComment(props){
                                 variant="outlined"
                             />
                             <Box sx={{display:"flex",flexDirection:"row"}}>
-                                <Button onClick={()=>setEdit(false)}>Hủy</Button>
+                                <Button onClick={()=>{setEdit(false); setContent(comment.Content);}}>Hủy</Button>
                                 <Button onClick={()=>props.editReply({...comment,Content:content})}>Xác nhận</Button>
                             </Box>
                         </Box>
@@ -75,7 +75,7 @@ function SmallComment(props){
                     isAdmin ? 
                     (<Box sx={{display:"flex",flexDirection:"row"}}>
                         <Button onClick={()=>setEdit(true)}>Sửa bình luận</Button> 
-                        <Button onClick={()=>props.deleteReply()}>Xóa bình luận</Button>
+                        <Button onClick={()=>props.deleteReply(comment.RelyID)}>Xóa bình luận</Button>
                     </Box>
                     ):
                     (<></>)

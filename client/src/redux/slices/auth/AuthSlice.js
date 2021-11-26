@@ -51,6 +51,7 @@ export const selectors = {
     getRegisterSuccess: (state) => state.auth.currentUser.register_status.isSuccess,
     getRegisterError: (state) => state.auth.register_status.isError,
     getUserRole: (state) => state.auth.currentUser.profile.role,
+    getAcountId: (state) => state.auth.currentUser.profile.account_id,
 
     getLoginLoading: (state) => state.auth.currentUser.login_status.isLoading,
     getLoginSuccess: (state) => state.auth.currentUser.login_status.isSuccess,
