@@ -40,7 +40,7 @@ import Carousel from 'react-material-ui-carousel';
 import MaterialListCarousel from '../components/FoodItemManagement/MaterialListCarousel';
 import defaul_food_image from "../assets/images/defaul_food_image.jpg";
 import Comments from '../components/Comments/Comments';
-import { selectors, delete_news_comment_action } from './../redux/slices/News/NewsSlice';
+import { selectors, delete_news_comment_action, update_news_comment_action, add_news_comment_action, get_news_detail_action } from './../redux/slices/News/NewsSlice';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -53,13 +53,16 @@ function NewsInfo(){
     const comments=news_detail.Comment;
     console.log("new detail",news_detail);
     const deleteComment=(id)=>{
-        dispatch({type:delete_news_comment_action})
+        dispatch({type:delete_news_comment_action});
+        dispatch({type:get_news_detail_action.loading,payload:news_detail.NewsID});
     }
     const updateComment=(comment)=>{
-
+        dispatch({type:update_news_comment_action.loading,payload:comment});
+        dispatch({type:get_news_detail_action.loading,payload:news_detail.NewsID});
     }
     const addComment=(comment)=>{
-        
+        dispatch({type:add_news_comment_action.loading,payload:comment});
+        dispatch({type:get_news_detail_action.loading,payload:news_detail.NewsID});
     }
     
     return (
