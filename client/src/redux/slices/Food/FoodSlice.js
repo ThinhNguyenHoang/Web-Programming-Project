@@ -72,32 +72,7 @@ const voucher = {
 //     name:"",
 //     discount:0,
 // }
-const news={
-    NewsID:"",
-    Title:"",
-    Picture:"",
-    HighLight:"",
-    Content:"",
-    Author:"",
-    Comment:[],
-}
-const comments={
-    CommentID:"",
-    UserID:"",
-    UserName:"",
-    UserAvatar:"",
-    Content:"",
-    ImageList:[],
-    Reply:[]
-}
-const Reply={
-    ReplyID:"",
-    CommentID:"",
-    UserID:"",
-    UserName:"",
-    UserAvatar:"",
-    Content:"",
-}
+
 const food_item = {
     id: "",
     name: "",
@@ -142,9 +117,6 @@ const initialValue = {
         update_status: generateStatus(),
         delete_status: generateStatus(),
     },
-    news: {
-
-    },
     recommendations: {
         status: generateStatus(),
         food_list: [],
@@ -183,7 +155,6 @@ export const selectors = {
     getCart: state => state.food.cart,
     getVoucher: state => state.food.cart.voucher_list,
     getUserId: state => state.food.user_id,
-    getNews: state => state.food.news,
     getFoodList: state => state.food.news.food_list,
     getComboList: state => state.food.news.combo_list,
     getNofiList: state => state.food.news.nofi_list,
@@ -213,28 +184,20 @@ export const increase_quantity_cart = "increase_quantity";
 export const decrease_quantity_cart = "decrease_quantity";
 export const delete_food_cart = "delete_food";
 
-//News actions
-export const get_news_actions = generateSagaLifecycleNames("get_news");
-export const add_cart_actions = generateSagaLifecycleNames("add_cart");
-export const next_food_news = "next_food";
-export const back_food_news = "back_food";
-export const next_combo_news = "next_combo";
-export const back_combo_news = "back_combo";
-export const next_nofi_news = "next_nofication";
-export const back_nofi_news = "back_nofication";
+
 
 // Food Item Action
 export const food_item_detail = generateSagaLifecycleNames("food_item_detail");
 //
 //Food manage :get food list, get tag list, get material list
-export const food_management=generateSagaLifecycleNames("food_management");
-export const delete_tag=generateSagaLifecycleNames("delete_tag");
-export const add_tag=generateSagaLifecycleNames("add_tag");
-export const add_food=generateSagaLifecycleNames("add_new_food");
-export const delete_food=generateSagaLifecycleNames("delete_exist_food");
-export const update_food=generateSagaLifecycleNames("update_exist_food");
-export const add_material=generateSagaLifecycleNames("add_new_material");
-export const delete_material=generateSagaLifecycleNames("delete_exist_material");
+export const food_management_action=generateSagaLifecycleNames("food_management");
+export const delete_tag_action=generateSagaLifecycleNames("delete_tag");
+export const add_tag_action=generateSagaLifecycleNames("add_tag");
+export const add_food_action=generateSagaLifecycleNames("add_new_food");
+export const delete_food_action=generateSagaLifecycleNames("delete_exist_food");
+export const update_food_action=generateSagaLifecycleNames("update_exist_food");
+export const add_material_action=generateSagaLifecycleNames("add_new_material");
+export const delete_material_action=generateSagaLifecycleNames("delete_exist_material");
 export const setFoodEdit= "setFoodEdit";
 
 
@@ -325,15 +288,6 @@ const FoodSlice = createSlice({
         [delete_cart_actions.error]: (state, action) => {
             state.cart.delete_status = error();
         },
-        [add_cart_actions.loading]: (state, action) => {
-            state.news.addCart_status = loading();
-        },
-        [add_cart_actions.success]: (state, action) => {
-            state.news.addCart_status = success();
-        },
-        [add_cart_actions.error]: (state, action) => {
-            state.news.addCart_status = error();
-        },
         [food_item_detail.loading]: (state, action) => {
             state.food_item_detail.status = loading();
         },
@@ -347,79 +301,79 @@ const FoodSlice = createSlice({
         [food_item_detail.loading]: (state, action) => {
             state.food_item_detail.status = error();
         },
-        [food_management.loading]:(state,action)=>{
+        [food_management_action.loading]:(state,action)=>{
             state.food_manage.get_foodManage_status=loading();
         },
-        [food_management.success]:(state,action)=>{
+        [food_management_action.success]:(state,action)=>{
             state.food_manage.food_list=action.payload.food_list;
             state.food_manage.tag_list=action.payload.tag_list;
             state.food_manage.material_list=action.payload.material_list;
             state.food_manage.get_foodManage_status=success();
         },
-        [food_management.error]:(state,action)=>{
+        [food_management_action.error]:(state,action)=>{
             state.food_manage.get_foodManage_status=error();
         },
-        [delete_tag.loading]:(state,action)=>{
+        [delete_tag_action.loading]:(state,action)=>{
             state.food_manage.delete_tag=loading();
         },
-        [delete_tag.success]:(state,action)=>{
+        [delete_tag_action.success]:(state,action)=>{
             state.food_manage.delete_tag=success();
         },
-        [delete_tag.error]:(state,action)=>{
+        [delete_tag_action.error]:(state,action)=>{
             state.food_manage.delete_tag=error();
         },
-        [add_tag.loading]:(state,action)=>{
+        [add_tag_action.loading]:(state,action)=>{
             state.food_manage.add_tag =loading();
         },
-        [add_tag.success]:(state,action)=>{
+        [add_tag_action.success]:(state,action)=>{
             state.food_manage.add_tag =success();
         },
-        [add_tag.error]:(state,action)=>{
+        [add_tag_action.error]:(state,action)=>{
             state.food_manage.add_tag =error();
         },
-        [add_food.loading]:(state,action)=>{
+        [add_food_action.loading]:(state,action)=>{
             state.food_manage.add_food =loading();
         },
-        [add_food.success]:(state,action)=>{
+        [add_food_action.success]:(state,action)=>{
             state.food_manage.add_food =success();
         },
-        [add_food.error]:(state,action)=>{
+        [add_food_action.error]:(state,action)=>{
             state.food_manage.add_food =error();
         },
-        [update_food.loading]:(state,action)=>{
+        [update_food_action.loading]:(state,action)=>{
             state.food_manage.update_food =loading();
         },
-        [update_food.success]:(state,action)=>{
+        [update_food_action.success]:(state,action)=>{
             state.food_manage.update_food =success();
         },
-        [update_food.error]:(state,action)=>{
+        [update_food_action.error]:(state,action)=>{
             state.food_manage.update_food =error();
         },
-        [delete_food.loading]:(state,action)=>{
+        [delete_food_action.loading]:(state,action)=>{
             state.food_manage.delete_food =loading();
         },
-        [delete_food.success]:(state,action)=>{
+        [delete_food_action.success]:(state,action)=>{
             state.food_manage.delete_food =success();
         },
-        [delete_food.error]:(state,action)=>{
+        [delete_food_action.error]:(state,action)=>{
             state.food_manage.delete_food =error();
         },
-        [add_material.loading]:(state,action)=>{
+        [add_material_action.loading]:(state,action)=>{
             state.food_manage.add_material =loading();
         },
-        [add_material.success]:(state,action)=>{
+        [add_material_action.success]:(state,action)=>{
             state.food_manage.add_material =success();
         },
-        [add_material.error]:(state,action)=>{
+        [add_material_action.error]:(state,action)=>{
             state.food_manage.add_material =error();
         },
-        [delete_material.loading]:(state,action)=>{
+        [delete_material_action.loading]:(state,action)=>{
             state.food_manage.delete_material =loading();
         },
-        [delete_material.success]:(state,action)=>{
+        [delete_material_action.success]:(state,action)=>{
             state.food_manage.delete_material =success();
         },
-        [delete_material.error]:(state,action)=>{
+        [delete_material_action.error]:(state,action)=>{
             state.food_manage.delete_material =error();
         },
         [setFoodEdit]:(state,action)=>{

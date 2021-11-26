@@ -21,7 +21,6 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { selectors,update_food,food_management,add_food } from '../redux/slices/Food/FoodSlice';
 import Typography from '@mui/material/Typography';
 import MaterialCardAdd from '../components/FoodItemManagement/MaterialCardAdd';
 import MaterialCardDelete from '../components/FoodItemManagement/MaterialCardDelete';
@@ -40,110 +39,29 @@ import MaterialCardRead from '../components/FoodItemManagement/MaterialCardRead'
 import Carousel from 'react-material-ui-carousel';
 import MaterialListCarousel from '../components/FoodItemManagement/MaterialListCarousel';
 import defaul_food_image from "../assets/images/defaul_food_image.jpg";
+import Comments from '../components/Comments/Comments';
+import { selectors, delete_news_comment_action } from './../redux/slices/News/NewsSlice';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 
-const taglist = [
-    { title: 'Món chay'},
-    { title: 'Món mặn'},
-    { title: 'Món nước'},
-    { title: 'Món Hàn Quốc'},
-    { title: 'Ngày Rằm'},
-    { title: "Món Nhật"},
-    { title: 'Đồ ăn nội địa'},
-];
-const compareTag=(tagA,tagB)=>{
-    if(tagA.TagName===tagB.TagName && tagB.TagID===tagA.TagID){
-        return true;
-    }
-    return false;
-};
-const compareMaterial= (marA,marB)=>{
-    if(marA.MaterialID === marB.MaterialID && marA.MaterialName === marB.MaterialName){
-        return true;
-    }
-    return false;
-}
-const existObject=(obj,objList,func)=>{
-    const filter=objList.filter((ob)=>func(ob,obj));
-    return filter.length >0 ? true: false ;
-};
-
 function NewsInfo(){
     let history= useHistory();
     const dispatch=useDispatch();
-    const food_manage_data= useSelector(selectors.getFoodManagement);
-    const tag_list=food_manage_data.tag_list;
-    const material_list=food_manage_data.material_list;
-    var food_detail;
-    
-    if (food_manage_data.tempFoodID !==""){
-        food_detail=food_manage_data.food_list.filter((food)=>food.FoodID===food_manage_data.tempFoodID)[0];
-    }else{
-        food_detail={
-            FoodID:"",
-            FoodName:"",
-            Picture:"",
-            Price:"",
-            Description:"",
-            Instruct:"",
-            Material:[],
-            Tags:[],
-        }
+    const news_detail=useSelector(selectors.getNewsDetail);
+    const comments=news_detail.Comment;
+    console.log("new detail",news_detail);
+    const deleteComment=(id)=>{
+        dispatch({type:delete_news_comment_action})
     }
+    const updateComment=(comment)=>{
 
-    const [values, setValues] = useState(food_detail);
-    
-    const [addClick,setAddClick]=useState();
-    const [deleteClick,setDeleteClick]=useState();
-    const unchooseMaterial=material_list.filter((mar)=>!existObject(mar,values.Material,compareMaterial));
-    const [unchooseList,setUnchooseList]=useState(unchooseMaterial);
-    const defaultTag=tag_list.filter((tag)=>existObject(tag,values.Tags,compareTag));
-    
-    React.useEffect(()=>{
-        if(typeof addClick !== "undefined"){
-            const newList=[...values.Material,addClick];
-            setValues({...values,Material:newList});
-            setUnchooseList(unchooseList.filter((mar)=>!compareMaterial(mar,addClick,compareMaterial)));
-        }
-        
-    },[addClick]);
-    
-    React.useEffect(()=>{
-        if(typeof deleteClick !== "undefined"){
-            const newList=[...values.Material,addClick];
-            setValues({...values,Material:values.Material.filter((mar)=>!compareMaterial(mar,deleteClick,compareMaterial))});
-            setUnchooseList([...unchooseList,deleteClick]);
-        }
-        
-    },[deleteClick]);
-
-    const setImage=(image)=>{
-        setValues({...values,Picture:image});
     }
+    const addComment=(comment)=>{
 
-    const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const handleCreatFood=()=>{
-        if (food_manage_data.tempFoodID !==""){
-            
-            dispatch({type:update_food.loading,payload:values});
-        } else {
-            console.log("init values",values);
-            dispatch({type:add_food.loading,payload:values});
-        }
-        history.push(ROUTING_CONSTANTS.MANAGE_ITEM_LIST);
     }
-
+    
     return (
         <Box sx={{display:`flex`, flexDirection:"column", }}>
             <Grid container xs={12} sx={{bgcolor:"elevation.layer0.main"}}>
@@ -151,14 +69,14 @@ function NewsInfo(){
                     <Box sx={{display:`flex`, flexDirection:"column", bgcolor:"elevation.layer1.main", justifyContent:"center", boxShadow:2}} width={1100}>
                         <Typography variant="h3" gutterBottom component="div" sx={{flexGrow:1, color:"elevation.layer0.contrast", ml:"10px", mt:"10px", fontWeight:"bold"}} align="center">
                             {/* This is title */}
-                            Haaland cùng đồng đội xuống chơi ở Europa League
+                            {news_detail.Title}
                         </Typography>
                         <CardMedia>
                             {/* This is picture */}
                         </CardMedia>
                         <Typography variant="body1" gutterBottom component="div" sx={{flexGrow:1, color:"elevation.layer0.contrast", mx:"20px", mt:"10px", fontWeight:"bold"}} align="justify">
                             {/* This is description */}
-                            Dortmund hành quân đến Bồ Đào Nha với quyết tâm cao độ. "Die Borussen" phải giành tối thiểu một trận hòa để nuôi hy vọng đi tiếp. Tuy nhiên, thầy trò HLV Marco Rose lại gây thất vọng khi thua đậm 1-3 trước chủ nhà Sporting.
+                            {news_detail.Highlight}
                         </Typography>
                         <Typography variant="body1" paragraph gutterBottom component="div" sx={{flexGrow:1, color:"elevation.layer0.contrast", mx:"20px", mt:"10px"}} align="justify">
                             {/* This is content */}
@@ -167,19 +85,23 @@ function NewsInfo(){
                                     return <p key={key}>{i}</p>;
                                 })
                             } */}
+                            {news_detail.Content.split("\n").map((i, key) => {
+                                    return <p key={key}>{i}</p>;
+                                })}
                         </Typography>
                         <Typography variant="body1" gutterBottom component="div" sx={{flexGrow:1, color:"elevation.layer0.contrast", mx:"20px", mt:"10px", fontStyle:"italic"}} align="right">
                             {/* This is writer */}
-                            Nhật Nguyên
+                            {news_detail.Author}
                         </Typography>
                     </Box>
                 </Grid>
-                <Grid item container xs={12} sx={{justifyContent:"center", py: 5, width:"100%"}}>
+                <Grid item container xs={12} sx={{justifyContent:"center", py: 5, width:"100%"}} direction="column">
                     <Box sx={{display:`flex`, flexDirection:"column", pr:"100px", bgcolor:"elevation.layer0.main", borderRadius:0}} width={1000}>
                         <Typography variant="h4" gutterBottom component="div" sx={{flexGrow:1, color:"red", ml:"10px", mt:"10px"}}>
                             Bình luận
                         </Typography>
                     </Box>
+                    <Comments comments={comments} deleteComment={deleteComment} updateComment={updateComment} addComment={addComment}/>
                 </Grid>
             </Grid>
         </Box>

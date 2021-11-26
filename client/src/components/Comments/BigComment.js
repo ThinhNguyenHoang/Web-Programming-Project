@@ -9,43 +9,67 @@ import SmallComment from "./SmallComment";
 
 function BigComment(props){
     const isAdmin=props.isAdmin;
+    const isLogin=props.isLogin;
     const userAvatar=props.userAvatar;
     const [isEdit,setEdit]=React.useState(false);
     const [isAnswer,setAnswer]=React.useState(false);
     const comment=props.comment;
-    const smallCommentList=comment.smallCommentList;
-    const imageList=comment.imageList;
+    const smallCommentList=comment.Reply;
+    const imageList=comment.ImageList;
+
+    let ansButton;
+    if(isLogin){
+        ansButton= <Button onClick={()=>setAnswer(true)}>Trả lời</Button>;
+    }else{
+        ansButton=(<></>);
+    }
+    const editReply=(reply)=>{
+
+    }
+    const deleteReply=(id)=>{
+
+    }
+    const addReply=(reply)=>{
+
+    }
+
     return (
         <Box sx={{display:"flex",flexDirection:"column"}}>
-            <Box sx={{display:"flex",flexDirection:"row"}}>
-                <Avatar src={comment.userAvatar} alt="avatar"></Avatar>
+            <Box sx={{display:"flex",flexDirection:"column"}}>
+                <Box sx={{display:"flex",flexDirection:"row"}}>
+                    <Avatar src={comment.UserAvatar} alt="avatar"></Avatar>
+                    <Typography small>{comment.UserName}</Typography>
+                </Box>
                 <Box sx={{display:"flex", flexDirection:"column"}}>
                     {
                         isEdit ? (
+                            <Box >
                             <TextField
                                 width="auto"
                                 fullWidth
                                 name="instruction"
                                 multiline
                                 rows={5}
-                                value={comment.content}
+                                defaultValue={comment.Content}
                                 // onChange={}
                                 variant="outlined"
                             />
+                            </>
                         ):
                         (
-                            <Typography paragraph> {comment.content}</Typography>
+                            <Typography paragraph> {comment.Content}</Typography>
                         )
                     }
                     <Box sx={{display:"flex",flexDirection:"row"}}>
                         {imageList.map((imageComment)=><CardMedia component="img" height="150" image={imageComment} alt="Paella dish"/>)}
                     </Box>
                     <Box sx={{display:"flex",flexDirection:"row"}}>
-                        <Button onClick={()=>setAnswer(true)}>Trả lời</Button>
+                        {ansButton}
+                        
                         {isAdmin ? 
                             (<>
                                <Button onClick={()=>setEdit(true)}>Sửa bình luận</Button> 
-                               <Button onClick={()=>console.log("delete comment")}>Xóa bình luận</Button>
+                               <Button onClick={()=>props.deleteComment(comment.CommentID)}>Xóa bình luận</Button>
                             </>
                             ):
                             (
@@ -78,8 +102,14 @@ function BigComment(props){
                     </Box>
                 ):(<></>)
             }
-            <Box sx={{display:"flex",flexDirection:"column",borderRoght:1}}>
-                {smallCommentList.map(()=><SmallComment/>)}
+            <Box sx={{display:"flex",flexDirection:"column",borderLeft:1,ml:8}}>
+                {smallCommentList.map((reply)=><SmallComment 
+                                                    comment={reply} 
+                                                    key={reply.ReplyID} 
+                                                    isAdmin={isAdmin} 
+                                                    deleteReply={deleteReply}
+                                                    editReply={editReply}
+                                                    />)}
             </Box>
         </Box>
     );

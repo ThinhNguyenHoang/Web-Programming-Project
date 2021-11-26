@@ -8,7 +8,7 @@ import fimg from "../../assets/images/foodimg.png";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { red } from '@mui/material/colors';
 import { useTranslation } from 'react-i18next';
-import { add_cart_actions } from '../../redux/slices/Food/FoodSlice';
+import { add_cart_actions } from '../../redux/slices/food/FoodSlice';
 import { useHistory } from 'react-router';
 import { useDispatch  } from 'react-redux';
 import { ROUTING_CONSTANTS } from '../../routes/RouterConfig'; 

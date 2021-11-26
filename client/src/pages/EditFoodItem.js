@@ -21,7 +21,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { selectors,update_food,food_management,add_food } from '../redux/slices/Food/FoodSlice';
+import { selectors,update_food_action,food_management_action,add_food_action } from '../redux/slices/food/FoodSlice';
 import Typography from '@mui/material/Typography';
 import MaterialCardAdd from '../components/FoodItemManagement/MaterialCardAdd';
 import MaterialCardDelete from '../components/FoodItemManagement/MaterialCardDelete';
@@ -131,10 +131,10 @@ function EditFoodItem(){
     const handleCreatFood=()=>{
         if (food_manage_data.tempFoodID !==""){
             
-            dispatch({type:update_food.loading,payload:values});
+            dispatch({type:update_food_action.loading,payload:values});
         } else {
             console.log("init values",values);
-            dispatch({type:add_food.loading,payload:values});
+            dispatch({type:add_food_action.loading,payload:values});
         }
         history.push(ROUTING_CONSTANTS.MANAGE_ITEM_LIST);
     }

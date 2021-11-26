@@ -4,7 +4,7 @@ import {Typography} from "@mui/material";
 import FoodItemCard from "./FoodItemCard";
 import Carousel from "react-material-ui-carousel";
 import FoodGrid from "./FoodGrid";
-import {food_recommendation_actions, selectors} from "../../redux/slices/Food/FoodSlice";
+import {food_recommendation_actions, selectors} from "../../redux/slices/food/FoodSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {array_to_chunks} from "../../utils";
 // ? Food Item Schema

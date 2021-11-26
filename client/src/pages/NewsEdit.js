@@ -21,7 +21,6 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { selectors,update_food,food_management,add_food } from '../redux/slices/Food/FoodSlice';
 import Typography from '@mui/material/Typography';
 import MaterialCardAdd from '../components/FoodItemManagement/MaterialCardAdd';
 import MaterialCardDelete from '../components/FoodItemManagement/MaterialCardDelete';
@@ -36,109 +35,39 @@ import { ThemeProvider } from "@material-ui/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ROUTING_CONSTANTS } from '../routes/RouterConfig';
 import { height } from '@mui/system';
+import { add_news_action, selectors } from '../redux/slices/News/NewsSlice';
+import { update_news_action } from './../redux/slices/News/NewsSlice';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const taglist = [
-    { title: 'Món chay'},
-    { title: 'Món mặn'},
-    { title: 'Món nước'},
-    { title: 'Món Hàn Quốc'},
-    { title: 'Ngày Rằm'},
-    { title: "Món Nhật"},
-    { title: 'Đồ ăn nội địa'},
-];
-const compareTag=(tagA,tagB)=>{
-    if(tagA.TagName===tagB.TagName && tagB.TagID===tagA.TagID){
-        return true;
-    }
-    return false;
-};
-const compareMaterial= (marA,marB)=>{
-    if(marA.MaterialID === marB.MaterialID && marA.MaterialName === marB.MaterialName){
-        return true;
-    }
-    return false;
-}
-const existObject=(obj,objList,func)=>{
-    const filter=objList.filter((ob)=>func(ob,obj));
-    return filter.length >0 ? true: false ;
-};
+
 
 function NewsEdit(){
     let history= useHistory();
     const dispatch=useDispatch();
-    const food_manage_data= useSelector(selectors.getFoodManagement);
-    const tag_list=food_manage_data.tag_list;
-    const material_list=food_manage_data.material_list;
-    var food_detail;
-    
-    if (food_manage_data.tempFoodID !==""){
-        food_detail=food_manage_data.food_list.filter((food)=>food.FoodID===food_manage_data.tempFoodID)[0];
-    }else{
-        food_detail={
-            FoodID:"",
-            FoodName:"",
-            Picture:"",
-            Price:"",
-            Description:"",
-            Instruct:"",
-            Material:[],
-            Tags:[],
+    const news_detail=useSelector(selectors.getNewsDetail);
+    const [title,setTitle]=useState(news_detail.Title);
+    const [highlight,setHighlight]=useState(news_detail.Highlight);
+    const [picture,setPicture]=useState(news_detail.Picture);
+    const [content,setContent]=useState(news_detail.Content);
+    const [author,setAuthor]=useState(news_detail.Author);
+    const handleCreatNews= ()=>{
+        const news={
+            NewsID:news_detail.NewsID,
+            Title:title,
+            Highlight:highlight,
+            Picture:picture,
+            Content:content,
+            Author:author
         }
+        if(news_detail.NewsID!=""){
+            dispatch({type:update_news_action.loading,payload:news});
+        }else{
+            dispatch({type:add_news_action.loading,payload:news});
+        }
+        history.push(ROUTING_CONSTANTS.NEWS)
     }
-
-    const [values, setValues] = useState(food_detail);
-    
-    const [addClick,setAddClick]=useState();
-    const [deleteClick,setDeleteClick]=useState();
-    const unchooseMaterial=material_list.filter((mar)=>!existObject(mar,values.Material,compareMaterial));
-    const [unchooseList,setUnchooseList]=useState(unchooseMaterial);
-    const defaultTag=tag_list.filter((tag)=>existObject(tag,values.Tags,compareTag));
-    
-    React.useEffect(()=>{
-        if(typeof addClick !== "undefined"){
-            const newList=[...values.Material,addClick];
-            setValues({...values,Material:newList});
-            setUnchooseList(unchooseList.filter((mar)=>!compareMaterial(mar,addClick,compareMaterial)));
-        }
-        
-    },[addClick]);
-    
-    React.useEffect(()=>{
-        if(typeof deleteClick !== "undefined"){
-            const newList=[...values.Material,addClick];
-            setValues({...values,Material:values.Material.filter((mar)=>!compareMaterial(mar,deleteClick,compareMaterial))});
-            setUnchooseList([...unchooseList,deleteClick]);
-        }
-        
-    },[deleteClick]);
-
-    const setImage=(image)=>{
-        setValues({...values,Picture:image});
-    }
-
-    const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const handleCreatFood=()=>{
-        if (food_manage_data.tempFoodID !==""){
-            
-            dispatch({type:update_food.loading,payload:values});
-        } else {
-            console.log("init values",values);
-            dispatch({type:add_food.loading,payload:values});
-        }
-        history.push(ROUTING_CONSTANTS.MANAGE_ITEM_LIST);
-    }
-
     return (
         <Box>
             <Grid container xs={12} sx={{bgcolor:"elevation.layer0.main"}}>
@@ -149,7 +78,7 @@ function NewsEdit(){
                         </Typography>
                         <Box sx={{display:`flex`, flexDirection:"row", flexWrap:"wrap", alignContent:"center"}}>
                             <Box sx={{bgcolor:"elevation.layer3.main"}}>
-                                <ReactFirebaseFileUpload2 setImageURL={setImage} picture={values.Picture}/>
+                                <ReactFirebaseFileUpload2 setImageURL={setPicture} picture={picture}/>
                             </Box>
                             <Box maxWidth="100ch" >
                                 <form autoComplete="off">
@@ -162,8 +91,8 @@ function NewsEdit(){
                                                         label="Tiêu đề"
                                                         name="title"
                                                         required
-                                                        value='Haaland cùng đồng đội xuống chơi ở Europa League'
-                                                        // onChange={(e)=>setValues({...values,FoodName:e.target.value})}
+                                                        defaultValue={title}
+                                                        onChange={(e)=>setTitle(e.target.value)}
                                                         variant="outlined"
                                                     />
                                                 </Grid>
@@ -174,8 +103,8 @@ function NewsEdit(){
                                                         name="description"
                                                         multiline
                                                         rows={8}
-                                                        value='Dortmund hành quân đến Bồ Đào Nha với quyết tâm cao độ. "Die Borussen" phải giành tối thiểu một trận hòa để nuôi hy vọng đi tiếp. Tuy nhiên, thầy trò HLV Marco Rose lại gây thất vọng khi thua đậm 1-3 trước chủ nhà Sporting.'
-                                                        // onChange={(e)=>setValues({...values,Description:e.target.value})}
+                                                        defaultValue={highlight}
+                                                        onChange={(e)=>setHighlight(e.target.value)}
                                                         variant="outlined"
                                                     />
                                                 </Grid>
@@ -184,8 +113,8 @@ function NewsEdit(){
                                                         fullWidth
                                                         label="Tác giả"
                                                         name="writer"
-                                                        value='Nhật Nguyễn'
-                                                        // onChange={(e)=>setValues({...values,Description:e.target.value})}
+                                                        defaultValue={author}
+                                                        onChange={(e)=>setAuthor(e.target.value)}
                                                         variant="outlined"
                                                         required
                                                     />
@@ -211,14 +140,14 @@ function NewsEdit(){
                             name="content"
                             multiline
                             rows={20}
-                            // defaultValue={values.Instruct}
-                            // onChange={(e)=>setValues({...values,Instruct:e.target.value})}
+                            defaultValue={content}
+                            onChange={(e)=>setContent(e.target.value)}
                             variant="outlined"
                             required
                         />
                         <Box sx={{display:`flex`, flexDirection:"row", alignSelf:"flex-end"}}>
-                            <Button sx={{width:"fit-content", mt:"20px", mr:"10px"}} variant="contained" onClick={()=>history.push(ROUTING_CONSTANTS.MANAGE_ITEM_LIST)}>HỦY BỎ</Button>
-                            <Button sx={{width:"fit-content", mt:"20px"}} variant="contained" onClick={()=>handleCreatFood()}>HOÀN TẤT</Button>
+                            <Button sx={{width:"fit-content", mt:"20px", mr:"10px"}} variant="contained" onClick={()=>history.push(ROUTING_CONSTANTS.NEWS)}>HỦY BỎ</Button>
+                            <Button sx={{width:"fit-content", mt:"20px"}} variant="contained" onClick={()=>handleCreatNews()}>HOÀN TẤT</Button>
                         </Box>
                     </Box>
                 </Grid>

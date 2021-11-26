@@ -18,6 +18,7 @@ import FoodDetails from "../pages/FoodDetails";
 import NewsInfo from "../pages/NewsInfo";
 import NewsEdit from "../pages/NewsEdit";
 
+
 const baseUrl = process.env.FAKE_SERVER_HOST;
 export const ROUTING_CONSTANTS = {
     ROOT: "/",
@@ -40,7 +41,9 @@ export const ROUTING_CONSTANTS = {
     ORDER: "/orders",
     TESTING: "/test",
     EDITFOOD:"/editfood",
-    PAYMENT:"/payment"
+    PAYMENT:"/payment",
+    EDITNEWS:"/editnews",
+    NEWSINFO:"/newsinfo",
 }
 
 const generateTabLinkItem = (label_name, nav_to, require_auth) => {
@@ -129,16 +132,13 @@ export const RouterConfig = () => {
                     <HomePage/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.LOGIN}>
-                    {/* <Login/> */}
-                    <NewsInfo/>
+                    <Login/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.REGISTER}>
-                    {/* <Register/> */}
-                    <NewsEdit/>
+                    <Register/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.ABOUT_US}>
-                    <FoodItemManagement/>
-                    {/* <AboutUs/> */}
+                    <AboutUs/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.NEWS}>
                     <News/>
@@ -168,11 +168,16 @@ export const RouterConfig = () => {
                     <FoodItemManagement/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.EDITFOOD}>
-                    {/* <EditFoodItem/> */}
-                    <FoodDetails/>
+                    <EditFoodItem/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.PAYMENT}>
                     <PaymentPage></PaymentPage>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.EDITNEWS}>
+                    <NewsEdit/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.NEWSINFO}>
+                    <NewsInfo/>
                 </Route>
             </Switch>
         </WithHeader>

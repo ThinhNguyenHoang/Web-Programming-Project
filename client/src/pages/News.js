@@ -7,11 +7,14 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton } from '@mui/material';
-import { get_news_actions,selectors } from '../redux/slices/Food/FoodSlice'
 import { useEffect } from 'react';
 import NewsCard from '../components/News/newscard';
 import NewsCarousel from '../components/News/NewsCarousel';
 import Divider from '@mui/material/Divider';
+import { get_news_list_action,selectors } from '../redux/slices/News/NewsSlice';
+
+import { selectors as Auth} from './../redux/slices/auth/AuthSlice';
+
 
 const fake_news = {
     title: "Sách góp phần phát huy trí tuệ, phẩm chất con người Việt Nam",
@@ -20,6 +23,15 @@ const fake_news = {
 }
 
 function News (){
+    const dispatch = useDispatch();
+    useEffect(()=>{
+        dispatch({type:get_news_list_action.loading,paload:""});
+    },[]);
+    const news_list= useSelector(selectors.getNewsList);
+    const isAdmin=useSelector(Auth.getUserRole)==="ADMIN";
+
+
+
     return (
         <Box sx={{display: `flex`, flexDirection: "column", flexWrap:"wrap"}} justifySelf="center">
             <Grid container xs={12} sx={{bgcolor:"elevation.layer0.main"}}>
@@ -38,7 +50,7 @@ function News (){
                         <Typography variant="h4" gutterBottom component="div" sx={{fontWeight:"bold",color:"red"}}>
                             Tin chính
                         </Typography>
-                        {[1,2,3,4,5,6,7,8].map(idx=> <NewsCard key={idx} news={fake_news}/>)}
+                        {news_list.map(news=> <NewsCard key={news.NewsID} news={news} isAdmin={isAdmin}/>)}
                     </Box>
                 </Grid>
             </Grid>

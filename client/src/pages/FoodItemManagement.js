@@ -1,6 +1,6 @@
 import { Typography,Box,TableContainer,TableBody,TableRow,TableHead,Table } from '@mui/material';
 import * as React from 'react';
-import { add_material, delete_tag, food_management, selectors ,delete_food,add_tag,setFoodEdit} from '../redux/slices/Food/FoodSlice';
+import { add_material_action, delete_tag_action, food_management_action, selectors ,delete_food_action,add_tag_action,setFoodEdit} from '../redux/slices/food/FoodSlice';
 import Grid from '@mui/material/Grid';
 import { useDispatch,useSelector } from 'react-redux';
 import { chainPropTypes } from '@mui/utils';
@@ -55,7 +55,7 @@ function FoodItemManagement(){
     let history = useHistory();
 
     React.useEffect(()=>{
-        dispatch({type:food_management.loading,payload:""});
+        dispatch({type:food_management_action.loading,payload:""});
     },[]);
 
     const dispatch = useDispatch();
@@ -63,7 +63,7 @@ function FoodItemManagement(){
     const food_list=food_manageData.food_list;
     const tag_list=food_manageData.tag_list;
     const material_list=food_manageData.material_list;
-    console.log("food_list",food_list);
+    console.log("food data",food_manageData);
     
     const foodMaxPage=food_list.length % 10===0 ? food_list.length/10 : Math.floor(food_list.length/10)+1;
     const [foodCurrPage,setFoodPage]=React.useState(1);
@@ -86,7 +86,7 @@ function FoodItemManagement(){
         setOpen(false);
     };
     const handleCreate=()=>{
-        dispatch({type:add_material.loading,payload:{MaterialName:material_name,Picture:material_img}});
+        dispatch({type:add_material_action.loading,payload:{MaterialName:material_name,Picture:material_img}});
         setOpen(false);
     }
 
@@ -98,7 +98,7 @@ function FoodItemManagement(){
         setOpenTag(false);
     }
     const handleCreateTag=()=>{
-        dispatch({type:add_tag.loading,payload:{TagName:tag_name}});
+        dispatch({type:add_tag_action.loading,payload:{TagName:tag_name}});
         setOpenTag(false);
     }
 
@@ -151,7 +151,7 @@ function FoodItemManagement(){
                                                 history.push(ROUTING_CONSTANTS.EDITFOOD);}}>
                                                 <EditIcon/>
                                             </IconButton>
-                                            <IconButton aria-label="delete " onClick={()=>dispatch({type:delete_food.loading,payload:food_list[idx-1].FoodID})}>
+                                            <IconButton aria-label="delete " onClick={()=>dispatch({type:delete_food_action.loading,payload:food_list[idx-1].FoodID})}>
                                                 <DeleteIcon/>
                                             </IconButton>
                                         </StyledTableCell>
@@ -196,7 +196,7 @@ function FoodItemManagement(){
                     {tag_list.map((tag)=> (
                         <Grid item >
                             <Box sx={{display:"flex", alignContent:"center",height:"100%"}}>
-                                <Chip color="secondary" label={tag.TagName} variant="filled" onDelete={()=>dispatch({type:delete_tag.loading,payload:tag.TagID})}sx={{alignSelf:"center"}} />
+                                <Chip color="secondary" label={tag.TagName} variant="filled" onDelete={()=>dispatch({type:delete_tag_action.loading,payload:tag.TagID})}sx={{alignSelf:"center"}} />
                             </Box>
                         </Grid>
                     ))}
