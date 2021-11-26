@@ -2,7 +2,6 @@
 
 namespace src\combo\controller;
 
-use src\combo\dto\ComboRegisterRequest;
 use src\combo\service\ComboService;
 use src\common\base\BaseController;
 use src\common\base\RequestHandler;

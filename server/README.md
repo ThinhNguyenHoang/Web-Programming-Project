@@ -286,21 +286,20 @@ TRANSACTION - Các cột không có trong này thì bỏ trong MYSQL (Bỏ statu
                 "time": "",
                 "description": "",
                 "amount":"",
-                "orderID":"",
+                "order_id":"",
                 Nếu là manager thì trả thêm: 
-                "userID":"",
-                "userName":"",
+                "user_id":"",
+                "userName":""
                 },
                 {
                 "id": "",
                 "time": "",
                 "description": "",
                 "amount":"",
-                "orderID":"",
-                "userID":"",
+                "order_id":"",
                 Nếu là manager thì trả thêm: 
-                "userID":"",
-                "userName":"",
+                "user_id":"",
+                "userName":""
                 }
             ]
         }

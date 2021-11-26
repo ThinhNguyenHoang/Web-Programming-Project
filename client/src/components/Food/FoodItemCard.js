@@ -6,23 +6,16 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import {generateStatus} from "../../utils/reduxGenerate";
 import default_food_image from "../../assets/images/defaul_food_image.jpg";
-import {Button} from "@mui/material";
-import {useState} from "react";
 import {ThemedOutlineButton} from "../Buttons/ThemedButton/ThemedButton";
-import Box from "@mui/material/Box";
-import {ThemeContext} from "../../theme";
+
 import {useDispatch, useSelector} from "react-redux";
 import {add_to_wish_list_actions, remove_from_wish_list_actions, selectors} from "../../redux/slices/food/FoodSlice";
+
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;

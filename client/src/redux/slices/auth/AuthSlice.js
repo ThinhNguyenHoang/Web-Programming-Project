@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { error, generateSagaLifecycleNames, generateStatus, loading, success } from "../../../utils/reduxGenerate";
-import {useSelector} from "react-redux";
-import userDefaultAvatar from "../../../assets/images/user_default.jpg"
-import {get_news_actions} from "../food/FoodSlice";
+
 import {ROUTING_CONSTANTS} from "../../../routes/RouterConfig";
 import Toaster from "../../../utils/Toaster/Toaster";
 

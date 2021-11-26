@@ -193,9 +193,8 @@ class RequestHelper
     }
     public static function isAdminPrivilege(): bool
     {
-        $token = self::validate_jwt_token();
-        $payload = self::getTokenPayload();
-        return $payload->role == "ADMIN";
+        $token = self::isLogin();
+        return $token->data->role == "ADMIN";
     }
     public static function getTokenPayload(): object
     {

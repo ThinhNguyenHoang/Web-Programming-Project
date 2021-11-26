@@ -14,7 +14,7 @@ use Exception;
 use src\common\base\Repository;
 use src\common\utils\QueryExecutor;
 use src\common\utils\ResponseHelper;
-use src\tag\message\FoodMessage;
+use src\tag\message\TagMessage;
 use function DeepCopy\deep_copy;
 
 /**
@@ -78,17 +78,6 @@ class TagRepository implements Repository
         }
     }
 
-    public static function insertUserRefTag(int $TagID, int $UserID): \mysqli_result|bool|null
-    {
-        $query = ";";
-        try {
-            return QueryExecutor::executeQuery($query);
-        } catch (Exception $e) {
-            error_log($e->getMessage(), 0);
-            return null;
-        }
-    }
-
     public static function read(int $entityID = null)
     {
         //DO NOTHING HERE
@@ -96,7 +85,7 @@ class TagRepository implements Repository
 
     public static function update(int $entityID = null, object $entity = null)
     {
-        $query = ";";
+        $query = "UPDATE tag set TagName='$entity->TagName' WHERE TagID=$entityID;";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $exception) {
@@ -105,28 +94,33 @@ class TagRepository implements Repository
         return null;
     }
 
-    public static function updateUserRefTag($TagID, $Materials)
+    public static function deleteUserRefTag($TagID)
     {
-        // $delete_makeby_query = ";";
-        // try {
-        //     QueryExecutor::executeQuery($delete_makeby_query);
-        // } catch (Exception $exception) {
-        //     echo $exception->getMessage();
-        // }
+        $delete_user_ref_tag_query = "DELETE FROM user_ref_tag WHERE TagID=$TagID;";
+        try {
+            return QueryExecutor::executeQuery($delete_user_ref_tag_query);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
 
-        // foreach ($Materials as $material) {
-        //     $result = FoodRepository::insertMakeBy($FoodID, $material->MaterialID);
-        //     if (!$result) {
-        //         ResponseHelper::error_server(FoodMessage::getMessages()->updateError);
-        //         die();
-        //     }
-        // }
-        // return true;
+        return null;
+    }
+
+    public static function deleteCategoryTag($TagID)
+    {
+        $delete_category_tag_query = "DELETE FROM category_tag WHERE TagID=$TagID;";
+        try {
+            return QueryExecutor::executeQuery($delete_category_tag_query);
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
+        }
+
+        return null;
     }
 
     public static function delete(int $entityID = null)
     {
-        $query = "DELETE FROM tag WHERE TagID=$entityID;;";
+        $query = "DELETE FROM tag WHERE TagID=$entityID;";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $exception) {
