@@ -1,0 +1,468 @@
+import React, { useEffect, useState } from 'react';
+import { Box, Button, CardActionArea, CardActions, Drawer, ImageList, ImageListItem, Popover } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import { useDispatch, useSelector } from "react-redux";
+import { selectors } from "../../redux/slices/auth/AuthSlice";
+import { getDownloadURL, listAll, ref } from "firebase/storage";
+import { ImageUploader, storage } from "../../utils/UploadFile/FileUploader";
+import Typography from "@mui/material/Typography";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBackspace, faPlus } from "@fortawesome/free-solid-svg-icons";
+import Toaster from "../../utils/Toaster/Toaster";
+import default_account_image from '../../assets/images/default_bank_account_img.png'
+import CardMedia from "@mui/material/CardMedia";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import FoodItemCard from "../Food/FoodItemCard";
+import { Field, Form, Formik } from "formik";
+import * as yup from "yup";
+import { TextField } from "formik-material-ui";
+import { useHistor } from 'react-router';
+import { useTranslation } from 'react-i18next';
+import { add_bank_account_detail_actions, edit_bank_account_detail_actions, remove_bank_account_detail_actions } from '../../redux/slices/payment/PaymentSlice';
+
+const getAccountImageFromAccountType = (type) => {
+    return undefined;
+}
+
+
+export const bank_account_init_list = [{
+    id: "",
+    bank_account_number: "",
+    bank_account_owner: "",
+    bank_account_type: "",
+    balance: 150,
+    valid_start: "",
+    valid_end: "",
+}, {
+    id: "",
+    bank_account_number: "",
+    bank_account_owner: "",
+    bank_account_type: "",
+    balance: 0,
+    valid_start: "",
+    valid_end: "",
+}, {
+    id: "",
+    bank_account_number: "",
+    bank_account_owner: "",
+    bank_account_type: "",
+    balance: 130,
+    valid_start: "",
+    valid_end: "",
+}]
+
+export const BankAccountItem = ({ account_item, additionalStyle }) => {
+    const dispatch = useDispatch();
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const showPopOver = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const closePopOver = () => {
+        setAnchorEl(null);
+    };
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+
+    return (
+        <Card sx={{ maxWidth: 345, ...additionalStyle }}>
+            <CardMedia
+                component="img"
+                height="140"
+                image={getAccountImageFromAccountType(account_item.bank_account_type) || default_account_image}
+                alt="green iguana"
+            />
+            <CardContent>
+                <Typography gutterBottom variant="h5" component="div" color={`primary.main`}>
+                    {account_item.bank_account_number || "No account number info"}
+                </Typography>
+                <Typography variant={`h6`}>
+                    {`Owner: ${account_item.bank_account_owner || "No owner info"}`}
+                </Typography>
+                <Typography variant={`h6`}>
+                    {`Balance: ${account_item.balance || "0000"} K` || "No owner info"}
+                </Typography>
+                <Typography variant={`body2`} body>
+                    {`Valid From: ${account_item.valid_start || "N/A"} To: ${account_item.valid_end || "N/A"}` || "No validity info"}
+                </Typography>
+            </CardContent>
+            <CardActions>
+                {/* // TODO: Detail --> To bank detail page 
+                    // TODO: Remove --> Delete the accoutn  */}
+                <Button onClick={showPopOver}> Add/Remove </Button>
+                <Button onClick={() => {
+                    dispatch({ type: remove_bank_account_detail_actions.loading, payload: account_item.id })
+                }}> Remove </Button>
+
+                <Popover
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={closePopOver}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                >
+                    <Box sx={{
+                        bgcolor: `white`,
+                        borderRadius: 2,
+                        py: 3,
+                        borderColor: `elevation.layer3.contrast`,
+                        border: 2,
+                        color: `black`,
+                        display: `flex`,
+                        flexDirection: `column`,
+                        alignItems: `center`,
+                        justifyContent: `center`
+                    }}>
+                        <Formik
+                            initialValues={{
+
+                            }}
+                            validationSchema={yup.object({
+                                balance: yup
+                                    .number("New balance amount")
+                                    .min(
+                                        0,
+                                        "Balance amount shoud be positive"
+                                    )
+                            })}
+                            // * TODO: Change onSubmit handler to post to authorize api
+                            onSubmit={(values, { setSubmitting }) => {
+                                // setTimeout(() => {
+                                //     setSubmitting(false);
+                                //     alert(JSON.stringify(values, null, 2));
+                                // }, 500);
+                                // onUpdateUser(values, setSubmitting);
+                                const payload = {
+                                    ...account_item,
+                                    balance:values,
+                                }
+                                dispatch({type:edit_bank_account_detail_actions.loading,payload});
+                            }}
+                        >
+                            {({ submitForm, isSubmitting, isValid }) => (
+                                <Form>
+                                    <Box
+                                        display={`flex`}
+                                        flexDirection={`column`}
+                                        justifyContent={`center`}
+                                        alignItems={`center`}
+                                    >
+                                        <Box sx={{ my: 1, px: 3, }}>
+                                            <Field component={TextField} type="text" label="Bank Account Number"
+                                                name="bank_account_number"
+                                                variant={`outlined`} />
+                                        </Box>
+                                    </Box>
+                                    <Box sx={{
+                                        display: `flex`,
+                                        flexDirection: "row",
+                                        justifyContent: "center",
+                                        m: 2,
+                                        mx: 4,
+                                        mb: 3,
+                                        px: 1,
+                                    }}>
+                                        <Box
+                                            sx={{
+                                                m: 1,
+                                            }}
+                                        >
+                                            <Button
+                                                variant={`contained`}
+                                                color={`primary`}
+                                                disabled={isSubmitting || !isValid}
+                                                onClick={submitForm}
+                                            >
+                                                {"Update Bank Balance"}
+                                            </Button>
+                                        </Box>
+                                    </Box>
+                                </Form>
+                            )}
+                        </Formik>
+                    </Box>
+                </Popover>
+            </CardActions>
+        </Card >
+    );
+}
+
+export const AccountGrid = ({ bank_account_list, callback }) => {
+    const [chosenAccount, setChosenAccount] = useState(0);
+    return (
+        <Box sx={{ flexGrow: 1, m: 4 }}>
+            {
+                bank_account_list ?
+                    <Grid
+                        container
+                        spacing={{ xs: 2, md: 2 }}
+                        columns={{ xs: 4, sm: 8, md: 12 }}
+                    >
+                        {bank_account_list.map((item, index) => (
+                            <Grid item
+                                xs={2} sm={4} md={4} key={index} onClick={() => {
+                                    setChosenAccount(index);
+                                    if (callback) {
+                                        callback(chosenAccount);
+                                    }
+                                }}>
+                                <BankAccountItem account_item={item} additionalStyle={chosenAccount === index ? {
+                                    border: 4,
+                                    borderColor: `primary.main`
+                                } : {}} />
+                            </Grid>
+                        ))}
+                    </Grid>
+                    : <Typography variant={`h1`} color={`primary.main`}>
+                        You haven't added an account yet
+                    </Typography>
+            }
+        </Box>
+    );
+}
+
+export const AddAccountForm = (callback) => {
+    const { t, i18n } = useTranslation();
+
+    return (
+        <Box sx={{
+            bgcolor: `white`,
+            borderRadius: 2,
+            py: 3,
+            borderColor: `elevation.layer3.contrast`,
+            border: 2,
+            color: `black`,
+            display: `flex`,
+            flexDirection: `column`,
+            alignItems: `center`,
+            justifyContent: `center`
+        }}>
+            <Formik
+                initialValues={{
+
+                }}
+                validationSchema={yup.object({
+                    bank_account_number: yup
+                        .string("Bank Account Number")
+                        .min(
+                            8,
+                            "Valid Bank Number should be a bit longer"
+                        )
+                    ,
+                    bank_account_owner: yup
+                        .string("Bank Account Owner")
+                        .min(
+                            2,
+                            "Valid Bank Owner should be a bit longer"
+                        )
+                    ,
+                    bank_account_type: yup
+                        .string("Bank Account Type")
+                        .min(
+                            2,
+                            "Valid account type should be a bit longer"
+                        )
+                    ,
+                    valid_start: yup
+                        .date()
+                        .min(
+                            new Date().getFullYear() - 200,
+                            "Enter valid end date"
+                        )
+                        .max(
+                            new Date(),
+                            "Please enter valid end date"
+                        )
+                    ,
+                    valid_end: yup
+                        .date()
+                        .min(
+                            new Date().getFullYear() - 200,
+                            "Enter valid end date"
+                        )
+                        .max(
+                            new Date().getFullYear() + 300,
+                            "Please enter valid end date"
+                        )
+                })}
+                // * TODO: Change onSubmit handler to post to authorize api
+                onSubmit={(values, { setSubmitting }) => {
+                    // setTimeout(() => {
+                    //     setSubmitting(false);
+                    //     alert(JSON.stringify(values, null, 2));
+                    // }, 500);
+                    // onUpdateUser(values, setSubmitting);
+                    callback(values, setSubmitting);
+                }}
+            >
+                {({ submitForm, isSubmitting, isValid }) => (
+                    <Form>
+                        <Box
+                            display={`flex`}
+                            flexDirection={`column`}
+                            justifyContent={`center`}
+                            alignItems={`center`}
+                        >
+                            {/*<Box sx={{my: 1, px: 3,}}>*/}
+                            {/*    <Field component={TextField} type="password" label="Password" name="password"*/}
+                            {/*           variant={`outlined`}/>*/}
+                            {/*</Box>*/}
+                            <Box sx={{ my: 1, px: 3, }}>
+                                <Field component={TextField} type="text" label="Bank Account Number"
+                                    name="bank_account_number"
+                                    variant={`outlined`} />
+                            </Box>
+                            <Box sx={{ my: 1, px: 3, }}>
+                                <Field component={TextField} type="text" label="Bank Account Owner" name="bank_account_owner"
+                                    variant={`outlined`} />
+                            </Box>
+                            <Box sx={{ my: 1, px: 3, }}>
+                                <Field component={TextField} type="text" label="Valid Start" name="valid_start"
+                                    variant={`outlined`} />
+                            </Box>
+                            <Box sx={{ my: 1, px: 3, }}>
+                                <Field component={TextField} type="text" label="Valid End" name="valid_end"
+                                    variant={`outlined`} />
+                            </Box>
+                        </Box>{" "}
+                        <Box sx={{
+                            display: `flex`,
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            m: 2,
+                            mx: 4,
+                            mb: 3,
+                            px: 1,
+                        }}>
+                            <Box
+                                sx={{
+                                    m: 1,
+                                }}
+                            >
+                                <Button
+                                    variant={`contained`}
+                                    color={`primary`}
+                                    disabled={isSubmitting || !isValid}
+                                    onClick={submitForm}
+                                >
+                                    {"Create Bank Account"}
+                                </Button>
+                            </Box>
+                        </Box>
+                    </Form>
+                )}
+            </Formik>
+        </Box>
+
+    );
+}
+
+
+
+export const PaymentDrawer = (
+    {
+        trigger, additionalStyle = {}, amount_to_pay = 0
+    }
+) => {
+    const dispatch = useDispatch();
+    const [show, setShow] = useState(false);
+    const [indexChosen, setIndexChosen] = useState(0);
+
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const showPopOver = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const closePopOver = () => {
+        setAnchorEl(null);
+    };
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+
+    // TODO GET THE REAL BANK ACCOUNT LIST AND ADD IT TO THE GRID
+    // const [accountList,setAccountList]  = useState([]);
+    return (
+        <Box sx={{ m: 1, p: 1, display: `flex`, flexDirection: `column` }} xs={12} md={4}
+            justifyContent={`flex-start`} alignItems={`center`}>
+            <Box sx={{
+                py: 3,
+                color: `black`,
+                display: `flex`,
+                flexDirection: `column`,
+                alignItems: `center`,
+                justifyContent: `center`
+            }}>
+                <Box sx={{ ...additionalStyle }} onClick={() => {
+                    setShow(true)
+                }}>
+                    {/*<img src={image_uri ? image_uri :default_user_avatar} alt={`image`}/>*/}
+                    {trigger}
+                </Box>
+                <Drawer sx={{ display: `flex`, flexDirection: `column`, alignItems: `center` }} open={show}
+                    anchor={`bottom`} onClose={() => setShow(false)}>
+                    <Box sx={{
+                        display: `flex`,
+                        flexDirection: `row`,
+                        alignItems: `center`,
+                        justifyContent: `space-between`
+                    }}>
+                        <Typography variant={`h6`} sx={{ m: 3 }}>
+                            {"Your Payment Accounts"}
+                        </Typography>
+                        <Box>
+                            <Button sx={{ mx: 2 }} variant={`contained`} color={`primary`} onClick={showPopOver}>
+                                <Box sx={{ mr: 1 }}>
+                                    <FontAwesomeIcon style={{ color: '#fff' }} icon={faPlus} />
+                                </Box>
+                                Add Payment Account
+                            </Button>
+
+                            <Button sx={{ mx: 2 }} variant={`contained`} color={`primary`} onClick={() => setShow(false)}>
+                                <Box sx={{ mr: 1 }}>
+                                    <FontAwesomeIcon style={{ color: '#fff' }} icon={faBackspace} />
+                                </Box>
+                                CLOSE
+                            </Button>
+                            {/* Popover to add new bank account */}
+                            <Popover
+                                id={id}
+                                open={open}
+                                anchorEl={anchorEl}
+                                onClose={closePopOver}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'left',
+                                }}
+                            >
+                                <AddAccountForm callback={(values, setSubmitting) => {
+                                    console.log("Update profile with values:", values);
+                                    dispatch({
+                                        type: add_bank_account_detail_actions.loading,
+                                        payload: values,
+                                    });
+                                }} />
+                            </Popover>
+
+                        </Box>
+                    </Box>
+                    <AccountGrid bank_account_list={bank_account_init_list}
+                        callback={(index) => setIndexChosen(index)} />
+                    {amount_to_pay && <Typography sx={{ alignSelf: `center`, m: 2 }} variant={`h3`}
+                        color={`${bank_account_init_list[indexChosen].balance >= amount_to_pay ? 'success.main' : 'error.main'}`}>
+                        {bank_account_init_list[indexChosen].balance < amount_to_pay ? "Insufficent Balance To Pay" : "Valid account with enough money"}
+                    </Typography>}
+                </Drawer>
+            </Box>
+        </Box>
+    );
+}
+    ;
+export default PaymentDrawer;

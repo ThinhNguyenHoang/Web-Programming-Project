@@ -1,5 +1,12 @@
 DROP TABLE IF EXISTS VOUCHER; 
-CREATE TABLE VOUCHER (VoucherID BIGINT(8), ExpirationDate DATE, Description TEXT, VoucherName VARCHAR(255), UserID BIGINT(8), PRIMARY KEY(VoucherID));
+CREATE TABLE VOUCHER (
+	VoucherID BIGINT(8) NOT NULL AUTO_INCREMENT,
+    ExpirationDate DATE, 
+    Description TEXT, 
+    VoucherName VARCHAR(255), 
+    UserID BIGINT(8), 
+    PRIMARY KEY(VoucherID)
+);
 INSERT INTO VOUCHER(VoucherID, ExpirationDate, Description, VoucherName, UserID) VALUES (1,'2021-01-01','Voucher description ID 1', 'Weeken Voucher',1);
 INSERT INTO VOUCHER(VoucherID, ExpirationDate, Description, VoucherName, UserID) VALUES (2,'2020-01-01','Voucher description ID 2', 'Wednesday Voucher',1);
 INSERT INTO VOUCHER(VoucherID, ExpirationDate, Description, VoucherName, UserID) VALUES (3,'2020-11-11','Voucher description ID 3', 'Tuesday Voucher',1);
@@ -15,12 +22,26 @@ INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (3,1,2, 1
 INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (3,1,3, 20); 
 
 DROP TABLE IF EXISTS TRANSACTION; 
-CREATE TABLE TRANSACTION (TransactionID BIGINT(8), TimeStamp TIMESTAMP, Description TEXT, PayAmount BIGINT(8), Status VARCHAR(255), Subject VARCHAR(255), PaymentMethod VARCHAR(255), OrderID BIGINT(8), UserID BIGINT(8), PRIMARY KEY (TransactionID)); 
-INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (1,'2021-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000,'Com True','Da tra tien', 'Vi dien tu', 1,1); 
-INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (2,'2018-05-03 00:00:01', 'Tra tien cho nguoi choi', 6000000, 'Hu tieu','Da tra tien', 'Vi dien tu', 1,1); 
-INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (3,'2019-11-01 00:00:01', 'Tra tien cho nguoi choi', 5000000, 'Hu tieu','Da tra tien', 'Vi dien tu', 1,1); 
-INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (4,'2020-11-01 00:00:01', 'Tra tien cho nguoi choi', 4000000, 'Hu tieu','Da tra tien', 'Vi dien tu', 1,1); 
-INSERT INTO TRANSACTION (TransactionID, TimeStamp, Description, PayAmount, Status, Subject, PaymentMethod, OrderID, UserID) VALUES (5,'2022-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000, 'Hu tieu','Da tra tien', 'Vi dien tu', 1,1); 
+CREATE TABLE TRANSACTION (
+	id BIGINT(8) NOT NULL AUTO_INCREMENT, 
+    time TIMESTAMP, 
+    description TEXT, 
+    amount BIGINT(8), 
+    orderID BIGINT(8), 
+    userID BIGINT(8), 
+    PRIMARY KEY (id)
+); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2021-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000, 1,2); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2018-05-03 00:00:01', 'Tra tien cho nguoi choi', 6000000, 1,2); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2019-11-01 00:00:01', 'Tra tien cho nguoi choi', 5000000, 1,2); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2020-11-01 00:00:01', 'Tra tien cho nguoi choi', 4000000, 1,2); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2022-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000, 1,2); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2021-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000, 1,4); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2018-05-03 00:00:01', 'Tra tien cho nguoi choi', 6000000, 1,4); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2019-11-01 00:00:01', 'Tra tien cho nguoi choi', 5000000, 1,4); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2020-11-01 00:00:01', 'Tra tien cho nguoi choi', 4000000, 1,4); 
+INSERT INTO TRANSACTION (time, description, amount, orderID, userID) VALUES ('2022-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000, 1,4); 
+
 
 DROP TABLE IF EXISTS USER; 
 DROP TABLE IF EXISTS USER_PROFILE; 
@@ -37,12 +58,10 @@ ALTER TABLE user_profile drop UserName;
 -- User Profile: UserID --> UserAccounservicet: UserId 
 DROP TABLE IF EXISTS USER_ACCOUNT; 
 CREATE TABLE USER_ACCOUNT(Id BIGINT(8) NOT NULL auto_increment, Username VARCHAR(255), Password Varchar(255),Role Varchar(255), PRIMARY KEY (Id)); 
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('thinhhaha13','asdjklsadfjlksadf','CUSTOMER');
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('asdfasfdasdf','asdjklsadfjlksadf','CUSTOMER');
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('asdasdasdasd','asdjklsadfjlksadf','CUSTOMER');
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('zxczxczxc','asdjklsadfjlksadf','CUSTOMER');
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('qweqweqwe','asdjklsadfjlksadf','CUSTOMER');
-INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('xasxas','asdjklsadfjlksadf','ADMIN');
+INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('zxcvzxcvzxcv','$2y$10$MXYHr/kmXibWR9mNtKMcIe0FQO9DOHyFXnrQFj/wBk7K331v60QTi','ADMIN');
+INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('asdfasdfasdf','$2y$10$nW6P2JVt2VYNYvXoZ5Vzp.pTChzMgOifg1Si3pyFymdgdtpp9AUMO','CUSTOMER');
+INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('admin','$2y$10$wM.ULD391HU3QTHVcacpt.MyplIDjGIb3tuWi6A4ZTf/dUwp4QRdC','ADMIN');
+INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('customer','$2y$10$vSETY0yhweJ9Mo6SkTHIF.3x0fLwjmyrefl9.1WF0sv3M2js2MPA2','CUSTOMER');
 
 -- DROP TABLE IF EXISTS USER_OWNS_BANK_ACCOUNT; 
 -- CREATE TABLE USER_OWNS_BANK_ACCOUNT(Id BIGINT(8) NOT NULL auto_increment, UserID BIGINT(8), BankAccountID BIGINT(8), PRIMARY KEY (Id)); 
@@ -53,11 +72,21 @@ INSERT INTO USER_ACCOUNT(Username,Password,Role) VALUES('xasxas','asdjklsadfjlks
 -- INSERT INTO USER_OWNS_BANK_ACCOUNT(UserID,BankAccountID) VALUES(3,7);
 
 DROP TABLE IF EXISTS BANK_ACCOUNT; 
-CREATE TABLE BANK_ACCOUNT(Id BIGINT(8) NOT NULL auto_increment, UserID BIGINT(8), BankAccountNumber VARCHAR(256), AccountOwner VARCHAR(256),BankAccountType VARCHAR(256), Balance VARCHAR(256), ValidStart VARCHAR(256),  ValidEnd VARCHAR(256),PRIMARY KEY (Id)); 
-INSERT INTO BANK_ACCOUNT(UserID,BankAccountNumber, AccountOwner, BankAccountType,Balance, ValidStart, ValidEnd) VALUES(1,'900119775222544','Nguyen Hoang THinh','OCB','150000','2000-01-01','2025-10-01');
-INSERT INTO BANK_ACCOUNT(UserID,BankAccountNumber, AccountOwner, BankAccountType,Balance, ValidStart, ValidEnd) VALUES(2,'900119771114','Thinh Nguyen Hoang','Vietcombank','2250000','2000-01-01','2025-10-01');
-INSERT INTO BANK_ACCOUNT(UserID,BankAccountNumber, AccountOwner, BankAccountType,Balance, ValidStart, ValidEnd) VALUES(3,'900148974454','Hoang THinh Nguyen','BIDV','150000','112000-01-01','2025-10-01');
-INSERT INTO BANK_ACCOUNT(UserID,BankAccountNumber, AccountOwner, BankAccountType,Balance, ValidStart, ValidEnd) VALUES(4,'80119775222544','Thinh Thinh Thinh','Algribank','1150000','2000-01-01','2025-10-01');
+CREATE TABLE BANK_ACCOUNT(
+	id BIGINT(8) NOT NULL auto_increment,
+    user_id BIGINT(8), 
+    bank_account_number VARCHAR(256), 
+    bank_account_owner VARCHAR(256),
+    bank_account_type VARCHAR(256), 
+    balance float, 
+    valid_start DATE,
+    valid_end DATE,
+    PRIMARY KEY (Id)
+); 
+INSERT INTO BANK_ACCOUNT(user_id,bank_account_number, bank_account_owner, bank_account_type, balance, valid_start, valid_end) VALUES(1,'900119775222544','Nguyen Hoang THinh','OCB','150000','2000-01-01','2025-10-01');
+INSERT INTO BANK_ACCOUNT(user_id,bank_account_number, bank_account_owner, bank_account_type, balance, valid_start, valid_end) VALUES(2,'900119771114','Thinh Nguyen Hoang','Vietcombank','2250000','2000-01-01','2025-10-01');
+INSERT INTO BANK_ACCOUNT(user_id,bank_account_number, bank_account_owner, bank_account_type, balance, valid_start, valid_end) VALUES(3,'900148974454','Hoang THinh Nguyen','BIDV','150000','2000-01-01','2025-10-01');
+INSERT INTO BANK_ACCOUNT(user_id,bank_account_number, bank_account_owner, bank_account_type, balance, valid_start, valid_end) VALUES(4,'80119775222544','Thinh Thinh Thinh','Algribank','1150000','2000-01-01','2025-10-01');
 
 /*
 DROP TABLE IF EXISTS cart; 
@@ -287,12 +316,17 @@ DROP TABLE IF EXISTS category_tag;
 CREATE TABLE category_tag (
 	TagID BIGINT(8) NOT NULL,
 <<<<<<< HEAD
+<<<<<<< HEAD
     FoodID BIGINT(8),
     ComboID BIGINT(8),
 =======
     FoodID BIGINT(8) NOT NULL,
     ComboID BIGINT(8) ,
 >>>>>>> test3
+=======
+    FoodID BIGINT(8),
+    ComboID BIGINT(8),
+>>>>>>> 21755423fb19812f05f8726603019f6b79559dd3
     PRIMARY KEY (TagID, FoodID, ComboID)
 );
 
@@ -316,3 +350,34 @@ INSERT INTO category_tag VALUES (2,0,4);
 INSERT INTO category_tag VALUES (3,0,4);
 INSERT INTO category_tag VALUES (4,0,5);
 INSERT INTO category_tag VALUES (5,0,5);
+
+
+DROP TABLE IF EXISTS wish_list;
+CREATE TABLE wish_list (
+    WishListID BIGINT(8) NOT NULL AUTO_INCREMENT,
+    UserID BIGINT(8) NOT NULL,
+    ComboID BIGINT(8),
+    FoodID BIGINT(8),
+    PRIMARY KEY (UserID, FoodID, ComboID)
+);
+
+INSERT INTO wish_list VALUES (7,1,0);
+INSERT INTO wish_list VALUES (7,2,0);
+INSERT INTO wish_list VALUES (7,3,0);
+INSERT INTO wish_list VALUES (7,4,0);
+INSERT INTO wish_list VALUES (7,5,0);
+INSERT INTO wish_list VALUES (8,1,0);
+INSERT INTO wish_list VALUES (8,2,0);
+INSERT INTO wish_list VALUES (8,3,0);
+INSERT INTO wish_list VALUES (8,4,0);
+INSERT INTO wish_list VALUES (7,0,1);
+INSERT INTO wish_list VALUES (7,0,2);
+INSERT INTO wish_list VALUES (7,0,3);
+INSERT INTO wish_list VALUES (7,0,4);
+INSERT INTO wish_list VALUES (7,0,5);
+INSERT INTO wish_list VALUES (8,0,1);
+INSERT INTO wish_list VALUES (8,0,2);
+INSERT INTO wish_list VALUES (8,0,3);
+INSERT INTO wish_list VALUES (8,0,4);
+INSERT INTO wish_list VALUES (8,0,5);
+

@@ -20,9 +20,9 @@ class VoucherController extends BaseController implements RequestHandler
         $method = strtolower(RequestHelper::getRequestMethod());
         error_log("Voucher controller::METHOD::" . $method);
         $relative_path = RequestHelper::get_ith_path_item(1);
-        $token = RequestHelper::validate_jwt_token();
         switch ($method) {
             case "get":
+                $token = RequestHelper::validate_jwt_token();
                 if ($relative_path == null) {
                     error_log("VOUCHER_CONTROLLER::GET VOUCHER ENDPOINT::" . $relative_path);
                     VoucherService::getVoucherList();
@@ -34,6 +34,7 @@ class VoucherController extends BaseController implements RequestHandler
                 }
                 break;
             case "post":
+                $token = RequestHelper::validate_jwt_token();
                 if ($relative_path == null) {
                     error_log("VOUCHER_CONTROLLER::ADD VOUCHER ENDPOINT::" . $relative_path);
                     VoucherService::addVoucher();
@@ -42,6 +43,7 @@ class VoucherController extends BaseController implements RequestHandler
                 }
                 break;
             case "put":
+                $token = RequestHelper::validate_jwt_token();
                 if (is_numeric($relative_path)) {
                     error_log("VOUCHER_CONTROLLER::UPDATE VOUCHER ENDPOINT::" . $relative_path);
                     VoucherService::updateVoucher($relative_path);
@@ -50,6 +52,7 @@ class VoucherController extends BaseController implements RequestHandler
                 }
                 break;
             case "delete":
+                $token = RequestHelper::validate_jwt_token();
                 if (is_numeric($relative_path)) {
                     error_log("VOUCHER_CONTROLLER::DELETE VOUCHER ENDPOINT::" . $relative_path);
                     VoucherService::deleteVoucher($relative_path);

@@ -22,7 +22,7 @@ import {ThemedOutlineButton} from "../Buttons/ThemedButton/ThemedButton";
 import Box from "@mui/material/Box";
 import {ThemeContext} from "../../theme";
 import {useDispatch} from "react-redux";
-import {add_to_wish_list_actions, remove_from_wish_list_actions} from "../../redux/slices/food/FoodSlice";
+import {add_to_wish_list_actions, remove_from_wish_list_actions} from "../../redux/slices/Food/FoodSlice";
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -39,7 +39,7 @@ const HeartIconButton = ({isClicked,callback}) =>{
     // TODO: Remember to change the initial state to isClicked
     const [clicked, setClicked] = useState(false);
     return <IconButton aria-label="add to favorites" onClick={() => {
-            setClicked(!clicked);
+            // setClicked(!clicked);
             callback(clicked);
             console.log("CLICKED IS: ",clicked)
         }

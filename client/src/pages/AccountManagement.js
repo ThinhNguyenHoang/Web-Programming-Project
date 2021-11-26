@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Avatar, Box, Button, Drawer, Grid, LinearProgress, Popover} from "@mui/material";
-import {generateStatus} from "../utils/reduxGenerate";
 import {
     change_pass_actions, changeUserAvatar,
     login_actions,
@@ -9,7 +8,6 @@ import {
 } from "../redux/slices/auth/AuthSlice";
 import {useDispatch, useSelector} from "react-redux";
 import Typography from "@mui/material/Typography";
-import {deepOrange} from "@mui/material/colors";
 import default_user_avatar from '../assets/images/user_default.jpg'
 import {Field, Form, Formik} from "formik";
 import * as yup from "yup";
@@ -17,24 +15,9 @@ import {base_keys} from "../locales/constants";
 import {TextField} from "formik-material-ui";
 import {useHistory} from "react-router-dom";
 import {useTranslation} from "react-i18next";
-import MyImageMasonry from "../components/ImageMasonry/MyImageMasonry";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faPlus, faBackspace} from '@fortawesome/free-solid-svg-icons'
-import {THEME_CONSTANTS} from "../theme/constants";
-import FileUploader, {ImageUploader} from "../utils/UploadFile/FileUploader";
 import ImageDrawerUpdater from "../components/ImageDrawerUpdater/ImageDrawerUpdater";
+import PaymentDrawer, {AccountGrid, bank_account_init_list} from "../components/Payment/PaymentDrawer";
 
-//
-// const ImageChooserDrawer = () => {
-//     const [show,setShow] = useState(false);
-//     return (
-//         <Box onClick={()=> setShow(false)}>
-//             <Drawer open={show} onClose={toggleDrawer(anchor,true)}>
-//
-//             </Drawer>
-//         </Box>
-//     );
-// }
 
 const AccountManagement = () => {
     let history = useHistory();
@@ -338,7 +321,7 @@ const AccountManagement = () => {
             </Grid>
 
 
-            <Grid container sx={{bgcolor: `elevation.layer3.main`, m: 1, p: 2, width: `50%`, borderRadius: 2}}
+            <Grid container sx={{bgcolor: `elevation.layer3.main`, m: 1, p: 2, borderRadius: 2}}
                   justifyContent="center">
                 <Grid item sx={{display: `flex`, alignItems: `center`, justifyContent: `center`}} xs={12}>
                     <Typography sx={{
@@ -349,33 +332,14 @@ const AccountManagement = () => {
                             xs: 20
                         }, color: `primary.main`
                     }} p={1} variant={`h3`} mt={1}>
-                        My Balance Account
+                        My Balance Accounts
                     </Typography>
                 </Grid>
                 <Grid item sx={{m: 1, p: 1, display: `flex`, flexDirection: `column`}} xs={12} md={4}
                       justifyContent={`flex-start`} alignItems={`center`}>
                     {/* TODO: GET LIST OF BANK ACCOUNTS AND RENDER HERE*/}
-                    <Box sx={{
-                        bgcolor: `white`,
-                        borderRadius: 2,
-                        py: 3,
-                        borderColor: `elevation.layer3.contrast`,
-                        border: 2,
-                        color: `black`,
-                        display: `flex`,
-                        flexDirection: `column`,
-                        alignItems: `center`,
-                        justifyContent: `center`
-                    }}>
-                        <Avatar sx={{width: 100, height: 100}}
-                                src={user_profile.avatar ? user_profile.avatar : default_user_avatar}
-                                alt={`User image`}>
-                            {user_profile.username ? user_profile.username : "A"}
-                        </Avatar>
-                        <Typography variant={`h5`} sx={{m: 3}}>
-                            {user_profile.username ? user_profile.username : "Guess"}
-                        </Typography>
-                    </Box>
+                        <AccountGrid bank_account_list={bank_account_init_list}/>
+                        <PaymentDrawer trigger={<Button variant={`contained`} color={`primary`}>Add New Account</Button>}/>
                 </Grid>
             </Grid>
         </Grid>

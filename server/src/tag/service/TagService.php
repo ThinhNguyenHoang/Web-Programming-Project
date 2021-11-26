@@ -123,8 +123,12 @@ class TagService
         // delete tag
         $result = TagRepository::delete($TagID);
         if ($result) {
-            ResponseHelper::success(TagMessage::getMessages()->deleteSuccess, $tag_found);
-            return;
+            $user_ref_tag_result = TagRepository::deleteUserRefTag($TagID);
+            $category_tag_result = TagRepository::deleteCategoryTag($TagID);
+            if ($user_ref_tag_result && $category_tag_result) {
+                ResponseHelper::success(TagMessage::getMessages()->deleteSuccess, $tag_found);
+                return;
+            }
         }
         ResponseHelper::error_server(TagMessage::getMessages()->deleteError);
     }

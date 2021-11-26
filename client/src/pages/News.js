@@ -7,7 +7,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton } from '@mui/material';
-import { get_news_actions,selectors } from '../redux/slices/food/FoodSlice'
+import { get_news_actions,selectors } from '../redux/slices/Food/FoodSlice'
 import { useEffect } from 'react';
 import NewsCard from '../components/News/newscard';
 import NewsCarousel from '../components/News/NewsCarousel';

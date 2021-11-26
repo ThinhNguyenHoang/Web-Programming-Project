@@ -1,6 +1,6 @@
 import { Typography,Box,TableContainer,TableBody,TableRow,TableHead,Table } from '@mui/material';
 import * as React from 'react';
-import { add_material, delete_tag, food_management, selectors ,delete_food,add_tag,setFoodEdit} from '../redux/slices/food/FoodSlice';
+import { add_material, delete_tag, food_management, selectors ,delete_food,add_tag,setFoodEdit} from '../redux/slices/Food/FoodSlice';
 import Grid from '@mui/material/Grid';
 import { useDispatch,useSelector } from 'react-redux';
 import { chainPropTypes } from '@mui/utils';

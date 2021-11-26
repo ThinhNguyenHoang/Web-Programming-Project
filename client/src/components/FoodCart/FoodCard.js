@@ -8,7 +8,7 @@ import { Box } from "@mui/system";
 import {base_keys} from '../../locales/constants';
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { increase_quantity_cart,decrease_quantity_cart,delete_food_cart,update_cart_actions,delete_cart_actions } from "../../redux/slices/food/FoodSlice";
+import { increase_quantity_cart,decrease_quantity_cart,delete_food_cart,update_cart_actions,delete_cart_actions } from "../../redux/slices/Food/FoodSlice";
 import img from '../../assets/images/foodimg.png';
 import InfoIcon from '@mui/icons-material/Info';
 

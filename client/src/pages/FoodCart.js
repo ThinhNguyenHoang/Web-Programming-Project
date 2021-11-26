@@ -14,7 +14,7 @@ import VoucherBox from '../components/FoodCart/VoucherBox';
 import TotalBox from '../components/FoodCart/TotalBox';
 import NoteBox from '../components/FoodCart/NoteBox';
 import FoodCard from '../components/FoodCart/FoodCard';
-import {update_cart_actions,selectors,get_cart_actions} from "../redux/slices/food/FoodSlice";
+import {update_cart_actions,selectors,get_cart_actions} from "../redux/slices/Food/FoodSlice";
 
 function FoodCart() {
   const cart=useSelector(selectors.getCart);

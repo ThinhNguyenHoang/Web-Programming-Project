@@ -2,24 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import { error, generateSagaLifecycleNames, generateStatus, loading, success } from "../../../utils/reduxGenerate";
 import {useSelector} from "react-redux";
 import userDefaultAvatar from "../../../assets/images/user_default.jpg"
-import {get_news_actions} from "../food/FoodSlice";
+import {get_news_actions} from "../Food/FoodSlice";
 import {ROUTING_CONSTANTS} from "../../../routes/RouterConfig";
 import Toaster from "../../../utils/Toaster/Toaster";
-/*
- * Sample user profile:
- * profile: {
- *   userId:
- *   userName:
- *   fullName:
- *   dateOfBirth:
- *   email:
- *   point:
- *   bankAccountId:
- *   address:
- *   phoneNumber:
- *   avatar
- * }
- */
 
 const initialValue = {
     currentUser: {
@@ -44,10 +29,20 @@ const initialValue = {
             avatar: "",
             role: "",
         },
+    },
+
+    user_list: {
+        status: generateStatus(),
+        data:[]
     }
 }
 
 export const selectors = {
+    getUserList: (state) => state.auth.user_list.data,
+    getUserListSuccess: (state) => state.auth.user_list.status.isSuccess,
+    getUserListLoading: (state) => state.auth.user_list.status.isLoading,
+    getUserListError: (state) => state.auth.user_list.status.isError,
+
     getUserAvatar: (state) => state.auth.currentUser.avatar,
     getUserName: (state) => state.auth.currentUser.profile.username,
     getUserState: (state) => state.auth.currentUser.profile.role,
@@ -75,6 +70,7 @@ export const selectors = {
     getDeleteAccountError: (state) => state.auth.currentUser.delete_account_status.isError,
 }
 
+export const get_user_list_actions = generateSagaLifecycleNames("get_user_list");
 
 export const login_actions = generateSagaLifecycleNames("login");
 export const logout_actions = generateSagaLifecycleNames("logout");
@@ -108,6 +104,18 @@ const authSlice = createSlice({
         }
     },
     extraReducers:{
+        [get_user_list_actions.loading]: (state, action) => {
+            state.user_list.status = loading();
+        },
+        // TODO: Put the list in to the store
+        [get_user_list_actions.success]: (state, action) => {
+            state.user_list.status = success();
+        },
+        [get_user_list_actions.error]: (state, action) => {
+            state.user_list.status = error();
+        },
+
+
         [login_actions.loading]: (state, action) => {
             state.currentUser.login_status = loading();
         },
@@ -145,15 +153,12 @@ const authSlice = createSlice({
         },
 
         [register_actions.loading]: (state, action) => {
-            console.log("HUHUHU");
             state.currentUser.register_status = loading();
         },
         [register_actions.success]: (state, action) => {
-            console.log("REG_SUCCESS");
             state.currentUser.register_status = success();
         },
         [register_actions.error]: (state, action) => {
-            console.log("Payload Received:", action);
             const { message } = action.payload;
             state.currentUser.register_status = error(message)
         },
@@ -163,7 +168,6 @@ const authSlice = createSlice({
             state.currentUser.change_pass_status = loading();
         },
         [change_pass_actions.success]: (state, action) => {
-            console.log("CHANGE PASS SLICE: ",action.payload);
             Toaster.toastSuccessful("Change user password successfully");
             state.currentUser.change_pass_status = success();
         },

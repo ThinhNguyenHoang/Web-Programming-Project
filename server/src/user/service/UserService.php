@@ -217,7 +217,7 @@ class UserService
         $token = RequestHelper::validate_jwt_token();
         if(!$token) die();
         $request = RequestHelper::getRequestBody();
-        error_log("Get User Profile: " . $request, 0);
+        error_log("Get User Profile: " . json_encode($request), 0);
         // Find user with the username in database
         $user = new \stdClass();
         $user->username = $token->data->username;

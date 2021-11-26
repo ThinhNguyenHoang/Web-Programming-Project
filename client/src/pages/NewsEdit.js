@@ -21,7 +21,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { selectors,update_food,food_management,add_food } from '../redux/slices/food/FoodSlice';
+import { selectors,update_food,food_management,add_food } from '../redux/slices/Food/FoodSlice';
 import Typography from '@mui/material/Typography';
 import MaterialCardAdd from '../components/FoodItemManagement/MaterialCardAdd';
 import MaterialCardDelete from '../components/FoodItemManagement/MaterialCardDelete';

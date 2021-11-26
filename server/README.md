@@ -214,3 +214,104 @@ MATERIAL:
 
     DELETE: /material/:id
 ```
+# Thanh toán
+```
+BANK ACCOUNT:
+    GET: /bank_account
+        {
+            "message": "Read material:result in success",
+            "data": [
+                {
+                "id": "",
+                "bank_account_number": "",
+                "bank_account_owner": "",
+                "bank_account_type":"",
+                "balance":"",
+                "valid_start":"",
+                "valid_end":"",
+                },
+                {
+                "id": "",
+                "bank_account_number": "",
+                "bank_account_owner": "",
+                "bank_account_type":"",
+                "balance":"",
+                "valid_start":"",
+                "valid_end":"",
+                }
+            ]
+        }
+        
+        /bank_account/:id
+
+    POST: /bank_account
+        body: {
+                "bank_account_number": "",
+                "bank_account_owner": "",
+                "bank_account_type":"",
+                "balance":"",
+                "valid_start":"",
+                "valid_end":"",
+                }
+    
+    PUT: /bank_account/:id
+        body: {
+                "bank_account_number": "",
+                "bank_account_owner": "",
+                "bank_account_type":"",
+                "balance":"",
+                "valid_start":"",
+                "valid_end":"",
+        }
+        reponse_body: {
+            list_account đã update 
+        }
+    DELETE: /bank_account/:id
+        reponse_body: {
+            list_account đã update 
+        }
+
+```
+
+
+
+```
+TRANSACTION - Các cột không có trong này thì bỏ trong MYSQL (Bỏ status, subject, payment method):
+    GET: /transaction
+        {
+            "message": "Read transaction:result in success",
+            "data": [
+                {
+                "id": "",
+                "time": "",
+                "description": "",
+                "amount":"",
+                "order_id":"",
+                Nếu là manager thì trả thêm: 
+                "user_id":"",
+                "userName":""
+                },
+                {
+                "id": "",
+                "time": "",
+                "description": "",
+                "amount":"",
+                "order_id":"",
+                Nếu là manager thì trả thêm: 
+                "user_id":"",
+                "userName":""
+                }
+            ]
+        }
+        
+        /transaction/:id
+
+    POST: /transaction
+        body: {
+                "bank_account_number": "",
+                "user_id": "",
+                "order_id":"",
+                "amount":"",
+                "description":"",
+                }
+```
