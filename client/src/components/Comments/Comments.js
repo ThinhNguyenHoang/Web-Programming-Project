@@ -82,11 +82,12 @@ function Comments(props){
     return (
         <Box sx={{display:"flex",flexDirection:"column"}}>
             {!isLogin ?
-            (<Typography>Vui lòng đăng nhập để bình luận </Typography>)
+            (<Typography sx={{color:"elevation.layer0.contrast", fontStyle:"italic"}}>Vui lòng đăng nhập để bình luận </Typography>)
             :(<Box sx={{display:"flex",flexDirection:"row"}}>
                 <Avatar src={userAvatar} alt="avatar"></Avatar>
                 <Box sx={{display:"flex",flexDirection:"column", ml:"10px"}} width="1000px">
                     <TextField
+                        
                         width="auto"
                         fullWidth
                         label="Bình luận"
@@ -95,7 +96,7 @@ function Comments(props){
                         rows={3}
                         onChange={(e)=>setContent(e.target.value)}
                         variant="outlined"
-                        sx={{mb:"10px"}}
+                        sx={{mb:"10px", bgcolor:"white"}}
                     />
                     <Box sx={{display:"flex",flexDirection:"row", columnGap:"10px"}}>
                         {imageList.map((imageComment)=>{

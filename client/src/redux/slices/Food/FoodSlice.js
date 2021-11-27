@@ -270,28 +270,6 @@ const FoodSlice = createSlice({
             state.cart.voucher_id = action.payload;
             UpdateDiscount(state.cart);
         },
-        [increase_quantity_cart]: (state, action) => {
-            state.cart.food_list.map((food) => {
-                if (food.id === action.payload) {
-                    food.quantity += 1;
-                }
-                return food;
-            })
-            UpdateQuantity(state.cart);
-            UpdateSubtotal(state.cart);
-
-        },
-        [decrease_quantity_cart]: (state, action) => {
-            state.cart.food_list.map((food) => {
-                if (food.id === action.payload && food.quantity > 0) {
-                    food.quantity -= 1;
-                }
-                return food;
-            })
-            UpdateQuantity(state.cart);
-            UpdateSubtotal(state.cart);
-            return state;
-        },
         [delete_food_cart]: (state, action) => {
             var deleteFood = state.cart.food_list.filter(food => food.id == action.payload);
             var idx = state.cart.food_list.indexOf(deleteFood[0]);
@@ -306,8 +284,8 @@ const FoodSlice = createSlice({
         },
         [get_cart_actions.success]: (state, action) => {
             console.log("CART PAYLOAD:", action.payload);
-
             state.cart.food_list = action.payload.food_list;
+            state.cart.combo_list=action.payload.combo_list;
             state.cart.voucher_list = action.payload.voucher_list;
             UpdateSubtotal(state.cart);
             UpdateQuantity(state.cart);

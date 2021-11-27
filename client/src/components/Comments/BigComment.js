@@ -159,8 +159,12 @@ function BigComment(props){
                                     rows={2}
                                     onChange={(e)=>setReply(e.target.value)}
                                     variant="outlined"
+                                    sx={{bgcolor:"white"}}
                                 />
-                                <Button sx={{width:"fit-content"}} style={{textTransform: 'none'}} onClick={addReply}>Trả lời</Button>
+                                <Box sx={{display:`flex`, flexDirection:"row"}}>
+                                    <Button sx={{width:"fit-content"}} style={{textTransform: 'none'}} onClick={addReply}>Trả lời</Button>
+                                    <Button sx={{width:"fit-content"}} style={{textTransform: 'none'}} >Hủy</Button>
+                                </Box>
                             </Box>
                         </Box>
                     ):(<></>)

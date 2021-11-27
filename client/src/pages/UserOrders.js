@@ -42,216 +42,33 @@ import { Grid } from '@mui/material';
 
 const MCList={order_list:[
     {
-        name:'Taylor Swift',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
+        id:'1914881',
+        delivery_date:'28/11/2021',
+        price:132000,
+        address:'456 Trường Chinh',
         discount:"10%",
     },
     {
-        name:'John Doe',
-        id:'???????',
+        id:'1913844',
         delivery_date:'12/6/2021',
         price:145000,
         address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
+        discount:"20%",
     },
     {
-        name:'John Doe',
-        id:'???????',
+        id:'1928374',
         delivery_date:'12/6/2021',
         price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
+        address:'375 CMT8',
+        discount:"50%",
     },
     {
-        name:'John Doe',
-        id:'???????',
+        id:'1827364',
         delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
+        price:100000,
+        address:'192 Bình Thạnh, Phú Nhuận, TP.HCM',
         discount:"10%",
     },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'123',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    
 ]};
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -290,8 +107,7 @@ const exportData = (order_list)=>{
     pdfMake.createPdf(docDef).download();
 }
 
-
-function OrderMangament(props){
+function UserOrders(){
     let history = useHistory();
     const {t, i18n} = useTranslation();
     const dispatch = useDispatch();
@@ -317,27 +133,17 @@ function OrderMangament(props){
     return (
         <Box sx={{bgcolor:"elevation.layer0.main"}}>
             <Box sx={{display:"flex", flexDirection:"column", mx:"200px"}}>
-                <Typography alignContent="center" variant="h4" color="elevation.layer0.contrast" my={2}>Quản lý đơn hàng</Typography>
-                <Box sx={{display:"flex",flexDirection:"row",justifyContent:"space-between",my:2}}>
-                    <Box sx={{display:"inline-flex",flexDirection:"row",alignItems:"end"}}>
-                        <TextField label="fullWidth" id="fullWidth" size="small" sx={{bgcolor:"white"}} />
-                        <IconButton alignSelf="center" sx={{color:"elevation.layer0.contrast"}}>
-                            <SearchIcon/>
-                        </IconButton>
-                    </Box>
-                    <Button variant="text" startIcon={<ArchiveIcon/> } onClick={()=>exportData(order.order_list)}>Export</Button>
-                </Box>
+                <Typography variant="h3" color="red" sx={{fontWeight:"bold", textAlign:"center"}} my={2}>Lịch sử đơn hàng</Typography>
                 <TableContainer component={Paper} sx={{mt:4, mb:4}}>
                     <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center" sx={{fontWeight:"bold"}}>STT</TableCell>
                                 <TableCell align="center" sx={{fontWeight:"bold"}}>Mã đơn hàng</TableCell>
-                                <TableCell align="center" sx={{fontWeight:"bold"}}>Tên khách hàng</TableCell>
                                 <TableCell align="center" sx={{fontWeight:"bold"}}>Ngày giao</TableCell>
                                 <TableCell align="center" sx={{fontWeight:"bold"}}>Đã giảm giá</TableCell>
                                 <TableCell align="center" sx={{fontWeight:"bold"}}>Giá</TableCell>
-                                <TableCell align="center" sx={{fontWeight:"bold"}}>Địa chỉ giao hàng</TableCell>
+                                <TableCell align="left" sx={{fontWeight:"bold"}}>Địa chỉ giao hàng</TableCell>
                                 <TableCell align="left"></TableCell>
                             </TableRow>
                         </TableHead>
@@ -355,12 +161,11 @@ function OrderMangament(props){
                                                 {idx}
                                             </TableCell>
                                             <TableCell align="center">{order.order_list[idx-1].id}</TableCell>
-                                            <TableCell align="center">{order.order_list[idx-1].name}</TableCell>
                                             <TableCell align="center">{order.order_list[idx-1].delivery_date}</TableCell>
                                             <TableCell align="center">{order.order_list[idx-1].discount}</TableCell>
                                             <TableCell align="center">{order.order_list[idx-1].price}</TableCell>
-                                            <TableCell align="center">{order.order_list[idx-1].address}</TableCell>
-                                            <TableCell align="center">
+                                            <TableCell align="left">{order.order_list[idx-1].address}</TableCell>
+                                            <TableCell align="left">
                                                 <Button style={{textTransform:"none"}} onClick={handleClickOpen}>
                                                     Chi tiết
                                                 </Button>
@@ -372,11 +177,8 @@ function OrderMangament(props){
                                                 >
                                                     <AppBar sx={{ position: 'relative' }}>
                                                         <Toolbar>
-                                                            <Typography variant="h6" component="div">
-                                                            Mã đơn hàng: 
-                                                            </Typography>
-                                                            <Typography sx={{flex: 1, fontWeight:"bold" }} variant="h6" component="div">
-                                                            {order.order_list[idx-1].id}
+                                                            <Typography sx={{flex: 1, fontWeight:"bold" }} variant="h5" component="div">
+                                                                CHI TIẾT ĐƠN HÀNG
                                                             </Typography>
                                                             <IconButton
                                                             edge="start"
@@ -408,10 +210,10 @@ function OrderMangament(props){
                                                                     </Typography>
                                                                     <Box>
                                                                         <Typography variant="h6" sx={{display:"inline", color:"elevation.layer0.contrast"}}>
-                                                                            Tên khách hàng: 
+                                                                            Mã đơn hàng:
                                                                         </Typography>
                                                                         <Typography variant="h6" sx={{display:"inline", color:"elevation.layer0.contrast", fontWeight:"bold", mx:"5px"}}>
-                                                                            {order.order_list[idx-1].name}
+                                                                            {order.order_list[idx-1].id}
                                                                         </Typography>
                                                                     </Box>
                                                                     <Box>
@@ -488,4 +290,4 @@ function OrderMangament(props){
         </Box>
     );
 }
-export default OrderMangament;
+export default UserOrders;

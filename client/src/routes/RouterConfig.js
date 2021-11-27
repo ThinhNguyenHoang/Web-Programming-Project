@@ -17,6 +17,7 @@ import EditFoodItem from "../pages/EditFoodItem";
 import FoodDetails from "../pages/FoodDetails";
 import NewsInfo from "../pages/NewsInfo";
 import NewsEdit from "../pages/NewsEdit";
+import UserOrders from "../pages/UserOrders";
 
 
 const baseUrl = process.env.FAKE_SERVER_HOST;
@@ -44,6 +45,7 @@ export const ROUTING_CONSTANTS = {
     PAYMENT:"/payment",
     EDITNEWS:"/editnews",
     NEWSINFO:"/newsinfo",
+    USERORDERS:"/userorders"
 }
 
 const generateTabLinkItem = (label_name, nav_to, require_auth) => {
@@ -178,6 +180,9 @@ export const RouterConfig = () => {
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.NEWSINFO}>
                     <NewsInfo/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.USERORDERS}>
+                    <UserOrders/>
                 </Route>
             </Switch>
         </WithHeader>
