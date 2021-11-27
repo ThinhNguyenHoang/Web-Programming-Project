@@ -11,6 +11,78 @@ FOOD:
                     "Price": "",
                     "Description": "",
                     "Instruct": null,
+                    "Sale": "",
+                    "Material": [
+                        {
+                            "MaterialID": "",
+                            "MaterialName": "",
+                            "Picture": 
+                        },
+                        {
+                            "MaterialID": "",
+                            "MaterialName": "",
+                            "Picture": 
+                        }
+                    ],
+                    "Tags": [
+                        {
+                            "TagID": "",
+                            "TagName": ""
+                        },
+                        {
+                            "TagID": "",
+                            "TagName": ""
+                        }
+                    ]
+                }
+            ]
+        }
+
+        /food/:id
+
+        /food/recommendation
+        {
+            "message": "Read food:result in success",
+            "data": [
+                {
+                    "FoodID": "",
+                    "FoodName": "",
+                    "Picture":null,
+                    "Price": "",
+                    "Description": "",
+                    "Instruct": "",
+                    "Sale": "",
+                    "Material": [
+                        {
+                            "MaterialID": "",
+                            "MaterialName": "",
+                            "Picture": 
+                        },
+                        {
+                            "MaterialID": "",
+                            "MaterialName": "",
+                            "Picture": 
+                        }
+                    ],
+                    "Tags": [
+                        {
+                            "TagID": "",
+                            "TagName": ""
+                        },
+                        {
+                            "TagID": "",
+                            "TagName": ""
+                        }
+                    ]
+                },
+                {
+                    "FoodID": "",
+                    "FoodName": "",
+                    "Picture":null,
+                    "Price": "",
+                    "Description": "",
+                    "Instruct": "",
+                    "Sale": "",
                     "Material": [
                         {
                             "MaterialID": "",
@@ -43,6 +115,7 @@ FOOD:
                 "Price": "",
                 "Description": "",
                 "Instruct": "",
+                "Sale": ,
                 "Material": [
                     {
                         "MaterialID":""
@@ -69,6 +142,7 @@ FOOD:
                 "Price": "",
                 "Description": "",
                 "Instruct": "",
+                "Sale": ,
                 "Material": [
                     {
                         "MaterialID":""
@@ -116,7 +190,8 @@ COMBO:
                             "Picture": ,
                             "Price": "",
                             "Description": "",
-                            "Instruct": 
+                            "Instruct":,
+                            "Sale":
                         }
                     ],
                     "Tags": [
@@ -131,8 +206,88 @@ COMBO:
                     ]
                 }
         }
+        
         /combo/:id
         
+        /combo/recommendation
+{
+    "message": "Read combo:result in success",
+    "data": [
+        {
+            "ComboID": "",
+            "ComboName": "",
+            "ComboDescrip": "",
+            "Price": "",
+            "Food": [
+                {
+                    "FoodID": "",
+                    "FoodName": "",
+                    "Picture": ,
+                    "Price": "",
+                    "Description": "",
+                    "Instruct": "",
+                    "Sale": "0"
+                },
+                {
+                    "FoodID": "",
+                    "FoodName": "",
+                    "Picture": ,
+                    "Price": "",
+                    "Description": "",
+                    "Instruct": "",
+                    "Sale": "0"
+                }
+            ],
+            "Tags": [
+                {
+                    "TagID": "",
+                    "TagName": ""
+                },
+                {
+                    "TagID": "",
+                    "TagName": ""
+                }
+            ]
+        },
+        {
+            "ComboID": "",
+            "ComboName": "",
+            "ComboDescrip": "",
+            "Price": "",
+            "Food": [
+                {
+                    "FoodID": "",
+                    "FoodName": "",
+                    "Picture": ,
+                    "Price": "",
+                    "Description": "",
+                    "Instruct": "",
+                    "Sale": "0"
+                },
+                {
+                    "FoodID": "",
+                    "FoodName": "",
+                    "Picture": ,
+                    "Price": "",
+                    "Description": "",
+                    "Instruct": "",
+                    "Sale": "0"
+                }
+            ],
+            "Tags": [
+                {
+                    "TagID": "",
+                    "TagName": ""
+                },
+                {
+                    "TagID": "",
+                    "TagName": ""
+                }
+            ]
+        }
+    ]
+}
+
     POST: /combo
             body: {
                 "ComboName": "",
@@ -412,4 +567,43 @@ BANK ACCOUNT:
                 }
             ]
         }
+```
+
+#TAG (admin)
+```
+    GET: /tag
+        {
+            "message": "Read tag:result in success",
+            "data": [
+                {
+                    "TagID": "",
+                    "TagName": ""
+                },
+                {
+                    "TagID": "",
+                    "TagName": ""
+                }
+            ]
+        }
+
+        /tag/:id
+        {
+            "message": "Read tag:result in success",
+            "data": {
+                "TagID": "1",
+                "TagName": "Cay"
+            }
+        }
+
+    POST: /tag
+        body: {
+            "TagName":
+        }
+    
+    PUT: /tag/:id
+        body: {
+            "TagName":
+        }
+
+    DELETE: /tag/:id
 ```

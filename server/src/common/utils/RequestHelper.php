@@ -152,7 +152,7 @@ class RequestHelper
         }
         catch(ExpiredException $exception) {
             ResponseHelper::error_client("Expired Token: Please try renew the token");
-            return null;
+            die();
         }
         if ($token->iss !== $issuer ||
             $token->exp < $now->getTimestamp())
