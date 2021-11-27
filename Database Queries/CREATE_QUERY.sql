@@ -7,19 +7,30 @@ CREATE TABLE VOUCHER (
     UserID BIGINT(8), 
     PRIMARY KEY(VoucherID)
 );
-INSERT INTO VOUCHER(VoucherID, ExpirationDate, Description, VoucherName, UserID) VALUES (1,'2021-01-01','Voucher description ID 1', 'Weeken Voucher',1);
-INSERT INTO VOUCHER(VoucherID, ExpirationDate, Description, VoucherName, UserID) VALUES (2,'2020-01-01','Voucher description ID 2', 'Wednesday Voucher',1);
-INSERT INTO VOUCHER(VoucherID, ExpirationDate, Description, VoucherName, UserID) VALUES (3,'2020-11-11','Voucher description ID 3', 'Tuesday Voucher',1);
-INSERT INTO VOUCHER(VoucherID, ExpirationDate, Description, VoucherName, UserID) VALUES (4,'2019-01-09','Voucher description ID 4', 'Thursday Voucher',1);
-INSERT INTO VOUCHER(VoucherID, ExpirationDate, Description, VoucherName, UserID) VALUES (5,'2021-03-07','Voucher description ID 5' , 'Friday Voucher',1);
+INSERT INTO VOUCHER(ExpirationDate, Description, VoucherName, UserID) VALUES ('2021-01-01','Voucher description ID 1', 'Weeken Voucher',2);
+INSERT INTO VOUCHER(ExpirationDate, Description, VoucherName, UserID) VALUES ('2020-01-01','Voucher description ID 2', 'Wednesday Voucher',4);
+INSERT INTO VOUCHER(ExpirationDate, Description, VoucherName, UserID) VALUES ('2020-11-11','Voucher description ID 3', 'Tuesday Voucher',2);
+INSERT INTO VOUCHER(ExpirationDate, Description, VoucherName, UserID) VALUES ('2019-01-09','Voucher description ID 4', 'Thursday Voucher',4);
+INSERT INTO VOUCHER(ExpirationDate, Description, VoucherName, UserID) VALUES ('2021-03-07','Voucher description ID 5' , 'Friday Voucher',2);
+INSERT INTO VOUCHER(ExpirationDate, Description, VoucherName, UserID) VALUES ('2021-01-01','Voucher description ID 1', 'Weeken Voucher',4);
+INSERT INTO VOUCHER(ExpirationDate, Description, VoucherName, UserID) VALUES ('2020-01-01','Voucher description ID 2', 'Wednesday Voucher',2);
+INSERT INTO VOUCHER(ExpirationDate, Description, VoucherName, UserID) VALUES ('2020-11-11','Voucher description ID 3', 'Tuesday Voucher',4);
+INSERT INTO VOUCHER(ExpirationDate, Description, VoucherName, UserID) VALUES ('2019-01-09','Voucher description ID 4', 'Thursday Voucher',2);
+INSERT INTO VOUCHER(ExpirationDate, Description, VoucherName, UserID) VALUES ('2021-03-07','Voucher description ID 5' , 'Friday Voucher',4);
 
 DROP TABLE IF EXISTS APPLY_FOR;
 CREATE TABLE APPLY_FOR (VoucherID BIGINT(8), ComboID BIGINT(8), FoodID BIGINT(8), SalePercent BIGINT(8), PRIMARY KEY(VoucherID, FoodID, ComboID)); 
-INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (1,2,2, 20); 
-INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (3,1,1, 20); 
-INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (2,2,1, 30); 
-INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (3,1,2, 10); 
-INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (3,1,3, 20); 
+INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (1,2,0, 20); 
+INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (2,1,0, 20); 
+INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (3,2,0, 30); 
+INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (4,1,0, 10); 
+INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (5,1,0, 20);
+
+INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (6,0,2, 20); 
+INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (7,0,1, 20); 
+INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (8,0,1, 30); 
+INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (9,0,2, 10); 
+INSERT INTO APPLY_FOR (VoucherID, ComboID, FoodID, SalePercent) VALUES (10,0,3, 20); 
 
 DROP TABLE IF EXISTS TRANSACTION; 
 CREATE TABLE TRANSACTION (
@@ -95,6 +106,7 @@ CREATE TABLE Cart(
 	Total INT NOT NULL,
       PRIMARY KEY (UserID)
 );
+
 INSERT INTO `web_food`.`cart` (`UserID`, `Total`) VALUES ('1', '45000');
 INSERT INTO `web_food`.`cart` (`UserID`, `Total`) VALUES ('2', '30000');
 INSERT INTO `web_food`.`cart` (`UserID`, `Total`) VALUES ('3', '50000');
@@ -102,18 +114,24 @@ INSERT INTO `web_food`.`cart` (`UserID`, `Total`) VALUES ('4', '100000');
 INSERT INTO `web_food`.`cart` (`UserID`, `Total`) VALUES ('5', '0');
 */
 
-DROP TABLE IF EXISTS cartfood; 
-CREATE TABLE CartFood(
-      FoodID BIGINT(8),
-      UserID BIGINT(8),
+DROP TABLE IF EXISTS cart; 
+CREATE TABLE cart(
+    FoodID BIGINT(8),
+    ComboID BIGINT(8),
+    UserID BIGINT(8),
 	Quantity INT,
-      PRIMARY KEY (FoodID,UserID)
+    PRIMARY KEY (FoodID, ComboID, UserID)
 );
-INSERT INTO `web_food`.`cartfood` ( `FoodID`, `UserID`, `Quantity`) VALUES ( '11', '1','1');
-INSERT INTO `web_food`.`cartfood` ( `FoodID`, `UserID`, `Quantity`) VALUES ( '12', '4','2');
-INSERT INTO `web_food`.`cartfood` (`FoodID`, `UserID`, `Quantity`) VALUES ( '13', '2','2');
-INSERT INTO `web_food`.`cartfood` (`FoodID`, `UserID`, `Quantity`) VALUES ( '15', '4','1');
-INSERT INTO `web_food`.`cartfood` ( `FoodID`, `UserID`, `Quantity`) VALUES ( '14', '3','1');
+INSERT INTO `web_food`.`cart` (`FoodID`, `ComboID`, `UserID`, `Quantity`) VALUES ( '1', 0, '2','2');
+INSERT INTO `web_food`.`cart` (`FoodID`, `ComboID`, `UserID`, `Quantity`) VALUES ( '2', 0, '4','2');
+INSERT INTO `web_food`.`cart` (`FoodID`, `ComboID`, `UserID`, `Quantity`) VALUES ( '3', 0, '2','2');
+INSERT INTO `web_food`.`cart` (`FoodID`, `ComboID`, `UserID`, `Quantity`) VALUES ( '4', 0, '4','1');
+INSERT INTO `web_food`.`cart` (`FoodID`, `ComboID`, `UserID`, `Quantity`) VALUES ( '5', 0, '2','1');
+INSERT INTO `web_food`.`cart` (`FoodID`, `ComboID`, `UserID`, `Quantity`) VALUES ( '0', 1, '4','1');
+INSERT INTO `web_food`.`cart` (`FoodID`, `ComboID`, `UserID`, `Quantity`) VALUES ( '0', 2, '2','2');
+INSERT INTO `web_food`.`cart` (`FoodID`, `ComboID`, `UserID`, `Quantity`) VALUES ( '0', 3, '4','2');
+INSERT INTO `web_food`.`cart` (`FoodID`, `ComboID`, `UserID`, `Quantity`) VALUES ( '0', 4, '2','1');
+INSERT INTO `web_food`.`cart` (`FoodID`, `ComboID`, `UserID`, `Quantity`) VALUES ( '0', 5, '4','1');
 
 
 
@@ -369,3 +387,4 @@ INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,0,2);
 INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,0,3);
 INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,0,4);
 INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,0,5);
+
