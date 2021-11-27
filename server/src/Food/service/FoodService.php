@@ -190,6 +190,17 @@ class FoodService
             $food->Instruct = $food_found["Instruct"];
         }
 
+        if (property_exists($request, "Sale")) {
+            if ($request->Sale != "") {
+                $food->Sale = $request->Sale;
+                $is_update_food = true;
+            } else {
+                $food->Sale = $food_found["Sale"];
+            }
+        } else {
+            $food->Sale = $food_found["Sale"];
+        }
+
         $food->Material = array();
         if (property_exists($request, "Material")) {
             if (is_array($request->Material)) {

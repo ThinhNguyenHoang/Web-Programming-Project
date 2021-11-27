@@ -23,6 +23,7 @@ use src\wish_list\controller\WishListController;
 use src\bank_account\controller\BankAccountController;
 use src\transaction\controller\TransactionController;
 use src\cart\controller\CartController;
+use src\news\controller\NewsController;
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -85,6 +86,10 @@ switch ($endpoint) {
     case "cart":
         $cartController = new CartController();
         $cartController->handleRequest();
+        break;
+    case "news":
+        $newsController = new NewsController();
+        $newsController->handleRequest();
         break;
     default:
         header("HTTP/1.1 404 Not Found");
