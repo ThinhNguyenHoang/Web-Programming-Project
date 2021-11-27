@@ -12,6 +12,7 @@ import AboutUs from "../pages/AboutUs";
 import AccountManagement from "../pages/AccountManagement";
 import FoodRecommendationPage from "../pages/FoodRecommendationPage";
 import WishListPage from "../pages/WishListPage";
+import FoodPage from "../pages/FoodPage";
 
 const baseUrl = process.env.FAKE_SERVER_HOST;
 export const ROUTING_CONSTANTS = {
@@ -34,7 +35,8 @@ export const ROUTING_CONSTANTS = {
     CLIENT: "/clients",
     ORDER: "/orders",
     TESTING: "/test",
-    PAYMENT:"/payment"
+    PAYMENT:"/payment",
+    FOOD: "/food"
 }
 
 const generateTabLinkItem = (label_name, nav_to, require_auth) => {
@@ -64,45 +66,8 @@ export const ROUTING_TAB_ITEMS = [
     generateTabLinkItem("Login", ROUTING_CONSTANTS.LOGIN),
     generateTabLinkItem("Register", ROUTING_CONSTANTS.REGISTER),
     generateTabLinkItem("Wishlist", ROUTING_CONSTANTS.WISH_LIST),
+    generateTabLinkItem("All Foods", ROUTING_CONSTANTS.FOOD),
 ]
-
-
-/*
-    * Từng component dưới này phải được thay bằng một page ở pages
-    ! Còn phải thêm trang cho các lần thanh toán và các đơn hàng
- */
-function Home() {
-    return null;
-}
-
-function ManageItemInfo() {
-    return null;
-}
-
-function ManageBills() {
-    return null;
-}
-
-function ManageTransactions() {
-    return null;
-}
-
-function Account() {
-    return null;
-}
-
-function Cart() {
-    return null;
-}
-
-function Topics() {
-    return null;
-}
-
-
-// function News() {
-//     return null;
-// }
 
 function Recommendations() {
     return null;
@@ -157,6 +122,9 @@ export const RouterConfig = () => {
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.PAYMENT}>
                     <PaymentPage/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.FOOD}>
+                    <FoodPage/>
                 </Route>
             </Switch>
         </WithHeader>
