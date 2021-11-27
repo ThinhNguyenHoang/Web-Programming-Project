@@ -24,6 +24,7 @@ class FoodMapper
         $food->Price = $request->Price;
         $food->Description = $request->Description;
         $food->Instruct = $request->Instruct;
+        $food->Sale = $request->Sale;
         return $food;
     }
 }

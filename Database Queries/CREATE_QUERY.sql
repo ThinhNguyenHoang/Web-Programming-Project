@@ -238,17 +238,19 @@ INSERT INTO SERVICE VALUES ( 819295, 'Service Info 2', 'ServiceName 2', 'BannerI
 INSERT INTO SERVICE VALUES ( 819296, 'Service Info 5', 'ServiceName 5', 'BannerImage 5');
 
 DROP TABLE IF EXISTS news; 
-CREATE TABLE NEWS (
-      NewID BIGINT(8) NOT NULL,
+CREATE TABLE news (
+	NewsID BIGINT(8) NOT NULL AUTO_INCREMENT,
 	Title VARCHAR(255),
-	Body TEXT NOT NULL,
-	Summary TEXT,
-	Keyword VARCHAR(255),
-      PRIMARY KEY (NewID)
+    Picture  TEXT,
+    Highlight TEXT,
+	Content TEXT,
+	Author TEXT,
+	PRIMARY KEY (NewsID)
 );
-INSERT INTO NEWS VALUES (819284, 'Bước chuyển mình của gia đình có truyền thống nấu thạch suốt 35 năm tại đất Hà thành', 'Quả không ngoa khi nói thạch đen là món ăn truyền thống đất Kinh Kỳ, ai sinh ra và lớn lên ở nơi đây mà lại chưa từng qua một thời mê mẩn thức quà chợ này. Còn nhớ những chiều ngồi ngóng tiếng rao: "Ai tào phớ đê... Ai tào phớ nào...", là cả đám con nít chạy ào ra xoè những đồng tiền lẻ tích góp mấy ngày trời chỉ để thưởng thức "cực phẩm" mùa hè - tào phớ nước đường cùng thạch đen. Người ta nói: Dân Hà thành sành ăn bậc nhất quả là không chút sai lệch! Cái vị nhạt nhạt, một chút ngầy ngậy, mềm mềm của tào phớ kết hợp với vị ngọt thanh của nước đường rồi điểm thêm chút thạch đen dai giòn sần sật, cái mùi đặc trưng không lẫn vào đâu được thì quả thật là tuyệt cú. Nghĩ thôi cũng muốn chảy nước miếng luôn ấy!', 'Có thể nói, để làm mới mình sau hơn 35 năm là điều khó khăn và là nhiệm vụ mà Chiko luôn nỗ lực theo đuổi để mang tới những sản phẩm tốt nhất đến tay khách hàng.','TRADITONAL, FOOD, MON AN, TRUYEN THONG');
-INSERT INTO NEWS VALUES (819285, 'Cách làm bánh hình quả táo', 'Lúc rảnh rỗi bạn có thể thử làm chiếc bánh hình trái táo vừa xinh xắn lại thơm ngon, không cần quá nhiều hoa tay lại có thể gây bất ngờ với mọi người trong gia đình.', '','CAKE, APPLE, BANH, TAO');
-
+INSERT INTO news (`Title`, `Picture`, `Highlight`, `Content`, `Author`) VALUES ('Bước chuyển mình của gia đình có truyền thống nấu thạch suốt 35 năm tại đất Hà thành','','','Quả không ngoa khi nói thạch đen là món ăn truyền thống đất Kinh Kỳ, ai sinh ra và lớn lên ở nơi đây mà lại chưa từng qua một thời mê mẩn thức quà chợ này. Còn nhớ những chiều ngồi ngóng tiếng rao: "Ai tào phớ đê... Ai tào phớ nào...", là cả đám con nít chạy ào ra xoè những đồng tiền lẻ tích góp mấy ngày trời chỉ để thưởng thức "cực phẩm" mùa hè - tào phớ nước đường cùng thạch đen. Người ta nói: Dân Hà thành sành ăn bậc nhất quả là không chút sai lệch! Cái vị nhạt nhạt, một chút ngầy ngậy, mềm mềm của tào phớ kết hợp với vị ngọt thanh của nước đường rồi điểm thêm chút thạch đen dai giòn sần sật, cái mùi đặc trưng không lẫn vào đâu được thì quả thật là tuyệt cú. Nghĩ thôi cũng muốn chảy nước miếng luôn ấy! Có thể nói, để làm mới mình sau hơn 35 năm là điều khó khăn và là nhiệm vụ mà Chiko luôn nỗ lực theo đuổi để mang tới những sản phẩm tốt nhất đến tay khách hàng.','');
+INSERT INTO news (`Title`, `Picture`, `Highlight`, `Content`, `Author`) VALUES ('Cách làm bánh hình quả táo', '', '', 'Lúc rảnh rỗi bạn có thể thử làm chiếc bánh hình trái táo vừa xinh xắn lại thơm ngon, không cần quá nhiều hoa tay lại có thể gây bất ngờ với mọi người trong gia đình.', '');
+INSERT INTO news (`Title`, `Picture`, `Highlight`, `Content`, `Author`) VALUES ('Cách làm bánh hình quả táo', '', '', 'Lúc rảnh rỗi bạn có thể thử làm chiếc bánh hình trái táo vừa xinh xắn lại thơm ngon, không cần quá nhiều hoa tay lại có thể gây bất ngờ với mọi người trong gia đình.', '');
+INSERT INTO news (`Title`, `Picture`, `Highlight`, `Content`, `Author`) VALUES ('Bước chuyển mình của gia đình có truyền thống nấu thạch suốt 35 năm tại đất Hà thành','','','tào phớ nào...", là cả đám con nít chạy ào ra xoè những đồng tiền lẻ tích góp mấy ngày trời chỉ để thưởng thức "cực phẩm" mùa hè - tào phớ nước đường cùng thạch đen. Người ta nói: Dân Hà thành sành ăn bậc nhất quả là không chút sai lệch! Cái vị nhạt nhạt, một chút ngầy ngậy, mềm mềm của tào phớ kết hợp với vị ngọt thanh của nước đường rồi điểm thêm chút thạch đen dai giòn sần sật, cái mùi đặc trưng không lẫn vào đâu được thì quả thật là tuyệt cú. Nghĩ thôi cũng muốn chảy nước miếng luôn ấy! Có thể nói, để làm mới mình sau hơn 35 năm là điều khó khăn và là nhiệm vụ mà Chiko luôn nỗ lực theo đuổi để mang tới những sản phẩm tốt nhất đến tay khách hàng.','');
 
 
 DROP TABLE IF EXISTS orderbill; 
@@ -369,23 +371,23 @@ CREATE TABLE wish_list (
     PRIMARY KEY (WishListID, UserID, FoodID, ComboID)
 );
 
-INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,1,0);
-INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,2,0);
-INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,3,0);
-INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,4,0);
-INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,5,0);
-INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,1,0);
-INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,2,0);
-INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,3,0);
-INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,4,0);
-INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,0,1);
-INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,0,2);
-INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,0,3);
-INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,0,4);
-INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (7,0,5);
-INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,0,1);
-INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,0,2);
-INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,0,3);
-INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,0,4);
-INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (8,0,5);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (2,1,0);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (2,2,0);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (2,3,0);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (2,4,0);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (2,5,0);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (2,1,0);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (2,2,0);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (2,3,0);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (2,4,0);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (4,0,1);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (4,0,2);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (4,0,3);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (4,0,4);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (4,0,5);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (4,0,1);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (4,0,2);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (4,0,3);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (4,0,4);
+INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (4,0,5);
 
