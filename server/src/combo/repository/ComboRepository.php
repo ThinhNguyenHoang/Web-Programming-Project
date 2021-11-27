@@ -237,4 +237,24 @@ class ComboRepository implements Repository
         }
         return null;
     }
+
+    public static function initUserRefTagForCombo()
+    {
+        $list_tag = TagRepository::listTag();
+
+        $UserID = RequestHelper::getUserIDFromToken();
+        foreach ($list_tag as $tag) {
+            $query = "INSERT INTO user_ref_tag (TagID, UserID, Count) VALUES ('" . $tag["TagID"] . "', $UserID, 0)";
+
+            try {
+                $result = QueryExecutor::executeQuery($query);
+            } catch (Exception $exception) {
+                echo $exception->getMessage();
+            }
+
+            if (!$result) {
+                return null;
+            }
+        }
+    }
 }

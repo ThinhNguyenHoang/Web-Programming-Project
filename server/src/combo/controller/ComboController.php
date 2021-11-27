@@ -34,7 +34,7 @@ class ComboController extends BaseController implements RequestHandler
                     if ($token) {
                         TagRepository::increaseTagCount($token->data->id, $combo["Tags"]);
                     }
-                } else if ($relative_path == "recomendation") {
+                } else if ($relative_path == "recommendation") {
                     $token = RequestHelper::validate_jwt_token();
                     error_log("COMBO_CONTROLLER::GET COMBO RECOMENDATION ENDPOINT::" . $relative_path);
                     ComboService::getComboRecomendation();
