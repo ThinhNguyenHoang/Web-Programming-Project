@@ -16,7 +16,7 @@ export const RecommendationGrid = () => {
 
         };
     }, []);
-
+    console.log("recommendation_list",);
     return (
         <Box sx={{flexGrow: 1, m: 4}}>
             {

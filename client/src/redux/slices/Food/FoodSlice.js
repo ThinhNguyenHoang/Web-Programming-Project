@@ -154,6 +154,7 @@ const initialValue = {
     user_id: 1,
     cart: {
         food_list: [],
+        combo_list:[],
         voucher_list: [],
         subtotal: 0,
         discount: 0,

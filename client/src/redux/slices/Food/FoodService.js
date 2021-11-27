@@ -45,12 +45,10 @@ export const GetCartDataService= (payload)=>{
     .catch((error) => console.log("fail cart"));
 
 }
-export const GetVoucherDataService=(payload)=>{
-    console.log("Get voucher data");
-
-    return axios.get(`${baseURL}${api_endpoints.voucher}`)
-    .then((response) => response.data)
-    .catch((error) => console.log("fail voucher"));
+export const GetVoucherDataService=async (payload)=>{
+    return await request.getAsync(api_endpoints.voucher)
+                        .then((response) => response.data)
+                        .catch((error) => error);
 }
 
 export const GetFoodDataService=(payload)=>{
@@ -67,15 +65,13 @@ export const AddCartService = async (payload) =>{
     .catch(error => console.log("axios failed",error))
 }
 
-export const GetCartService = async  (payload)=>{
-    console.log("Get cart");
-    const cartData = await GetCartDataService(payload);
-    const foodData = await GetFoodDataService(payload);
-    const voucherData = await GetVoucherDataService(payload);
+export const GetCartService =  (payload)=>{
+    const cartData = cartt;
+    const voucherData = GetVoucherDataService(payload);
     
     return {
-            food_list:CartData2FoodCart(cartData,foodData),
-            voucher_list:VoucherData2VoucherList(voucherData),
+            food_list:cartData,
+            voucher_list:voucherData,
         }
 }
 
@@ -152,4 +148,40 @@ export const addFoodToWishtListService = (payload)=>{
 export const removeFoodFromWishtListService = (payload)=>{
     console.log("WISHLIST_SERVICE::REMOVE ",payload);
     return request.deleteAsync(api_endpoints.wish_list,payload);
+}
+
+
+const fooddd1={
+    FoodID:"1",
+    FoodName:"food name 1",
+    Picture:"https://image.shutterstock.com/image-photo/suraj-mukhi-flower-my-great-600w-1467178388.jpg",
+    Quantity:1,
+    Price:4000,
+}
+const fooddd2={
+    FoodID:"2",
+    FoodName:"food name 2",
+    Picture:"https://image.shutterstock.com/image-photo/suraj-mukhi-flower-my-great-600w-1467178388.jpg",
+    Quantity:1,
+    Price:4000,
+}
+const fooddd3={
+    FoodID:"3",
+    FoodName:"food name 3",
+    Picture:"https://image.shutterstock.com/image-photo/suraj-mukhi-flower-my-great-600w-1467178388.jpg",
+    Quantity:1,
+    Price:4000,
+}
+const comboo={
+    ComboID:"1",
+    ComboName:"",
+    Picture:"",
+    Quantity:"",
+    Price:10000,
+    FoodList:[fooddd1,fooddd2,fooddd3]
+}
+
+const cartt={
+    ComboList:[comboo],
+    FoodList:[fooddd1,fooddd2,fooddd3],
 }
