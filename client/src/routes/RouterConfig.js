@@ -171,7 +171,7 @@ export const RouterConfig = () => {
                     <EditFoodItem/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.PAYMENT}>
-                    <PaymentPage></PaymentPage>
+                    <PaymentPage/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.EDITNEWS}>
                     <NewsEdit/>

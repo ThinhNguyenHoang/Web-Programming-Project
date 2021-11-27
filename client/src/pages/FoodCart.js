@@ -43,7 +43,7 @@ function FoodCart() {
         <Grid item container md={4} xs={12} display="flex" flexDirection="column" spacing={2}  >
           <VoucherBox voucherList={cart.voucher_list} voucher_id={cart.voucher_id} />
           <TotalBox subtotal={cart.subtotal} discount={cart.discount} />
-          <NoteBox/>
+          {/* <NoteBox/> */}
           <Box textAlign="center" pt={8} >
             <Button onClick={()=>{dispatch({type:update_cart_actions.loading,payload:{food_list:cart.food_list,user_id:userID}})}} variant="text" px="auto" sx={{
               color:"#fff",

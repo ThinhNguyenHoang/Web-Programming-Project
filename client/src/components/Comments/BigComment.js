@@ -10,17 +10,18 @@ import {useSelector} from "react-redux";
 import {selectors} from "../../redux/slices/auth/AuthSlice";
 
 function BigComment(props){
-    const isAdmin=props.isAdmin;
-    const isLogin=props.isLogin;
-    const userAvatar=props.userAvatar;
     const [isEdit,setEdit]=React.useState(false);
     const [isAnswer,setAnswer]=React.useState(false);
-    const comment=props.comment;
-    const smallCommentList=comment.Reply;
-    const imageList=comment.ImageList;
-    const [content,setContent]=React.useState(comment.Content);
     const [reply,setReply]=React.useState("");
     const userID=useSelector(selectors.getAcountId);
+    const comment=props.comment;
+    const userAvatar=props.userAvatar;
+    const smallCommentList=comment.Reply;
+    const imageList=comment.ImageList;
+    const isAdmin=props.isAdmin;
+    const isLogin=props.isLogin;
+
+    const [content,setContent]=React.useState(comment.Content);
 
     let ansButton;
     if(isLogin){
@@ -29,11 +30,13 @@ function BigComment(props){
         ansButton=(<></>);
     }
     const editReply=(reply)=>{
-        const newReply=comment.Reply.map(rep=>{
-            if(rep.RelyID===reply.ReplyID){
+        const newReply=smallCommentList.map(rep=>{
+            if(rep.ReplyID===reply.ReplyID){
+                console.log("sdfsdfsd");
                 return {...rep,Content:reply.Content};
+                
             }
-            return rep
+            return rep;
         });
         props.updateComment({...comment,Reply:newReply});
     }
@@ -78,7 +81,7 @@ function BigComment(props){
                                         />
                                         <Box sx={{display:"flex",flexDirection:"row"}}>
                                             <Button onClick={()=>{setEdit(false); setContent(comment.Content);}}>Hủy</Button>
-                                            <Button onClick={()=>props.editComment({...comment,Content:content})}>Xác nhận</Button>
+                                            <Button onClick={()=>props.updateComment({...comment,Content:content})}>Xác nhận</Button>
                                         </Box>
                                     </Box>
                                 ):
@@ -132,7 +135,7 @@ function BigComment(props){
                     </Box>
                 ):(<></>)
             } */}
-            <Box sx={{display:"flex",flexDirection:"column",borderLeft:1,ml:8, rowGap:"20px"}}>
+            <Box sx={{display:"flex",flexDirection:"column",borderLeft:1,ml:8, rowGap:"20px", my:"10px"}}>
                 <Box sx={{ml:"10px", width:"fit-content",display:"flex",flexDirection:"column", rowGap:"20px"}}>
                 {smallCommentList.map((reply)=><SmallComment 
                                                     comment={reply} 
@@ -142,7 +145,7 @@ function BigComment(props){
                                                     editReply={editReply}
                                                     />)}
 
-                {isAnswer ? 
+                {isAnswer ?
                     (
                         <Box sx={{display:"flex",flexDirection:"row"}}>
                             <Avatar src={userAvatar} alt="avatar"></Avatar>

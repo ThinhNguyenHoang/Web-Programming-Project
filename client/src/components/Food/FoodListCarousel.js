@@ -7,19 +7,6 @@ import FoodGrid from "./FoodGrid";
 import {food_recommendation_actions, selectors} from "../../redux/slices/food/FoodSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {array_to_chunks} from "../../utils";
-// ? Food Item Schema
-// const food_item = {
-//     id: "",
-//     name: "",
-//     picture_uri: "",
-//     price: "",
-//     description: "",
-//     status: generateStatus(),
-//     sale_value: "",
-//     instruct: "",
-//     tags: [],
-//     material: []
-// }
 
 const FoodListCarousel = () => {
     // TODO: Change this to real food api

@@ -135,9 +135,7 @@ function Comments(props){
                     updateComment={props.updateComment} 
                     />)}
             </Box>
-            
         </Box>
     );
-
 }
 export default Comments;
