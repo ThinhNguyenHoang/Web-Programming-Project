@@ -88,11 +88,9 @@ function* GetNewsSaga({payload}){
 function* getFoodRecommendationSaga({payload}){
     try{
         const res = yield call(getFoodRecommendationService,payload);
-        Toaster.toastSuccessful("SAGA RECOM:",res);
         yield put({type:food_recommendation_actions.success, payload: res})
     }
     catch (e) {
-        Toaster.toastError("SAGA RECOM-ERR:",JSON.stringify(e));
         yield put({type:food_recommendation_actions.error,payload:JSON.stringify(e)});
     }
 }

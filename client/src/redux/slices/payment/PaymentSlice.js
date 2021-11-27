@@ -36,7 +36,7 @@ const initialValue = {
     }
 }
 
-export const selectors = {
+export const payment_selectors = {
     getBankAccountsList: (state) => state.payment.payment_account.accounts,
     getBankAccountListSuccess: (state) => state.payment.payment_account.status.isSuccess,
     getBankAccountListLoading: (state) => state.payment.payment_account.status.isLoading,

@@ -15,7 +15,7 @@ console.log("REDUCER OF AUTH: ", authSlice);
 const reducer = {
     auth: authSlice.reducer,
     food: FoodSlice.reducer,
-    paymentSlice: paymentSlice.reducer,
+    payment: paymentSlice.reducer,
 }
 
 const store = configureStore({

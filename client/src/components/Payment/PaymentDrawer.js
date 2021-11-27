@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Box, Button, CardActionArea, CardActions, Drawer, ImageList, ImageListItem, Popover } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
-import { selectors } from "../../redux/slices/auth/AuthSlice";
-import { getDownloadURL, listAll, ref } from "firebase/storage";
-import { ImageUploader, storage } from "../../utils/UploadFile/FileUploader";
 import Typography from "@mui/material/Typography";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBackspace, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -19,7 +16,7 @@ import * as yup from "yup";
 import { TextField } from "formik-material-ui";
 import { useHistor } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { add_bank_account_detail_actions, edit_bank_account_detail_actions, remove_bank_account_detail_actions } from '../../redux/slices/payment/PaymentSlice';
+import { add_bank_account_detail_actions, edit_bank_account_detail_actions, remove_bank_account_detail_actions,payment_selectors } from '../../redux/slices/payment/PaymentSlice';
 
 const getAccountImageFromAccountType = (type) => {
     return undefined;
@@ -68,7 +65,7 @@ export const BankAccountItem = ({ account_item, additionalStyle }) => {
     const id = open ? 'simple-popover' : undefined;
 
     return (
-        <Card sx={{ maxWidth: 345, ...additionalStyle }}>
+        <Card sx={{ maxWidth: 400, ...additionalStyle }}>
             <CardMedia
                 component="img"
                 height="140"
@@ -154,8 +151,8 @@ export const BankAccountItem = ({ account_item, additionalStyle }) => {
                                         alignItems={`center`}
                                     >
                                         <Box sx={{ my: 1, px: 3, }}>
-                                            <Field component={TextField} type="text" label="Bank Account Number"
-                                                name="bank_account_number"
+                                            <Field component={TextField} type="text" label="New Balance Amount"
+                                                name="balance"
                                                 variant={`outlined`} />
                                         </Box>
                                     </Box>
@@ -193,18 +190,20 @@ export const BankAccountItem = ({ account_item, additionalStyle }) => {
     );
 }
 
-export const AccountGrid = ({ bank_account_list, callback }) => {
+export const AccountGrid = ({ bank_account_list = [], callback }) => {
     const [chosenAccount, setChosenAccount] = useState(0);
+    const bank_list = useSelector(payment_selectors.getBankAccountsList);
+    const list_to_display = bank_account_list ? bank_account_list : bank_list;
     return (
         <Box sx={{ flexGrow: 1, m: 4 }}>
             {
-                bank_account_list ?
+                list_to_display ?
                     <Grid
                         container
                         spacing={{ xs: 2, md: 2 }}
                         columns={{ xs: 4, sm: 8, md: 12 }}
                     >
-                        {bank_account_list.map((item, index) => (
+                        {list_to_display.map((item, index) => (
                             <Grid item
                                 xs={2} sm={4} md={4} key={index} onClick={() => {
                                     setChosenAccount(index);
@@ -214,7 +213,7 @@ export const AccountGrid = ({ bank_account_list, callback }) => {
                                 }}>
                                 <BankAccountItem account_item={item} additionalStyle={chosenAccount === index ? {
                                     border: 4,
-                                    borderColor: `primary.main`
+                                    borderColor: `primary.main`,
                                 } : {}} />
                             </Grid>
                         ))}
@@ -291,14 +290,18 @@ export const AddAccountForm = (callback) => {
                             "Please enter valid end date"
                         )
                 })}
-                // * TODO: Change onSubmit handler to post to authorize api
                 onSubmit={(values, { setSubmitting }) => {
                     // setTimeout(() => {
                     //     setSubmitting(false);
                     //     alert(JSON.stringify(values, null, 2));
                     // }, 500);
                     // onUpdateUser(values, setSubmitting);
-                    callback(values, setSubmitting);
+                    if (callback){
+                        callback(values, setSubmitting);
+                    }
+                    else {
+                        console.log("Account form: No Callback: ",values,setSubmitting);
+                    }
                 }}
             >
                 {({ submitForm, isSubmitting, isValid }) => (
@@ -374,7 +377,7 @@ export const PaymentDrawer = (
     const [show, setShow] = useState(false);
     const [indexChosen, setIndexChosen] = useState(0);
 
-
+    const bank_account_list = useSelector(payment_selectors.getBankAccountsList);
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const showPopOver = (event) => {
@@ -453,11 +456,11 @@ export const PaymentDrawer = (
 
                         </Box>
                     </Box>
-                    <AccountGrid bank_account_list={bank_account_init_list}
+                    <AccountGrid bank_account_list={bank_account_list}
                         callback={(index) => setIndexChosen(index)} />
                     {amount_to_pay && <Typography sx={{ alignSelf: `center`, m: 2 }} variant={`h3`}
-                        color={`${bank_account_init_list[indexChosen].balance >= amount_to_pay ? 'success.main' : 'error.main'}`}>
-                        {bank_account_init_list[indexChosen].balance < amount_to_pay ? "Insufficent Balance To Pay" : "Valid account with enough money"}
+                        color={`${bank_account_list[indexChosen].balance >= amount_to_pay ? 'success.main' : 'error.main'}`}>
+                        {bank_account_list[indexChosen].balance < amount_to_pay ? "Insufficent Balance To Pay" : "Valid account with enough money"}
                     </Typography>}
                 </Drawer>
             </Box>

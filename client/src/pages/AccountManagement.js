@@ -161,7 +161,7 @@ const AccountManagement = () => {
                                             component={TextField}
                                             type="password"
                                             label="Password"
-                                            name="password"
+                                            name="passwoDrd"
                                             variant={`outlined`}
                                         />
                                         <Field
@@ -332,10 +332,10 @@ const AccountManagement = () => {
                         My Balance Accounts
                     </Typography>
                 </Grid>
-                <Grid item sx={{m: 1, p: 1, display: `flex`, flexDirection: `column`}} xs={12} md={4}
+                <Grid item sx={{m: 1, p: 1, display: `flex`, flexDirection: `column`}} xs={12} md={12}
                       justifyContent={`flex-start`} alignItems={`center`}>
                     {/* TODO: GET LIST OF BANK ACCOUNTS AND RENDER HERE*/}
-                        <AccountGrid bank_account_list={bank_account_init_list}/>
+                        <AccountGrid/>
                         <PaymentDrawer trigger={<Button variant={`contained`} color={`primary`}>Add New Account</Button>}/>
                 </Grid>
             </Grid>
