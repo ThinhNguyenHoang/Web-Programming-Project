@@ -238,6 +238,7 @@ class UserService
         $user_profile = UserRepository::getUserProfile($user_found->id);
         if($user_profile){
             ResponseHelper::success(UserMessage::getMessages()->readSuccess,$user_profile);
+            return;
         }
         ResponseHelper::error_server(UserMessage::getMessages()->readError);
 

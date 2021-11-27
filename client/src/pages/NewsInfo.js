@@ -53,7 +53,7 @@ function NewsInfo(){
     const comments=news_detail.Comment;
     console.log("new detail",news_detail);
     const deleteComment=(id)=>{
-        dispatch({type:delete_news_comment_action});
+        dispatch({type:delete_news_comment_action,payload:id});
         dispatch({type:get_news_detail_action.loading,payload:news_detail.NewsID});
     }
     const updateComment=(comment)=>{

@@ -11,7 +11,7 @@ const user_init={
     lastModified:'',
 }
 const order_init={
-    id:0,
+    OrderID:0,
     name:'',
     product:'',
     delivery_date:'',
@@ -30,7 +30,8 @@ const inital_state={
         order_list:[],
         get_order_status : generateStatus(),
         filter:'',
-    }
+    },
+
 }
 
 export const Mselectors={

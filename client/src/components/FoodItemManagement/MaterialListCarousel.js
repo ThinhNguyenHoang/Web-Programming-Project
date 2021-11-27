@@ -66,12 +66,12 @@ export const CompanyItem = ({company, mx,sx},...props) => {
           <CardMedia
             component="img"
             height="140px"
-            image={company.logo ? company.logo : default_company_logo}
-            alt={company.name ? company.name : "No info"}
+            image={company.Picture ? company.logo : default_company_logo}
+            alt={company.MaterialName ? company.MaterialName : "No info"}
           />
           <CardContent sx={{bgcolor:'elevation.layer1.main', color: 'elevation.layer1.contrast'}}>
             <Typography gutterBottom variant="h5" component="div" sx={{textAlign:"center"}}>
-              {company.name}
+              {company.MaterialName}
             </Typography>
           </CardContent>
         </Card>
@@ -92,9 +92,9 @@ export const InvolvedCompaniesSlice = ({company_list}) => {
         </Box>
     )
 }
-const MaterialListCarousel = () => {
+const MaterialListCarousel = (props) => {
     // TODO: Code use Effect to get the involved company logo
-    const list_of_list = array_to_chunks(involved_company_init,5);
+    const list_of_list = array_to_chunks(props.material_list,5);
     console.log("COMPANY LIST: ",list_of_list)
     return (
         <Box sx={{display: `flex`, flexDirection: `column`,mb:6}}>

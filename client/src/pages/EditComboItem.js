@@ -21,7 +21,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { selectors,update_food_action,food_management_action,add_food_action } from '../redux/slices/food/FoodSlice';
+import { selectors,update_combo_action,food_management_action,add_combo_action } from '../redux/slices/food/FoodSlice';
 import Typography from '@mui/material/Typography';
 import MaterialCardAdd from '../components/FoodItemManagement/MaterialCardAdd';
 import MaterialCardDelete from '../components/FoodItemManagement/MaterialCardDelete';
@@ -37,26 +37,9 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { ROUTING_CONSTANTS } from '../routes/RouterConfig';
 import { height } from '@mui/system';
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const taglist = [
-    { title: 'Món chay'},
-    { title: 'Món mặn'},
-    { title: 'Món nước'},
-    { title: 'Món Hàn Quốc'},
-    { title: 'Ngày Rằm'},
-    { title: "Món Nhật"},
-    { title: 'Đồ ăn nội địa'},
-];
-const compareTag=(tagA,tagB)=>{
-    if(tagA.TagName===tagB.TagName && tagB.TagID===tagA.TagID){
-        return true;
-    }
-    return false;
-};
-const compareMaterial= (marA,marB)=>{
-    if(marA.MaterialID === marB.MaterialID && marA.MaterialName === marB.MaterialName){
+const compareFood= (marA,marB)=>{
+    if(marA.FoodID === marB.FoodID){
         return true;
     }
     return false;
@@ -66,53 +49,49 @@ const existObject=(obj,objList,func)=>{
     return filter.length >0 ? true: false ;
 };
 
-function EditFoodItem(){
+function EditComboItem(){
     let history= useHistory();
     const dispatch=useDispatch();
     const food_manage_data= useSelector(selectors.getFoodManagement);
-    const tag_list=food_manage_data.tag_list;
-    const material_list=food_manage_data.material_list;
-    var food_detail;
+    const food_list=food_manage_data.food_list;
+    var combo_detail;
     
-    if (food_manage_data.tempFoodID !==""){
-        food_detail=food_manage_data.food_list.filter((food)=>food.FoodID===food_manage_data.tempFoodID)[0];
+    if (food_manage_data.tempComboID !==""){
+        combo_detail=food_manage_data.combo_list.filter((combo)=>combo.ComboID===food_manage_data.tempComboID)[0];
     }else{
-        food_detail={
-            FoodID:"",
-            FoodName:"",
-            Picture:"",
-            Price:"",
-            Description:"",
-            //TODO sale
-            Instruct:"",
-            Material:[],
-            Tags:[],
-        }
+        combo_detail={
+                ComboID:"",
+                ComboName:"",
+                Picture:"",
+                Quantity:0,
+                Price:0,
+                Food:[] 
+            }
+        
     }
 
-    const [values, setValues] = useState(food_detail);
+    const [values, setValues] = useState(combo_detail);
     
     const [addClick,setAddClick]=useState();
     const [deleteClick,setDeleteClick]=useState();
-    const unchooseMaterial=material_list.filter((mar)=>!existObject(mar,values.Material,compareMaterial));
-    const [unchooseList,setUnchooseList]=useState(unchooseMaterial);
-    const defaultTag=tag_list.filter((tag)=>!existObject(tag,values.Tags,compareTag));
-    const [tagList,setTaglist]=useState(defaultTag);
+    const unchooseFood=food_list.filter((mar)=>!existObject(mar,values.Food,compareFood));
+    const [unchooseList,setUnchooseList]=useState(unchooseFood);
     
     React.useEffect(()=>{
         if(typeof addClick !== "undefined"){
-            const newList=[...values.Material,addClick];
-            setValues({...values,Material:newList});
-            setUnchooseList(unchooseList.filter((mar)=>!compareMaterial(mar,addClick,compareMaterial)));
+            const addFood=food_list.filter((food)=>food.FoodID===addClick.FoodID)[0];
+            const newList=[...values.Food,addFood];
+            setValues({...values,Food:newList});
+            setUnchooseList(unchooseList.filter((mar)=>!compareFood(mar,addFood)));
         }
         
     },[addClick]);
     
     React.useEffect(()=>{
         if(typeof deleteClick !== "undefined"){
-            const newList=[...values.Material,addClick];
-            setValues({...values,Material:values.Material.filter((mar)=>!compareMaterial(mar,deleteClick,compareMaterial))});
-            setUnchooseList([...unchooseList,deleteClick]);
+            const deleteFood=food_list.filter((food)=>food.FoodID===deleteFood.FoodID)[0];
+            setValues({...values,Food:values.Food.filter((mar)=>!compareFood(mar,deleteFood))});
+            setUnchooseList([...unchooseList,deleteFood]);
         }
         
     },[deleteClick]);
@@ -131,12 +110,12 @@ function EditFoodItem(){
     };
 
     const handleCreatFood=()=>{
-        setValues({...values,Tags:tagList});
-        if (food_manage_data.tempFoodID !==""){
-            dispatch({type:update_food_action.loading,payload:values});
+        if (food_manage_data.tempComboID !==""){
+            dispatch({type:update_combo_action.loading,payload:values});
+            console.log("com values",values);
         } else {
             console.log("init values",values);
-            dispatch({type:add_food_action.loading,payload:values});
+            dispatch({type:add_combo_action.loading,payload:values});
         }
         history.push(ROUTING_CONSTANTS.MANAGE_ITEM_LIST);
     }
@@ -164,8 +143,8 @@ function EditFoodItem(){
                                                         label="Tên món ăn"
                                                         name="foodname"
                                                         required
-                                                        value={values.FoodName}
-                                                        onChange={(e)=>setValues({...values,FoodName:e.target.value})}
+                                                        value={values.ComboName}
+                                                        onChange={(e)=>setValues({...values,ComboName:e.target.value})}
                                                         variant="outlined"
                                                     />
                                                 </Grid>
@@ -176,8 +155,8 @@ function EditFoodItem(){
                                                         name="description"
                                                         multiline
                                                         rows={3}
-                                                        value={values.Description}
-                                                        onChange={(e)=>setValues({...values,Description:e.target.value})}
+                                                        value={values.ComboDescrip}
+                                                        onChange={(e)=>setValues({...values,ComboDescrip:e.target.value})}
                                                         variant="outlined"
                                                     />
                                                 </Grid>
@@ -196,48 +175,7 @@ function EditFoodItem(){
                                                         />
                                                     </FormControl>
                                                 </Grid>
-                                                <Grid item xs={10} md={5}>
-                                                    <FormControl variant="outlined" fullWidth>
-                                                        <InputLabel>Giảm giá</InputLabel>
-                                                        <OutlinedInput
-                                                            id="saleoff"
-                                                            label="Giảm giá"
-                                                            endAdornment={<InputAdornment position="end">%</InputAdornment>}
-                                                            inputProps={{
-                                                            'aria-label': 'saleoff',
-                                                            }}
-                                                        />
-                                                    </FormControl>
-                                                </Grid>
-                                                <Grid item xs={10} md={5}>
-                                                    
-                                                    <Autocomplete
-                                                        fullWidth
-                                                        multiple
-                                                        value={tagList}
-                                                        onChange={(e,v)=>{setTaglist(v)}}
-                                                        id="checkboxes-tags-demo"
-                                                        options={tag_list}
-                                                        disableCloseOnSelect
-                                                        getOptionSelected={(o,v)=>compareTag(o,v)}
-                                                        getOptionLabel={(option) => option.TagName}
-                                                        renderOption={(props, option, { selected }) => (
-                                                            <li {...props}>
-                                                            <Checkbox
-                                                                icon={icon}
-                                                                checkedIcon={checkedIcon}
-                                                                style={{ marginRight: 8 }}
-                                                                checked={selected}
-                                                            />
-                                                            {option.TagName}
-                                                            </li>
-                                                        )}
-                                                        style={{ width: 500 }}
-                                                        renderInput={(params) => (
-                                                            <TextField {...params} label="Tag" placeholder="Thêm" />
-                                                        )}
-                                                    />
-                                                </Grid>
+                                                
                                             </Grid>
                                         </CardContent>
                                     </Card>
@@ -249,7 +187,7 @@ function EditFoodItem(){
                 <Grid item container xs={12} sx={{justifyContent:"center", paddingTop: 5, width:"100%"}}>
                     <Box sx={{display:`flex`, flexDirection:"column"}} width={1180}>
                         <Typography variant="h4" gutterBottom component="div" sx={{color:"elevation.layer0.contrast"}}>
-                            Nguyên liệu
+                            Bao gồm
                         </Typography>
                         {food_manage_data.get_foodManage_status.isLoangding?
                         (<Box sx={{ display: 'flex',justifyContent:'center', paddingTop:3 }}>
@@ -257,9 +195,9 @@ function EditFoodItem(){
                         </Box>
                         ):(
                         <Grid container spacing={{ xs: 5, md: 5 }} columns={{ xs: 3, sm: 8, md: 12 }} sx={{paddingTop:3}}>
-                            {values.Material.map((material)=>(
+                            {values.Food.map((food)=>(
                                 <Grid item>
-                                    <MaterialCardDelete key={material.MaterialID} material={material} setDeleteClick={setDeleteClick}/>
+                                    <MaterialCardDelete key={food.FoodID} material={{FoodID:food.FoodID,MaterialName:food.FoodName,Picture:food.Picture}} setDeleteClick={setDeleteClick}/>
                                 </Grid>
                             ))}
                             <Grid item sx={{display:"flex",alignItems:"center"}}>
@@ -267,11 +205,11 @@ function EditFoodItem(){
                                 <AddIcon fontSize="large" />
                             </IconButton>
                             <Dialog open={open} onClose={handleClose} PaperProps={{style: {backgroundColor: 'primary.main',boxShadow: 'none'}}}>
-                            <DialogTitle sx={{textAlign:"center", color:'elevation.layer3.contrast'}}>Chọn nguyên liệu</DialogTitle>
+                            <DialogTitle sx={{textAlign:"center", color:'elevation.layer3.contrast'}}>Chọn thức ăn</DialogTitle>
                             <DialogContent>
                                 <Box sx={{display:`flex`, flexDirection:"row", flexWrap: "wrap",overflowY:"auto", columnGap: "40px"}}>
-                                    {unchooseList.map((material)=>(
-                                        <MaterialCardAdd key={material.MaterialID} material={material} setAddClick={setAddClick}/>
+                                    {unchooseList.map((food)=>(
+                                        <MaterialCardAdd key={food.FoodID} material={{FoodID:food.FoodID,MaterialName:food.FoodName,Picture:food.Picture}} setAddClick={setAddClick}/>
                                     ))}
                                 </Box>
                             </DialogContent>
@@ -283,50 +221,13 @@ function EditFoodItem(){
                         </Grid>)}
                     </Box>
                 </Grid>
-                {/* <Grid item xs={12} sx={{justifyContent:"space-evenly", paddingTop: 5,mx:4}}>
-                    <Box sx={{display:"flex", flexDirection:"row",flexWrap:"wrap"}}>
-                        <Typography variant="h4" gutterBottom component="div" sx={{flexGrow:1}}>
-                            Qui trình chế biến
-                        </Typography>
-                        <TextField
-                            width="auto"
-                            fullWidth
-                            label="Hướng dẫn"
-                            name="instruction"
-                            multiline
-                            rows={10}
-                            value={values.Instruct}
-                            onChange={(e)=>setValues({...values,Instruct:e.target.value})}
-                            variant="outlined"
-                        />
-                    </Box>
-                </Grid> */}
-                <Grid item container xs={12} sx={{justifyContent:"center", py: 5, width:"100%"}}>
-                    <Box sx={{display:`flex`, flexDirection:"column"}} width={1180}>
-                        <Typography variant="h4" gutterBottom component="div" sx={{flexGrow:1, color:"elevation.layer0.contrast", mb:5}}>
-                            Qui trình chế biến
-                        </Typography>
-                        <TextField
-                            width="auto"
-                            fullWidth
-                            label="Hướng dẫn"
-                            name="instruction"
-                            multiline
-                            rows={10}
-                            defaultValue={values.Instruct}
-                            onChange={(e)=>setValues({...values,Instruct:e.target.value})}
-                            variant="outlined"
-                            required
-                        />
-                        <Box sx={{display:`flex`, flexDirection:"row", alignSelf:"flex-end"}}>
-                            <Button sx={{width:"fit-content", mt:"20px", mr:"10px"}} variant="contained" onClick={()=>history.push(ROUTING_CONSTANTS.MANAGE_ITEM_LIST)}>HỦY BỎ</Button>
-                            <Button sx={{width:"fit-content", mt:"20px"}} variant="contained" onClick={()=>handleCreatFood()}>HOÀN TẤT</Button>
-                        </Box>
-                    </Box>
-                </Grid>
+                <Box sx={{display:`flex`, flexDirection:"row", alignSelf:"flex-end"}}>
+                    <Button sx={{width:"fit-content", mt:"20px", mr:"10px"}} variant="contained" onClick={()=>history.push(ROUTING_CONSTANTS.MANAGE_ITEM_LIST)}>HỦY BỎ</Button>
+                    <Button sx={{width:"fit-content", mt:"20px"}} variant="contained" onClick={()=>handleCreatFood()}>HOÀN TẤT</Button>
+                </Box>                        
             </Grid>
         </Box>
     );
 
 }
-export default EditFoodItem;
+export default EditComboItem;

@@ -6,7 +6,9 @@ import {
     getFoodRecommendationService,
     addTagService,addFoodService,addMaterialService,updateFoodService,
     deleteFoodService,deleteTagService,deleteMaterialService,getFoodManageService,
-    getWishList, addFoodToWishtListService, removeFoodFromWishtListService
+    getWishList, addFoodToWishtListService, removeFoodFromWishtListService,foodDetailService,
+    addCommentService,deleteCommentService,updateCommentService,
+    addComboService,deleteComboService,updateComboService
 } from "./FoodService";
 import {
     update_cart_actions,
@@ -14,10 +16,12 @@ import {
     delete_cart_actions,
     add_food_action,add_tag_action,update_food_action,
     delete_tag_action,delete_food_action,add_material_action,delete_material_action,food_management_action,
-    food_recommendation_actions, food_wish_list_actions, add_to_wish_list_actions, remove_from_wish_list_actions
+    food_recommendation_actions, food_wish_list_actions, add_to_wish_list_actions, remove_from_wish_list_actions,
+    food_detail_action,add_food_comment_action,update_food_comment_action,delete_food_comment_action,
+    add_combo_action,update_combo_action,delete_combo_action
 } from "./FoodSlice";
 import Toaster from "../../../utils/Toaster/Toaster";
-import {GetCartService,GetFoodService,GetVoucherService,UpdateCartService,DeleteCartService} from './FoodService';
+import { GetCartService, GetFoodService, GetVoucherService, UpdateCartService, DeleteCartService } from './FoodService';
 import {stringify} from "query-string";
 
 function* UpdateCartSaga({payload}){
@@ -126,6 +130,39 @@ function* deleteFoodSaga({payload}){
         yield put({type:delete_food_action.error});
     }
 }
+function* addComboSaga({payload}){
+    try{
+        const res=yield call(addComboService,payload);
+        yield put({type:add_combo_action.success,payload:res});
+        yield put({type:food_management_action.loading,payload:""});
+        Toaster.toastSuccessful("Add combo success");
+    }catch(e){
+        Toaster.toastError("Add combo fail \n",e.message);
+        yield put({type:add_combo_action.error});
+    }
+}
+function* updateComboSaga({payload}){
+    try{
+        const res=yield call(updateComboService,payload);
+        yield put({type:update_combo_action.success});
+        yield put({type:food_management_action.loading,payload:""});
+        Toaster.toastSuccessful("Update combo success");
+    }catch(e){
+        Toaster.toastError("Update combo fail \n",e.message);
+        yield put({type:update_combo_action.error});
+    }
+}
+function* deleteComboSaga({payload}){
+    try{
+        const res=yield call(deleteComboService,payload);
+        yield put({type:delete_combo_action.success,payload:res});
+        yield put({type:food_management_action.loading,payload:""});
+        Toaster.toastSuccessful("Delete combo success");
+    }catch(e){
+        Toaster.toastError("Delete combo fail \n",e.message);
+        yield put({type:delete_food_action.error});
+    }
+}
 function* addMaterialSaga({payload}){
     try{
         const res=yield call(addMaterialService,payload);
@@ -195,6 +232,39 @@ function* removeItemFromWishListSaga({payload}){
     }
 }
 
+function* foodDetailSaga({payload}){
+    try{
+        const res=yield call(foodDetailService,payload);
+        yield put({type:food_detail_action.success,payload:res});
+    }catch(e){
+        yield put({type:food_detail_action.error});
+    }
+}
+function* addCommentSaga({payload}){
+    try{
+        const res=yield call(addCommentService,payload);
+        yield put({type:add_food_comment_action.success, payload: res});
+    }catch(e){
+        yield put({type:add_food_comment_action.error});
+    }
+}
+function* updateCommentSaga({payload}){
+    try{
+        const res=yield call(updateCommentService,payload);
+        yield put({type:update_food_comment_action.success, payload: res});
+    }catch(e){
+        yield put({type:update_food_comment_action.error});
+    }
+}
+function* deleteCommentSaga({payload}){
+    try{
+        const res=yield call(deleteCommentService,payload);
+        yield put({type:delete_food_comment_action.success, payload: res});
+    }catch(e){
+        yield put({type:delete_food_comment_action.error});
+    }
+}
+
 const watchersFood = function* (){
     yield takeLatest(update_cart_actions.loading, UpdateCartSaga);
     yield takeLatest(get_cart_actions.loading,GetCartSaga);
@@ -205,6 +275,9 @@ const watchersFood = function* (){
     yield takeLatest(add_food_action.loading,addFoodSaga);
     yield takeLatest(update_food_action.loading,updateFoodSaga);
     yield takeLatest(delete_food_action.loading,deleteFoodSaga);
+    yield takeLatest(add_combo_action.loading,addComboSaga);
+    yield takeLatest(update_combo_action.loading,updateComboSaga);
+    yield takeLatest(delete_combo_action.loading,deleteComboSaga);
     yield takeLatest(add_material_action.loading,addMaterialSaga);
     yield takeLatest(delete_material_action.loading,deleteMaterialSaga);
     yield takeLatest(food_recommendation_actions.loading,getFoodRecommendationSaga);
@@ -212,6 +285,11 @@ const watchersFood = function* (){
     yield takeEvery(food_wish_list_actions.loading,getWishListSaga);
     yield takeEvery(add_to_wish_list_actions.loading,addItemToWishListSaga);
     yield takeEvery(remove_from_wish_list_actions.loading,removeItemFromWishListSaga);
+    //*food detail
+    yield takeLatest(food_detail_action.loading,foodDetailSaga);
+    yield takeLatest(add_food_comment_action.loading,addCommentSaga);
+    yield takeLatest(update_food_comment_action.loading,updateCommentSaga);
+    yield takeLatest(delete_food_comment_action.loading,deleteCommentSaga);
 
 }
 export default watchersFood;

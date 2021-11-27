@@ -21,7 +21,6 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { selectors,update_food_action,food_management_action,add_food_action } from '../redux/slices/food/FoodSlice';
 import Typography from '@mui/material/Typography';
 import MaterialCardAdd from '../components/FoodItemManagement/MaterialCardAdd';
 import MaterialCardDelete from '../components/FoodItemManagement/MaterialCardDelete';
@@ -40,6 +39,9 @@ import MaterialCardRead from '../components/FoodItemManagement/MaterialCardRead'
 import Carousel from 'react-material-ui-carousel';
 import MaterialListCarousel from '../components/FoodItemManagement/MaterialListCarousel';
 import defaul_food_image from "../assets/images/defaul_food_image.jpg";
+import { food_detail_action } from './../redux/slices/food/FoodSlice';
+import Comments from './../components/Comments/Comments';
+import { delete_food_comment_action,update_food_comment_action,add_food_comment_action,selectors } from '../redux/slices/food/FoodSlice';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -73,76 +75,30 @@ const existObject=(obj,objList,func)=>{
 function FoodDetails(){
     let history= useHistory();
     const dispatch=useDispatch();
-    const food_manage_data= useSelector(selectors.getFoodManagement);
-    const tag_list=food_manage_data.tag_list;
-    const material_list=food_manage_data.material_list;
-    var food_detail;
     
-    if (food_manage_data.tempFoodID !==""){
-        food_detail=food_manage_data.food_list.filter((food)=>food.FoodID===food_manage_data.tempFoodID)[0];
-    }else{
-        food_detail={
-            FoodID:"",
-            FoodName:"",
-            Picture:"",
-            Price:"",
-            Description:"",
-            Instruct:"",
-            Material:[],
-            Tags:[],
-        }
-    }
-
-    const [values, setValues] = useState(food_detail);
-    
-    const [addClick,setAddClick]=useState();
-    const [deleteClick,setDeleteClick]=useState();
-    const unchooseMaterial=material_list.filter((mar)=>!existObject(mar,values.Material,compareMaterial));
-    const [unchooseList,setUnchooseList]=useState(unchooseMaterial);
-    const defaultTag=tag_list.filter((tag)=>existObject(tag,values.Tags,compareTag));
-    
+    const foodid=useSelector(selectors.getFoodDetailID);
     React.useEffect(()=>{
-        if(typeof addClick !== "undefined"){
-            const newList=[...values.Material,addClick];
-            setValues({...values,Material:newList});
-            setUnchooseList(unchooseList.filter((mar)=>!compareMaterial(mar,addClick,compareMaterial)));
-        }
-        
-    },[addClick]);
+        dispatch({type:food_detail_action.loading,payload:foodid});
+    },[]);
     
-    React.useEffect(()=>{
-        if(typeof deleteClick !== "undefined"){
-            const newList=[...values.Material,addClick];
-            setValues({...values,Material:values.Material.filter((mar)=>!compareMaterial(mar,deleteClick,compareMaterial))});
-            setUnchooseList([...unchooseList,deleteClick]);
-        }
+    const food_detail= useSelector(selectors.getFoodDetail);
+    console.log("food detailt",food_detail);
+    const tag_list=food_detail.Tags;
+    
+    const material_list=food_detail.Material;
+    const comments=food_detail.Comment;
+    const instruct=food_detail.Instruct ? food_detail.Instruct :"";
+
+    const deleteComment=(id)=>{
+        dispatch({type:delete_food_comment_action,payload:id});
         
-    },[deleteClick]);
-
-    const setImage=(image)=>{
-        setValues({...values,Picture:image});
     }
-
-    const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const handleCreatFood=()=>{
-        if (food_manage_data.tempFoodID !==""){
-            
-            dispatch({type:update_food_action.loading,payload:values});
-        } else {
-            console.log("init values",values);
-            dispatch({type:add_food_action.loading,payload:values});
-        }
-        history.push(ROUTING_CONSTANTS.MANAGE_ITEM_LIST);
+    const updateComment=(comment)=>{
+        dispatch({type:update_food_comment_action.loading,payload:comment});
     }
-
+    const addComment=(comment)=>{
+        dispatch({type:add_food_comment_action.loading,payload:comment});
+    }
     return (
         <Box>
             <Grid container xs={12} sx={{bgcolor:"elevation.layer0.main"}}>
@@ -153,22 +109,22 @@ function FoodDetails(){
                                 component="img"
                                 height="300px"
                                 width="300px"
-                                image={values.Picture ? values.Picture : defaul_food_image}
+                                image={food_detail.Picture ? food_detail.Picture : defaul_food_image}
                                 alt="Paella dish"
                             />
                         </Box>
                         <Box maxWidth="70ch" sx={{display: `flex`, flexDirection:"column", flexWrap:"wrap"}} ml="20px">
                             <Box sx={{display:`flex`, flexDirection:"column", mb:"20px", flexWrap:"wrap"}} >
                                 <Typography variant="h3" gutterBottom component="div" sx={{color:"elevation.layer0.contrast", fontWeight:"bold"}}>
-                                    {values.FoodName}
+                                    {food_detail.FoodName}
                                 </Typography>
                                 <Typography variant="body1" gutterBottom paragraph sx={{color:"elevation.layer0.contrast",height:"auto"}}>
-                                    {values.Description}
+                                    {food_detail.Description}
                                 </Typography>
                                 <Box my="20px">
                                     <Box sx={{display:"inline"}} >
                                         <Typography variant="h5" gutterBottom component="div" sx={{display:"inline",color:"red", fontWeight:"bold"}}>
-                                            {values.Price}
+                                            {food_detail.Price}
                                         </Typography>
                                         <Typography variant="h5" gutterBottom component="div" sx={{display:"inline",color:"red", fontWeight:"bold"}}>
                                              VND
@@ -211,7 +167,7 @@ function FoodDetails(){
                                 </Grid>
                             ))}
                         </Grid>)} */}
-                        <MaterialListCarousel/>
+                        <MaterialListCarousel material_list={material_list}/>
                     </Box>
                 </Grid>
                 <Grid item container xs={12} sx={{justifyContent:"center", py: 5, width:"100%"}}>
@@ -221,7 +177,8 @@ function FoodDetails(){
                         </Typography>
                         <Typography sx={{color:"elevation.layer0.contrast", ml:"10px", mb:"10px"}} variant="body1">
                             {  
-                                values.Instruct.split("\n").map((i, key) => {
+                                
+                                instruct.split("\n").map((i, key) => {
                                     return <p key={key}>{i}</p>;
                                 })
                   
@@ -234,6 +191,7 @@ function FoodDetails(){
                         <Typography variant="h4" gutterBottom component="div" sx={{flexGrow:1, color:"red", ml:"10px", mt:"10px"}}>
                             Bình luận
                         </Typography>
+                        {/* <Comments comments={comments} deleteComment={deleteComment} updateComment={updateComment} addComment={addComment}/> */}
                     </Box>
                 </Grid>
             </Grid>

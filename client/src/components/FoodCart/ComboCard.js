@@ -49,16 +49,16 @@ function ComboCard(props) {
 				<Typography variant="subtitle1" color="initial" sx={{ fontWeight: "bold", textAlign: "center" }} pb={2}>{t(base_keys.food.quantity)}</Typography>
 				<Box display="flex" flexDirection="row" pb={2}>
 					<QuanlityButton onClick={()=>{
-						updateCombo({...combo,Quantity:combo.Quantity+1});
+						updateCombo({...combo,Quantity:parseInt(combo.Quantity)+1});
 					}} >
 						<AddIcon sx={{ fill: "black" }} />
 					</QuanlityButton>
 					<Typography variant="subtitle1" color="initial" sx={{ fontWeight: "bold", px: 2 }}>{combo.Quantity}</Typography>
 					<QuanlityButton onClick={()=>{
-						if(combo.Quantity<2){
+						if(parseInt(combo.Quantity)<2){
                             return;
                         }else{
-                            updateCombo({...combo,Quantity:combo.Quantity-1});
+                            updateCombo({...combo,Quantity:parseInt(combo.Quantity)-1});
                         }
 					}}>
 						<RemoveIcon sx={{ fill: "black" }} />

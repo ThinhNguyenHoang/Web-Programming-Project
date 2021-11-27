@@ -49,16 +49,16 @@ function FoodCard(props) {
 				<Typography variant="subtitle1" color="initial" sx={{ fontWeight: "bold", textAlign: "center" }} pb={2}>{t(base_keys.food.quantity)}</Typography>
 				<Box display="flex" flexDirection="row" pb={2}>
 					<QuanlityButton onClick={()=>{
-						updateFood({...food,Quantity:food.Quantity+1});
+						updateFood({...food,Quantity:parseInt(food.Quantity)+1});
 					}} >
 						<AddIcon sx={{ fill: "black" }} />
 					</QuanlityButton>
 					<Typography variant="subtitle1" color="initial" sx={{ fontWeight: "bold", px: 2 }}>{food.Quantity}</Typography>
 					<QuanlityButton onClick={()=>{
-						if(food.Quantity<2){
+						if(parseInt(food.Quantity)<2){
                             return;
                         }else{
-                            updateFood({...food,Quantity:food.Quantity-1});
+                            updateFood({...food,Quantity:parseInt(food.Quantity)-1});
                         }
 					}}>
 						<RemoveIcon sx={{ fill: "black" }} />

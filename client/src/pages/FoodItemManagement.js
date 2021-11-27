@@ -1,6 +1,7 @@
 import { Typography,Box,TableContainer,TableBody,TableRow,TableHead,Table } from '@mui/material';
 import * as React from 'react';
-import { add_material_action, delete_tag_action, food_management_action, selectors ,delete_food_action,add_tag_action,setFoodEdit} from '../redux/slices/food/FoodSlice';
+import { add_material_action, delete_tag_action, food_management_action, selectors ,delete_food_action,add_tag_action,setFoodEdit,setComboEdit,
+delete_combo_action} from '../redux/slices/food/FoodSlice';
 import Grid from '@mui/material/Grid';
 import { useDispatch,useSelector } from 'react-redux';
 import { chainPropTypes } from '@mui/utils';
@@ -63,6 +64,7 @@ function FoodItemManagement(){
     const food_list=food_manageData.food_list;
     const tag_list=food_manageData.tag_list;
     const material_list=food_manageData.material_list;
+    const combo_list=food_manageData.combo_list;
     console.log("food data",food_manageData);
     
     const foodMaxPage=food_list.length % 10===0 ? food_list.length/10 : Math.floor(food_list.length/10)+1;
@@ -77,6 +79,15 @@ function FoodItemManagement(){
     const [material_img,setMaterialImg]=React.useState("");
     const [material_name,setMaterialName]=React.useState("");
     const [tag_name,setTagName]=React.useState("");
+    //! /////////combo
+    const comboMaxPage=combo_list.length % 10===0 ? combo_list.length/10 : Math.floor(combo_list.length/10)+1;
+    const [comboCurrPage,setComboPage]=React.useState(1);
+    const [combo_render_list,setComboRenderList]=React.useState([1,2,3,4,5,6,7,8,9,10]);
+    React.useEffect(() => {
+        setComboRenderList([...Array(10).keys()].map(i=>i+1+(comboCurrPage-1)*10));
+        
+    }, [comboCurrPage]);
+    //! ////////combo
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -184,6 +195,87 @@ function FoodItemManagement(){
                     </Box>
                 </TableContainer>)}
             </Box>
+            {/* //! /////////////////////// */}
+            <Box sx={{display:`flex`, flexDirection:"column", paddingBottom:5, width:"1000" }}>
+                <Divider>
+                    <Typography sx={{ fontSize: { lg: 50, md: 40, sm: 30, xs: 20 }, color: `red`}} p={2} variant={`h2`}>Danh sách Combo</Typography>
+                </Divider>
+                <Button  sx={{width:"fit-content", alignSelf:"flex-end", mb:"20px"}} variant="contained" onClick={()=>{
+                    dispatch({type:setComboEdit,payload:""});
+                    history.push(ROUTING_CONSTANTS.EDITCOMBO);
+                }}>Thêm combo</Button>
+                {food_manageData.get_foodManage_status.isLoangding ?
+                (<Box sx={{ display: 'flex',justifyContent:'center', paddingTop:3 }}>
+                    <CircularProgress />
+                </Box>
+                ):(
+                <TableContainer component={Paper} width={1000}>
+                    <Table aria-label="a dense table">
+                        <TableHead>
+                            <TableRow>
+                                <StyledTableCell align="left">STT</StyledTableCell>
+                                <StyledTableCell align="left">Mã combo</StyledTableCell>
+                                <StyledTableCell align="left">Tên combo</StyledTableCell>
+                                <StyledTableCell align="left">Giá</StyledTableCell>
+                                <StyledTableCell ></StyledTableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                         
+                            {combo_render_list.map((idx)=>{
+                                if (idx>combo_list.length){
+                                    return(
+                                        <StyledTableRow style={{ height: 53  }} key={idx}>
+                                            <StyledTableCell colSpan={5} />
+                                        </StyledTableRow>
+                                    );
+                                }
+                                return (
+                                    <StyledTableRow key={idx}>
+                                        <StyledTableCell component="th" scope="row">{idx}</StyledTableCell>
+                                        <StyledTableCell align="left">{combo_list[idx-1].ComboID}</StyledTableCell>
+                                        <StyledTableCell align="left">{combo_list[idx-1].ComboName}</StyledTableCell>
+                                        <StyledTableCell align="left">{combo_list[idx-1].Price}</StyledTableCell>
+                                        <StyledTableCell align="left">
+                                            <IconButton aria-label="edit " onClick={()=>{
+                                                dispatch({type:setComboEdit,payload:combo_list[idx-1].ComboID});
+                                                history.push(ROUTING_CONSTANTS.EDITCOMBO);}}>
+                                                <EditIcon/>
+                                            </IconButton>
+                                            <IconButton aria-label="delete " onClick={()=>dispatch({type:delete_combo_action.loading,payload:combo_list[idx-1].ComboID})}>
+                                                <DeleteIcon/>
+                                            </IconButton>
+                                        </StyledTableCell>
+                                    </StyledTableRow>
+                                );
+                                
+                                })}
+                        </TableBody>
+                    </Table>
+                    <Box sx={{display:"flex",flexDirection:"row",justifyContent:"flex-end"}}>
+                        <Typography sx={{alignSelf:"center",mr:4}}>{(comboCurrPage-1)*10+1}-{comboCurrPage*10}/{combo_list.length}</Typography>
+                        <IconButton onClick={()=>{
+                            if (comboCurrPage<2){
+                                return;
+                            }else{
+                                setFoodPage(comboCurrPage-1);
+                            }
+                        }}>    
+                            <ArrowBackIosNewIcon/>
+                        </IconButton>
+                        <IconButton onClick={()=>{
+                            if (comboCurrPage>=comboMaxPage){
+                                return;
+                            }else{
+                                setFoodPage(comboCurrPage+1);
+                            }
+                        }}>
+                            <ArrowForwardIosIcon/>
+                        </IconButton>
+                    </Box>
+                </TableContainer>)}
+            </Box>
+            {/* //! ////////////////////////////////// */}
             <Grid sx={{maxWidth:1500, flexGrow: 1, alignSelf:"center", paddingBottom:15}}>
                 <Divider>
                     <Typography variant="h4" sx={{color: 'red'}}>Tag</Typography>
