@@ -107,7 +107,7 @@ class FoodRepository implements Repository
         } catch (Exception $e) {
             error_log($e->getMessage());
         }
-        if(!$result){
+        if (!$result) {
             return null;
         }
         $top_tag = array();
@@ -147,7 +147,7 @@ class FoodRepository implements Repository
 
     public static function create($entity = null): \mysqli_result|bool|null
     {
-        $query = "INSERT INTO food VALUES('$entity->FoodID','$entity->FoodName','$entity->Picture', '$entity->Price', '$entity->Description', '$entity->Instruct');";
+        $query = "INSERT INTO food (FoodName, Picture, Price, Description, Instruct, Sale) VALUES('$entity->FoodID','$entity->FoodName','$entity->Picture', '$entity->Price', '$entity->Description', '$entity->Instruct', '$entity->Sale');";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
@@ -185,7 +185,7 @@ class FoodRepository implements Repository
 
     public static function update(int $entityID = null, object $entity = null)
     {
-        $query = "UPDATE food SET FoodName='$entity->FoodName', Picture='$entity->Picture', Price=$entity->Price, Description='$entity->Description', Instruct='$entity->Instruct' WHERE FoodID=$entityID;";
+        $query = "UPDATE food SET FoodName='$entity->FoodName', Picture='$entity->Picture', Price=$entity->Price, Description='$entity->Description', Instruct='$entity->Instruct', Sale='$entity->Sale' WHERE FoodID=$entityID;";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $exception) {
@@ -263,5 +263,26 @@ class FoodRepository implements Repository
             echo $exception->getMessage();
         }
         return null;
+    }
+
+    public static function initUserRefTagForFood()
+    {
+        $list_tag = TagRepository::listTag();
+
+        $UserID = RequestHelper::getUserIDFromToken();
+        foreach ($list_tag as $tag) {
+            echo $tag["TagID"];
+            $query = "INSERT INTO user_ref_tag (TagID, UserID, Count) VALUES ('" . $tag["TagID"] . "', $UserID, 0)";
+
+            try {
+                $result = QueryExecutor::executeQuery($query);
+            } catch (Exception $exception) {
+                echo $exception->getMessage();
+            }
+
+            if (!$result) {
+                return null;
+            }
+        }
     }
 }

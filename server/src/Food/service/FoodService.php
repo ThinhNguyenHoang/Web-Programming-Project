@@ -43,8 +43,8 @@ class FoodService
     {
         $top_tag = FoodRepository::getTopTagFood();
         if(!$top_tag){
-            ResponseHelper::error_server("No Recommendation Yet");
-            die();
+            FoodRepository::initUserRefTagForFood();
+            $top_tag = FoodRepository::getTopTagFood();
         }
         $list_food = array();
         foreach($top_tag as $tag) {
