@@ -276,7 +276,6 @@ BANK ACCOUNT:
 
 
 ```
-TRANSACTION - Các cột không có trong này thì bỏ trong MYSQL (Bỏ status, subject, payment method):
     GET: /transaction
         {
             "message": "Read transaction:result in success",
@@ -314,4 +313,103 @@ TRANSACTION - Các cột không có trong này thì bỏ trong MYSQL (Bỏ statu
                 "amount":"",
                 "description":"",
                 }
+```
+
+#CART
+```
+    GET: /cart
+    {
+        "message": "Read cart:result in success",
+        "data": {
+            "UserID": "",
+            "FoodList": [
+                {
+                    "FoodID": "",
+                    "FoodName": "",
+                    "Picture": ,
+                    "Price": "",
+                    "Sale": "",
+                    "Quantity": ""
+                },
+                {
+                    "FoodID": "",
+                    "FoodName": "",
+                    "Picture": ,
+                    "Price": "",
+                    "Sale": "",
+                    "Quantity": ""
+                }
+            ],
+            "ComboList": [
+                {
+                    "ComboID": "",
+                    "ComboName": "",
+                    "Price": "",
+                    "FoodList": [
+                        {
+                            "FoodID": "",
+                            "FoodName": "",
+                            "Picture": ,
+                            "Price": "",
+                            "Sale": ""
+                        },
+                        {
+                            "FoodID": "",
+                            "FoodName": "",
+                            "Picture": ,
+                            "Price": "",
+                            "Sale": ""
+                        }
+                    ],
+                    "Quantity": ""
+                },
+                {
+                    "ComboID": "",
+                    "ComboName": "",
+                    "Price": "",
+                    "FoodList": [
+                        {
+                            "FoodID": "",
+                            "FoodName": "",
+                            "Picture": ,
+                            "Price": "",
+                            "Sale": ""
+                        },
+                        {
+                            "FoodID": "",
+                            "FoodName": "",
+                            "Picture": ,
+                            "Price": "",
+                            "Sale": ""
+                        }
+                    ],
+                    "Quantity": ""
+                }
+            ]
+        }
+    }
+
+    PUT: /cart
+        body: {
+            "FoodList":[
+                {
+                    "FoodID": , 
+                    "Quantity": 
+                },
+                {
+                    "FoodID": , 
+                    "Quantity":
+                }
+            ],
+            "ComboList": [
+                {
+                    "ComboID":,
+                    "Quantity":
+                },
+                {
+                    "ComboID":,
+                    "Quantity":
+                }
+            ]
+        }
 ```
