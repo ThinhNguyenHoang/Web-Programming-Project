@@ -46,6 +46,12 @@ class ResponseHelper {
 
     public static function error_server($message){
         // TODO: Trả về code lỗi: 500  và trả về message lỗi nếu có (Lỗi do server)
+        http_response_code(500);
+        $object = new \stdClass();
+        $object->message = "HASDHASHD";
+        echo json_encode(
+            array("message" => $message)
+        );
     }
 
 }
