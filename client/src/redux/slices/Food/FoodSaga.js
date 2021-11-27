@@ -26,6 +26,7 @@ function* UpdateCartSaga({payload}){
     try{
         yield call(UpdateCartService,payload);
         yield put({type:update_cart_actions.success});
+        yield put({type:get_cart_actions.loading,payload:""});
         Toaster.toastSuccessful("Update cart Successfully");
     }catch(e){
         Toaster.toastError("Update cart faild: " + e.message);
@@ -39,11 +40,8 @@ function* GetCartSaga({payload}){
     console.log("Get cart Saga");
     try{
         const res=yield call(GetCartService,payload);
-        console.log("res data",res);
         yield put({type:"get_cart.success",payload:res});
         Toaster.toastSuccessful("Load cart Successfully");
-        
-
     }catch(e){
         Toaster.toastError("Load cart faild: " + e.message);
         yield put({type: get_cart_actions.error, payload: ''});

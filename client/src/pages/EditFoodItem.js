@@ -83,6 +83,7 @@ function EditFoodItem(){
             Picture:"",
             Price:"",
             Description:"",
+            //TODO sale
             Instruct:"",
             Material:[],
             Tags:[],

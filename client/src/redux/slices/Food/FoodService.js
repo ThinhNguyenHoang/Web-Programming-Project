@@ -24,12 +24,22 @@ const api_endpoints = {
 
 
 export const UpdateCartService= (payload)=>{
-    console.log("Update user food cart",FoodCart2CartData(payload));
-    FoodCart2CartData(payload).map((data)=>{
-        return axios.post(`${baseURL}${api_endpoints.cart}/${data.id}`,data)
-        .then((response=>console.log("Axios success ",data.id,response.data)))
-        .catch((error)=>console.log("Axios fail",data.id,error));
-    })
+    console.log("Update user food cart sevice",payload);
+    
+}
+export const GetCartService = async (payload)=>{
+    const cartData = cartt;
+    const voucherData = await request.getAsync(api_endpoints.voucher)
+                                    .then((response)=>response.data)
+                                    .catch((error)=>console.log("fail at cart service ",error));
+    return {
+            food_list:cartData.FoodList,
+            combo_list:cartData.ComboList,
+            voucher_list:voucherData,
+        }
+}
+export const GetVoucherDataService=(payload)=>{
+    return request.getAsync(api_endpoints.voucher);
 }
 
 export const DeleteCartService = async (payload)=>{
@@ -45,11 +55,7 @@ export const GetCartDataService= (payload)=>{
     .catch((error) => console.log("fail cart"));
 
 }
-export const GetVoucherDataService=async (payload)=>{
-    return await request.getAsync(api_endpoints.voucher)
-                        .then((response) => response.data)
-                        .catch((error) => error);
-}
+
 
 export const GetFoodDataService=(payload)=>{
     console.log("Get food data");
@@ -65,15 +71,7 @@ export const AddCartService = async (payload) =>{
     .catch(error => console.log("axios failed",error))
 }
 
-export const GetCartService =  (payload)=>{
-    const cartData = cartt;
-    const voucherData = GetVoucherDataService(payload);
-    
-    return {
-            food_list:cartData,
-            voucher_list:voucherData,
-        }
-}
+
 
 export const getFoodManageService = async (payload)=>{
     const food_list= await request.getAsync(api_endpoints.food)
@@ -174,9 +172,9 @@ const fooddd3={
 }
 const comboo={
     ComboID:"1",
-    ComboName:"",
-    Picture:"",
-    Quantity:"",
+    ComboName:"Combo 1",
+    Picture:"https://image.shutterstock.com/image-photo/suraj-mukhi-flower-my-great-600w-1467178388.jpg",
+    Quantity:1,
     Price:10000,
     FoodList:[fooddd1,fooddd2,fooddd3]
 }
