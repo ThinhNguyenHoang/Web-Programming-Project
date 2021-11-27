@@ -91,7 +91,7 @@ function* getFoodRecommendationSaga({payload}){
         yield put({type:food_recommendation_actions.success, payload: res})
     }
     catch (e) {
-        yield put({type:food_recommendation_actions.error,payload:JSON.stringify(e)});
+        yield put({type:food_recommendation_actions.error,payload:e});
     }
 }
 // * WISH LIST

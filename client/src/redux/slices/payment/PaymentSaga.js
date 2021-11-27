@@ -2,7 +2,7 @@ import {call, put, takeLatest} from "redux-saga/effects";
 
 import Toaster from "../../../utils/Toaster/Toaster";
 import {
-    addNewBankAccountService,
+    addNewBankAccountService, deleteBankAccountService, editBankAccountService,
     getBankAccountItemService,
     getBankAccountListService,
     getTransactionItemService,
@@ -68,10 +68,10 @@ function* getBankAccountDetailSaga({ payload }) {
 
 function* editBankAccountDetailSaga({ payload }) {
     try {
-        const res = yield call(getBankAccountDetailSaga, payload)
+        const res = yield call(editBankAccountService, payload)
         yield put({ type:edit_bank_account_detail_actions.success, payload:res});
     } catch (e) {
-        yield put({type: edit_bank_account_detail_actions.error, payload: e.message});
+        yield put({type: edit_bank_account_detail_actions.error, payload: e});
     }
 }
 
@@ -80,16 +80,16 @@ function* addBankAccountSaga({ payload }) {
         const res = yield call(addNewBankAccountService, payload)
         yield put({ type:add_bank_account_detail_actions.success, payload:res});
     } catch (e) {
-        yield put({type: add_bank_account_detail_actions.error, payload: e.message});
+        yield put({type: add_bank_account_detail_actions.error, payload: e});
     }
 }
 
 function* removeBankAccountSaga({ payload }) {
     try {
-        const res = yield call(addNewBankAccountService, payload)
+        const res = yield call(deleteBankAccountService, payload)
         yield put({ type:remove_bank_account_detail_actions.success, payload:res});
     } catch (e) {
-        yield put({type: remove_bank_account_detail_actions.error, payload: e.message});
+        yield put({type: remove_bank_account_detail_actions.error, payload: e});
     }
 }
 

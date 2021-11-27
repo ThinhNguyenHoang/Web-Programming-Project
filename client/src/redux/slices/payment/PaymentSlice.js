@@ -97,40 +97,40 @@ const paymentSlice = createSlice({
             state.payment_account.status = success();
         },
         [get_bank_account_detail_actions.error]: (state, action) => {
-            state.payment_account.status = error()
+            state.payment_account.status = error(action.payload)
         },
 
         [edit_bank_account_detail_actions.loading]: (state, action) => {
             state.payment_account.status = loading();
         },
         [edit_bank_account_detail_actions.success]: (state, action) => {
-            state.payment_account.accounts = action.payload.data;
+            state.payment_account.accounts = [...state.payment_account.accounts,action.payload.data];
             state.payment_account.status = success();
         },
         [edit_bank_account_detail_actions.error]: (state, action) => {
-            state.payment_account.status = error()
+            state.payment_account.status = error(action.payload)
         },
 
         [add_bank_account_detail_actions.loading]: (state, action) => {
             state.payment_account.status = loading();
         },
         [add_bank_account_detail_actions.success]: (state, action) => {
-            state.payment_account.accounts = action.payload.data;
+            state.payment_account.accounts = [...state.payment_account.accounts,action.payload.data];
             state.payment_account.status = success();
         },
         [add_bank_account_detail_actions.error]: (state, action) => {
-            state.payment_account.status = error()
+            state.payment_account.status = error(action.payload)
         },
 
         [remove_bank_account_detail_actions.loading]: (state, action) => {
             state.payment_account.status = loading();
         },
         [remove_bank_account_detail_actions.success]: (state, action) => {
-            state.payment_account.accounts = action.payload.data;
+            state.payment_account.accounts = [...state.payment_account.accounts,action.payload.data];
             state.payment_account.status = success();
         },
         [remove_bank_account_detail_actions.error]: (state, action) => {
-            state.payment_account.status = error()
+            state.payment_account.status = error(action.payload)
         },
 
         [make_payment_actions.loading]: (state,action) => {

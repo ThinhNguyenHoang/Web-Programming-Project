@@ -38,10 +38,10 @@ export const addNewBankAccountService = (payload) => {
 }
 // * Mainly used for adding or removing money from the account
 export const editBankAccountService = (payload) => {
-    return request.putAsync(api_endpoints.bank_account, payload);
+    return request.putAsyncWithId(api_endpoints.bank_account, payload);
 }
 
 export const deleteBankAccountService = (payload) => {
-    return request.deleteAsync(api_endpoints.bank_account, payload);
+    return request.deleteAsyncWithID(api_endpoints.bank_account, payload);
 }
 

@@ -59,7 +59,6 @@ export const changePasswordService = (payload) => {
 }
 
 export const updateUserProfileService = (payload) => {
-    console.log("FOUND TOKEN, CALLING UPDATE_PROFILE",payload);
     return request.putAsync(api_endpoints.profile, payload);
 }
 

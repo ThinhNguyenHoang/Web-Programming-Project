@@ -333,8 +333,9 @@ const FoodSlice = createSlice({
             state.recommendations.status = success();
         },
         [food_recommendation_actions.error]: (state, action) => {
-            Toaster.toastError(JSON.stringify(action.payload));
-            state.recommendations.status = error();
+            state.recommendations.status = error(action.payload);
+            // Toaster.toastError(action.payload);
+
         },
         [food_recommendation_actions.loading]: (state, action) => {
             state.recommendations.status = loading();

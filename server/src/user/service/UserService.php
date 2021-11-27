@@ -188,6 +188,7 @@ class UserService
         }
         catch(ExpiredException $exception){
             ResponseHelper::error_server("Invalid Token: Token Expired. Try renew it");
+            die();
         }
         if(!$token) die();
         $request = RequestHelper::getRequestBody();
@@ -202,13 +203,16 @@ class UserService
         if(!$user_found){
             // Throw error notifying username already taken
             ResponseHelper::error_client("Account doesn't exist");
+            die();
         }
         $user_profile = UserMapper::mapUserProfileFromRequest($request);
         $result = UserRepository::updateUserProfile($user_found->id,$user_profile);
         if($result){
             ResponseHelper::success(UserMessage::getMessages()->updateSuccess,$result);
+            die();
         }
         ResponseHelper::error_server(UserMessage::getMessages()->updateError);
+        die();
     }
 
 
@@ -234,10 +238,12 @@ class UserService
         if(!$user_found){
             // Throw error notifying username already taken
             ResponseHelper::error_client("Account doesn't exist");
+            return;
         }
         $user_profile = UserRepository::getUserProfile($user_found->id);
         if($user_profile){
             ResponseHelper::success(UserMessage::getMessages()->readSuccess,$user_profile);
+            return;
         }
         ResponseHelper::error_server(UserMessage::getMessages()->readError);
 

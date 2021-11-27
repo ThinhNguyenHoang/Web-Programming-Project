@@ -130,10 +130,41 @@ class RequestHelper {
             .catch((error) => this.handleError(error.response));
     }
 
+    async putAsyncWithId(endPoint,payload,headers = {}){
+        this.prepareHeaders(headers);
+        return axios
+            .put(`${this.baseUrl}${endPoint}/${payload.id}`, payload, {
+                ...this.defaultConfig,
+                headers: this.defaultHeaders
+            })
+            .then((response) => this.handleResponse(response, endPoint))
+            .catch((error) => this.handleError(error.response));
+    }
+
+    // async deleteAsync(endPoint, payload, headers = {}) {
+    //     this.prepareHeaders(headers);
+    //     return axios
+    //         .delete(`${this.baseUrl}${endPoint}${this.prepareParams(payload)}`, {
+    //             ...this.defaultConfig,
+    //             headers: this.defaultHeaders
+    //         })
+    //         .then((response) => this.handleResponse(response, endPoint))
+    //         .catch((error) => this.handleError(error.response));
+    // }
     async deleteAsync(endPoint, payload, headers = {}) {
         this.prepareHeaders(headers);
         return axios
             .delete(`${this.baseUrl}${endPoint}${this.prepareParams(payload)}`, {
+                ...this.defaultConfig,
+                headers: this.defaultHeaders
+            })
+            .then((response) => this.handleResponse(response, endPoint))
+            .catch((error) => this.handleError(error.response));
+    }
+    async deleteAsyncWithID(endPoint, {id}, headers = {}) {
+        this.prepareHeaders(headers);
+        return axios
+            .delete(`${this.baseUrl}${endPoint}/${id}`, {
                 ...this.defaultConfig,
                 headers: this.defaultHeaders
             })

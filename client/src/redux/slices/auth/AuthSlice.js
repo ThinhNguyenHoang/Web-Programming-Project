@@ -116,6 +116,9 @@ const authSlice = createSlice({
 
         [login_actions.loading]: (state, action) => {
             state.currentUser.login_status = loading();
+            window.localStorage.removeItem("token");
+            window.localStorage.clear();
+            console.log("SAGA CLEARING LOCAL STORAGE");
         },
         [login_actions.success]: (state, action) => {
             console.log("PAYLOAD:" ,action.payload.data);
@@ -133,7 +136,12 @@ const authSlice = createSlice({
             window.location.assign(homepage);
         },
         [login_actions.error]: (state, action) => {
+            Toaster.toastError("Login Failed: " + action.payload.message);
             const { message } = action.payload;
+            window.localStorage.removeItem("token");
+            window.localStorage.clear();
+
+
             state.currentUser.register_status = error(message)
         },
 
@@ -208,6 +216,7 @@ const authSlice = createSlice({
         [update_user_profile_actions.success]: (state, action) => {
             const user_profile = action.payload.data;
             const username = state.currentUser.profile.username;
+            Toaster.toastSuccessful("Update account success");
             state.currentUser.profile =  {username,...user_profile};
             state.currentUser.update_profile_status = success();
         },

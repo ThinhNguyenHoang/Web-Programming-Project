@@ -23,7 +23,6 @@ function* loginUserSaga({ payload }) {
         yield put({ type:"login.success", payload:res});
         Toaster.toastSuccessful("Login Successfully");
     } catch (e) {
-        Toaster.toastError("Login Failed: " + e.message);
         yield put({type: login_actions.error, payload: e.message});
     }
 }
@@ -71,13 +70,13 @@ function* changeUserPasswordSaga({payload}) {
 
 function* updateUserProfileSaga({payload}) {
     try{
+        console.log("Saga: updateuser profile");
         const res = yield call(updateUserProfileService, payload);
         yield put({type: update_user_profile_actions.success,payload:res})
-        Toaster.toastSuccessful("Update User Information Successfully");
     }
     catch (e){
         console.log(e);
-        yield put({type:update_user_profile_actions.error, e})
+        yield put({type:update_user_profile_actions.error})
     }
 }
 
@@ -90,10 +89,6 @@ function* getUserProfileSaga(){
     }
     catch (e){
         console.log("GET PROFILE ERROR:",e.message);
-        window.localStorage.removeItem("token");
-        window.localStorage.clear();
-        console.log("SAGA CLEARING LOCAL STORAGE");
-
         yield put({type:read_user_profile_actions.error, payload:e.message})
     }
 }

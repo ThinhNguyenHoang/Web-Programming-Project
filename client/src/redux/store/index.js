@@ -3,7 +3,7 @@ import authSlice from '../slices/auth/AuthSlice';
 import FoodSlice from '../slices/food/FoodSlice';
 import paymentSlice from "../slices/payment/PaymentSlice";
 import createSagaMiddleware from 'redux-saga';
-
+import { composeWithDevTools } from 'redux-devtools-extension';
 import rootSaga from "./sagas";
 
 
@@ -20,7 +20,7 @@ const reducer = {
 
 const store = configureStore({
     reducer,
-    middleware: middleware
+    middleware
 })
 
 

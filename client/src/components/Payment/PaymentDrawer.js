@@ -16,7 +16,15 @@ import * as yup from "yup";
 import { TextField } from "formik-material-ui";
 import { useHistor } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { add_bank_account_detail_actions, edit_bank_account_detail_actions, remove_bank_account_detail_actions,payment_selectors } from '../../redux/slices/payment/PaymentSlice';
+import {
+    add_bank_account_detail_actions,
+    edit_bank_account_detail_actions,
+    remove_bank_account_detail_actions,
+    payment_selectors,
+    get_bank_accounts_actions
+} from '../../redux/slices/payment/PaymentSlice';
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import {getYearMonthDateFromJsDate} from "../../utils";
 
 const getAccountImageFromAccountType = (type) => {
     return undefined;
@@ -89,9 +97,9 @@ export const BankAccountItem = ({ account_item, additionalStyle }) => {
             <CardActions>
                 {/* // TODO: Detail --> To bank detail page 
                     // TODO: Remove --> Delete the accoutn  */}
-                <Button onClick={showPopOver}> Add/Remove </Button>
+                <Button onClick={showPopOver}> Edit Balance</Button>
                 <Button onClick={() => {
-                    dispatch({ type: remove_bank_account_detail_actions.loading, payload: account_item.id })
+                    dispatch({ type: remove_bank_account_detail_actions.loading, payload: account_item})
                 }}> Remove </Button>
 
                 <Popover
@@ -137,9 +145,10 @@ export const BankAccountItem = ({ account_item, additionalStyle }) => {
                                 // onUpdateUser(values, setSubmitting);
                                 const payload = {
                                     ...account_item,
-                                    balance:values,
+                                    ...values,
                                 }
-                                dispatch({type:edit_bank_account_detail_actions.loading,payload});
+                                console.log("Update account with values:",payload);
+                                dispatch({type:edit_bank_account_detail_actions.loading,payload:payload});
                             }}
                         >
                             {({ submitForm, isSubmitting, isValid }) => (
@@ -190,10 +199,18 @@ export const BankAccountItem = ({ account_item, additionalStyle }) => {
     );
 }
 
-export const AccountGrid = ({ bank_account_list = [], callback }) => {
+export const AccountGrid = ({ bank_account_list, callback }) => {
     const [chosenAccount, setChosenAccount] = useState(0);
     const bank_list = useSelector(payment_selectors.getBankAccountsList);
     const list_to_display = bank_account_list ? bank_account_list : bank_list;
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch({type:get_bank_accounts_actions.loading})
+        return () => {
+
+        };
+    }, []);
+
     return (
         <Box sx={{ flexGrow: 1, m: 4 }}>
             {
@@ -226,7 +243,7 @@ export const AccountGrid = ({ bank_account_list = [], callback }) => {
     );
 }
 
-export const AddAccountForm = (callback) => {
+export const AddAccountForm = ({callback}) => {
     const { t, i18n } = useTranslation();
 
     return (
@@ -276,7 +293,7 @@ export const AddAccountForm = (callback) => {
                         )
                         .max(
                             new Date(),
-                            "Please enter valid end date"
+                            "Please enter valid start date"
                         )
                     ,
                     valid_end: yup
@@ -296,15 +313,21 @@ export const AddAccountForm = (callback) => {
                     //     alert(JSON.stringify(values, null, 2));
                     // }, 500);
                     // onUpdateUser(values, setSubmitting);
+
+                    const modified_values = {
+                        ...values,
+                        bank_account_type: "OCB",
+                        balance: 0,
+                    }
                     if (callback){
-                        callback(values, setSubmitting);
+                        callback(modified_values, setSubmitting);
                     }
                     else {
                         console.log("Account form: No Callback: ",values,setSubmitting);
                     }
                 }}
             >
-                {({ submitForm, isSubmitting, isValid }) => (
+                {({ submitForm, isSubmitting, isValid ,values,setFieldValue}) => (
                     <Form>
                         <Box
                             display={`flex`}
@@ -326,12 +349,29 @@ export const AddAccountForm = (callback) => {
                                     variant={`outlined`} />
                             </Box>
                             <Box sx={{ my: 1, px: 3, }}>
-                                <Field component={TextField} type="text" label="Valid Start" name="valid_start"
-                                    variant={`outlined`} />
+                                <DesktopDatePicker
+                                    label="Valid Start"
+                                    inputFormat="DD/MM/YYYY"
+                                    value={values.valid_start}
+                                    onChange={(value) => {
+                                        setFieldValue("valid_start",value.format("YYYY-MM-DD"),true);
+                                    }}
+                                    renderInput={(params) => <Field component={TextField} type="text" name="valid_start"
+                                                                    variant={`outlined`} {...params} />}
+                                 />
                             </Box>
                             <Box sx={{ my: 1, px: 3, }}>
-                                <Field component={TextField} type="text" label="Valid End" name="valid_end"
-                                    variant={`outlined`} />
+                                <DesktopDatePicker
+                                    label="Valid End"
+                                    inputFormat="DD/MM/YYYY"
+                                    value={values.valid_end}
+                                    onChange={(value) => {
+
+                                        setFieldValue("valid_end",value.format("YYYY-MM-DD"),true);
+                                    }}
+                                    renderInput={(params) => <Field component={TextField} type="text" name="valid_end"
+                                                                    variant={`outlined`} {...params} />}
+                                />
                             </Box>
                         </Box>{" "}
                         <Box sx={{
@@ -390,6 +430,13 @@ export const PaymentDrawer = (
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
+    const handleAddBankAccount = (values,setSubmitting) => {
+        console.log("Add bank account with values:", values);
+        dispatch({
+            type: add_bank_account_detail_actions.loading,
+            payload: values,
+        });
+    }
     // TODO GET THE REAL BANK ACCOUNT LIST AND ADD IT TO THE GRID
     // const [accountList,setAccountList]  = useState([]);
     return (
@@ -445,13 +492,7 @@ export const PaymentDrawer = (
                                     horizontal: 'left',
                                 }}
                             >
-                                <AddAccountForm callback={(values, setSubmitting) => {
-                                    console.log("Update profile with values:", values);
-                                    dispatch({
-                                        type: add_bank_account_detail_actions.loading,
-                                        payload: values,
-                                    });
-                                }} />
+                                <AddAccountForm callback={handleAddBankAccount}/>
                             </Popover>
 
                         </Box>

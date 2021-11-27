@@ -68,9 +68,6 @@ class UserController extends BaseController implements RequestHandler
                 break;
             case "put":
                 switch($relative_path){
-                    case "bank-account":
-                        UserService::registerUser();
-                        break;
                     case null:
                         UserService::updateUserAccount();
                         break;

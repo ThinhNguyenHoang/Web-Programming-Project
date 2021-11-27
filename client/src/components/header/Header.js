@@ -120,16 +120,20 @@ const Header = (props) => {
                                         }
                                         return true;
                                     }
+                                }).filter((item) => {
+                                    if(isLoggedIn && (item.navigateTo === ROUTING_CONSTANTS.LOGIN || item.navigateTo=== ROUTING_CONSTANTS.REGISTER)) {
+                                        return false;
+                                    }
+                                    else if(!isLoggedIn && (item.navigateTo === ROUTING_CONSTANTS.RECOMMENDATION || item.navigateTo=== ROUTING_CONSTANTS.ACCOUNT)){
+                                        return false;
+                                    }
+                                    return true;
                                 }).map((item, index) => {
                                     if (item.navigateTo === ROUTING_CONSTANTS.HOMEPAGE) {
                                         return <LogoAndName navTo={item.navigateTo}/>
                                     }
-                                    else if(isLoggedIn && (item.navigateTo === ROUTING_CONSTANTS.LOGIN || item.navigateTo=== ROUTING_CONSTANTS.REGISTER)){
-                                        return <></>
-                                    }
-                                    else if(!isLoggedIn && (item.navigateTo === ROUTING_CONSTANTS.RECOMMENDATION || item.navigateTo=== ROUTING_CONSTANTS.ACCOUNT)){
-                                        return <></>
-                                    }
+
+                                    // }
                                     return <Tab label={item.label} id={item.id} component={Link} to={item.navigateTo}>
                                         <Link to={item.navigateTo}>
                                         </Link>

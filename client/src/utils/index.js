@@ -17,5 +17,5 @@ export const getYearMonthDateFromJsDate = (value) => {
     const year = value.getFullYear();
     const month = value.getMonth();
     const date = value.getDate();
-    return `${year}/${month}/${date}`;
+    return `${year}-${month}-${date}`;
 }

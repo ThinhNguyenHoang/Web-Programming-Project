@@ -9,16 +9,19 @@ import "./locales/i18n";
 import { BrowserRouter } from "react-router-dom";
 import { RouterConfig } from "./routes/RouterConfig";
 import {toast, ToastContainer} from "react-toastify";
-
+import DateAdapter from "@mui/lab/AdapterMoment";
+import {LocalizationProvider} from "@mui/lab";
 
 ReactDOM.render(
     <React.StrictMode>
         <CustomThemeProvider>
             <ToastContainer draggablePercent={60} />
             <Provider store={store}>
-                <BrowserRouter>
-                    <RouterConfig />
-                </BrowserRouter>
+                <LocalizationProvider dateAdapter={DateAdapter}>
+                    <BrowserRouter>
+                        <RouterConfig />
+                    </BrowserRouter>
+                </LocalizationProvider>
             </Provider>
         </CustomThemeProvider>
     </React.StrictMode>,

@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import Toaster from "../Toaster/Toaster";
 
 export function generateName(actionType) {
     const actionName = actionType
@@ -62,7 +63,7 @@ export function success(extraParams = {}) {
 }
 
 export function error(errors) {
-    toast.error(errors.message);
+    Toaster.toastError(errors.message);
     return {
         isSuccess: false,
         isError: true,

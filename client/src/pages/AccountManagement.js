@@ -17,6 +17,8 @@ import {useHistory} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import ImageDrawerUpdater from "../components/ImageDrawerUpdater/ImageDrawerUpdater";
 import PaymentDrawer, {AccountGrid, bank_account_init_list} from "../components/Payment/PaymentDrawer";
+import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
+import {getYearMonthDateFromJsDate} from "../utils";
 
 
 const AccountManagement = () => {
@@ -47,6 +49,7 @@ const AccountManagement = () => {
             type: update_user_profile_actions.loading,
             payload: data,
         });
+        setSubmitting(false);
     }
     const onChangeUserPassword = (values, setSubmitting) => {
         console.log("Change pass with values", values);
@@ -55,7 +58,7 @@ const AccountManagement = () => {
             type: change_pass_actions.loading,
             payload: values.password,
         });
-        // setSubmitting(false);
+        setSubmitting(false);
     }
 
     return (
@@ -255,7 +258,7 @@ const AccountManagement = () => {
                                 onUpdateUser(values, setSubmitting);
                             }}
                         >
-                            {({submitForm, isSubmitting, isValid}) => (
+                            {({submitForm, isSubmitting, isValid,values,setFieldValue}) => (
                                 <Form>
                                     <Box
                                         display={`flex`}
@@ -276,9 +279,21 @@ const AccountManagement = () => {
                                             <Field component={TextField} type="text" label="Address" name="address"
                                                    variant={`outlined`}/>
                                         </Box>
-                                        <Box sx={{my: 1, px: 3,}}>
-                                            <Field component={TextField} type="text" label="Date Of Birth" name="dob"
-                                                   variant={`outlined`}/>
+                                        <Box sx={{ my: 1, px: 3, }}>
+                                            <DesktopDatePicker
+                                                label="Date Of Birth"
+                                                inputFormat="DD/MM/YYYY"
+                                                value={values.dob}
+                                                onChange={(value) => {
+                                                    // console.log("CONVETED DOB IS: ",value,"MOMENT CONVERT: ",value.format("YYYY-MM-DD"));
+
+                                                    // const convertedDate = getYearMonthDateFromJsDate(value);
+                                                    // console.log("CONVETED DOB IS: ",convertedDate);
+                                                    setFieldValue("dob",value.format("YYYY-MM-DD"),true);
+                                                }}
+                                                renderInput={(params) => <Field component={TextField} type="text" name="dob"
+                                                                                variant={`outlined`} {...params} />}
+                                            />
                                         </Box>
                                         <Box sx={{my: 1, px: 3,}}>
                                             <Field component={TextField} type="email" label="Email" name="email"
