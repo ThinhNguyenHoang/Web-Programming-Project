@@ -41,7 +41,11 @@ class ComboService
     public static function getComboRecomendation()
     {
         $top_tag = ComboRepository::getTopTagCombo();
-        echo json_encode($top_tag);die();
+
+        if (!$top_tag) {
+            ComboRepository::initUserRefTagForCombo();
+            $top_tag = ComboRepository::getTopTagCombo();
+        }
         $list_combo = array();
         foreach($top_tag as $tag) {
             // echo json_encode($tag);die();

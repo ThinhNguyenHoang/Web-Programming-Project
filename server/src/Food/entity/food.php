@@ -12,11 +12,12 @@ class Food
     public int $Price;
     public string $Description;
     public $Instruct;
+    public $Sale;
 
     /**
      * Food constructor.
      */
-    public function __construct(int $FoodID = 0, string $FoodName = "", $Picture = null, int $Price = 0, string $Description = "", $Instruct = "")
+    public function __construct(int $FoodID = 0, string $FoodName = "", $Picture = null, int $Price = 0, string $Description = "", $Instruct = "", $Sale=0)
     {
         $this->FoodID = $FoodID;
         $this->FoodName = $FoodName;
@@ -24,5 +25,6 @@ class Food
         $this->Price = $Price;
         $this->Description = $Description;  
         $this->$Instruct = $Instruct;
+        $this->Sale = $Sale;
     }
 }
