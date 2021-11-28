@@ -176,10 +176,10 @@ export const RouterConfig = () => {
                 <Route exact path={ROUTING_CONSTANTS.PAYMENT}>
                     <PaymentPage/>
                 </Route>
-                <Route exact path={ROUTING_CONSTANTS.EDITNEWS}>
+                <Route exact path={ROUTING_CONSTANTS.EDITNEWS+"/:id"}>
                     <NewsEdit/>
                 </Route>
-                <Route exact path={ROUTING_CONSTANTS.NEWSINFO}>
+                <Route exact path={ROUTING_CONSTANTS.NEWSINFO+"/:id"}>
                     <NewsInfo/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.FOODDETAIL}>

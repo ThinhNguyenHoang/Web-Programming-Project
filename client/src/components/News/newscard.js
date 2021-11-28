@@ -26,8 +26,8 @@ function NewsCard (props){
             <CardActionArea>
                 <Button onClick={()=>dispatch({type:delete_news_action.loading,payload:news.NewsID})}>Xóa</Button>
                 <Button onClick={()=>{
-                    dispatch({type:get_news_detail_action.loading,payload:news.NewsID});
-                    history.push(ROUTING_CONSTANTS.EDITNEWS);}}>Sửa</Button>
+                    // dispatch({type:get_news_detail_action.loading,payload:news.NewsID});
+                    history.push(ROUTING_CONSTANTS.EDITNEWS+"/"+news.NewsID);}}>Sửa</Button>
             </CardActionArea>
         );
     }else{
@@ -45,8 +45,8 @@ function NewsCard (props){
                             color="initial" 
                             sx={{fontWeight:"bold",fontSize:"large",textOverflow: 'ellipsis',color:"elevation.layer1.contrast"}} 
                             onClick={()=>{
-                                            dispatch({type:get_news_detail_action.loading,payload:news.NewsID});
-                                            history.push(ROUTING_CONSTANTS.NEWSINFO);}}>
+                                            // dispatch({type:get_news_detail_action.loading,payload:news.NewsID});
+                                            history.push(ROUTING_CONSTANTS.NEWSINFO+"/"+news.NewsID);}}>
                             {news.Title}
                         </Typography>
                     </CardActionArea>

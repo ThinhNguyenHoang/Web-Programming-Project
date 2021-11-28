@@ -20,7 +20,7 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import Typography from '@mui/material/Typography';
 import MaterialCardAdd from '../components/FoodItemManagement/MaterialCardAdd';
 import MaterialCardDelete from '../components/FoodItemManagement/MaterialCardDelete';
@@ -36,7 +36,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { ROUTING_CONSTANTS } from '../routes/RouterConfig';
 import { height } from '@mui/system';
 import { add_news_action, selectors } from '../redux/slices/News/NewsSlice';
-import { update_news_action } from './../redux/slices/News/NewsSlice';
+import { update_news_action,get_news_detail_action,set_new_news} from './../redux/slices/News/NewsSlice';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -46,12 +46,30 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 function NewsEdit(){
     let history= useHistory();
     const dispatch=useDispatch();
+    const {id}=useParams();
+    React.useEffect(()=>{
+        if(id!=="add"){
+            console.log("get news",id);
+            dispatch({type:get_news_detail_action.loading,payload:id});
+        }else{
+            dispatch({type:set_new_news});
+        }
+    },[]);
+    
     const news_detail=useSelector(selectors.getNewsDetail);
-    const [title,setTitle]=useState(news_detail.Title);
-    const [highlight,setHighlight]=useState(news_detail.Highlight);
+    const [title,setTitle]=useState(news_detail.NewsID);
+    const [highlight,setHighlight]=useState(news_detail.Title);
     const [picture,setPicture]=useState(news_detail.Picture);
     const [content,setContent]=useState(news_detail.Content);
     const [author,setAuthor]=useState(news_detail.Author);
+    React.useEffect(()=>{   
+        setTitle(news_detail.Title);
+        setHighlight(news_detail.Highlight);
+        setPicture(news_detail.Picture);
+        setContent(news_detail.Content);
+        setAuthor(news_detail.Author);
+    },[news_detail]);   
+    
     const handleCreatNews= ()=>{
         const news={
             NewsID:news_detail.NewsID,
@@ -61,7 +79,7 @@ function NewsEdit(){
             Content:content,
             Author:author
         }
-        if(news_detail.NewsID!=""){
+        if(id!=="add"){
             dispatch({type:update_news_action.loading,payload:news});
         }else{
             dispatch({type:add_news_action.loading,payload:news});

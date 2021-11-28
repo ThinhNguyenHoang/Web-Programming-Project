@@ -79,6 +79,7 @@ const newsSlice = createSlice({
         },
         [get_news_detail_action.loading]:(state,action)=>{
             state.getNewsDetailStatus=loading();
+            
         },
         [get_news_detail_action.success]:(state,action)=>{
             state.news_detail=action.payload;

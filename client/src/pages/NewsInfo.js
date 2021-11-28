@@ -20,7 +20,7 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import Typography from '@mui/material/Typography';
 import MaterialCardAdd from '../components/FoodItemManagement/MaterialCardAdd';
 import MaterialCardDelete from '../components/FoodItemManagement/MaterialCardDelete';
@@ -49,6 +49,10 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 function NewsInfo(){
     let history= useHistory();
     const dispatch=useDispatch();
+    const {id}=useParams();
+    React.useEffect(()=>{
+        dispatch({type:get_news_detail_action.loading,payload:id});
+    },[]);
     const news_detail=useSelector(selectors.getNewsDetail);
     const comments=news_detail.Comment;
     console.log("new detail",news_detail);
