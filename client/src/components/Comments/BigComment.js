@@ -32,7 +32,6 @@ function BigComment(props){
     const editReply=(reply)=>{
         const newReply=smallCommentList.map(rep=>{
             if(rep.ReplyID===reply.ReplyID){
-                console.log("sdfsdfsd");
                 return {...rep,Content:reply.Content};
                 
             }
@@ -46,6 +45,7 @@ function BigComment(props){
 
     }
     const addReply=()=>{
+        setAnswer(false);
         const rep={
             CommentID:comment.CommentID,
             UserID: userID,

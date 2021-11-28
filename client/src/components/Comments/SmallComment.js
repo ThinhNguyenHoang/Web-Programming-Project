@@ -65,7 +65,7 @@ function SmallComment(props){
                                     />
                                     <Box sx={{display:"flex",flexDirection:"row"}}>
                                         <Button style={{textTransform: 'none'}} onClick={()=>{setEdit(false); setContent(comment.Content);}}>Hủy</Button>
-                                        <Button style={{textTransform: 'none'}} onClick={()=>props.editReply({...comment,Content:content})}>Xác nhận</Button>
+                                        <Button style={{textTransform: 'none'}} onClick={()=>{props.editReply({...comment,Content:content}); setEdit(false);}}>Xác nhận</Button>
                                     </Box>
                                 </Box>
                             ):
