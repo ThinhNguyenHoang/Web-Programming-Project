@@ -92,7 +92,6 @@ function FoodCart() {
         <Grid item container md={4} xs={12} display="flex" flexDirection="column" spacing={2}  >
           <VoucherBox voucherList={cart.voucher_list} voucher_id={cart.voucher_id} />
           <TotalBox subtotal={cart.subtotal} discount={cart.discount} />
-          <NoteBox/>
           <Box textAlign="center" pt={8} >
             <PaymentDrawer trigger={
               <Button onClick={()=>{
