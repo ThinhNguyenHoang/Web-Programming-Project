@@ -9,7 +9,8 @@ import default_food_image from "../../assets/images/defaul_food_image.jpg";
 import {Button, Tab, Tabs} from "@mui/material";
 import {useState} from "react";
 import Box from "@mui/material/Box";
-import {useDispatch} from "react-redux";
+import {useDispatch,useSelector} from "react-redux";
+import { selectors ,update_cart_actions} from "../../redux/slices/food/FoodSlice";
 import ThemedButton, {ThemedOutlineButton} from "../Buttons/ThemedButton/ThemedButton";
 
 // ? Food Combo Schema
@@ -86,8 +87,13 @@ export default function ComboItemCard({combo_item}, ...props) {
     };
 
     const dispatch = useDispatch();
+    const cart = useSelector(selectors.getCart);
     const handleAddCart=()=>{
-        
+        const newCart = {
+            ComboList: [...cart.combo_list,{ComboID:combo_item.id,Quantity:1}],
+            FoodList: cart.food_list
+        }
+        dispatch({type: update_cart_actions.loading, payload: newCart})
     }
 
     return (
