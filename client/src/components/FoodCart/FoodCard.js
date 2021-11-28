@@ -46,7 +46,14 @@ function FoodCard(props) {
 						<Typography variant="h5" sx={{color:"elevation.layer1.contrast", fontWeight:"bold" }}>{food.FoodName}</Typography><br />
 					</Button>
 					<br/>
-					<Typography ml="10px" variant="h6" color="initial" sx={{ fontWeight: "bold", display: "inline",color:"elevation.layer1.contrast" }}>{t(base_keys.food.price)} : {food.Price}đ</Typography>
+					<Typography ml="10px" variant="h6" color="initial" sx={{ fontWeight: "bold", display: "inline",color:"elevation.layer1.contrast" }}>{t(base_keys.food.price)} : {food.Price*(1-parseInt(food.Sale)/100)}đ</Typography>
+					{
+						food.Sale==="0" ? (<></>):
+						(
+							<Typography ml="10px" variant="h6" color="initial" sx={{ fontWeight: "bold", display: "inline",color:"elevation.layer1.contrast" }}>Giá cũ : {food.Price}đ</Typography>
+						)
+					}
+					
 				</Grid>
 			</Grid>
 			<Grid item justifyContent="center" alignItems="center" margin="auto">
