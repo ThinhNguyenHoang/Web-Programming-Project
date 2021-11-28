@@ -16,6 +16,7 @@ import NoteBox from '../components/FoodCart/NoteBox';
 import FoodCard from '../components/FoodCart/FoodCard';
 import {update_cart_actions,selectors,get_cart_actions} from "../redux/slices/food/FoodSlice";
 import ComboCard from './../components/FoodCart/ComboCard';
+import PaymentDrawer from "../components/Payment/PaymentDrawer";
 
 function FoodCart() {
   const cart=useSelector(selectors.getCart);
@@ -93,29 +94,34 @@ function FoodCart() {
           <TotalBox subtotal={cart.subtotal} discount={cart.discount} />
           <NoteBox/>
           <Box textAlign="center" pt={8} >
-            <Button onClick={()=>{
-              //TODO dispatch({type:update_cart_actions.loading,})
-            }} 
-              variant="text" px="auto" sx={{
-              color:"#fff",
-              backgroundColor:"#f00",
-              height:"50px",
-              width:"180px",
-              fontSize:20,
-              fontWeight:"bold",
-              borderRadius:3,
-              "&:hover":{
-                backgroundColor:"#f00"
-              },
-              "&:active":{
-                backgroundColor:"#ff7373"
-              },
-              "&:focus":{
-                backgroundColor:"#f00"
-              }
-            }} >
-              {t(base_keys.food.pay)}
-            </Button>
+            <PaymentDrawer trigger={
+              <Button onClick={()=>{
+                //TODO dispatch({type:update_cart_actions.loading,})
+              }}
+                      variant="text" px="auto" sx={{
+                color:"#fff",
+                backgroundColor:"#f00",
+                height:"50px",
+                width:"180px",
+                fontSize:20,
+                fontWeight:"bold",
+                borderRadius:3,
+                "&:hover":{
+                  backgroundColor:"#f00"
+                },
+                "&:active":{
+                  backgroundColor:"#ff7373"
+                },
+                "&:focus":{
+                  backgroundColor:"#f00"
+                }
+              }} >
+                {t(base_keys.food.pay)}
+              </Button>
+            }
+                           amount_to_pay={cart.subtotal}
+
+            />
           </Box>
         </Grid>
       </Grid>
