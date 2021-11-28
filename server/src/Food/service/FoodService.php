@@ -42,25 +42,18 @@ class FoodService
     public static function getFoodRecomendation()
     {
         $top_tag = FoodRepository::getTopTagFood();
-        if (empty($top_tag)) {
-            error_log("111111111111111111111111111111111111111111111111111111111: " . json_encode($top_tag), 0);
-
+        if (!$top_tag) {
             FoodRepository::initUserRefTagForFood();
             $top_tag = FoodRepository::getTopTagFood();
         }
-        var_dump($top_tag);
-        error_log("LOGGGGGGGGGGGGGGGGGGGG: " . json_encode($top_tag), 0);
-
         $list_food = array();
         foreach ($top_tag as $tag) {
             // echo json_encode($tag);die();
             $food_found = FoodRepository::findFoodByID($tag["FoodID"]);
             if ($food_found) {
-
                 array_push($list_food, $food_found);
             }
         }
-        error_log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX: " . json_encode($list_food), 0);
         ResponseHelper::success(FoodMessage::getMessages()->readSuccess, $list_food);
     }
 
