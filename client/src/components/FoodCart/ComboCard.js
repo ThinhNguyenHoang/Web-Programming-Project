@@ -41,19 +41,19 @@ function ComboCard(props) {
 					<CardMedia component="img" title="food" image={combo.Picture} sx={{ maxHeight: 190, maxWidth: 190 }} />
 				</Grid>
 				<Grid item pl={2}>
-					<Typography variant="subtitle1" color="initial" sx={{ display: "inline" }}>{combo.ComboName}</Typography><br />
-					<Typography variant="subtitle1" color="initial" sx={{ fontWeight: "bold", display: "inline" }}>{t(base_keys.food.price)} : {combo.Price}đ</Typography>
+					<Typography variant="h5" color="initial" sx={{ display: "inline" , color:"elevation.layer1.contrast", fontWeight:"bold"}}>{combo.ComboName}</Typography><br />
+					<Typography variant="h6" color="initial" sx={{ fontWeight: "bold", display: "inline", color:"elevation.layer1.contrast" }}>{t(base_keys.food.price)} : {combo.Price}đ</Typography>
 				</Grid>
 			</Grid>
 			<Grid item  justifyContent="center" alignItems="center"   >
-				<Typography variant="subtitle1" color="initial" sx={{ fontWeight: "bold", textAlign: "center" }} pb={2}>{t(base_keys.food.quantity)}</Typography>
+				<Typography variant="subtitle1" color="initial" sx={{ fontWeight: "bold", textAlign: "center", color:"elevation.layer1.contrast" }} pb={2}>{t(base_keys.food.quantity)}</Typography>
 				<Box display="flex" flexDirection="row" pb={2}>
 					<QuanlityButton onClick={()=>{
 						updateCombo({...combo,Quantity:parseInt(combo.Quantity)+1});
 					}} >
 						<AddIcon sx={{ fill: "black" }} />
 					</QuanlityButton>
-					<Typography variant="subtitle1" color="initial" sx={{ fontWeight: "bold", px: 2 }}>{combo.Quantity}</Typography>
+					<Typography variant="subtitle1" color="initial" sx={{ fontWeight: "bold", px: 2, color:"elevation.layer1.contrast" }}>{combo.Quantity}</Typography>
 					<QuanlityButton onClick={()=>{
 						if(parseInt(combo.Quantity)<2){
                             return;
@@ -66,12 +66,12 @@ function ComboCard(props) {
 				</Box>
 				<Box textAlign='center'>
 					<IconButton>
-						<InfoIcon sx={{fill:"black"}}/>
+						<InfoIcon sx={{color:"elevation.layer1.contrast"}}/>
 					</IconButton>
 					<IconButton square="true" onClick={()=>{
 						deleteCombo(combo.ComboID);
 					}}>
-						<DeleteIcon sx={{ fill: "black" }} />
+						<DeleteIcon sx={{color:"elevation.layer1.contrast"}} />
 					</IconButton>
 				</Box>
 			</Grid>

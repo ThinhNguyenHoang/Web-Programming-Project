@@ -25,7 +25,7 @@ function BigComment(props){
 
     let ansButton;
     if(isLogin){
-        ansButton= <Button onClick={()=>setAnswer(true)}>Trả lời</Button>;
+        ansButton= <Button style={{textTransform: 'none'}} onClick={()=>setAnswer(true)}>Trả lời</Button>;
     }else{
         ansButton=(<></>);
     }
@@ -57,46 +57,52 @@ function BigComment(props){
     }
 
     return (
-        <Box sx={{display:"flex",flexDirection:"column"}}>
-            <Box sx={{display:"flex",flexDirection:"column"}}>
+        <Box sx={{display:"flex",flexDirection:"column", flexWrap:"wrap"}}>
+            <Box sx={{display:"flex",flexDirection:"row", flexWrap:"wrap"}}>
                 <Box sx={{display:"flex",flexDirection:"row"}}>
                     <Avatar src={comment.UserAvatar} alt="avatar"></Avatar>
-                    <Typography small>{comment.UserName}</Typography>
                 </Box>
-                <Box sx={{display:"flex", flexDirection:"column"}}>
-                    {
-                        isEdit ? (
-                            <Box sx={{display:"flex", flexDirection:"column"}}>
-                                <TextField
-                                    width="auto"
-                                    fullWidth
-                                    name="instruction"
-                                    multiline
-                                    rows={5}
-                                    defaultValue={content}
-                                    onChange={(e)=>setContent(e.target.value)}
-                                    variant="outlined"
-                                />
-                                <Box sx={{display:"flex",flexDirection:"row"}}>
-                                    <Button onClick={()=>{setEdit(false); setContent(comment.Content);}}>Hủy</Button>
-                                    <Button onClick={()=>props.updateComment({...comment,Content:content})}>Xác nhận</Button>
-                                </Box>
-                            </Box>
-                        ):
-                        (
-                            <Typography paragraph> {comment.Content}</Typography>
-                        )
-                    }
+                <Box sx={{display:"flex", flexDirection:"column", flexWrap:"wrap"}} width="950px">
+                    <Box sx={{display:"flex",flexDirection:"column", borderRadius:5, bgcolor:"elevation.layer1.main"}}>
+                        <Box sx={{mx:"10px", my:"2px"}}>
+                            <Typography small sx={{fontWeight:"bold", color:"elevation.layer1.contrast"}}>{comment.UserName}</Typography>
+                            {
+                                isEdit ? (
+                                    <Box sx={{display:"flex", flexDirection:"column", flexWrap:"wrap"}}>
+                                        <TextField
+                                            width="auto"
+                                            fullWidth
+                                            name="instruction"
+                                            multiline
+                                            rows={2}
+                                            defaultValue={content}
+                                            onChange={(e)=>setContent(e.target.value)}
+                                            variant="outlined"
+                                        />
+                                        <Box sx={{display:"flex",flexDirection:"row"}}>
+                                            <Button onClick={()=>{setEdit(false); setContent(comment.Content);}}>Hủy</Button>
+                                            <Button onClick={()=>props.updateComment({...comment,Content:content})}>Xác nhận</Button>
+                                        </Box>
+                                    </Box>
+                                ):
+                                (
+                                    <Typography paragraph sx={{color:"elevation.layer1.contrast"}}> {comment.Content}</Typography>
+                                )
+                            }
+                            
+                        </Box>
+                    </Box>
                     <Box sx={{display:"flex",flexDirection:"row"}}>
                         {imageList.map((imageComment)=><CardMedia component="img" height="150" image={imageComment} alt="Paella dish"/>)}
                     </Box>
+                    
                     <Box sx={{display:"flex",flexDirection:"row"}}>
                         {ansButton}
                         
                         {isAdmin ? 
                             (<>
-                               <Button onClick={()=>setEdit(true)}>Sửa bình luận</Button> 
-                               <Button onClick={()=>props.deleteComment(comment.CommentID)}>Xóa bình luận</Button>
+                               <Button style={{textTransform: 'none'}} onClick={()=>setEdit(true)}>Sửa</Button> 
+                               <Button style={{textTransform: 'none'}} onClick={()=>props.deleteComment(comment.CommentID)}>Xóa</Button>
                             </>
                             ):
                             (
@@ -108,18 +114,18 @@ function BigComment(props){
                 </Box>
                 
             </Box>
-            {isAnswer ? 
+            {/* {isAnswer ? 
                 (
                     <Box sx={{display:"flex",flexDirection:"row"}}>
                         <Avatar src={userAvatar} alt="avatar"></Avatar>
                         <Box sx={{display:"flex",flexDirection:"column"}}>
                             <TextField
-                                width="auto"
+                                // width="auto"
                                 fullWidth
                                 label="Trả lời bình luận này"
                                 name="instruction"
                                 multiline
-                                rows={5}
+                                rows={2}
                                 onChange={(e)=>setReply(e.target.value)}
                                 variant="outlined"
                             />
@@ -128,8 +134,9 @@ function BigComment(props){
                 
                     </Box>
                 ):(<></>)
-            }
-            <Box sx={{display:"flex",flexDirection:"column",borderLeft:1,ml:8}}>
+            } */}
+            <Box sx={{display:"flex",flexDirection:"column",borderLeft:1,ml:8, rowGap:"20px", my:"10px"}}>
+                <Box sx={{ml:"10px", width:"fit-content",display:"flex",flexDirection:"column", rowGap:"20px"}}>
                 {smallCommentList.map((reply)=><SmallComment 
                                                     comment={reply} 
                                                     key={reply.ReplyID} 
@@ -137,6 +144,32 @@ function BigComment(props){
                                                     deleteReply={deleteReply}
                                                     editReply={editReply}
                                                     />)}
+
+                {isAnswer ?
+                    (
+                        <Box sx={{display:"flex",flexDirection:"row"}}>
+                            <Avatar src={userAvatar} alt="avatar"></Avatar>
+                            <Box sx={{display:"flex",flexDirection:"column", mx:"10px", width:"850px"}}>
+                                <TextField
+                                    // width="auto"
+                                    fullWidth
+                                    label="Trả lời bình luận này"
+                                    name="instruction"
+                                    multiline
+                                    rows={2}
+                                    onChange={(e)=>setReply(e.target.value)}
+                                    variant="outlined"
+                                    sx={{bgcolor:"white"}}
+                                />
+                                <Box sx={{display:`flex`, flexDirection:"row"}}>
+                                    <Button sx={{width:"fit-content"}} style={{textTransform: 'none'}} onClick={addReply}>Trả lời</Button>
+                                    <Button sx={{width:"fit-content"}} style={{textTransform: 'none'}} >Hủy</Button>
+                                </Box>
+                            </Box>
+                        </Box>
+                    ):(<></>)
+                }
+                </Box>
             </Box>
         </Box>
     );

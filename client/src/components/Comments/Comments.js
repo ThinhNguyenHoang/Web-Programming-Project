@@ -13,6 +13,7 @@ import { selectors as auth } from './../../redux/slices/auth/AuthSlice';
 import { storage } from '../../utils/UploadFile/FileUploader';
 import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import { ButtonBase } from '@mui/material';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
 
 
@@ -81,21 +82,23 @@ function Comments(props){
     return (
         <Box sx={{display:"flex",flexDirection:"column"}}>
             {!isLogin ?
-            (<Typography>Vui lòng đăng nhập để bình luận </Typography>)
+            (<Typography sx={{color:"elevation.layer0.contrast", fontStyle:"italic"}}>Vui lòng đăng nhập để bình luận </Typography>)
             :(<Box sx={{display:"flex",flexDirection:"row"}}>
                 <Avatar src={userAvatar} alt="avatar"></Avatar>
-                <Box sx={{display:"flex",flexDirection:"column"}}>
+                <Box sx={{display:"flex",flexDirection:"column", ml:"10px"}} width="1000px">
                     <TextField
+                        
                         width="auto"
                         fullWidth
-                        label="Bình luận về món ăn này"
+                        label="Bình luận"
                         name="instruction"
                         multiline
-                        rows={5}
+                        rows={3}
                         onChange={(e)=>setContent(e.target.value)}
                         variant="outlined"
+                        sx={{mb:"10px", bgcolor:"white"}}
                     />
-                    <Box sx={{display:"flex",flexDirection:"row"}}>
+                    <Box sx={{display:"flex",flexDirection:"row", columnGap:"10px"}}>
                         {imageList.map((imageComment)=>{
                             return (<ButtonBase onClick={()=>handleDeleteImage(imageComment)}>
                                         <CardMedia component="img" height="150" image={imageComment} alt="Paella dish"/>
@@ -104,8 +107,8 @@ function Comments(props){
                             
                             )}
                     </Box>
-                    <Box sx={{display:"flex",flexDirection:"row"}}>
-                        <Button onClick={handleAddComment}>Bình luận</Button>
+                    <Box sx={{display:"flex",flexDirection:"row",  columnGap:"10px"}}>
+                        <Button onClick={handleAddComment} variant="contained">Gửi</Button>
                         <input
                             accept="image/*"
                             style={{ display: 'none' }}
@@ -115,7 +118,7 @@ function Comments(props){
                             onChange={handleAddImage}
                             />
                             <label htmlFor="raised-button-file">
-                                <Button variant="raised" component="span" >
+                                <Button variant="outlined" component="span" sx={{color:"elevation.layer0.contrast"}} >
                                     Thêm ảnh
                                 </Button>
                             </label> 
@@ -123,7 +126,7 @@ function Comments(props){
                     
                 </Box>
             </Box>)}
-            <Box sx={{display:"flex",flexDirection:"column"}}>
+            <Box sx={{display:"flex",flexDirection:"column", mt:"10px"}}>
                 {commentList.map((bigcomment)=><BigComment 
                     key={bigcomment.id} 
                     comment={bigcomment} 
@@ -133,9 +136,7 @@ function Comments(props){
                     updateComment={props.updateComment} 
                     />)}
             </Box>
-            
         </Box>
     );
-
 }
 export default Comments;
