@@ -26,6 +26,7 @@ import {
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import {getYearMonthDateFromJsDate} from "../../utils";
 import {selectors} from "../../redux/slices/auth/AuthSlice";
+import {selectors as foodSelectors} from "../../redux/slices/food/FoodSlice";
 
 const getAccountImageFromAccountType = (type) => {
     return undefined;
@@ -431,6 +432,11 @@ export const PaymentDrawer = (
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
+
+    const food_list_in_card = useSelector(foodSelectors.getFoodListInCard);
+    const combo_list_in_card = useSelector(foodSelectors.getComboListInCard);
+
+
     const handleAddBankAccount = (values,setSubmitting) => {
         console.log("Add bank account with values:", values);
         dispatch({
@@ -439,15 +445,6 @@ export const PaymentDrawer = (
         });
     }
 
-        // account_detail:{
-        //     id:"",
-        //         bank_account_number: "",
-        //         bank_account_owner: "",
-        //         bank_account_type: "",
-        //         balance: "",
-        //         valid_start:"",
-        //         valid_end:"",
-        // },
     const makePayment = () => {
         const account_chosen = bank_account_list[indexChosen];
         const payload = {
@@ -455,6 +452,19 @@ export const PaymentDrawer = (
             user_id: userProfile.account_id,
             amount: amount_to_pay,
             description: "No description",
+            voucher_id: "1",
+            food_list: [food_list_in_card.map(item => {
+                return {
+                    FoodID: item.FoodID
+                }
+            })],
+            combo_list: [
+                combo_list_in_card.map(item => {
+                    return {
+                        ComboID: item.ComboID,
+                    }
+                })
+            ],
         }
         dispatch({type: make_payment_actions.loading, payload});
     }
