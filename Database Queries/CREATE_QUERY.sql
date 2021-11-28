@@ -301,8 +301,8 @@ INSERT INTO tag VALUES (5, "Đường phố");
 
 DROP TABLE IF EXISTS user_ref_tag;
 CREATE TABLE user_ref_tag (
-	TagID BIGINT(8) NOT NULL,
-    UserID BIGINT(8) NOT NULL,
+	TagID BIGINT(8),
+    UserID BIGINT(8),
     Count BIGINT(8),
     PRIMARY KEY (UserID, TagID)
 );
@@ -319,10 +319,6 @@ CREATE TABLE category_tag (
 	TagID BIGINT(8) NOT NULL,
     FoodID BIGINT(8),
     ComboID BIGINT(8),
-<<<<<<< HEAD
-=======
-
->>>>>>> 692b9a0bbe116c2f525c9bb104f8cd54dfade305
     PRIMARY KEY (TagID, FoodID, ComboID)
 );
 
@@ -445,6 +441,7 @@ INSERT INTO comment_image (CommentID, Image) VALUES (15, "");
 DROP TABLE IF EXISTS reply_comment;
 CREATE TABLE reply_comment (
 	CommentID BIGINT(8),
+    UserID BIGINT(8),
     Content TEXT
 );
 

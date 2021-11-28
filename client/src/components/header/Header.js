@@ -28,7 +28,7 @@ const UserAvatarBox = () =>{
     const userAvatar = useSelector(selectors.getUserAvatar)
     const userName = useSelector(selectors.getUserName)
     if(isLoggedIn){
-        return <Box sx={{display:`flex`, flexDirection:'row',justifyContent:`space-between`,alignItems:`center`,m:1}}>
+        return <Box sx={{display: {xs:`none`,sm:`none`,md:`flex`}, flexDirection:'row',justifyContent:`space-between`,alignItems:`center`,m:1}}>
                 <Avatar src={userAvatar} alt={userName}>{userName? userName : "Guess"}</Avatar>
             <Typography sx={{ml:1,color: `elevation.layer0.contrast`}} >
                 {`Hello, ${userName}`}
@@ -154,13 +154,13 @@ const Header = (props) => {
 
 export const WithHeader = (props) => {
     return (
-        <div>
+        <Box sx={{display:`flex`, flexDirection:`column`}}>
             <Header/>
-            <Box sx={{pt:{xs:`100px`,sm:`100px`,md:`100px`,lg:`75px`}}}>
+            <Box sx={{pt:{xs:`100px`,sm:`100px`,md:`100px`,lg:`75px`},mb:{xs:`100px`,sm:`100px`,md:`100px`,lg:`75px`}}}>
                 {props.children}
             </Box>
-            <Footer/>
-        </div>
+            <Footer additionalStyle={{justifySelf:`flex-end`}}/>
+        </Box>
     )
 }
 export default Header;

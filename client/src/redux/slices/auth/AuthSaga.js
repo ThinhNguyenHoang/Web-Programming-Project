@@ -1,9 +1,9 @@
 import {call, put, takeEvery, takeLatest} from "redux-saga/effects";
 import {
     changePasswordService,
-    deleteUserAccountService, getUserProfileService,
+    deleteUserAccountService, editUserService, getUserListService, getUserProfileService,
     loginService,
-    registerService,
+    registerService, removeUserService,
     updateUserAccountService, updateUserProfileService
 } from "./AuthService";
 import {
@@ -12,12 +12,49 @@ import {
     change_pass_actions,
     update_account_actions,
     delete_account_actions,
-    update_user_profile_actions, read_user_profile_actions
+    update_user_profile_actions,
+    read_user_profile_actions,
+    get_user_list_actions,
+    edit_user_actions,
+    remove_user_actions
 } from "./AuthSlice";
 import Toaster from "../../../utils/Toaster/Toaster";
 
+
+// * Manager Only
+function* getUserListSaga({ payload }) {
+    try {
+        const res = yield call(getUserListService, payload)
+        yield put({ type:get_user_list_actions.success, payload:res});
+    } catch (e) {
+        yield put({type: get_user_list_actions.error, payload: e});
+    }
+}
+
+function* editUserSaga({ payload }) {
+    try {
+        const res = yield call(editUserService, payload)
+        yield put({ type:edit_user_actions.success, payload:res});
+    } catch (e) {
+        yield put({type: edit_user_actions.error, payload: e});
+    }
+}
+
+function* removeUserSaga({ payload }) {
+    try {
+        const res = yield call(removeUserService, payload)
+        yield put({ type:remove_user_actions.success, payload:res});
+    } catch (e) {
+        yield put({type: remove_user_actions.error, payload: e});
+    }
+}
+
+
+
+
+
+
 function* loginUserSaga({ payload }) {
-    console.log("Register SAGA called with payload:",payload);
     try {
         const res = yield call(loginService, payload)
         yield put({ type:"login.success", payload:res});
@@ -102,6 +139,12 @@ const watchers = function* (){
 
     yield takeLatest(update_user_profile_actions.loading, updateUserProfileSaga);
     yield takeLatest(read_user_profile_actions.loading, getUserProfileSaga);
+
+    yield takeLatest(get_user_list_actions.loading, getUserListSaga);
+    yield takeLatest(edit_user_actions.loading, editUserSaga);
+    yield takeLatest(remove_user_actions.loading, removeUserSaga);
+
+
 }
 
 export default watchers;

@@ -77,7 +77,7 @@ function EditFoodItem(){
             Picture:"",
             Price:"",
             Description:"",
-            //TODO sale
+            Sale:"",
             Instruct:"",
             Material:[],
             Tags:[],
@@ -201,6 +201,8 @@ function EditFoodItem(){
                                                         <OutlinedInput
                                                             id="saleoff"
                                                             label="Giảm giá"
+                                                            value={values.Sale}
+                                                            onChange={(e)=>setValues({...values,Sale:e.target.value})}
                                                             endAdornment={<InputAdornment position="end">%</InputAdornment>}
                                                             inputProps={{
                                                             'aria-label': 'saleoff',

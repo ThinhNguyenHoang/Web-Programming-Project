@@ -97,6 +97,7 @@ class NewsCommentRepository implements Repository
     {
         $query = "SELECT Content, UserID FROM reply_comment WHERE CommentID = $CommentID;";
 
+        $result = null;
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
@@ -104,7 +105,6 @@ class NewsCommentRepository implements Repository
         }
 
         $list_comment_reply = array();
-        $result=null;
         if ($result) {
             while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
                 error_log(json_encode($row), 0);
@@ -183,7 +183,7 @@ class NewsCommentRepository implements Repository
 
     public static function update(int $entityID = null, object $entity = null)
     {
-        $query = "UPDATE comment SET Content='$entity->Content' WHERE NewsID=$entityID;";
+        $query = "UPDATE comment SET Content='$entity->Content' WHERE CommentID=$entityID;";
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $exception) {
@@ -240,6 +240,7 @@ class NewsCommentRepository implements Repository
             foreach ($entity as $reply) {
                 $insert_reply_query = "INSERT INTO reply_comment (CommentID, Content, UserID) VALUES ('$entityID', '$reply->Content', '$reply->UserID')";
 
+                $insert_reply_result = null;
                 try {
                     $insert_reply_result = QueryExecutor::executeQuery($insert_reply_query);
                 } catch (Exception $exception) {
