@@ -44,9 +44,12 @@ function Comments(props){
             Reply:[],
         }
         props.addComment(newComment);
+        setContent("");
+        setImageList([]);
+
     }
     const handleDeleteImage=(image)=>{
-        setImageList(imageList.filter(img=>img!==image));
+        setImageList(imageList.filter(img=>img.Image!==image.Image));
     }
     const handleAddImage=(e)=>{
         const image=e.target.files[0];
@@ -73,7 +76,7 @@ function Comments(props){
             () => {
                 getDownloadURL(uploadTask.snapshot.ref)
                     .then((downloadUrl) => {
-                        setImageList([...imageList,downloadUrl]);
+                        setImageList([...imageList,{Image:downloadUrl}]);
                     })
             }
         )
@@ -94,6 +97,7 @@ function Comments(props){
                         name="instruction"
                         multiline
                         rows={3}
+                        value={content}
                         onChange={(e)=>setContent(e.target.value)}
                         variant="outlined"
                         sx={{mb:"10px", bgcolor:"white"}}
@@ -101,7 +105,7 @@ function Comments(props){
                     <Box sx={{display:"flex",flexDirection:"row", columnGap:"10px"}}>
                         {imageList.map((imageComment)=>{
                             return (<ButtonBase onClick={()=>handleDeleteImage(imageComment)}>
-                                        <CardMedia component="img" height="150" image={imageComment} alt="Paella dish"/>
+                                        <CardMedia component="img" height="150" image={imageComment.Image} alt="Paella dish"/>
                                     </ButtonBase>);
                         }
                             
