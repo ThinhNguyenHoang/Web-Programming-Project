@@ -319,6 +319,10 @@ CREATE TABLE category_tag (
 	TagID BIGINT(8) NOT NULL,
     FoodID BIGINT(8),
     ComboID BIGINT(8),
+<<<<<<< HEAD
+=======
+
+>>>>>>> 692b9a0bbe116c2f525c9bb104f8cd54dfade305
     PRIMARY KEY (TagID, FoodID, ComboID)
 );
 

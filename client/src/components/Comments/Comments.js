@@ -8,9 +8,10 @@ import {Button} from "@mui/material";
 import { useSelector } from 'react-redux';
 import { TextField } from '@mui/material';
 import BigComment from './BigComment';
+import { selectors } from './../../redux/slices/news/NewsSlice';
 import { selectors as auth } from './../../redux/slices/auth/AuthSlice';
 import { storage } from '../../utils/UploadFile/FileUploader';
-import { ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
+import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import { ButtonBase } from '@mui/material';
 
 
