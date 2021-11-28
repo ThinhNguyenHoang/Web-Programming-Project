@@ -12,9 +12,10 @@ require_once  __DIR__ . '/../../../vendor/autoload.php';
  define("DB_DATABASE_NAME1", "web_food");
 
 define("DB_HOST", "localhost");
-define("DB_USERNAME", "thuan");
-define("DB_PASSWORD", "Csv0202");
+define("DB_USERNAME", "root");
+define("DB_PASSWORD", "123456");
 define("DB_DATABASE_NAME", "web_food");
+
 
 class ConnectionSingleton extends Singleton
 {
@@ -23,10 +24,12 @@ class ConnectionSingleton extends Singleton
     protected function __construct()
     {
         try {
+
             mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
             self::$mySqlConnection = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE_NAME);
         } catch (Exception $e) {
             try {
+
                 self::$mySqlConnection = new mysqli(DB_HOST1, DB_USERNAME1, DB_PASSWORD1, DB_DATABASE_NAME1);
             }
             catch (Exception $e) {

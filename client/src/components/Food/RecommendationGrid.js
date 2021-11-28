@@ -6,17 +6,19 @@ import FoodItemCard from "./FoodItemCard";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ComboItemCard from "./ComboItemCard";
+import { get_cart_actions } from './../../redux/slices/food/FoodSlice';
 
 export const RecommendationGrid = () => {
     const recommendation_list = useSelector(selectors.getRecommendationList);
     const dispatch = useDispatch();
+    dispatch({type:get_cart_actions.loading,payload:""});
     useEffect(() => {
         dispatch({type: food_recommendation_actions.loading})
         return () => {
 
         };
     }, []);
-
+    console.log("recommendation_list",);
     return (
         <Box sx={{flexGrow: 1, m: 4}}>
             {

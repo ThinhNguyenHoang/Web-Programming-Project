@@ -14,8 +14,10 @@ import default_food_image from "../../assets/images/defaul_food_image.jpg";
 import {ThemedOutlineButton} from "../Buttons/ThemedButton/ThemedButton";
 
 import {useDispatch, useSelector} from "react-redux";
-import {add_to_wish_list_actions, remove_from_wish_list_actions, selectors} from "../../redux/slices/food/FoodSlice";
-
+import {add_to_wish_list_actions, remove_from_wish_list_actions, selectors, set_food_detail_id, update_cart_actions} from "../../redux/slices/food/FoodSlice";
+import { get_cart_actions } from './../../redux/slices/food/FoodSlice';
+import { ROUTING_CONSTANTS } from './../../routes/RouterConfig';
+import { useHistory } from "react-router";
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -57,10 +59,24 @@ export default function FoodItemCard({food_item,mx,allow_expansion=true},...prop
     const [expanded, setExpanded] = React.useState(false);
     const wish_list_ids = useSelector(selectors.getWishListFood).map(item => item.id);
     const is_in_wish_list = wish_list_ids.includes(food_item.id);
+    const cart=useSelector(selectors.getCart);
     const dispatch = useDispatch();
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
+    const history= useHistory();
+    const handleAddTocart=()=>{
+        const newCart={
+            ComboList:cart.combo_list,
+            FoodList:[...cart.food_list,{FoodID:food_item.id,Quantity:1}]
+        }
+        dispatch({type:update_cart_actions.loading,payload:newCart})
+    }
+    const handleDetail=()=>{
+        dispatch({type:set_food_detail_id,payload:food_item.id});
+        history.push(ROUTING_CONSTANTS.FOODDETAIL);
+    }
+    
 
     return (
         <Card sx={{display:"flex", flexDirection:"column", maxWidth: 345,mx:mx? mx:0,bgcolor:`elevation.layer2.main`,boxShadow:2}} >
@@ -101,10 +117,10 @@ export default function FoodItemCard({food_item,mx,allow_expansion=true},...prop
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                    <ThemedOutlineButton>
+                    <ThemedOutlineButton onClick={handleAddTocart}>
                         ORDER NOW
                     </ThemedOutlineButton>
-                    <ThemedOutlineButton>
+                    <ThemedOutlineButton onClick={handleDetail}>
                         DETAILS
                     </ThemedOutlineButton>
                 {/*<Button variant={`outlined`}>*/}

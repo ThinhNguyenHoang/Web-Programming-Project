@@ -10,8 +10,16 @@ import HomePage from "../pages/HomePage";
 import {WithHeader} from "../components/header/Header";
 import AboutUs from "../pages/AboutUs";
 import AccountManagement from "../pages/AccountManagement";
+import FoodItemManagement from "../pages/FoodItemManagement";
 import FoodRecommendationPage from "../pages/FoodRecommendationPage";
 import WishListPage from "../pages/WishListPage";
+import FoodPage from "../pages/FoodPage";
+import EditFoodItem from "../pages/EditFoodItem";
+import FoodDetails from "../pages/FoodDetails";
+import NewsInfo from "../pages/NewsInfo";
+import NewsEdit from "../pages/NewsEdit";
+import EditComboItem from "../pages/EditComboItem";
+
 
 const baseUrl = process.env.FAKE_SERVER_HOST;
 export const ROUTING_CONSTANTS = {
@@ -34,7 +42,13 @@ export const ROUTING_CONSTANTS = {
     CLIENT: "/clients",
     ORDER: "/orders",
     TESTING: "/test",
-    PAYMENT:"/payment"
+    FOOD: "/food",
+    EDITFOOD:"/editfood",
+    PAYMENT:"/payment",
+    EDITNEWS:"/editnews",
+    NEWSINFO:"/newsinfo",
+    FOODDETAIL:"/fooddetail",
+    EDITCOMBO:"/editcombo"
 }
 
 const generateTabLinkItem = (label_name, nav_to, require_auth) => {
@@ -59,50 +73,13 @@ export const ROUTING_TAB_ITEMS = [
     generateTabLinkItem("My Account", ROUTING_CONSTANTS.ACCOUNT),
     // ! EDIT THE FOLLOWING LAST PROPS TO THE USER ROLE STRING CONSTANT
     generateTabLinkItem("Manage User", ROUTING_CONSTANTS.MANAGE_USERS, "Manager"),
-    generateTabLinkItem("Manage Item Info", "Manager"),
+    generateTabLinkItem("Manage Item Info",ROUTING_CONSTANTS.MANAGE_ITEM_LIST, "Manager"),
     generateTabLinkItem("Manage User", ROUTING_CONSTANTS.MANAGE_BILL, "Manager"),
     generateTabLinkItem("Login", ROUTING_CONSTANTS.LOGIN),
     generateTabLinkItem("Register", ROUTING_CONSTANTS.REGISTER),
     generateTabLinkItem("Wishlist", ROUTING_CONSTANTS.WISH_LIST),
+    generateTabLinkItem("All Foods", ROUTING_CONSTANTS.FOOD),
 ]
-
-
-/*
-    * Từng component dưới này phải được thay bằng một page ở pages
-    ! Còn phải thêm trang cho các lần thanh toán và các đơn hàng
- */
-function Home() {
-    return null;
-}
-
-function ManageItemInfo() {
-    return null;
-}
-
-function ManageBills() {
-    return null;
-}
-
-function ManageTransactions() {
-    return null;
-}
-
-function Account() {
-    return null;
-}
-
-function Cart() {
-    return null;
-}
-
-function Topics() {
-    return null;
-}
-
-
-// function News() {
-//     return null;
-// }
 
 function Recommendations() {
     return null;
@@ -155,8 +132,29 @@ export const RouterConfig = () => {
                 <Route exact path={ROUTING_CONSTANTS.TESTING}>
                     <App/>
                 </Route>
+                <Route exact path={ROUTING_CONSTANTS.MANAGE_ITEM_LIST}>
+                    <FoodItemManagement/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.EDITFOOD}>
+                    <EditFoodItem/>
+                </Route>
                 <Route exact path={ROUTING_CONSTANTS.PAYMENT}>
                     <PaymentPage/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.FOOD}>
+                    <FoodPage/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.EDITNEWS+"/:id"}>
+                    <NewsEdit/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.NEWSINFO+"/:id"}>
+                    <NewsInfo/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.FOODDETAIL}>
+                    <FoodDetails/>
+                </Route>
+                <Route exact path={ROUTING_CONSTANTS.EDITCOMBO}>
+                    <EditComboItem/>
                 </Route>
             </Switch>
         </WithHeader>

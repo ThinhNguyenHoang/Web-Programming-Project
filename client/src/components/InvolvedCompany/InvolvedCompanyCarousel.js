@@ -56,11 +56,11 @@ const involved_company_init = [
         logo: "https://thumbs.dreamstime.com/z/food-logo-smile-label-company-grocery-store-friendly-vector-illustration-smiling-mouth-symbol-135565322.jpg",
         name: 'Company 2'
     },
-    {
-        id: "9",
-        logo: "https://i.pinimg.com/600x315/fc/59/3b/fc593b7131868f87ac0a52fa1a496e1d.jpg",
-        name: 'Company 4'
-    },
+    // {
+    //     id: "9",
+    //     logo: "https://i.pinimg.com/600x315/fc/59/3b/fc593b7131868f87ac0a52fa1a496e1d.jpg",
+    //     name: 'Company 4'
+    // },
 ]
 export const CompanyItem = ({company, mx,sx},...props) => {
     return (
@@ -86,8 +86,8 @@ export const InvolvedCompaniesSlice = ({company_list}) => {
         <Box sx={{
             display: 'flex',
             flexDirection: {xs: 'column', sm: 'column', md: `row`},
-            alignItems: 'center',
-            justifyContent: `center`
+            // alignItems: 'center',
+            // justifyContent: `center`
         }}>
             {company_list.map((item, index) => {
                 return <CompanyItem company={item} key={index.toString()} sx={{mx:4}}/>
@@ -97,7 +97,7 @@ export const InvolvedCompaniesSlice = ({company_list}) => {
 }
 const InvolvedCompanyCarousel = () => {
     // TODO: Code use Effect to get the involved company logo
-    const list_of_list = array_to_chunks(involved_company_init,3);
+    const list_of_list = array_to_chunks(involved_company_init,2);
     console.log("COMPANY LIST: ",list_of_list)
     return (
         <Box sx={{display: `flex`, flexDirection: `column`,mb:6}}>

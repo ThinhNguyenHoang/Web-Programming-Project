@@ -61,7 +61,7 @@ export const darkTheme = createTheme(({
                 main: '#373737',
                 contrast: '#fff'
             }, // popup,...
-        }
+        },
     }
 }))
 

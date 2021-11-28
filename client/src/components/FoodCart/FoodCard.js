@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { increase_quantity_cart,decrease_quantity_cart,delete_food_cart,update_cart_actions,delete_cart_actions } from "../../redux/slices/food/FoodSlice";
 import img from '../../assets/images/foodimg.png';
+import InfoIcon from '@mui/icons-material/Info';
 
 const QuanlityButton = styled(Button)({
 	border: '1px solid ',
@@ -29,41 +30,46 @@ const QuanlityButton = styled(Button)({
 
 function FoodCard(props) {
 	const food=props.food;
-	const {t} = useTranslation();
+	const deleteFood=props.deleteFood;
+	const updateFood=props.updateFood;
+	const {t, i18n} = useTranslation();
 	const dispatch = useDispatch();
 	return (
 		<Grid item container xs={12} pl={0} pr={2} py={4} direction="row">
 			<Grid item container sx={{ flex: 1 }}>
 				<Grid item pl={2}>
-					<CardMedia component="img" title="food" image={img} sx={{ maxHeight: 190, maxWidth: 190 }} />
+					<CardMedia component="img" title="food" image={food.Picture} sx={{ maxHeight: 190, maxWidth: 190 }} />
 				</Grid>
 				<Grid item pl={2}>
-					<Typography variant="subtitle1" color="initial" sx={{ display: "inline" }}>{food.name}</Typography><br />
-					<Typography variant="subtitle1" color="initial" sx={{ fontWeight: "bold", display: "inline" }}>{t(base_keys.food.price)} : {food.price}đ</Typography>
+					<Typography variant="subtitle1" color="initial" sx={{ display: "inline" }}>{food.FoodName}</Typography><br />
+					<Typography variant="subtitle1" color="initial" sx={{ fontWeight: "bold", display: "inline" }}>{t(base_keys.food.price)} : {food.Price}đ</Typography>
 				</Grid>
 			</Grid>
 			<Grid item  justifyContent="center" alignItems="center"   >
 				<Typography variant="subtitle1" color="initial" sx={{ fontWeight: "bold", textAlign: "center" }} pb={2}>{t(base_keys.food.quantity)}</Typography>
 				<Box display="flex" flexDirection="row" pb={2}>
 					<QuanlityButton onClick={()=>{
-						dispatch({type:increase_quantity_cart,payload:food.id});
-						dispatch({type:update_cart_actions.loading,payload:{food_list:[food],user_id:props.userId}});
+						updateFood({...food,Quantity:parseInt(food.Quantity)+1});
 					}} >
 						<AddIcon sx={{ fill: "black" }} />
 					</QuanlityButton>
-					<Typography variant="subtitle1" color="initial" sx={{ fontWeight: "bold", px: 2 }}>{food.quantity}</Typography>
+					<Typography variant="subtitle1" color="initial" sx={{ fontWeight: "bold", px: 2 }}>{food.Quantity}</Typography>
 					<QuanlityButton onClick={()=>{
-						dispatch({type:decrease_quantity_cart,payload:food.id});
-						dispatch({type:update_cart_actions.loading,payload:{food_list:[food],user_id:props.userId}});
+						if(parseInt(food.Quantity)<2){
+                            return;
+                        }else{
+                            updateFood({...food,Quantity:parseInt(food.Quantity)-1});
+                        }
 					}}>
 						<RemoveIcon sx={{ fill: "black" }} />
 					</QuanlityButton>
 				</Box>
 				<Box textAlign='center'>
+					<IconButton>
+						<InfoIcon sx={{fill:"black"}}/>
+					</IconButton>
 					<IconButton square="true" onClick={()=>{
-						dispatch({type:delete_food_cart,payload:food.id});
-						console.log("delete click")
-						dispatch({type:delete_cart_actions.loading,payload:food.id});
+						deleteFood(food.FoodID);
 					}}>
 						<DeleteIcon sx={{ fill: "black" }} />
 					</IconButton>
