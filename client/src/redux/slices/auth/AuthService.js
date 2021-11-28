@@ -14,8 +14,20 @@ const api_endpoints = {
     profile: `${userLocalBase}/profile`
 }
 
-
+// * Manager Specific
 export const getUserListService = (payload) => {
+    return request.getAsync(api_endpoints.user_list,payload);
+}
+
+export const removeUserService = (payload) => {
+    return request.deleteAsync(api_endpoints.user_list,payload);
+}
+
+export const editUserService = (payload) => {
+    return request.putAsync(api_endpoints.user_list,payload);
+}
+
+export const getUserDetail = (payload) => {
     return request.getAsync(api_endpoints.user_list,payload);
 }
 

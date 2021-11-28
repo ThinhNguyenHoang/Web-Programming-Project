@@ -154,8 +154,11 @@ function EditFoodItem(){
                         <Box sx={{display:`flex`, flexDirection:"row", flexWrap:"wrap", alignContent:"center"}}>
                             <Box sx={{bgcolor:"elevation.layer1.main"}}>
                                 {/*<ReactFirebaseFileUpload2 setImageURL={setImage} picture={values.Picture}/>*/}
-                                {/*<img src={}/>*/}
-                                {/*<ImageDrawerUpdater trigger={}/>*/}
+                                <ImageDrawerUpdater trigger={<img src={values.Picture ? values.Picture : default_food_image} width={`300px`} alt={`Food image`}/>}
+                                    img_uri_callback={(img) => {
+                                        setImage(img);
+                                    }}
+                                />
                             </Box>
                             <Box maxWidth="100ch" >
                                 <form autoComplete="off">
