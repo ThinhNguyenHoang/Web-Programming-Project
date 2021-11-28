@@ -86,6 +86,9 @@ export default function ComboItemCard({combo_item}, ...props) {
     };
 
     const dispatch = useDispatch();
+    const handleAddCart=()=>{
+        
+    }
 
     return (
         <Card sx={{
@@ -120,7 +123,7 @@ export default function ComboItemCard({combo_item}, ...props) {
 
             <CardContent>
                 <CardActions disableSpacing>
-                    <ThemedOutlineButton>
+                    <ThemedOutlineButton onClick={handleAddCart}>
                         ORDER NOW
                     </ThemedOutlineButton>
                 </CardActions>

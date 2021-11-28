@@ -133,6 +133,9 @@ function FoodDetails(){
                                     <Typography variant="h6" gutterBottom component="div" sx={{display:"inline",color:"elevation.layer0.contrast", ml:"50px"}}>
                                         Khuyến mãi
                                     </Typography>
+                                    <Typography variant="h6" gutterBottom component="div" sx={{display:"inline",color:"red", ml:"20px"}}>
+                                        {food_detail.Sale+"%"}
+                                    </Typography>
                                 </Box>
                                 <Box sx={{display: `flex`, flexDirection: "row", columnGap:"10px",flexWrap:"wrap", rowGap:"10px"}}>
                                     {tag_list.map((tag)=> (
