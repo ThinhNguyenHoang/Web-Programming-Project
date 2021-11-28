@@ -240,6 +240,7 @@ class NewsCommentRepository implements Repository
             foreach ($entity as $reply) {
                 $insert_reply_query = "INSERT INTO reply_comment (CommentID, Content, UserID) VALUES ('$entityID', '$reply->Content', '$reply->UserID')";
 
+                $insert_reply_result = null;
                 try {
                     $insert_reply_result = QueryExecutor::executeQuery($insert_reply_query);
                 } catch (Exception $exception) {
