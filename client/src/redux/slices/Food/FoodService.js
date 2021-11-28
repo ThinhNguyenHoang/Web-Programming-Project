@@ -168,7 +168,7 @@ export const addFoodToWishtListService = (payload)=>{
 
 export const removeFoodFromWishtListService = (payload)=>{
     console.log("WISHLIST_SERVICE::REMOVE ",payload);
-    return request.deleteAsync(api_endpoints.wish_list,payload);
+    return request.deleteAsync(`${api_endpoints.wish_list}/${payload}`);
 }
 export const foodDetailService=async (payload)=>{
     return await request.getAsync(api_endpoints.food+"/"+payload)

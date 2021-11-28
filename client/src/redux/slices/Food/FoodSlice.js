@@ -95,9 +95,9 @@ const mapComboFromResponse = (item) => {
     }
 }
 
-const mapFoodItemFromResponseWithWishlist = (item) => {
+const mapFoodItemFromResponseWithWishlist = (wish_list_id,item) => {
     return {
-        id_wish_list: item.WishListID,
+        id_wish_list: wish_list_id,
         id: item.FoodID,
         name: item.FoodName,
         picture_uri: item.Picture,
@@ -111,13 +111,13 @@ const mapFoodItemFromResponseWithWishlist = (item) => {
     }
 }
 
-const mapComboFromResponseWithWishList = (item) => {
+const mapComboFromResponseWithWishList = (wish_list_id,item) => {
     const food_list = item.Food.map((item,index) => {
         return mapFoodItemFromResponse(item);
     })
 
     return {
-        id_wish_list: item.WishListID,
+        id_wish_list: wish_list_id,
         id: item.ComboID,
         name: item.ComboName,
         description: item.ComboDescrip,
@@ -474,8 +474,8 @@ const FoodSlice = createSlice({
         [food_wish_list_actions.success]: (state, action) => {
             Toaster.toastSuccessful(action.payload.message);
             const original_list = action.payload.data;
-            const food_wish_list = original_list.filter((item) => item.FoodID !== "0").map((item) => mapFoodItemFromResponse(item.data));
-            const combo_wish_list = original_list.filter((item) => item.ComboID !== "0").map((item) => mapComboFromResponse(item.data));
+            const food_wish_list = original_list.filter((item) => item.FoodID !== "0").map((item) => mapFoodItemFromResponseWithWishlist(item.WishListID,item.data));
+            const combo_wish_list = original_list.filter((item) => item.ComboID !== "0").map((item) => mapComboFromResponseWithWishList(item.WishListID,item.data));
             state.wish_list.food_list = [...food_wish_list];
             state.wish_list.combo_list = [...combo_wish_list];
             state.wish_list.status = success();
