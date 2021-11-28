@@ -66,7 +66,7 @@ export const CompanyItem = ({company, mx,sx},...props) => {
           <CardMedia
             component="img"
             height="140px"
-            image={company.Picture ? company.logo : default_company_logo}
+            image={company.Picture ? company.Picture : default_company_logo}
             alt={company.MaterialName ? company.MaterialName : "No info"}
           />
           <CardContent sx={{bgcolor:'elevation.layer1.main', color: 'elevation.layer1.contrast'}}>
