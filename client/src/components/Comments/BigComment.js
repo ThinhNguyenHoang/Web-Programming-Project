@@ -93,7 +93,7 @@ function BigComment(props){
                         </Box>
                     </Box>
                     <Box sx={{display:"flex",flexDirection:"row"}}>
-                        {imageList.map((imageComment)=><CardMedia component="img" height="150" image={imageComment} alt="Paella dish"/>)}
+                        {imageList.map((imageComment)=><CardMedia component="img" height="150" image={imageComment.Image} alt="Paella dish"/>)}
                     </Box>
                     
                     <Box sx={{display:"flex",flexDirection:"row"}}>
