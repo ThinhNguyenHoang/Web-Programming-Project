@@ -27,19 +27,26 @@ const initialValue = {
             role: "",
         },
     },
-
+    // * Manager Only
     user_list: {
         status: generateStatus(),
         data:[]
-    }
+    },
+    remove_user_status: generateStatus(),
+    edit_user_status: generateStatus(),
+    get_user_detail: generateStatus(),
 }
 
 export const selectors = {
+    // * Manager Only
     getUserList: (state) => state.auth.user_list.data,
     getUserListSuccess: (state) => state.auth.user_list.status.isSuccess,
     getUserListLoading: (state) => state.auth.user_list.status.isLoading,
     getUserListError: (state) => state.auth.user_list.status.isError,
 
+
+
+    // * User Slice
     getUserAvatar: (state) => state.auth.currentUser.profile.avatar,
     getUserName: (state) => state.auth.currentUser.profile.username,
     getUserState: (state) => state.auth.currentUser.profile.role,
@@ -67,9 +74,13 @@ export const selectors = {
     getDeleteAccountSuccess: (state) => state.auth.currentUser.delete_account_status.isSuccess,
     getDeleteAccountError: (state) => state.auth.currentUser.delete_account_status.isError,
 }
-
+// * Manager Actions
 export const get_user_list_actions = generateSagaLifecycleNames("get_user_list");
+export const remove_user_actions = generateSagaLifecycleNames("remove_user");
+export const edit_user_actions = generateSagaLifecycleNames("edit_user");
+export const get_user_detail_actions = generateSagaLifecycleNames("get_user_detail");
 
+// * Normal User Actions
 export const login_actions = generateSagaLifecycleNames("login");
 export const logout_actions = generateSagaLifecycleNames("logout");
 export const register_actions = generateSagaLifecycleNames("register");
@@ -102,18 +113,55 @@ const authSlice = createSlice({
         }
     },
     extraReducers:{
+        //  * Manager only
         [get_user_list_actions.loading]: (state, action) => {
             state.user_list.status = loading();
         },
         // TODO: Put the list in to the store
         [get_user_list_actions.success]: (state, action) => {
+            state.user_list.data = action.payload.data;
             state.user_list.status = success();
         },
         [get_user_list_actions.error]: (state, action) => {
             state.user_list.status = error();
         },
 
+        [remove_user_actions.loading]: (state, action) => {
+            state.user_list.status = loading();
+        },
+        // TODO: Put the list in to the store
+        [remove_user_actions.success]: (state, action) => {
+            state.user_list.data = action.payload.data;
+            state.user_list.status = success();
+        },
+        [remove_user_actions.error]: (state, action) => {
+            state.user_list.status = error();
+        },
 
+        [edit_user_actions.loading]: (state, action) => {
+            state.user_list.status = loading();
+        },
+        // TODO: Put the list in to the store
+        [edit_user_actions.success]: (state, action) => {
+            state.user_list.data = action.payload.data;
+            state.user_list.status = success();
+        },
+        [edit_user_actions.error]: (state, action) => {
+            state.user_list.status = error();
+        },
+
+        [get_user_detail_actions.loading]: (state, action) => {
+            state.user_list.status = loading();
+        },
+        // TODO: Put the list in to the store
+        [get_user_detail_actions.success]: (state, action) => {
+            state.user_list.data = action.payload.data;
+            state.user_list.status = success();
+        },
+        [get_user_detail_actions.error]: (state, action) => {
+            state.user_list.status = error();
+        },
+        // * Every User
         [login_actions.loading]: (state, action) => {
             state.currentUser.login_status = loading();
             window.localStorage.removeItem("token");
@@ -247,7 +295,8 @@ const authSlice = createSlice({
             Toaster.toastError(action.payload + ` Your session has expired. Please Login again :)`);
             localStorage.clear();
             state.currentUser.read_profile_status = error()
-        }
+        },
+
 
     }
 });

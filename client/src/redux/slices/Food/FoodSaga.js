@@ -115,8 +115,7 @@ function* updateFoodSaga({payload}){
         yield put({type:food_management_action.loading,payload:""});
         Toaster.toastSuccessful("Update food success");
     }catch(e){
-        Toaster.toastError("Update food fail \n",e.message);
-        yield put({type:update_food_action.error});
+        yield put({type:update_food_action.error,e});
     }
 }
 function* deleteFoodSaga({payload}){

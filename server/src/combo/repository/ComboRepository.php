@@ -141,7 +141,7 @@ class ComboRepository implements Repository
 
     public static function insertCategoryTag($ComboID, $TagID)
     {
-        $query = "INSERT INTO category_tag (TagID, ComboID) VALUES('$TagID','$ComboID');";
+        $query = "INSERT INTO category_tag (TagID, ComboID, FoodID) VALUES('$TagID','$ComboID', 0);";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $e) {

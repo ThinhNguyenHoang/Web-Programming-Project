@@ -286,24 +286,6 @@ INSERT INTO CONTAINS VALUES ( 918384, 6, 891203);
 INSERT INTO CONTAINS VALUES ( 192094, 7, 678129 );
 INSERT INTO CONTAINS VALUES ( 729019, 8, 627129 );
 
-
-DROP TABLE IF EXISTS EVALUATION; 
-CREATE TABLE EVALUATION (
-    CommentID BIGINT(8) NOT NULL,
-    UserID BIGINT(8) NOT NULL,
-    Comment TEXT NOT NULL,
-    Rating INT NOT NULL,
-    PRIMARY KEY(CommentID)
-);
-	
-DROP TABLE IF EXISTS COMMENT_FOR; 
-CREATE TABLE COMMENT_FOR  (
-    FoodID BIGINT(8),
-    ComboID BIGINT(8),
-    CommentID BIGINT(8) NOT NULL,
-    PRIMARY KEY(CommentID)
-);
-
 DROP TABLE IF EXISTS tag;
 CREATE TABLE tag (
 	TagID BIGINT(8) NOT NULL AUTO_INCREMENT,
@@ -391,3 +373,91 @@ INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (4,0,3);
 INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (4,0,4);
 INSERT INTO wish_list (UserID, FoodID, ComboID) VALUES (4,0,5);
 
+
+DROP TABLE IF EXISTS comment; 
+CREATE TABLE comment (
+    CommentID BIGINT(8) NOT NULL AUTO_INCREMENT,
+    UserID BIGINT(8) NOT NULL,
+    Content TEXT NOT NULL,
+	FoodID BIGINT(8),
+    NewsID BIGINT(8),
+    PRIMARY KEY(CommentID)
+);
+
+INSERT INTO comment (UserID, Content, NewsID, FoodID) VALUES (2, "Bai nay chill phet", 1, 0);
+INSERT INTO comment (UserID, Content, NewsID, FoodID) VALUES (4, "Chuan tung centimet", 2, 0);
+INSERT INTO comment (UserID, Content, NewsID, FoodID) VALUES (2, "Comment_test3", 3, 0);
+INSERT INTO comment (UserID, Content, NewsID, FoodID) VALUES (4, "Comment_test4", 4, 0);
+INSERT INTO comment (UserID, Content, NewsID, FoodID) VALUES (2, "Comment_test5", 1, 0);
+INSERT INTO comment (UserID, Content, NewsID, FoodID) VALUES (4, "Comment_test6", 2, 0);
+INSERT INTO comment (UserID, Content, NewsID, FoodID) VALUES (2, "Comment_test7", 3, 0);
+INSERT INTO comment (UserID, Content, NewsID, FoodID) VALUES (4, "Comment_test8", 4, 0);
+INSERT INTO comment (UserID, Content, NewsID, FoodID) VALUES (2, "Comment_test9", 0, 1);
+INSERT INTO comment (UserID, Content, NewsID, FoodID) VALUES (4, "Comment_test10", 0, 2);
+INSERT INTO comment (UserID, Content, NewsID, FoodID) VALUES (2, "Comment_test11", 0, 3);
+INSERT INTO comment (UserID, Content, NewsID, FoodID) VALUES (4, "Comment_test12", 0, 4);
+INSERT INTO comment (UserID, Content, NewsID, FoodID) VALUES (2, "Comment_test13", 0, 5);
+INSERT INTO comment (UserID, Content, NewsID, FoodID) VALUES (4, "Comment_test14", 0, 1);
+INSERT INTO comment (UserID, Content, NewsID, FoodID) VALUES (2, "Comment_test15", 0, 2);
+INSERT INTO comment (UserID, Content, NewsID, FoodID) VALUES (4, "Comment_test16", 0, 3);
+INSERT INTO comment (UserID, Content, NewsID, FoodID) VALUES (2, "Comment_test17", 0, 4);
+INSERT INTO comment (UserID, Content, NewsID, FoodID) VALUES (4, "Comment_test18", 0, 5);
+
+
+DROP TABLE IF EXISTS comment_image;
+CREATE TABLE comment_image (
+	CommentID BIGINT(8) NOT NULL,
+    Image TEXT
+);
+
+INSERT INTO comment_image (CommentID, Image) VALUES (1, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (2, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (3, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (4, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (5, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (4, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (5, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (6, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (5, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (4, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (5, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (6, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (7, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (8, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (9, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (10, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (11, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (12, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (13, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (14, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (9, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (10, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (11, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (12, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (13, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (14, "");
+INSERT INTO comment_image (CommentID, Image) VALUES (15, "");
+
+DROP TABLE IF EXISTS reply_comment;
+CREATE TABLE reply_comment (
+	CommentID BIGINT(8),
+    Content TEXT
+);
+
+INSERT INTO reply_comment (CommentID, Content) VALUES (1, "reply_comment_1");
+INSERT INTO reply_comment (CommentID, Content) VALUES (2, "reply_comment_1");
+INSERT INTO reply_comment (CommentID, Content) VALUES (3, "reply_comment_1");
+INSERT INTO reply_comment (CommentID, Content) VALUES (4, "reply_comment_1");
+INSERT INTO reply_comment (CommentID, Content) VALUES (5, "reply_comment_1");
+INSERT INTO reply_comment (CommentID, Content) VALUES (6, "reply_comment_1");
+INSERT INTO reply_comment (CommentID, Content) VALUES (7, "reply_comment_1");
+INSERT INTO reply_comment (CommentID, Content) VALUES (8, "reply_comment_1");
+INSERT INTO reply_comment (CommentID, Content) VALUES (9, "reply_comment_1");
+INSERT INTO reply_comment (CommentID, Content) VALUES (10, "reply_comment_1");
+INSERT INTO reply_comment (CommentID, Content) VALUES (1, "reply_comment_1");
+INSERT INTO reply_comment (CommentID, Content) VALUES (1, "reply_comment_1");
+INSERT INTO reply_comment (CommentID, Content) VALUES (2, "reply_comment_1");
+INSERT INTO reply_comment (CommentID, Content) VALUES (3, "reply_comment_1");
+INSERT INTO reply_comment (CommentID, Content) VALUES (4, "reply_comment_1");
+INSERT INTO reply_comment (CommentID, Content) VALUES (4, "reply_comment_1");
+INSERT INTO reply_comment (CommentID, Content) VALUES (1, "reply_comment_1");

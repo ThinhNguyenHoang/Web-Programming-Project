@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import Typography from '@mui/material/Typography';
 import Comments from '../components/Comments/Comments';
-import { selectors, delete_news_comment_action, update_news_comment_action, add_news_comment_action, get_news_detail_action } from './../redux/slices/news/NewsSlice';
+import { selectors, delete_news_comment_action, update_news_comment_action, add_news_comment_action, get_news_detail_action } from '../redux/slices/news/NewsSlice';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;

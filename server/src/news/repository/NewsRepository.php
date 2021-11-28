@@ -17,6 +17,7 @@ use src\common\utils\ResponseHelper;
 use src\common\utils\RequestHelper;
 use src\news\message\NewsMessage;
 use src\material\repository\MaterialRepository;
+use src\news_comment\repository\NewsCommentRepository;
 use src\tag\repository\TagRepository;
 use function DeepCopy\deep_copy;
 
@@ -50,7 +51,7 @@ class NewsRepository implements Repository
         if ($result) {
             while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
                 error_log(json_encode($row), 0);
-                $row["Comment"] = array();
+                $row["Comment"] = NewsCommentRepository::listNewsComment($row["NewsID"]);
                 array_push($list_news, $row);
             }
         }
@@ -70,10 +71,13 @@ class NewsRepository implements Repository
         }
 
         $list_news = array();
-        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            error_log(json_encode($row), 0);
-            $row["Comment"] = array();
-            array_push($list_news, $row);
+
+        if ($result){
+            while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+                error_log(json_encode($row), 0);
+                $row["Comment"] = NewsCommentRepository::listNewsComment($row["NewsID"]);
+                array_push($list_news, $row);
+            }
         }
 
         error_log("NEWS_REPOSITORY::FETCH_LIST::", 0);

@@ -72,9 +72,9 @@ export const ROUTING_TAB_ITEMS = [
     generateTabLinkItem("Recommendations", ROUTING_CONSTANTS.RECOMMENDATION),
     generateTabLinkItem("My Account", ROUTING_CONSTANTS.ACCOUNT),
     // ! EDIT THE FOLLOWING LAST PROPS TO THE USER ROLE STRING CONSTANT
-    generateTabLinkItem("Manage User", ROUTING_CONSTANTS.MANAGE_USERS, "Manager"),
+    generateTabLinkItem("Manage User", ROUTING_CONSTANTS.CLIENT, "Manager"),
     generateTabLinkItem("Manage Item Info",ROUTING_CONSTANTS.MANAGE_ITEM_LIST, "Manager"),
-    generateTabLinkItem("Manage User", ROUTING_CONSTANTS.MANAGE_BILL, "Manager"),
+    generateTabLinkItem("Bill Management", ROUTING_CONSTANTS.MANAGE_BILL, "Manager"),
     generateTabLinkItem("Login", ROUTING_CONSTANTS.LOGIN),
     generateTabLinkItem("Register", ROUTING_CONSTANTS.REGISTER),
     generateTabLinkItem("Wishlist", ROUTING_CONSTANTS.WISH_LIST),
