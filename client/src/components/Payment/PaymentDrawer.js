@@ -453,18 +453,18 @@ export const PaymentDrawer = (
             amount: amount_to_pay,
             description: "No description",
             voucher_id: "1",
-            food_list: [food_list_in_card.map(item => {
+            food_list: food_list_in_card.map(item => {
                 return {
                     FoodID: item.FoodID
                 }
-            })],
-            combo_list: [
+            }),
+            combo_list:
                 combo_list_in_card.map(item => {
                     return {
                         ComboID: item.ComboID,
                     }
                 })
-            ],
+            ,
         }
         dispatch({type: make_payment_actions.loading, payload});
     }
