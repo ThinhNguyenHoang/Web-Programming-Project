@@ -154,13 +154,13 @@ const Header = (props) => {
 
 export const WithHeader = (props) => {
     return (
-        <div>
+        <Box sx={{display:`flex`, flexDirection:`column`}}>
             <Header/>
             <Box sx={{pt:{xs:`100px`,sm:`100px`,md:`100px`,lg:`75px`}}}>
                 {props.children}
             </Box>
-            <Footer/>
-        </div>
+            <Footer additionalStyle={{justifySelf:`flex-end`}}/>
+        </Box>
     )
 }
 export default Header;

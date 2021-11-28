@@ -40,18 +40,27 @@ class UserRepository implements Repository
      */
     public static function listUserAccount(): array
     {
-        $query = "SELECT id,username,password,role FROM USER_ACCOUNT";
+        $query = "select username,fullname as full_name,accountID as account_id, avatarURI as avatar ,dob,email,point,address,phonenumber as phone_number,role from user_profile, user_account where user_profile.AccountID = user_account.Id";
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
             error_log($e->getMessage());
         }
-//        $num_row = $result->num_rows;
+//        $query = "select username,fullname as full_name,accountID as account_id, avatarURI as avatar ,dob,email,point,address,phonenumber as phone_number,role from user_profile, user_account where user_profile.AccountID = user_account.Id and user_account.Id = $userId";
+//        try {
+//            $result = QueryExecutor::executeQuery($query);
+//            return UserMapper::mapUserProfileFromResult($result);
+//        } catch (Exception $exception) {
+//            echo $exception->getMessage();
+//        }
+//        return null;
+
         $list_user = array();
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
             error_log(json_encode($row),0);
             array_push($list_user,$row);
         }
+
         error_log("USER_REPOSITORY::FETCH_LIST::",0);
         return $list_user;
     }
