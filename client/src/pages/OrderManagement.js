@@ -337,7 +337,7 @@ function OrderMangament(props){
                                 <TableCell align="center" sx={{fontWeight:"bold"}}>Ngày giao</TableCell>
                                 <TableCell align="center" sx={{fontWeight:"bold"}}>Đã giảm giá</TableCell>
                                 <TableCell align="center" sx={{fontWeight:"bold"}}>Giá</TableCell>
-                                <TableCell align="center" sx={{fontWeight:"bold"}}>Địa chỉ giao hàng</TableCell>
+                                <TableCell align="center" sx={{fontWeight:"bold"}}>Ghi chú</TableCell>
                                 <TableCell align="left"></TableCell>
                             </TableRow>
                         </TableHead>
@@ -443,7 +443,7 @@ function OrderMangament(props){
                                                                     </Box>
                                                                     <Box>
                                                                         <Typography variant="h6" sx={{display:"inline",color:"elevation.layer0.contrast"}}>
-                                                                            Địa chỉ giao hàng:
+                                                                            Ghi chú:
                                                                         </Typography>
                                                                         <Typography variant="h6" sx={{display:"inline",color:"elevation.layer0.contrast", fontWeight:"bold", mx:"5px"}}>
                                                                             {order.order_list[idx-1].address}

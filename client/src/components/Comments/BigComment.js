@@ -39,8 +39,8 @@ function BigComment(props){
         });
         props.updateComment({...comment,Reply:newReply});
     }
-    const deleteReply=(id)=>{
-        const newReply=comment.Reply.filter(rep=>rep.ReplyID!==id);
+    const deleteReply=(reply)=>{
+        const newReply=comment.Reply.filter(rep=>rep.ReplyID!==reply.ReplyID);
         props.updateComment({...comment,Reply:newReply});
 
     }
@@ -157,6 +157,7 @@ function BigComment(props){
                                     name="instruction"
                                     multiline
                                     rows={2}
+                                    value={reply}
                                     onChange={(e)=>setReply(e.target.value)}
                                     variant="outlined"
                                     sx={{bgcolor:"white"}}

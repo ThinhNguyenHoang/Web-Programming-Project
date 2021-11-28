@@ -79,7 +79,7 @@ function SmallComment(props){
                     isAdmin ? 
                     (<Box sx={{display:"flex",flexDirection:"row"}}>
                         <Button sx={{height:"10px"}} style={{textTransform: 'none'}} onClick={()=>setEdit(true)}>Sửa</Button> 
-                        <Button sx={{height:"10px"}} style={{textTransform: 'none'}} onClick={()=>props.deleteReply(comment.RelyID)}>Xóa</Button>
+                        <Button sx={{height:"10px"}} style={{textTransform: 'none'}} onClick={()=>props.deleteReply(comment)}>Xóa</Button>
                     </Box>
                     ):
                     (<></>)
