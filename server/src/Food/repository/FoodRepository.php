@@ -147,7 +147,7 @@ class FoodRepository implements Repository
 
     public static function create($entity = null): \mysqli_result|bool|null
     {
-        $query = "INSERT INTO food (FoodName, Picture, Price, Description, Instruct, Sale) VALUES('$entity->FoodID','$entity->FoodName','$entity->Picture', '$entity->Price', '$entity->Description', '$entity->Instruct', '$entity->Sale');";
+        $query = "INSERT INTO food (FoodName, Picture, Price, Description, Instruct, Sale) VALUES('$entity->FoodName','$entity->Picture', '$entity->Price', '$entity->Description', '$entity->Instruct', '$entity->Sale');";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
