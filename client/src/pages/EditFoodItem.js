@@ -91,12 +91,11 @@ function EditFoodItem(){
     }
 
     const [values, setValues] = useState(food_detail);
-    
     const [addClick,setAddClick]=useState();
     const [deleteClick,setDeleteClick]=useState();
     const unchooseMaterial=material_list.filter((mar)=>!existObject(mar,values.Material,compareMaterial));
     const [unchooseList,setUnchooseList]=useState(unchooseMaterial);
-    const defaultTag=tag_list.filter((tag)=>!existObject(tag,values.Tags,compareTag));
+    const defaultTag=tag_list.filter((tag)=>existObject(tag,values.Tags,compareTag));
     const [tagList,setTaglist]=useState(defaultTag);
     
     React.useEffect(()=>{
@@ -118,6 +117,7 @@ function EditFoodItem(){
     },[deleteClick]);
 
     const setImage=(image)=>{
+        console.log("set imgae",image);
         setValues({...values,Picture:image});
     }
 
@@ -131,12 +131,12 @@ function EditFoodItem(){
     };
 
     const handleCreatFood=()=>{
-        setValues({...values,Tags:tagList});
+        //setValues({...values,Tags:[...tagList]});
         if (food_manage_data.tempFoodID !==""){
-            dispatch({type:update_food_action.loading,payload:values});
+            dispatch({type:update_food_action.loading,payload:{...values,Tags:[...tagList]}});
         } else {
             console.log("init values",values);
-            dispatch({type:add_food_action.loading,payload:values});
+            dispatch({type:add_food_action.loading,payload:{...values,Tags:[...tagList]}});
         }
         history.push(ROUTING_CONSTANTS.MANAGE_ITEM_LIST);
     }

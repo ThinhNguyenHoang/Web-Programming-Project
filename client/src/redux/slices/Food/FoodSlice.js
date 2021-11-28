@@ -403,10 +403,11 @@ const FoodSlice = createSlice({
             state.food_manage.update_food =loading();
         },
         [update_food_action.success]:(state,action)=>{
+            
             state.food_manage.update_food =success();
         },
         [update_food_action.error]:(state,action)=>{
-            state.food_manage.update_food =error();
+            state.food_manage.update_food =error(action.payload);
         },
         [delete_food_action.loading]:(state,action)=>{
             state.food_manage.delete_food =loading();

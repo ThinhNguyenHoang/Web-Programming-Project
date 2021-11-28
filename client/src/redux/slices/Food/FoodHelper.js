@@ -9,8 +9,8 @@ export const UpdateDiscount=(cart)=>{
 }
 export const UpdateQuantity=(cart)=>{
     cart.quantity=cart.food_list.reduce((sum,food)=>{
-        return sum+food.Quantity;
-    },0)+ cart.combo_list.reduce((sum,combo)=>sum+combo.Quantity,0)
+        return sum+parseInt(food.Quantity);
+    },0)+ cart.combo_list.reduce((sum,combo)=>sum+parseInt(combo.Quantity),0)
 }
 
 // //convert cart data and food data to food list in cart
