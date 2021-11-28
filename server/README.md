@@ -607,3 +607,168 @@ BANK ACCOUNT:
 
     DELETE: /tag/:id
 ```
+
+#NEWS
+```
+    GET: /news
+        {
+            "message": "Read news:result in success",
+            "data": [
+                {
+                    "NewsID": "",
+                    "Title": "",
+                    "Picture": "",
+                    "Highlight": "",
+                    "Content": "",
+                    "Author": "",
+                    "Comment": [
+                        {
+                            "CommentID": "",
+                            "UserID": "",
+                            "Content": "",
+                            "UserName": "",
+                            "UserAvatar": "",
+                            "ImageList": [
+                                {
+                                    "Image": ""
+                                }
+                            ],
+                            "Reply": []
+                        },
+                        {
+                            "CommentID": "",
+                            "UserID": "",
+                            "Content": "",
+                            "UserName": "",
+                            "UserAvatar": "",
+                            "ImageList": [
+                                {
+                                    "Image": ""
+                                }
+                            ],
+                            "Reply": [
+                                {
+                                    "Content": "",
+                                    "UserID": "",
+                                    "UserName": "",
+                                    "UserAvatar": ""
+                                },
+                                {
+                                    "Content": "",
+                                    "UserID": "",
+                                    "UserName": "",
+                                    "UserAvatar": ""
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "NewsID": "",
+                    "Title": "",
+                    "Picture": "",
+                    "Highlight": "",
+                    "Content": "",
+                    "Author": "",
+                    "Comment": [
+                        {
+                            "CommentID": "",
+                            "UserID": "",
+                            "Content": "",
+                            "UserName": "",
+                            "UserAvatar": "",
+                            "ImageList": [
+                                {
+                                    "Image": ""
+                                }
+                            ],
+                            "Reply": []
+                        },
+                        {
+                            "CommentID": "",
+                            "UserID": "",
+                            "Content": "",
+                            "UserName": "",
+                            "UserAvatar": "",
+                            "ImageList": [
+                                {
+                                    "Image": ""
+                                }
+                            ],
+                            "Reply": [
+                                {
+                                    "Content": "",
+                                    "UserID": "",
+                                    "UserName": "",
+                                    "UserAvatar": ""
+                                },
+                                {
+                                    "Content": "",
+                                    "UserID": "",
+                                    "UserName": "",
+                                    "UserAvatar": ""
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+
+        /news/:id
+    
+    POST: /news
+        body: {
+            "Title":"",
+            "Picture":"",
+            "Highlight":"",
+            "Content":"",
+            "Author":""
+        }
+    
+    PUT: /news/:id
+        body: {
+            "Title":"",
+            "Picture":"",
+            "Highlight":"",
+            "Content":"",
+            "Author":""
+        }
+
+    DELETE: /news/:id
+```
+
+#NEWS COMMENT
+```
+    POST: /news/comment
+        body: {
+            NewsID: ,
+            Content:"",
+            ImageList:[]
+        }
+    
+    PUT: /news/comment/:id
+        body: {
+            Content:"",
+            ImageList:[
+                {
+                    "Image":
+                },
+                {
+                    "Image":
+                }
+            ],
+            Reply: [
+                {
+                    "UserID":,
+                    "Content":
+                },
+                {
+                    "UserID":,
+                    "Content":
+                }
+            ]
+        }
+
+    DELETE: /news/comment/:id
+```
