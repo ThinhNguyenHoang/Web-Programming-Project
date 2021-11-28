@@ -96,7 +96,7 @@ function EditFoodItem(){
     const [deleteClick,setDeleteClick]=useState();
     const unchooseMaterial=material_list.filter((mar)=>!existObject(mar,values.Material,compareMaterial));
     const [unchooseList,setUnchooseList]=useState(unchooseMaterial);
-    const defaultTag=tag_list.filter((tag)=>!existObject(tag,values.Tags,compareTag));
+    const defaultTag=tag_list.filter((tag)=>existObject(tag,values.Tags,compareTag));
     const [tagList,setTaglist]=useState(defaultTag);
     
     React.useEffect(()=>{

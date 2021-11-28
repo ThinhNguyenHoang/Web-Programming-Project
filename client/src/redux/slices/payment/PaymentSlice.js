@@ -104,7 +104,9 @@ const paymentSlice = createSlice({
             state.payment_account.status = loading();
         },
         [edit_bank_account_detail_actions.success]: (state, action) => {
-            state.payment_account.accounts = [...state.payment_account.accounts,action.payload.data];
+            state.payment_account.accounts = state.payment_account.accounts.map((item) => {
+                return item.id !== action.payload.data.id ? item : action.payload.data;
+            });
             state.payment_account.status = success();
         },
         [edit_bank_account_detail_actions.error]: (state, action) => {
