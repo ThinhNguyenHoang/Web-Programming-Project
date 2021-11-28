@@ -14,7 +14,7 @@ import FoodItemCard from "../Food/FoodItemCard";
 import { Field, Form, Formik } from "formik";
 import * as yup from "yup";
 import { TextField } from "formik-material-ui";
-import { useHistor } from 'react-router';
+import { useHistory} from 'react-router';
 import { useTranslation } from 'react-i18next';
 import {
     add_bank_account_detail_actions,
@@ -26,7 +26,8 @@ import {
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import {getYearMonthDateFromJsDate} from "../../utils";
 import {selectors} from "../../redux/slices/auth/AuthSlice";
-import {selectors as foodSelectors} from "../../redux/slices/food/FoodSlice";
+import {selectors as foodSelectors, update_cart_actions} from "../../redux/slices/food/FoodSlice";
+import { ROUTING_CONSTANTS } from './../../routes/RouterConfig';
 
 const getAccountImageFromAccountType = (type) => {
     return undefined;
@@ -416,6 +417,7 @@ export const PaymentDrawer = (
     }
 ) => {
     const dispatch = useDispatch();
+    const history= useHistory();
     const [show, setShow] = useState(false);
     const [indexChosen, setIndexChosen] = useState(0);
     const userProfile = useSelector(selectors.getUserProfile);
@@ -467,6 +469,9 @@ export const PaymentDrawer = (
             ,
         }
         dispatch({type: make_payment_actions.loading, payload});
+        dispatch({type:update_cart_actions.loading,payload:{FoodList:[],ComboList:[]}});
+        setShow(false);
+        history.push(ROUTING_CONSTANTS.ORDERUSER);
     }
 
     return (
