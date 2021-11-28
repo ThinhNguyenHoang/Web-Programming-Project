@@ -11,12 +11,6 @@ import { useHistory } from 'react-router-dom';
 import { ROUTING_CONSTANTS } from './../routes/RouterConfig';
 
 
-const fake_news = {
-    title: "Sách góp phần phát huy trí tuệ, phẩm chất con người Việt Nam",
-    img : "https://codelearn.io/Upload/Blog/database-change-notification-oracle-63742419191.3747.jpg",
-    description: "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica"
-}
-
 function News (){
     const dispatch = useDispatch();
     const history=useHistory();
@@ -41,7 +35,7 @@ function News (){
                         <Typography variant="h4" gutterBottom component="div" sx={{fontWeight:"bold",color:"red", ml:"50px", mt:"10px"}}>
                             Nổi bật
                         </Typography>
-                        <NewsCarousel/>
+                        <NewsCarousel list={news_list}/>
                     </Box>
                 </Grid>
             </Grid>
