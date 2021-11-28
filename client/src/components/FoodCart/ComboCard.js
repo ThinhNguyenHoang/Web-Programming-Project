@@ -14,6 +14,7 @@ import InfoIcon from '@mui/icons-material/Info';
 
 const QuanlityButton = styled(Button)({
 	border: '1px solid ',
+	borderRadius:16,
 	backgroundColor: '#c2c2c2',
 	borderColor: '#ababab',
 	padding: '0px 0px',
