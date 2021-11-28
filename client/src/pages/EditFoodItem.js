@@ -36,8 +36,9 @@ import { ThemeProvider } from "@material-ui/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ROUTING_CONSTANTS } from '../routes/RouterConfig';
 import { height } from '@mui/system';
-import ImageDrawerUpdater from '../components/ImageDrawerUpdater/ImageDrawerUpdater';
-// import food_default_image from '../assets/images/default_food_image.jpg';
+import default_food_image from '../assets/images/defaul_food_image.jpg'
+import ImageDrawerUpdater from "../components/ImageDrawerUpdater/ImageDrawerUpdater";
+
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
@@ -144,7 +145,12 @@ function EditFoodItem(){
                         </Typography>
                         <Box sx={{display:`flex`, flexDirection:"row", flexWrap:"wrap", alignContent:"center"}}>
                             <Box sx={{bgcolor:"elevation.layer1.main"}}>
-                                {/* <ImageDrawerUpdater  ></ImageDrawerUpdater> */}
+                                {/*<ReactFirebaseFileUpload2 setImageURL={setImage} picture={values.Picture}/>*/}
+                                <ImageDrawerUpdater trigger={<img src={values.Picture ? values.Picture : default_food_image} width={`300px`} alt={`Food image`}/>}
+                                    img_uri_callback={(img) => {
+                                        setImage(img);
+                                    }}
+                                />
                             </Box>
                             <Box maxWidth="100ch" >
                                 <form autoComplete="off">

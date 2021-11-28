@@ -13,8 +13,6 @@ import Footer from "../Footer/Footer";
 import * as React from "react";
 import {read_user_profile_actions} from "../../redux/slices/auth/AuthSlice";
 import {USER_CONSTANTS} from "../../redux/slices/auth/AuthConstants";
-// Header should be passed in the number of tabs available
-// If not logged in the props should not contains the protected routes
 
 const LogoAndName = ({navTo}) =>{
     return (

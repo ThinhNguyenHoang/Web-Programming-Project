@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import { useDispatch, useSelector } from "react-redux";
 import Typography from "@mui/material/Typography";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBackspace, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faBackspace, faPlus, faMoneyBillAlt } from "@fortawesome/free-solid-svg-icons";
 import Toaster from "../../utils/Toaster/Toaster";
 import default_account_image from '../../assets/images/default_bank_account_img.png'
 import CardMedia from "@mui/material/CardMedia";
@@ -21,10 +21,11 @@ import {
     edit_bank_account_detail_actions,
     remove_bank_account_detail_actions,
     payment_selectors,
-    get_bank_accounts_actions
+    get_bank_accounts_actions, make_payment_actions
 } from '../../redux/slices/payment/PaymentSlice';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import {getYearMonthDateFromJsDate} from "../../utils";
+import {selectors} from "../../redux/slices/auth/AuthSlice";
 
 const getAccountImageFromAccountType = (type) => {
     return undefined;
@@ -73,7 +74,7 @@ export const BankAccountItem = ({ account_item, additionalStyle }) => {
     const id = open ? 'simple-popover' : undefined;
 
     return (
-        <Card sx={{ maxWidth: 400, ...additionalStyle }}>
+        <Card sx={{ width: 400, ...additionalStyle }}>
             <CardMedia
                 component="img"
                 height="140"
@@ -416,7 +417,7 @@ export const PaymentDrawer = (
     const dispatch = useDispatch();
     const [show, setShow] = useState(false);
     const [indexChosen, setIndexChosen] = useState(0);
-
+    const userProfile = useSelector(selectors.getUserProfile);
     const bank_account_list = useSelector(payment_selectors.getBankAccountsList);
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -437,8 +438,27 @@ export const PaymentDrawer = (
             payload: values,
         });
     }
-    // TODO GET THE REAL BANK ACCOUNT LIST AND ADD IT TO THE GRID
-    // const [accountList,setAccountList]  = useState([]);
+
+        // account_detail:{
+        //     id:"",
+        //         bank_account_number: "",
+        //         bank_account_owner: "",
+        //         bank_account_type: "",
+        //         balance: "",
+        //         valid_start:"",
+        //         valid_end:"",
+        // },
+    const makePayment = () => {
+        const account_chosen = bank_account_list[indexChosen];
+        const payload = {
+            bank_account_number: account_chosen.bank_account_number,
+            user_id: userProfile.account_id,
+            amount: amount_to_pay,
+            description: "No description",
+        }
+        dispatch({type: make_payment_actions.loading, payload});
+    }
+
     return (
         <Box sx={{ m: 1, p: 1, display: `flex`, flexDirection: `column` }} xs={12} md={4}
             justifyContent={`flex-start`} alignItems={`center`}>
@@ -468,6 +488,12 @@ export const PaymentDrawer = (
                             {"Your Payment Accounts"}
                         </Typography>
                         <Box>
+                            <Button sx={{ mx: 2 }} variant={`contained`} color={`primary`} onClick={makePayment}>
+                                <Box sx={{ mr: 1 }}>
+                                    <FontAwesomeIcon style={{ color: '#fff' }} icon={faMoneyBillAlt} />
+                                </Box>
+                                Pay
+                            </Button>
                             <Button sx={{ mx: 2 }} variant={`contained`} color={`primary`} onClick={showPopOver}>
                                 <Box sx={{ mr: 1 }}>
                                     <FontAwesomeIcon style={{ color: '#fff' }} icon={faPlus} />
@@ -500,8 +526,8 @@ export const PaymentDrawer = (
                     <AccountGrid bank_account_list={bank_account_list}
                         callback={(index) => setIndexChosen(index)} />
                     {amount_to_pay && <Typography sx={{ alignSelf: `center`, m: 2 }} variant={`h3`}
-                        color={`${bank_account_list[indexChosen].balance >= amount_to_pay ? 'success.main' : 'error.main'}`}>
-                        {bank_account_list[indexChosen].balance < amount_to_pay ? "Insufficent Balance To Pay" : "Valid account with enough money"}
+                        color={`${bank_account_list[indexChosen]?.balance >= amount_to_pay ? 'success.main' : 'error.main'}`}>
+                        {bank_account_list[indexChosen]?.balance < amount_to_pay ? `Insufficent Balance To Pay for ${amount_to_pay}` : `Valid account with enough money to pay for ${amount_to_pay}`}
                     </Typography>}
                 </Drawer>
             </Box>

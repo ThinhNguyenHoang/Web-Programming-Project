@@ -169,7 +169,7 @@ class FoodRepository implements Repository
 
     public static function insertCategoryTag($FoodID, $TagID)
     {
-        $query = "INSERT INTO category_tag (TagID, FoodID) VALUES('$TagID','$FoodID');";
+        $query = "INSERT INTO category_tag (TagID, FoodID, ComboID) VALUES('$TagID','$FoodID', 0);";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $e) {

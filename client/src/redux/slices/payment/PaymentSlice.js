@@ -104,7 +104,9 @@ const paymentSlice = createSlice({
             state.payment_account.status = loading();
         },
         [edit_bank_account_detail_actions.success]: (state, action) => {
-            state.payment_account.accounts = [...state.payment_account.accounts,action.payload.data];
+            state.payment_account.accounts = state.payment_account.accounts.map((item) => {
+                return item.id !== action.payload.data.id ? item : action.payload.data;
+            });
             state.payment_account.status = success();
         },
         [edit_bank_account_detail_actions.error]: (state, action) => {
@@ -133,11 +135,13 @@ const paymentSlice = createSlice({
             state.payment_account.status = error(action.payload)
         },
 
+        // * Make Payment
         [make_payment_actions.loading]: (state,action) => {
             state.make_payment_status = loading();
         },
         [make_payment_actions.success]: (state,action) => {
             // TODO: Update the account in the accounts list to new balance value
+            window.location.assign(`/`);
             state.make_payment_status = success();
         },
         [make_payment_actions.error]: (state,action) => {
