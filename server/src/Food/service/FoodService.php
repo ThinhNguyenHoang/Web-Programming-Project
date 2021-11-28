@@ -42,12 +42,12 @@ class FoodService
     public static function getFoodRecomendation()
     {
         $top_tag = FoodRepository::getTopTagFood();
-        if(!$top_tag){
+        if (!$top_tag) {
             FoodRepository::initUserRefTagForFood();
             $top_tag = FoodRepository::getTopTagFood();
         }
         $list_food = array();
-        foreach($top_tag as $tag) {
+        foreach ($top_tag as $tag) {
             // echo json_encode($tag);die();
             $food_found = FoodRepository::findFoodByID($tag["FoodID"]);
             if ($food_found) {
@@ -231,19 +231,15 @@ class FoodService
         $food->Tags = array();
         if (property_exists($request, "Tags")) {
             if (is_array($request->Tags)) {
-                if (!empty($request->Tags)) {
-                    foreach ($request->Tags as $tag) {
-                        if (property_exists($tag, "TagID")) {
-                            array_push($food->Tags, $tag);
-                        } else {
-                            ResponseHelper::error_client("Must contain TagID in Tag array element");
-                            die();
-                        }
+                foreach ($request->Tags as $tag) {
+                    if (property_exists($tag, "TagID")) {
+                        array_push($food->Tags, $tag);
+                    } else {
+                        ResponseHelper::error_client("Must contain TagID in Tag array element");
+                        die();
                     }
-                    $is_update_category_tag = true;
-                } else {
-                    $food->Tags = $food_found["Tags"];
                 }
+                $is_update_category_tag = true;
             } else {
                 ResponseHelper::error_client("Tags feild must be an array");
                 die();
