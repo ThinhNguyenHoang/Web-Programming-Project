@@ -58,10 +58,15 @@ class TransactionService
                 $transaction->id = QueryExecutor::getLastInsertID();
                 error_log("Adding transaction: " . json_encode($transaction), 0);
 
-                BankAccountService::reduceBankAccountBalance($transaction->bank_account_number, $transaction->amount);
-    
-                ResponseHelper::success(TransactionMessage::getMessages()->createSuccess, $transaction);
-                return;
+                $food_result = TransactionRepository::insertFoodTransactionContain($transaction->id, $transaction->food_list);
+                $combo_result = TransactionRepository::insertComboTransactionContain($transaction->id, $transaction->combo_list);
+
+                if ($food_result && $combo_result) {
+                    BankAccountService::reduceBankAccountBalance($transaction->bank_account_number, $transaction->amount);
+        
+                    ResponseHelper::success(TransactionMessage::getMessages()->createSuccess, $transaction);
+                    return;
+                }
             }
         } else {
             ResponseHelper::error_client("Deo du tien ban eii");
