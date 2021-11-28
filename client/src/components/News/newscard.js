@@ -12,7 +12,7 @@ import { delete_news_action } from '../../redux/slices/news/NewsSlice';
 import { useHistory } from 'react-router';
 import { get_news_detail_action } from './../../redux/slices/news/NewsSlice';
 import { ROUTING_CONSTANTS } from './../../routes/RouterConfig';
-
+import default_new_image from '../../assets/images/default_news_image.jpg';
 
 
 function NewsCard (props){
@@ -37,7 +37,7 @@ function NewsCard (props){
         <Box sx={{display: `flex`, flexDirection: "column"}}>
             <Divider variant="middle"/>
             <Card sx={{display:"flex",flexDirection:"row",height:128,mb:2, width:1000, my:"10px", bgcolor:"elevation.layer1.main", boxShadow:0, borderRadius:0}}>
-                <CardMedia title="nofication" image={news.Picture} sx={{width: 128 ,height: 128,borderBottomLeftRadius:"0",borderTopLeftRadius:"0",flexShrink:0}}/>
+                <CardMedia title="nofication" image={news.Picture || default_new_image} sx={{width: 128 ,height: 128,borderBottomLeftRadius:"0",borderTopLeftRadius:"0",flexShrink:0}}/>
                 <CardContent sx={{height:128,py:0}}>
                     <CardActionArea>
                         <Typography 

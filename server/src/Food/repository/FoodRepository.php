@@ -272,7 +272,7 @@ class FoodRepository implements Repository
         $UserID = RequestHelper::getUserIDFromToken();
         foreach ($list_tag as $tag) {
             $query = "INSERT INTO user_ref_tag (TagID, UserID, Count) VALUES ('" . $tag["TagID"] . "', $UserID, 0)";
-
+            $result = null;
             try {
                 $result = QueryExecutor::executeQuery($query);
             } catch (Exception $exception) {

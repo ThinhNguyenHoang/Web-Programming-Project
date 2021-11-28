@@ -85,7 +85,6 @@ export const WishListGrid = () => {
                     ))}
                 </Grid>
             </Box>
-
         </Box>
     );
 };
