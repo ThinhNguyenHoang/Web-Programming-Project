@@ -36,19 +36,12 @@ import { ThemeProvider } from "@material-ui/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ROUTING_CONSTANTS } from '../routes/RouterConfig';
 import { height } from '@mui/system';
-
+import ImageDrawerUpdater from '../components/ImageDrawerUpdater/ImageDrawerUpdater';
+// import food_default_image from '../assets/images/default_food_image.jpg';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const taglist = [
-    { title: 'Món chay'},
-    { title: 'Món mặn'},
-    { title: 'Món nước'},
-    { title: 'Món Hàn Quốc'},
-    { title: 'Ngày Rằm'},
-    { title: "Món Nhật"},
-    { title: 'Đồ ăn nội địa'},
-];
+
 const compareTag=(tagA,tagB)=>{
     if(tagA.TagName===tagB.TagName && tagB.TagID===tagA.TagID){
         return true;
@@ -131,7 +124,7 @@ function EditFoodItem(){
     };
 
     const handleCreatFood=()=>{
-        //setValues({...values,Tags:[...tagList]});
+        setValues({...values,Tags:[...tagList]});
         if (food_manage_data.tempFoodID !==""){
             dispatch({type:update_food_action.loading,payload:{...values,Tags:[...tagList]}});
         } else {
@@ -151,7 +144,7 @@ function EditFoodItem(){
                         </Typography>
                         <Box sx={{display:`flex`, flexDirection:"row", flexWrap:"wrap", alignContent:"center"}}>
                             <Box sx={{bgcolor:"elevation.layer1.main"}}>
-                                <ReactFirebaseFileUpload2 setImageURL={setImage} picture={values.Picture}/>
+                                {/* <ImageDrawerUpdater  ></ImageDrawerUpdater> */}
                             </Box>
                             <Box maxWidth="100ch" >
                                 <form autoComplete="off">
