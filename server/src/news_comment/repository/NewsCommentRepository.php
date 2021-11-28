@@ -184,7 +184,7 @@ class NewsCommentRepository implements Repository
 
     public static function update(int $entityID = null, object $entity = null)
     {
-        $query = "UPDATE comment SET Content='$entity->Content' WHERE NewsID=$entityID;";
+        $query = "UPDATE comment SET Content='$entity->Content' WHERE CommentID=$entityID;";
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $exception) {
