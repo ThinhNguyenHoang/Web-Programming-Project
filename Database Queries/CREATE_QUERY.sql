@@ -414,6 +414,7 @@ INSERT INTO comment_image (CommentID, Image) VALUES (15, "");
 
 DROP TABLE IF EXISTS reply_comment;
 CREATE TABLE reply_comment (
+	ReplyID BIGINT(8) NOT NULL AUTO_INCREMENT,
 	CommentID BIGINT(8),
     UserID BIGINT(8),
     Content TEXT

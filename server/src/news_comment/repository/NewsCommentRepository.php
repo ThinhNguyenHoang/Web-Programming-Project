@@ -95,7 +95,7 @@ class NewsCommentRepository implements Repository
 
     public static function getReplyComment($CommentID)
     {
-        $query = "SELECT Content, UserID FROM reply_comment WHERE CommentID = $CommentID;";
+        $query = "SELECT ReplyID, Content, UserID FROM reply_comment WHERE CommentID = $CommentID;";
 
         $result = null;
         try {
