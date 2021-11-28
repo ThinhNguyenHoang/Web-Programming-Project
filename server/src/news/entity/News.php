@@ -16,7 +16,7 @@ class News
     /**
      * News constructor.
      */
-    public function __construct(int $NewsID = 0, string $Title = "", $Picture = null, int $Highlight = 0, string $Content = "", $Author = "")
+    public function __construct($NewsID = 0, $Title = "", $Picture = "", $Highlight = "", $Content = "", $Author = "")
     {
         $this->NewsID = $NewsID;
         $this->Title = $Title;

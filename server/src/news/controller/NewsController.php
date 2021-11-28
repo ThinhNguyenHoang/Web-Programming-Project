@@ -7,6 +7,7 @@ use src\common\base\RequestHandler;
 use src\common\utils\RequestHelper;
 use src\common\utils\ResponseHelper;
 use src\news\service\NewsService;
+use src\news_comment\controller\NewsCommentController;
 use src\tag\repository\TagRepository;
 
 require_once  __DIR__ . '/../../../vendor/autoload.php';
@@ -21,6 +22,16 @@ class NewsController extends BaseController implements RequestHandler
         $method = strtolower(RequestHelper::getRequestMethod());
         error_log("News controller::METHOD::" . $method);
         $relative_path = RequestHelper::get_ith_path_item(1);
+        if ($relative_path  != "comment") {
+            self::newsEndpoint($method, $relative_path);
+        } else {
+            $newsCommentController = new NewsCommentController();
+            $newsCommentController->handleRequest();
+        }
+    }
+
+    public static function newsEndpoint($method, $relative_path)
+    {
         switch ($method) {
             case "get":
                 if ($relative_path == null) {
@@ -60,5 +71,10 @@ class NewsController extends BaseController implements RequestHandler
             default:
                 return false;
         }
+    }
+
+    public static function newsCommentEndpoint()
+    {
+        
     }
 }

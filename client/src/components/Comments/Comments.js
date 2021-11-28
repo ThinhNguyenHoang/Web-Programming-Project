@@ -8,9 +8,10 @@ import {Button} from "@mui/material";
 import { useSelector } from 'react-redux';
 import { TextField } from '@mui/material';
 import BigComment from './BigComment';
+import { selectors } from './../../redux/slices/news/NewsSlice';
 import { selectors as auth } from './../../redux/slices/auth/AuthSlice';
 import { storage } from '../../utils/UploadFile/FileUploader';
-import { ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
+import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import { ButtonBase } from '@mui/material';
 
 
@@ -35,6 +36,8 @@ function Comments(props){
     }
 
     const handleAddComment=()=>{
+        setContent("");
+        setImageList([]);
         const newComment={
             UserID:userID,
             Content:content,
@@ -44,11 +47,11 @@ function Comments(props){
         props.addComment(newComment);
     }
     const handleDeleteImage=(image)=>{
-        setImageList(imageList.filter(img=>img!==image));
+        setImageList(imageList.filter(img=>img.Image!==image.Image));
     }
     const handleAddImage=(e)=>{
         const image=e.target.files[0];
-        const storageRef = ref(storage, `images/${userName ? userName : "default_user"}/${image.name}`)
+        const storageRef = ref(storage, `images/${userName ? userName : "default_user"}/${image}`)
         const uploadTask = uploadBytesResumable(storageRef, image)
         uploadTask.on('state_changed',
             (snapshot) => {
@@ -71,7 +74,7 @@ function Comments(props){
             () => {
                 getDownloadURL(uploadTask.snapshot.ref)
                     .then((downloadUrl) => {
-                        setImageList([...imageList,downloadUrl]);
+                        setImageList([...imageList,{Image:downloadUrl}]);
                     })
             }
         )
@@ -91,13 +94,14 @@ function Comments(props){
                         name="instruction"
                         multiline
                         rows={5}
+                        value={content}
                         onChange={(e)=>setContent(e.target.value)}
                         variant="outlined"
                     />
                     <Box sx={{display:"flex",flexDirection:"row"}}>
                         {imageList.map((imageComment)=>{
                             return (<ButtonBase onClick={()=>handleDeleteImage(imageComment)}>
-                                        <CardMedia component="img" height="150" image={imageComment} alt="Paella dish"/>
+                                        <CardMedia component="img" height="150" image={imageComment.Image} alt="Paella dish"/>
                                     </ButtonBase>);
                         }
                             

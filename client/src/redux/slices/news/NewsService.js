@@ -1,3 +1,6 @@
+import { async } from "@firebase/util";
+import { faSync } from "@fortawesome/free-solid-svg-icons";
+import { withAttributes } from "js-cookie";
 import request from "../../../utils/RequestHelper";
 
 const api_endpoints={
@@ -5,37 +8,53 @@ const api_endpoints={
     comment:"/news/comment"
 }
 
-export const getNewsListService=(payload)=>{
-    console.log("get news list service");
-    return news_list;
+export const getNewsListService= async (payload)=>{
+    return await request.getAsync(api_endpoints.news)
+                        .then(res=>res.data)
+                        .catch(e=>e);
+
 }
-export const getNewsDetailService=(payload)=>{
+export const getNewsDetailService=async (payload)=>{
     console.log("get news detail, news id:",payload)
-    return news1;
+    return await request.getAsync(api_endpoints.news+"/"+payload)
+                        .then(res=>res.data)
+                        .catch(e=>e);
 }
-export const deleteNewsService= (payload)=>{
+export const deleteNewsService= async(payload)=>{
     console.log("delete new service,newID:",payload);
-    return "";
+    return await request.deleteAsync(api_endpoints.news+"/"+payload)
+                        .then(res=>res.data)
+                        .catch(e=>e);
 }
-export const addNewsService= (payload)=>{
+export const addNewsService= async (payload)=>{
     console.log("add news servie,news data:",payload);
-    return "";
+    return await request.postAsync(api_endpoints.news,payload)
+                        .then(res=>res.data)
+                        .catch(e=>e);
 }
-export const updateNewsService = (payload)=>{
+export const updateNewsService = async (payload)=>{
     console.log("update news service, data:",payload );
-    return "";
+    return await request.putAsync(api_endpoints.news+"/"+payload.NewsID,payload)
+                        .then(res=>res.data)
+                        .catch(e=>e);
 }
-export const addCommentService = (payload)=>{
+export const addCommentService = async (payload)=>{
     console.log("add comment service, data:",payload);
-    return "";
+    return await request.postAsync(api_endpoints.comment,payload)
+                        .then(res=>res.data)
+                        .catch(e=>e);
 }
-export const deleteCommentService= (payload)=>{
+export const deleteCommentService=async (payload)=>{
     console.log("delete comment service,data:",payload);
-    return ""
+    return await request.deleteAsync(api_endpoints.comment+"/"+payload)
+                        .then(res=>res.data)
+                        .catch(e=>e);
 }
-export const updateCommentService = (payload)=>{
+export const updateCommentService =async (payload)=>{
     console.log("update comment service, data:",payload);
-    return "";
+    return await request.putAsync(api_endpoints.comment+"/"+payload.CommentID,payload)
+                        .then(res=>res.data)
+                        .catch(e=>e);
 }
 
 const Reply1={

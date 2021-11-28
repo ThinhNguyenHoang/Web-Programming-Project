@@ -10,6 +10,7 @@ import { Divider } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { delete_news_action } from '../../redux/slices/news/NewsSlice';
 import { useHistory } from 'react-router';
+import { get_news_detail_action } from './../../redux/slices/news/NewsSlice';
 import { ROUTING_CONSTANTS } from './../../routes/RouterConfig';
 
 

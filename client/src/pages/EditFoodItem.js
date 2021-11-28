@@ -42,15 +42,7 @@ import ImageDrawerUpdater from "../components/ImageDrawerUpdater/ImageDrawerUpda
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const taglist = [
-    { title: 'Món chay'},
-    { title: 'Món mặn'},
-    { title: 'Món nước'},
-    { title: 'Món Hàn Quốc'},
-    { title: 'Ngày Rằm'},
-    { title: "Món Nhật"},
-    { title: 'Đồ ăn nội địa'},
-];
+
 const compareTag=(tagA,tagB)=>{
     if(tagA.TagName===tagB.TagName && tagB.TagID===tagA.TagID){
         return true;
@@ -93,7 +85,6 @@ function EditFoodItem(){
     }
 
     const [values, setValues] = useState(food_detail);
-    
     const [addClick,setAddClick]=useState();
     const [deleteClick,setDeleteClick]=useState();
     const unchooseMaterial=material_list.filter((mar)=>!existObject(mar,values.Material,compareMaterial));
@@ -120,6 +111,7 @@ function EditFoodItem(){
     },[deleteClick]);
 
     const setImage=(image)=>{
+        console.log("set imgae",image);
         setValues({...values,Picture:image});
     }
 
@@ -133,12 +125,12 @@ function EditFoodItem(){
     };
 
     const handleCreatFood=()=>{
-        setValues({...values,Tags:tagList});
+        setValues({...values,Tags:[...tagList]});
         if (food_manage_data.tempFoodID !==""){
-            dispatch({type:update_food_action.loading,payload:values});
+            dispatch({type:update_food_action.loading,payload:{...values,Tags:[...tagList]}});
         } else {
             console.log("init values",values);
-            dispatch({type:add_food_action.loading,payload:values});
+            dispatch({type:add_food_action.loading,payload:{...values,Tags:[...tagList]}});
         }
         history.push(ROUTING_CONSTANTS.MANAGE_ITEM_LIST);
     }

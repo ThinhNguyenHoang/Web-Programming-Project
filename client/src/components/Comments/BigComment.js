@@ -18,6 +18,7 @@ function BigComment(props){
     const userAvatar=props.userAvatar;
     const smallCommentList=comment.Reply;
     const imageList=comment.ImageList;
+    console.log("imalge list",imageList);
     const isAdmin=props.isAdmin;
     const isLogin=props.isLogin;
 
@@ -73,13 +74,13 @@ function BigComment(props){
                                     name="instruction"
                                     multiline
                                     rows={5}
-                                    defaultValue={content}
+                                    value={content}
                                     onChange={(e)=>setContent(e.target.value)}
                                     variant="outlined"
                                 />
                                 <Box sx={{display:"flex",flexDirection:"row"}}>
                                     <Button onClick={()=>{setEdit(false); setContent(comment.Content);}}>Hủy</Button>
-                                    <Button onClick={()=>props.updateComment({...comment,Content:content})}>Xác nhận</Button>
+                                    <Button onClick={()=>{props.updateComment({...comment,Content:content}); setEdit(false);}}>Xác nhận</Button>
                                 </Box>
                             </Box>
                         ):
@@ -88,7 +89,7 @@ function BigComment(props){
                         )
                     }
                     <Box sx={{display:"flex",flexDirection:"row"}}>
-                        {imageList.map((imageComment)=><CardMedia component="img" height="150" image={imageComment} alt="Paella dish"/>)}
+                        {imageList.map((imageComment)=><CardMedia component="img" height="150" image={imageComment.Image} alt="Paella dish"/>)}
                     </Box>
                     <Box sx={{display:"flex",flexDirection:"row"}}>
                         {ansButton}

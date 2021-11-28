@@ -36,6 +36,7 @@ export const GetCartService = async (payload)=>{
     const voucherData = await request.getAsync(api_endpoints.voucher)
                                     .then((response)=>response.data)
                                     .catch((error)=>console.log("fail at cart service ",error));
+    console.log("cart load",cartData);
     return {
             food_list:cartData.FoodList,
             combo_list:cartData.ComboList,
