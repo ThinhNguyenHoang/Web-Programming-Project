@@ -14,7 +14,8 @@ use Exception;
 use src\common\base\Repository;
 use src\common\utils\QueryExecutor;
 use src\common\utils\RequestHelper;
-use src\transaction\message\TransactionMessage;
+use src\food\repository\FoodRepository;
+use src\combo\repository\ComboRepository;
 use src\common\utils\ResponseHelper;
 
 use function DeepCopy\deep_copy;
@@ -38,17 +39,18 @@ class TransactionRepository implements Repository
     {
         if (RequestHelper::isAdminPrivilege()) {
             $query = "SELECT transaction.id, transaction.time, transaction.description, transaction.amount, 
-                        transaction.user_id, user_account.Username AS userName 
-                        FROM transaction AS transaction
-                        INNER JOIN user_account AS user_account
-                        ON user_account.Id=transaction.user_id ORDER BY transaction.id;";
+                        transaction.user_id, user_account.Username AS userName, voucher.SalePercent AS sale_percent
+                        FROM transaction AS transaction INNER JOIN user_account AS user_account
+                        ON user_account.Id=transaction.user_id LEFT JOIN voucher AS voucher
+                        ON transaction.voucher_id=voucher.VoucherID
+                        ORDER BY transaction.id;";
         } else {
             $UserID = RequestHelper::getUserIDFromToken();
-            $query = "SELECT transaction.id, transaction.time, transaction.description, transaction.amount, voucher.SalePercent
+            $query = "SELECT transaction.id, transaction.time, transaction.description, transaction.amount, voucher.SalePercent AS sale_percent
                         FROM transaction AS transaction LEFT JOIN voucher AS voucher
                         ON transaction.voucher_id=voucher.VoucherID WHERE user_id=$UserID ORDER BY id;";
         }
-        $result=null;
+        $result = null;
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
@@ -63,6 +65,8 @@ class TransactionRepository implements Repository
         $list_transaction = array();
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
             error_log(json_encode($row), 0);
+            $row["food_list"] = self::getFoodTransaction($row["id"]);
+            $row["combo_list"] = self::getComboTransaction($row["id"]);
             array_push($list_transaction, $row);
         }
 
@@ -70,21 +74,66 @@ class TransactionRepository implements Repository
         return $list_transaction;
     }
 
+    public static function getComboTransaction($TransactionID)
+    {
+        $query = "SELECT * FROM contains WHERE TransactionID=$TransactionID AND ComboID!=0";
+
+        $result = null;
+        try {
+            $result = QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+        }
+        $list_combo = array();
+        if ($result) {
+            while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+                error_log(json_encode($row), 0);
+                $combo = ComboRepository::findComboByID($row["ComboID"]);
+                array_push($list_combo, $combo);
+            }
+        }
+        error_log("BANK_ACCOUNT_REPOSITORY::FETCH_LIST::", 0);
+        return $list_combo;
+    }
+
+    public static function getFoodTransaction($TransactionID)
+    {
+        $query = "SELECT * FROM contains WHERE TransactionID=$TransactionID AND FoodID!=0";
+
+        $result = null;
+        try {
+            $result = QueryExecutor::executeQuery($query);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+        }
+        $list_food = array();
+        if ($result) {
+            while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+                error_log(json_encode($row), 0);
+                $food = FoodRepository::findFoodByID($row["FoodID"]);
+                array_push($list_food, $food);
+            }
+        }
+        error_log("BANK_ACCOUNT_REPOSITORY::FETCH_LIST::", 0);
+        return $list_food;
+    }
+
     public static function findTransactionByID(int $id)
     {
         if (RequestHelper::isAdminPrivilege()) {
             $query = "SELECT transaction.id, transaction.time, transaction.description, transaction.amount, 
-                        transaction.order_id, transaction.user_id, user_account.Username AS userName 
-                        FROM transaction AS transaction 
-                        INNER JOIN user_account AS user_account
-                        ON user_account.Id=transaction.user_id WHERE transaction.id=$id;";
+            transaction.user_id, user_account.Username AS username, voucher.SalePercent AS sale_percent
+            FROM transaction AS transaction INNER JOIN user_account AS user_account
+            ON user_account.Id=transaction.user_id LEFT JOIN voucher AS voucher
+            ON transaction.voucher_id=voucher.VoucherID WHERE transaction.id=$id;";
         } else {
             $UserID = RequestHelper::getUserIDFromToken();
-            $query = "SELECT id, time, description, amount, order_id 
-                        FROM transaction WHERE id=$id AND UserID=$UserID;";
+            $query = "SELECT transaction.id, transaction.time, transaction.description, transaction.amount, voucher.SalePercent AS sale_percent
+            FROM transaction AS transaction LEFT JOIN voucher AS voucher
+            ON transaction.voucher_id=voucher.VoucherID WHERE id=$id AND UserID=$UserID;";
         }
 
-        $result=null;
+        $result = null;
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
@@ -96,6 +145,8 @@ class TransactionRepository implements Repository
         }
 
         $transaction = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        $transaction["food_list"] = self::getFoodTransaction($transaction["id"]);
+        $transaction["combo_list"] = self::getComboTransaction($transaction["id"]);
         error_log(json_encode($transaction), 0);
 
         error_log("TRANSACTION_REPOSITORY::FETCH_LIST::", 0);
@@ -104,14 +155,56 @@ class TransactionRepository implements Repository
 
     public static function create($entity = null): \mysqli_result|bool|null
     {
-        $query = "INSERT INTO transaction (time, description, amount, order_id, user_id)
-         VALUES ('$$entity->time', '$entity->description', '$entity->amount', '$entity->order_id', '$entity->user_id');";
+        $query = "INSERT INTO transaction (time, description, amount, user_id, voucher_id)
+         VALUES ('$entity->time', '$entity->description', '$entity->amount', '$entity->user_id', '$entity->voucher_id');";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
             error_log($e->getMessage(), 0);
             return null;
         }
+    }
+
+    public static function insertFoodTransactionContain($transaction_id, $food_list)
+    {
+        foreach ($food_list as $food) {
+            $query = "INSERT INTO contains (TransactionID, FoodID, ComboID) VALUES ($transaction_id, $food->FoodID, 0)";
+
+            $result = null;
+            try {
+                $result = QueryExecutor::executeQuery($query);
+            } catch (Exception $e) {
+                error_log($e->getMessage(), 0);
+                return null;
+            }
+
+            if (!$result) {
+                return null;
+            }
+        }
+
+        return true;
+    }
+
+    public static function insertComboTransactionContain($transaction_id, $combo_list)
+    {
+        foreach ($combo_list as $combo) {
+            $query = "INSERT INTO contains (TransactionID, FoodID, ComboID) VALUES ($transaction_id, 0, $combo->ComboID)";
+
+            $result = null;
+            try {
+                $result = QueryExecutor::executeQuery($query);
+            } catch (Exception $e) {
+                error_log($e->getMessage(), 0);
+                return null;
+            }
+
+            if (!$result) {
+                return null;
+            }
+        }
+
+        return true;
     }
 
 

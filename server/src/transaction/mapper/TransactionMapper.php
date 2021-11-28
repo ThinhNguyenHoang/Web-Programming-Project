@@ -22,8 +22,10 @@ class TransactionMapper
         $transaction->bank_account_number = $request->bank_account_number;
         $transaction->description = $request->description;
         $transaction->amount = $request->amount;
-        $transaction->order_id = $request->order_id;
+        $transaction->voucher_id = $request->voucher_id;
         $transaction->user_id = $request->user_id;
+        $transaction->food_list = $request->food_list;
+        $transaction->combo_list = $request->combo_list;
         return $transaction;
     }
 }
