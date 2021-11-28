@@ -97,6 +97,7 @@ class NewsCommentRepository implements Repository
     {
         $query = "SELECT Content, UserID FROM reply_comment WHERE CommentID = $CommentID;";
 
+        $result = null;
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
