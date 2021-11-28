@@ -13,6 +13,8 @@ import Typography from '@mui/material/Typography';
 import { Button } from '@mui/material';
 import { ROUTING_CONSTANTS } from '../routes/RouterConfig';
 import { add_news_action, selectors, update_news_action,get_news_detail_action,set_new_news } from '../redux/slices/news/NewsSlice';
+import ImageDrawerUpdater from "../components/ImageDrawerUpdater/ImageDrawerUpdater";
+import default_food_image from "../assets/images/default_news_image.jpg";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -71,8 +73,16 @@ function NewsEdit(){
                             Thông tin bài viết
                         </Typography>
                         <Box sx={{display:`flex`, flexDirection:"row", flexWrap:"wrap", alignContent:"center"}}>
+                            {/*<Box sx={{bgcolor:"elevation.layer3.main"}}>*/}
+                            {/*    <ReactFirebaseFileUpload2 setImageURL={setPicture} picture={picture}/>*/}
+                            {/*</Box>*/}
                             <Box sx={{bgcolor:"elevation.layer3.main"}}>
-                                <ReactFirebaseFileUpload2 setImageURL={setPicture} picture={picture}/>
+                                {/*<ReactFirebaseFileUpload2 setImageURL={setImage} picture={values.Picture}/>*/}
+                                <ImageDrawerUpdater trigger={<img src={picture || default_food_image} width={`300px`} alt={`Food image`}/>}
+                                                    img_uri_callback={(img) => {
+                                                        setPicture(img);
+                                                    }}
+                                />
                             </Box>
                             <Box maxWidth="100ch" >
                                 <form autoComplete="off">

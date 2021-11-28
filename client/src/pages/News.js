@@ -22,7 +22,7 @@ function News (){
 
     var addButton;
     if(isAdmin){
-        addButton=(<Button sx={{width:"fit-content", mt:"20px", mr:"10px"}} variant="contained" onClick={()=>history.push(ROUTING_CONSTANTS.EDITNEWS+"/add")}>Thêm tin</Button>);
+        addButton=(<Button sx={{width:"fit-content", mt:"10px", mr:"10px", mb:"10px"}} variant="contained" onClick={()=>history.push(ROUTING_CONSTANTS.EDITNEWS+"/add")}>Thêm tin</Button>);
     }else{
         addButton=<></>;
     }
@@ -48,7 +48,6 @@ function News (){
                         {
                            addButton
                         }
-                        
                         {news_list.map(news=> <NewsCard key={news.NewsID} news={news} isAdmin={isAdmin}/>)}
                     </Box>
                 </Grid>

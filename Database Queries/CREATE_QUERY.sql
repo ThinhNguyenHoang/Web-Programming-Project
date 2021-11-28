@@ -275,8 +275,8 @@ INSERT INTO tag VALUES (5, "Đường phố");
 
 DROP TABLE IF EXISTS user_ref_tag;
 CREATE TABLE user_ref_tag (
-	TagID BIGINT(8) NOT NULL,
-    UserID BIGINT(8) NOT NULL,
+	TagID BIGINT(8),
+    UserID BIGINT(8),
     Count BIGINT(8),
     PRIMARY KEY (UserID, TagID)
 );

@@ -35,7 +35,7 @@ export const AllFoodGrid = (pagination = 4) => {
                         </Grid>
                     ))}
                 </Grid>
-            </Box>;
+            </Box>
 
             {/* WISH LIST COMBO ITEMS */}
             <Box sx={{display:`flex`, flexGrow: 1,justifyContent:`center`,flexDirection:`column`,alignItems:`center`}}>
@@ -51,7 +51,7 @@ export const AllFoodGrid = (pagination = 4) => {
                         </Grid>
                     ))}
                 </Grid>
-            </Box>;
+            </Box>
 
         </Box>
     );
