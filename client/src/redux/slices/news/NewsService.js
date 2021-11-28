@@ -9,10 +9,10 @@ const api_endpoints={
 }
 
 export const getNewsListService= async (payload)=>{
-    console.log("get news list service");
     return await request.getAsync(api_endpoints.news)
                         .then(res=>res.data)
                         .catch(e=>e);
+
 }
 export const getNewsDetailService=async (payload)=>{
     console.log("get news detail, news id:",payload)
@@ -38,17 +38,23 @@ export const updateNewsService = async (payload)=>{
                         .then(res=>res.data)
                         .catch(e=>e);
 }
-export const addCommentService = async(payload)=>{
+export const addCommentService = async (payload)=>{
     console.log("add comment service, data:",payload);
-    return "";
+    return await request.postAsync(api_endpoints.comment,payload)
+                        .then(res=>res.data)
+                        .catch(e=>e);
 }
-export const deleteCommentService= (payload)=>{
+export const deleteCommentService=async (payload)=>{
     console.log("delete comment service,data:",payload);
-    return ""
+    return await request.deleteAsync(api_endpoints.comment+"/"+payload)
+                        .then(res=>res.data)
+                        .catch(e=>e);
 }
-export const updateCommentService = (payload)=>{
+export const updateCommentService =async (payload)=>{
     console.log("update comment service, data:",payload);
-    return "";
+    return await request.putAsync(api_endpoints.comment+"/"+payload.CommentID,payload)
+                        .then(res=>res.data)
+                        .catch(e=>e);
 }
 
 const Reply1={

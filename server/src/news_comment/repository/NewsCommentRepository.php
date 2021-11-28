@@ -105,6 +105,7 @@ class NewsCommentRepository implements Repository
         }
 
         $list_comment_reply = array();
+        $result=null;
         if ($result) {
             while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
                 error_log(json_encode($row), 0);
