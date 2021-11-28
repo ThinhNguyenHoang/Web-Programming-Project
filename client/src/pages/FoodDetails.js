@@ -39,7 +39,7 @@ import MaterialCardRead from '../components/FoodItemManagement/MaterialCardRead'
 import Carousel from 'react-material-ui-carousel';
 import MaterialListCarousel from '../components/FoodItemManagement/MaterialListCarousel';
 import defaul_food_image from "../assets/images/defaul_food_image.jpg";
-import { food_detail_action } from './../redux/slices/food/FoodSlice';
+import { food_detail_action, get_cart_actions, update_cart_actions } from './../redux/slices/food/FoodSlice';
 import Comments from './../components/Comments/Comments';
 import { delete_food_comment_action,update_food_comment_action,add_food_comment_action,selectors } from '../redux/slices/food/FoodSlice';
 
@@ -77,8 +77,11 @@ function FoodDetails(){
     const dispatch=useDispatch();
     
     const foodid=useSelector(selectors.getFoodDetailID);
+    
     React.useEffect(()=>{
+        dispatch({type:get_cart_actions.loading,payload:""});
         dispatch({type:food_detail_action.loading,payload:foodid});
+        
     },[]);
     
     const food_detail= useSelector(selectors.getFoodDetail);
@@ -88,6 +91,7 @@ function FoodDetails(){
     const material_list=food_detail.Material;
     const comments=food_detail.Comment;
     const instruct=food_detail.Instruct ? food_detail.Instruct :"";
+    const cart=useSelector(selectors.getCart);
 
     const deleteComment=(id)=>{
         dispatch({type:delete_food_comment_action,payload:id});
@@ -98,6 +102,13 @@ function FoodDetails(){
     }
     const addComment=(comment)=>{
         dispatch({type:add_food_comment_action.loading,payload:comment});
+    }
+    const handleAddCart=()=>{
+        if( typeof cart ==="undefined"){
+            dispatch({type:update_cart_actions.loading,payload:{CommboList:[],FoodList:[{FoodID:food_detail.FoodID,Quantity:1}]}});
+        }else{
+            dispatch({type:update_cart_actions.loading,payload:{CommboList:cart.combo_list,FoodList:[...cart.food_list,{FoodID:food_detail.FoodID,Quantity:1}]}})
+        }
     }
     return (
         <Box>
@@ -133,6 +144,9 @@ function FoodDetails(){
                                     <Typography variant="h6" gutterBottom component="div" sx={{display:"inline",color:"elevation.layer0.contrast", ml:"50px"}}>
                                         Khuyến mãi
                                     </Typography>
+                                    <Typography variant="h6" gutterBottom component="div" sx={{display:"inline",color:"red", ml:"20px"}}>
+                                        {food_detail.Sale+"%"}
+                                    </Typography>
                                 </Box>
                                 <Box sx={{display: `flex`, flexDirection: "row", columnGap:"10px",flexWrap:"wrap", rowGap:"10px"}}>
                                     {tag_list.map((tag)=> (
@@ -144,7 +158,7 @@ function FoodDetails(){
                                     ))}
                                 </Box>
                             </Box>
-                            <Button variant="contained" sx={{width:"fit-content", height:"fit-content", mt:"20px"}} startIcon={<AddShoppingCartIcon />}>
+                            <Button variant="contained" sx={{width:"fit-content", height:"fit-content", mt:"20px"}} onClick={handleAddCart} startIcon={<AddShoppingCartIcon />}>
                                 Thêm vào giỏ hàng
                             </Button>
                         </Box>

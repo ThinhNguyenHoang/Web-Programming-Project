@@ -9,7 +9,8 @@ import default_food_image from "../../assets/images/defaul_food_image.jpg";
 import {Button, Tab, Tabs} from "@mui/material";
 import {useState} from "react";
 import Box from "@mui/material/Box";
-import {useDispatch} from "react-redux";
+import {useDispatch,useSelector} from "react-redux";
+import { selectors ,update_cart_actions} from "../../redux/slices/food/FoodSlice";
 import ThemedButton, {ThemedOutlineButton} from "../Buttons/ThemedButton/ThemedButton";
 
 // ? Food Combo Schema
@@ -38,7 +39,6 @@ const FoodBriefInfo = ({food_item}) => {
             display: "flex",
             flexDirection: "column",
             maxWidth: 345,
-            bgcolor: `elevation.layer2.main`,
             boxShadow: 2
         }}>
             <CardMedia
@@ -62,7 +62,7 @@ const FoodBriefInfo = ({food_item}) => {
 }
 
 function TabPanel({children, value, index, ...other}) {
-    console.log("TAB WITH INDEX:",index);
+    console.log("TAB WITH INDEX:", index);
     return (
         <div
             role="tabpanel"
@@ -82,15 +82,25 @@ export default function ComboItemCard({combo_item}, ...props) {
     const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
-        console.log("SET NEW VALUE: ",newValue);
+        console.log("SET NEW VALUE: ", newValue);
         setValue(newValue);
     };
 
     const dispatch = useDispatch();
+    const cart = useSelector(selectors.getCart);
+    const handleAddCart=()=>{
+        const newCart = {
+            ComboList: [...cart.combo_list,{ComboID:combo_item.id,Quantity:1}],
+            FoodList: cart.food_list
+        }
+        dispatch({type: update_cart_actions.loading, payload: newCart})
+    }
 
     return (
-        <Card sx={{maxWidth:345}}>
-            <Box sx={{borderBottom: 1, borderColor: "divider",mx:2}}>
+        <Card sx={{
+            maxWidth: 345, bgcolor: `elevation.layer2.main`, boxShadow: 2
+        }}>
+            <Box sx={{borderBottom: 1, borderColor: "divider", mx: 2}}>
                 <Tabs
                     value={value}
                     onChange={handleChange}
@@ -101,24 +111,25 @@ export default function ComboItemCard({combo_item}, ...props) {
                     })
                     }
                 </Tabs>
-                {combo_item.food_in_combo.map((item,index) => {
-                    console.log("INDEX IS: ",index);
-                    return <TabPanel  value={value} index={index}  children={<FoodBriefInfo food_item={item} key={index}/>}>
+                {combo_item.food_in_combo.map((item, index) => {
+                    console.log("INDEX IS: ", index);
+                    return <TabPanel value={value} index={index}
+                                     children={<FoodBriefInfo food_item={item} key={index}/>}>
                     </TabPanel>
                 })}
             </Box>
             <CardContent>
-                    <Typography variant={`h6`} color={`primary.main`}>
-                        {combo_item.name || "COMBO NAME"}
-                    </Typography>
-                    <Typography variant={`body1`}  color={`primary.main`}>
-                        {combo_item.price || "39999K"}
-                    </Typography>
+                <Typography variant={`h6`} color={`primary.main`}>
+                    {combo_item.name || "COMBO NAME"}
+                </Typography>
+                <Typography variant={`body1`} color={`primary.main`}>
+                    {combo_item.price || "39999K"}
+                </Typography>
             </CardContent>
 
             <CardContent>
                 <CardActions disableSpacing>
-                    <ThemedOutlineButton>
+                    <ThemedOutlineButton onClick={handleAddCart}>
                         ORDER NOW
                     </ThemedOutlineButton>
                 </CardActions>

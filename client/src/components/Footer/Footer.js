@@ -32,9 +32,9 @@ const branch_name = {
     address: "286, Ly Thường Kiệt, Quận 10, TP HCM",
 }
 
-const Footer = (props) => {
+const Footer = ({additionalStyle}) => {
     return (
-        <Grid sx={{position:'static',boxShadow:3,left:0,bottom:0,right:0,bgcolor:'elevation.layer1.main',marginTop:`50px`,justifyContent:'center',display:{sm:"none", md: 'flex' },mt:6}} container spacing={{ xs: 2, md: 3}}>
+        <Grid sx={{position:'static',boxShadow:3,left:0,bottom:0,right:0,bgcolor:'elevation.layer1.main',marginTop:`50px`,justifyContent:'center',display:{sm:"none", md: 'flex' },...additionalStyle,mt:6}} container spacing={{ xs: 2, md: 3}}>
             <Grid item xs={12} sm={8} md={3} mx={3}>
                 <Typography variant={`h4`} sx={{color:`header.contrast`}}>
                     Order Now

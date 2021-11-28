@@ -20,7 +20,7 @@ export const AllFoodGrid = (pagination = 4) => {
     }, []);
 
     return (
-        <Box sx={{p:2,m:2,display:'flex',justifyContent:`center`,flexDirection:`column`,alignItems:`center`}}>
+        <Box sx={{p:2,m:2,display:'flex',justifyContent:`center`,flexDirection:`column`,alignItems:`center`,bgcolor:`elevation.layer0.main`}}>
             {/* WISH LIST FOOD ITEMS */}
             <Box sx={{display:`flex`, flexGrow: 1,justifyContent:`center`,flexDirection:`column`,alignItems:`center`}}>
                 <Typography variant={`h4`} color={`primary.main`}  sx={{m:2}}> Food Items</Typography>
@@ -35,7 +35,7 @@ export const AllFoodGrid = (pagination = 4) => {
                         </Grid>
                     ))}
                 </Grid>
-            </Box>;
+            </Box>
 
             {/* WISH LIST COMBO ITEMS */}
             <Box sx={{display:`flex`, flexGrow: 1,justifyContent:`center`,flexDirection:`column`,alignItems:`center`}}>
@@ -51,7 +51,7 @@ export const AllFoodGrid = (pagination = 4) => {
                         </Grid>
                     ))}
                 </Grid>
-            </Box>;
+            </Box>
 
         </Box>
     );

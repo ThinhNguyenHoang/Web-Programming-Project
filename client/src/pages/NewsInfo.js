@@ -25,21 +25,21 @@ function NewsInfo(){
     const comments=news_detail.Comment;
     console.log("new detail",news_detail);
     const deleteComment=(id)=>{
-        dispatch({type:delete_news_comment_action,payload:id});
+        dispatch({type:delete_news_comment_action.loading,payload:id});
         dispatch({type:get_news_detail_action.loading,payload:news_detail.NewsID});
     }
     const updateComment=(comment)=>{
-        dispatch({type:update_news_comment_action.loading,payload:comment});
+        dispatch({type:update_news_comment_action.loading,payload:{...comment,NewsID:id}});
         dispatch({type:get_news_detail_action.loading,payload:news_detail.NewsID});
     }
     const addComment=(comment)=>{
-        dispatch({type:add_news_comment_action.loading,payload:comment});
+        dispatch({type:add_news_comment_action.loading,payload:{...comment,NewsID:id}});
         dispatch({type:get_news_detail_action.loading,payload:news_detail.NewsID});
     }
     
     return (
-        <Box sx={{display:`flex`, flexDirection:"column", }}>
-            <Grid container xs={12} sx={{bgcolor:"elevation.layer0.main"}}>
+        <Box sx={{display:`flex`, flexDirection:"column" }}>
+            <Grid container xs={12} sx={{bgcolor:"elevation.layer0.main", justifyContent:"center"}}>
                 <Grid item container xs={12} sx={{justifyContent:"center", py: 5, width:"100%"}}>
                     <Box sx={{display:`flex`, flexDirection:"column", bgcolor:"elevation.layer1.main", justifyContent:"center", boxShadow:2}} width={1100}>
                         <Typography variant="h3" gutterBottom component="div" sx={{flexGrow:1, color:"elevation.layer0.contrast", ml:"10px", mt:"10px", fontWeight:"bold"}} align="center">
@@ -70,14 +70,20 @@ function NewsInfo(){
                         </Typography>
                     </Box>
                 </Grid>
-                <Grid item container xs={12} sx={{justifyContent:"center", py: 5, width:"100%"}} direction="column">
+                {/* <Grid item container xs={12} sx={{justifyContent:"center", py: 5, width:"100%"}} direction="column">
                     <Box sx={{display:`flex`, flexDirection:"column", pr:"100px", bgcolor:"elevation.layer0.main", borderRadius:0}} width={1000}>
                         <Typography variant="h4" gutterBottom component="div" sx={{flexGrow:1, color:"red", ml:"10px", mt:"10px"}}>
                             Bình luận
                         </Typography>
                     </Box>
                     <Comments comments={comments} deleteComment={deleteComment} updateComment={updateComment} addComment={addComment}/>
-                </Grid>
+                </Grid> */}
+                <Box sx={{display:`flex`, flexDirection:"column", pr:"100px", borderRadius:0}} width={1000}>
+                    <Typography variant="h4" gutterBottom component="div" sx={{flexGrow:1, color:"red", ml:"10px", mt:"10px"}}>
+                        Bình luận
+                    </Typography>
+                    <Comments comments={comments} deleteComment={deleteComment} updateComment={updateComment} addComment={addComment}/>
+                </Box>
             </Grid>
         </Box>
     );

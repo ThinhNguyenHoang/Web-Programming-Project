@@ -68,6 +68,7 @@ const newsSlice = createSlice({
     reducers:{},
     extraReducers:{
         [get_news_list_action.loading]:(state,action)=>{
+            console.log("news slice");
             state.getNewsListStatus=loading();
         },
         [get_news_list_action.success]:(state,action)=>{
