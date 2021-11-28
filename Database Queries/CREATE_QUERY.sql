@@ -335,18 +335,8 @@ INSERT INTO user_ref_tag VALUES (6, 7, 3);
 DROP TABLE IF EXISTS category_tag;
 CREATE TABLE category_tag (
 	TagID BIGINT(8) NOT NULL,
-<<<<<<< HEAD
-<<<<<<< HEAD
     FoodID BIGINT(8),
     ComboID BIGINT(8),
-=======
-    FoodID BIGINT(8) NOT NULL,
-    ComboID BIGINT(8) ,
->>>>>>> test3
-=======
-    FoodID BIGINT(8),
-    ComboID BIGINT(8),
->>>>>>> 21755423fb19812f05f8726603019f6b79559dd3
     PRIMARY KEY (TagID, FoodID, ComboID)
 );
 
