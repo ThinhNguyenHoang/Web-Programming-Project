@@ -4,6 +4,27 @@ import {error, generateSagaLifecycleNames, generateStatus, loading, success} fro
 import {UpdateDiscount, UpdateSubtotal, UpdateQuantity} from "./FoodHelper";
 import Toaster from "../../../utils/Toaster/Toaster";
 
+
+ const food_item2={
+    FoodID:"",
+    FoodName:"",
+    Picture:"",
+    Price:"",
+    Description:"",
+    Instruct:"",
+    Material:[],
+    Tags:[],
+    Comment:[],
+}
+const tag={
+    TagID:"",
+    TagName:"",
+
+}
+const material={
+    MaterialID:"",
+    MaterialName:"",
+    Picture:""}
 const food_item_cart = {
     id: 0,
     name: "",
@@ -28,6 +49,31 @@ const voucher = {
     name: "",
     discount: 0,
 }
+// const food_item_cart={
+//     id:0,
+//     name:"",
+//     price:0,
+//     quantity:0,
+//     img:"",
+// }
+// const food_combo_item_news={
+//     id:0,
+//     name:"",
+//     price:"",
+//     decrip:"",
+//     img:"",
+// }
+// const nofi_item_news={
+//     id:0,
+//     name:"",
+//     content:"",
+// }
+// const voucher={
+//     id:0,
+//     name:"",
+//     discount:0,
+// }
+
 const food_item = {
     id: "",
     name: "",
@@ -40,7 +86,7 @@ const food_item = {
     instruct: "",
     //* List các tag: Mỗi tag có thể có giá trị : "Mặn" , "Chua", "Cay", "Ngọt", "Đắng",...
     tags: [],
-    material: []
+    material: [],
 }
 
 
@@ -109,6 +155,7 @@ const initialValue = {
     user_id: 1,
     cart: {
         food_list: [],
+        combo_list:[],
         voucher_list: [],
         subtotal: 0,
         discount: 0,
@@ -117,13 +164,6 @@ const initialValue = {
         get_status: generateStatus(),
         update_status: generateStatus(),
         delete_status: generateStatus(),
-    },
-    news: {
-        food_list: [],
-        combo_list: [],
-        nofi_list: [],
-        get_status: generateStatus(),
-        addCart_status: generateStatus(),
     },
     recommendations: {
         status: generateStatus(),
@@ -135,19 +175,56 @@ const initialValue = {
         food_list: [],
         combo_list: [],
     },
+    
+    food_manage:{
+        food_list:[],//list các fooditem trên
+        combo_list:[],
+        tag_list:[],
+        material_list:[],
+        tempFoodID:"",
+        tempComboID:"",
+        get_foodManage_status:generateStatus(),
+        // get_food:generateStatus(),//*lấy tất cả food
+        add_food:generateStatus(),//?add 1 food to db ,bao gồm tag, material
+        update_food:generateStatus(),//?update 1 food
+        delete_food:generateStatus(),//?
+        add_combo:generateStatus(),//?add 1 food to db ,bao gồm tag, material
+        update_combo:generateStatus(),//?update 1 food
+        delete_combo:generateStatus(),
+        // get_tag:generateStatus(),//lấy tất cả tag
+        add_tag:generateStatus(),//add 1 tag
+        delete_tag:generateStatus(),//delete 1 tag
+        // get_material:generateStatus(),//get all materials
+        delete_material:generateStatus(),//xóa 1 materiasls
+        add_material:generateStatus(),//update //*:có thể ko dùng
+
+
+    },
     add_to_wishlist: generateStatus(),
     remove_from_wish_list: generateStatus(),
-    food_item_detail: food_item
+    food_item_detail: food_item,
+    food_detail:{
+        tempID:"",
+        food_detail:food_item2,
+        get_status:generateStatus(),
+        addCommentStatus:generateStatus(),
+        deleteCommentStatus:generateStatus(),
+        updateCommentStatus:generateStatus(),
+
+    }
+    
 }
+
 
 export const selectors = {
     getCart: state => state.food.cart,
     getVoucher: state => state.food.cart.voucher_list,
     getUserId: state => state.food.user_id,
-    getNews: state => state.food.news,
     getFoodList: state => state.food.news.food_list,
     getComboList: state => state.food.news.combo_list,
     getNofiList: state => state.food.news.nofi_list,
+    //food mangement
+    getFoodManagement:state=>state.food.food_manage,
 
     // * Food recommendationa
     getRecommendationList: state => state.food.recommendations.food_list,
@@ -160,6 +237,10 @@ export const selectors = {
     getWishListSuccess: state => state.food.wish_list.status.isSuccess,
     getWishListLoading: state => state.food.wish_list.status.isSuccess,
     getWishListError: state => state.food.wish_list.status.isError,
+    //*Food detail
+    getFoodDetail: state => state.food.food_detail.food_detail,
+    getFoodDetailID: state=>state.food.food_detail.tempID,
+
 
 }
 
@@ -172,18 +253,26 @@ export const increase_quantity_cart = "increase_quantity";
 export const decrease_quantity_cart = "decrease_quantity";
 export const delete_food_cart = "delete_food";
 
-//News actions
-export const get_news_actions = generateSagaLifecycleNames("get_news");
-export const add_cart_actions = generateSagaLifecycleNames("add_cart");
-export const next_food_news = "next_food";
-export const back_food_news = "back_food";
-export const next_combo_news = "next_combo";
-export const back_combo_news = "back_combo";
-export const next_nofi_news = "next_nofication";
-export const back_nofi_news = "back_nofication";
+
 
 // Food Item Action
 export const food_item_detail = generateSagaLifecycleNames("food_item_detail");
+//
+//Food manage :get food list, get tag list, get material list
+export const food_management_action=generateSagaLifecycleNames("food_management");
+export const delete_tag_action=generateSagaLifecycleNames("delete_tag");
+export const add_tag_action=generateSagaLifecycleNames("add_tag");
+export const add_food_action=generateSagaLifecycleNames("add_new_food");
+export const delete_food_action=generateSagaLifecycleNames("delete_exist_food");
+export const update_food_action=generateSagaLifecycleNames("update_exist_food");
+export const add_combo_action=generateSagaLifecycleNames("add_new_combo");
+export const delete_combo_action=generateSagaLifecycleNames("delete_exist_combo");
+export const update_combo_action=generateSagaLifecycleNames("update_exist_combo");
+export const add_material_action=generateSagaLifecycleNames("add_new_material");
+export const delete_material_action=generateSagaLifecycleNames("delete_exist_material");
+export const setFoodEdit= "setFoodEdit";
+export const setComboEdit="setcomboedit";
+
 
 // * Food Wishlist action
 export const food_wish_list_actions = generateSagaLifecycleNames("wish_list");
@@ -191,6 +280,13 @@ export const add_to_wish_list_actions = generateSagaLifecycleNames("add_wish_lis
 export const remove_from_wish_list_actions = generateSagaLifecycleNames("remove_wish_list");
 // * Food Recommendation Actions:
 export const food_recommendation_actions = generateSagaLifecycleNames("food_recommendation");
+
+//* food detail
+export const food_detail_action = generateSagaLifecycleNames("get_food_detail");
+export const set_food_detail_id="set_food_detail_id";
+export const add_food_comment_action= generateSagaLifecycleNames("add_food_comment");
+export const delete_food_comment_action=generateSagaLifecycleNames("delete_food_comment");
+export const update_food_comment_action= generateSagaLifecycleNames("update_food_comment");
 
 
 
@@ -204,28 +300,6 @@ const FoodSlice = createSlice({
             state.cart.voucher_id = action.payload;
             UpdateDiscount(state.cart);
         },
-        [increase_quantity_cart]: (state, action) => {
-            state.cart.food_list.map((food) => {
-                if (food.id === action.payload) {
-                    food.quantity += 1;
-                }
-                return food;
-            })
-            UpdateQuantity(state.cart);
-            UpdateSubtotal(state.cart);
-
-        },
-        [decrease_quantity_cart]: (state, action) => {
-            state.cart.food_list.map((food) => {
-                if (food.id === action.payload && food.quantity > 0) {
-                    food.quantity -= 1;
-                }
-                return food;
-            })
-            UpdateQuantity(state.cart);
-            UpdateSubtotal(state.cart);
-            return state;
-        },
         [delete_food_cart]: (state, action) => {
             var deleteFood = state.cart.food_list.filter(food => food.id == action.payload);
             var idx = state.cart.food_list.indexOf(deleteFood[0]);
@@ -235,31 +309,13 @@ const FoodSlice = createSlice({
             UpdateQuantity(state.cart);
             UpdateSubtotal(state.cart);
         },
-        [next_food_news]: (state, action) => {
-            state.news.food_list.push(state.news.food_list.shift());
-        },
-        [back_food_news]: (state, action) => {
-            state.news.food_list.unshift(state.news.food_list.pop());
-        },
-        [next_combo_news]: (state, action) => {
-            state.news.combo_list.push(state.news.combo_list.shift());
-        },
-        [back_combo_news]: (state, action) => {
-            state.news.combo_list.unshift(state.news.combo_list.pop());
-        },
-        [next_nofi_news]: (state, action) => {
-            state.news.nofi_list.push(state.news.nofi_list.splice(0, 3));
-        },
-        [back_nofi_news]: (state, action) => {
-            state.news.nofi_list.unshift(state.news.nofi_list.splice(-1, 3));
-        },
         [get_cart_actions.loading]: (state, action) => {
             state.cart.get_status = loading();
         },
         [get_cart_actions.success]: (state, action) => {
             console.log("CART PAYLOAD:", action.payload);
-
             state.cart.food_list = action.payload.food_list;
+            state.cart.combo_list=action.payload.combo_list;
             state.cart.voucher_list = action.payload.voucher_list;
             UpdateSubtotal(state.cart);
             UpdateQuantity(state.cart);
@@ -290,28 +346,6 @@ const FoodSlice = createSlice({
         [delete_cart_actions.error]: (state, action) => {
             state.cart.delete_status = error();
         },
-        [get_news_actions.loading]: (state, action) => {
-            console.log("test here 2")
-            state.news.get_status = loading();
-        },
-        [get_news_actions.success]: (state, action) => {
-            state.news.get_status = success();
-            state.news.food_list = action.payload.food_list;
-            state.news.combo_list = action.payload.combo_list;
-            state.news.nofi_list = action.payload.nofi_list;
-        },
-        [get_news_actions.error]: (state, action) => {
-            state.news.get_status = error();
-        },
-        [add_cart_actions.loading]: (state, action) => {
-            state.news.addCart_status = loading();
-        },
-        [add_cart_actions.success]: (state, action) => {
-            state.news.addCart_status = success();
-        },
-        [add_cart_actions.error]: (state, action) => {
-            state.news.addCart_status = error();
-        },
         [food_item_detail.loading]: (state, action) => {
             state.food_item_detail.status = loading();
         },
@@ -325,7 +359,115 @@ const FoodSlice = createSlice({
         [food_item_detail.loading]: (state, action) => {
             state.food_item_detail.status = error();
         },
-
+        [food_management_action.loading]:(state,action)=>{
+            state.food_manage.get_foodManage_status=loading();
+        },
+        [food_management_action.success]:(state,action)=>{
+            state.food_manage.food_list=action.payload.food_list;
+            state.food_manage.tag_list=action.payload.tag_list;
+            state.food_manage.material_list=action.payload.material_list;
+            state.food_manage.combo_list=action.payload.combo_list;
+            state.food_manage.get_foodManage_status=success();
+        },
+        [food_management_action.error]:(state,action)=>{
+            state.food_manage.get_foodManage_status=error();
+        },
+        [delete_tag_action.loading]:(state,action)=>{
+            state.food_manage.delete_tag=loading();
+        },
+        [delete_tag_action.success]:(state,action)=>{
+            state.food_manage.delete_tag=success();
+        },
+        [delete_tag_action.error]:(state,action)=>{
+            state.food_manage.delete_tag=error();
+        },
+        [add_tag_action.loading]:(state,action)=>{
+            state.food_manage.add_tag =loading();
+        },
+        [add_tag_action.success]:(state,action)=>{
+            state.food_manage.add_tag =success();
+        },
+        [add_tag_action.error]:(state,action)=>{
+            state.food_manage.add_tag =error();
+        },
+        [add_food_action.loading]:(state,action)=>{
+            state.food_manage.add_food =loading();
+        },
+        [add_food_action.success]:(state,action)=>{
+            state.food_manage.add_food =success();
+        },
+        [add_food_action.error]:(state,action)=>{
+            state.food_manage.add_food =error();
+        },
+        [update_food_action.loading]:(state,action)=>{
+            state.food_manage.update_food =loading();
+        },
+        [update_food_action.success]:(state,action)=>{
+            state.food_manage.update_food =success();
+        },
+        [update_food_action.error]:(state,action)=>{
+            state.food_manage.update_food =error();
+        },
+        [delete_food_action.loading]:(state,action)=>{
+            state.food_manage.delete_food =loading();
+        },
+        [delete_food_action.success]:(state,action)=>{
+            state.food_manage.delete_food =success();
+        },
+        [delete_food_action.error]:(state,action)=>{
+            state.food_manage.delete_food =error();
+        },
+        [add_combo_action.loading]:(state,action)=>{
+            state.food_manage.add_combo =loading();
+        },
+        [add_combo_action.success]:(state,action)=>{
+            state.food_manage.add_combo =success();
+        },
+        [add_combo_action.error]:(state,action)=>{
+            state.food_manage.add_combo =error();
+        },
+        [update_combo_action.loading]:(state,action)=>{
+            state.food_manage.update_combo =loading();
+        },
+        [update_combo_action.success]:(state,action)=>{
+            state.food_manage.update_combo =success();
+        },
+        [update_combo_action.error]:(state,action)=>{
+            state.food_manage.update_combo =error();
+        },
+        [delete_combo_action.loading]:(state,action)=>{
+            state.food_manage.delete_combo =loading();
+        },
+        [delete_combo_action.success]:(state,action)=>{
+            state.food_manage.delete_combo =success();
+        },
+        [delete_combo_action.error]:(state,action)=>{
+            state.food_manage.delete_combo =error();
+        },
+        [add_material_action.loading]:(state,action)=>{
+            state.food_manage.add_material =loading();
+        },
+        [add_material_action.success]:(state,action)=>{
+            state.food_manage.add_material =success();
+        },
+        [add_material_action.error]:(state,action)=>{
+            state.food_manage.add_material =error();
+        },
+        [delete_material_action.loading]:(state,action)=>{
+            state.food_manage.delete_material =loading();
+        },
+        [delete_material_action.success]:(state,action)=>{
+            state.food_manage.delete_material =success();
+        },
+        [delete_material_action.error]:(state,action)=>{
+            state.food_manage.delete_material =error();
+        },
+        [setFoodEdit]:(state,action)=>{
+            state.food_manage.tempFoodID=action.payload;
+        },
+        [setComboEdit]:(state,action)=>{
+            state.food_manage.tempComboID=action.payload;
+        },
         [food_recommendation_actions.success]: (state, action) => {
             // Expect the list of food
             Toaster.toastSuccessful("FOOD RECOMMENDATION: " + JSON.stringify(action.payload));
@@ -340,8 +482,6 @@ const FoodSlice = createSlice({
         [food_recommendation_actions.loading]: (state, action) => {
             state.recommendations.status = loading();
         },
-
-
         // * Food Wishlist Reducers
         [food_wish_list_actions.success]: (state, action) => {
             Toaster.toastSuccessful(action.payload.message);
@@ -360,7 +500,6 @@ const FoodSlice = createSlice({
         [food_wish_list_actions.loading]: (state, action) => {
             state.wish_list.status = loading();
         },
-
         [add_to_wish_list_actions.success]: (state, action) => {
             state.add_to_wishlist.status = success();
         },
@@ -371,7 +510,6 @@ const FoodSlice = createSlice({
         [add_to_wish_list_actions.loading]: (state, action) => {
             state.add_to_wishlist.status = loading();
         },
-
         [remove_from_wish_list_actions.success]: (state, action) => {
             console.log("FOOD SLICE::REMOVE:: ",action.payload);
             state.remove_from_wish_list.status = success();
@@ -383,6 +521,47 @@ const FoodSlice = createSlice({
         },
         [remove_from_wish_list_actions.loading]: (state, action) => {
             state.remove_from_wish_list.status = loading();
+        },
+        //*Food detail
+        [set_food_detail_id]:(state,action)=>{
+            state.food_detail.tempID=action.payload;
+        },
+        [food_detail_action.loading]:(state,action)=>{
+            state.food_detail.get_status=loading();
+        },
+        [food_detail_action.success]:(state,action)=>{
+            state.food_detail.food_detail=action.payload;
+            state.food_detail.get_status=success();
+        },
+        [food_detail_action.error]:(state,action)=>{
+            state.food_detail.get_status=error();
+        },
+        [add_food_comment_action.loading]:(state,action)=>{
+            state.food_detail.addCommentStatus=loading();
+        },
+        [add_food_comment_action.success]:(state,action)=>{
+            state.food_detail.addCommentStatus=success();
+        },
+        [add_food_comment_action.error]:(state,action)=>{
+            state.food_detail.addCommentStatus=error();
+        },
+        [update_food_comment_action.loading]:(state,action)=>{
+            state.food_detail.updateCommentStatus=loading();
+        },
+        [update_food_comment_action.success]:(state,action)=>{
+            state.food_detail.updateCommentStatus=success();
+        },
+        [update_food_comment_action.error]:(state,action)=>{
+            state.food_detail.updateCommentStatus=error();
+        },
+        [delete_food_comment_action.loading]:(state,action)=>{
+            state.food_detail.deleteCommentStatus=loading();
+        },
+        [delete_food_comment_action.success]:(state,action)=>{
+            state.food_detail.deleteCommentStatus=success();
+        },
+        [delete_food_comment_action.error]:(state,action)=>{
+            state.food_detail.deleteCommentStatus=error();
         },
 
 

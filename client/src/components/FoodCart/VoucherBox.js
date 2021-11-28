@@ -58,9 +58,9 @@ function VoucherBox(props) {
 	const voucher_id=props.voucher_id;
 	return (
 		<Grid item >
-			<Card sx={{boxShadow:3}}>
+			<Card sx={{boxShadow:3, bgcolor: 'elevation.layer1.main'}}>
 				<CardContent>
-					<Typography variant="body1" color="initial" sx={{fontWeight:"bold", fontSize:20 ,}}>{t(base_keys.food.voucher)}</Typography>
+					<Typography variant="body1" color="initial" sx={{fontWeight:"bold", fontSize:20, color:"elevation.layer0.contrast"}}>{t(base_keys.food.voucher)}</Typography>
 					<hr/>
 						{voucherList.map((voucher)=>{
 							return <VoucherButton  dispatch={dispatch} voucher={voucher} voucher_id={voucher_id} key={voucher.id}/>;

@@ -10,9 +10,9 @@ function NoteBox(){
 
     return (
         <Grid item>
-            <Card sx={{boxShadow:3}}>
+            <Card sx={{boxShadow:3, bgcolor:'elevation.layer1.main'}}>
                 <CardContent>
-                    <Typography sx={{display:"inline",fontWeight:"bold"}} variant="body1" color="initial" pb={2}>{t(base_keys.food.note)}</Typography>
+                    <Typography sx={{display:"inline",fontWeight:"bold", color:"elevation.layer1.contrast"}} variant="body1" color="initial" pb={2}>{t(base_keys.food.note)}</Typography>
                     <br/>
                     <TextField
                         multiline
