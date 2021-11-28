@@ -121,9 +121,6 @@ export default function ComboItemCard({combo_item}, ...props) {
                     <ThemedOutlineButton>
                         ORDER NOW
                     </ThemedOutlineButton>
-                    <ThemedOutlineButton>
-                        Remove from wishlist
-                    </ThemedOutlineButton>
                 </CardActions>
             </CardContent>
         </Card>

@@ -459,8 +459,6 @@ const FoodSlice = createSlice({
             state.food_manage.tempComboID=action.payload;
         },
         [food_recommendation_actions.success]: (state, action) => {
-            // Expect the list of food
-            Toaster.toastSuccessful("FOOD RECOMMENDATION: " + JSON.stringify(action.payload));
             state.recommendations.food_list = action.payload.data.map(item => mapFoodItemFromResponse(item));
             state.recommendations.status = success();
         },
