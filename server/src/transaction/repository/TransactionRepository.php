@@ -38,14 +38,15 @@ class TransactionRepository implements Repository
     {
         if (RequestHelper::isAdminPrivilege()) {
             $query = "SELECT transaction.id, transaction.time, transaction.description, transaction.amount, 
-                        transaction.order_id, transaction.user_id, user_account.Username AS userName 
+                        transaction.user_id, user_account.Username AS userName 
                         FROM transaction AS transaction
                         INNER JOIN user_account AS user_account
                         ON user_account.Id=transaction.user_id ORDER BY transaction.id;";
         } else {
             $UserID = RequestHelper::getUserIDFromToken();
-            $query = "SELECT id, time, description, amount, order_id 
-                    FROM transaction WHERE user_id=$UserID ORDER BY id;";
+            $query = "SELECT transaction.id, transaction.time, transaction.description, transaction.amount, voucher.SalePercent
+                        FROM transaction AS transaction LEFT JOIN voucher AS voucher
+                        ON transaction.voucher_id=voucher.VoucherID WHERE user_id=$UserID ORDER BY id;";
         }
         $result=null;
         try {
