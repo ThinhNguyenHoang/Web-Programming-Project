@@ -1,11 +1,10 @@
-import {create} from "@mui/material/styles/createTransitions";
-import {createAction, createSlice} from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 import {error, generateSagaLifecycleNames, generateStatus, loading, success} from "../../../utils/reduxGenerate";
-import {UpdateDiscount, UpdateSubtotal, UpdateQuantity} from "./FoodHelper";
+import {UpdateDiscount, UpdateQuantity, UpdateSubtotal} from "./FoodHelper";
 import Toaster from "../../../utils/Toaster/Toaster";
 
 
- const food_item2={
+const food_item2={
     FoodID:"",
     FoodName:"",
     Picture:"",
@@ -49,30 +48,6 @@ const voucher = {
     name: "",
     discount: 0,
 }
-// const food_item_cart={
-//     id:0,
-//     name:"",
-//     price:0,
-//     quantity:0,
-//     img:"",
-// }
-// const food_combo_item_news={
-//     id:0,
-//     name:"",
-//     price:"",
-//     decrip:"",
-//     img:"",
-// }
-// const nofi_item_news={
-//     id:0,
-//     name:"",
-//     content:"",
-// }
-// const voucher={
-//     id:0,
-//     name:"",
-//     discount:0,
-// }
 
 const food_item = {
     id: "",
@@ -223,10 +198,25 @@ export const selectors = {
     getFoodList: state => state.food.news.food_list,
     getComboList: state => state.food.news.combo_list,
     getNofiList: state => state.food.news.nofi_list,
-    //food mangement
+    // * food mangement
     getFoodManagement:state=>state.food.food_manage,
 
-    // * Food recommendationa
+    // * Food page
+    getAllFoodListMapped: (state) => {
+        const original_food_list = state.food.food_manage.food_list;
+        const test = original_food_list.map((item, index) => {
+            return mapFoodItemFromResponse(item);
+        });
+        console.log("TEST FOOD LIST: ",test);
+        return test;
+    },
+    getAllComboListMapped: state => {
+        const original_combo_list = state.food.food_manage.combo_list;
+        return original_combo_list.map((item, index) => {
+            return mapComboFromResponse(item);
+        });
+    },
+    // * Food Recommendation
     getRecommendationList: state => state.food.recommendations.food_list,
     getRecommendationSuccess: state => state.food.recommendations.status.isSuccess,
     getRecommendationLoading: state => state.food.recommendations.status.isSuccess,

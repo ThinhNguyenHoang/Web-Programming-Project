@@ -238,23 +238,9 @@ const AccountManagement = () => {
                                         t(base_keys.form.password_min_8_requirement)
                                     )
                                     .default(user_profile.phone_number),
-                                // full_name: yup
-                                //     .string(t(base_keys.form.password_prompt))
-                                //     .min(
-                                //         8,
-                                //         t(base_keys.form.password_min_8_requirement)
-                                //     )
-                                //     .required(
-                                //         t(base_keys.form.password_required_prompt)
-                                //     )
-                                //     .default(user_profile.full_name),
                             })}
                             // * TODO: Change onSubmit handler to post to authorize api
                             onSubmit={(values, {setSubmitting}) => {
-                                // setTimeout(() => {
-                                //     setSubmitting(false);
-                                //     alert(JSON.stringify(values, null, 2));
-                                // }, 500);
                                 onUpdateUser(values, setSubmitting);
                             }}
                         >
