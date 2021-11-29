@@ -462,3 +462,24 @@ INSERT INTO reply_comment (CommentID, UserID, Content) VALUES (5, 2, "reply_comm
 INSERT INTO reply_comment (CommentID, UserID, Content) VALUES (8, 4, "reply_comment_1");
 INSERT INTO reply_comment (CommentID, UserID, Content) VALUES (6, 2, "reply_comment_1");
 INSERT INTO reply_comment (CommentID, UserID, Content) VALUES (5, 4, "reply_comment_1");
+
+
+DROP TABLE IF EXISTS page_setting;
+CREATE TABLE page_setting(
+	banner TEXT,
+    logo TEXT,
+    name TEXT,
+    phone TEXT,
+    slogan TEXT,
+    address TEXT,
+    description TEXT,
+    color TEXT,
+    length TEXT,
+    lat TEXT,
+    facebook TEXT,
+    mail TEXT,
+    twitter TEXT
+);
+
+INSERT INTO page_setting (banner, logo, name, phone, slogan, address, description, color, length, lat, facebook, mail, twitter)
+VALUES ("test", "test", "test", "test", "test", "test", "test", "test", "test", "test", "test", "test", "tets");
