@@ -36,6 +36,8 @@ import { ThemeProvider } from "@material-ui/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ROUTING_CONSTANTS } from '../routes/RouterConfig';
 import { height } from '@mui/system';
+import default_combo from '../assets/images/default_combo.jpg'
+import ImageDrawerUpdater from "../components/ImageDrawerUpdater/ImageDrawerUpdater";
 
 
 const compareFood= (marA,marB)=>{
@@ -123,16 +125,21 @@ function EditComboItem(){
     return (
         <Box>
             <Grid container xs={12} sx={{bgcolor:"elevation.layer0.main"}}>
-                <Grid item container xs={12} sx={{justifyContent:"center", paddingTop: 5, width:"100%"}} width="100%">
-                    <Box sx={{display:`flex`, flexDirection:"column"}}>
+                <Grid item container xs={12} sx={{justifyContent:"center", paddingTop: 5, width:"100%"}}>
+                    <Box sx={{display:`flex`, flexDirection:"column"}} width={1180}>
                         <Typography variant="h4" gutterBottom component="div" sx={{color:"elevation.layer0.contrast"}}>
                             Thông tin cơ bản
                         </Typography>
                         <Box sx={{display:`flex`, flexDirection:"row", flexWrap:"wrap", alignContent:"center"}}>
                             <Box sx={{bgcolor:"elevation.layer1.main"}}>
-                                <ReactFirebaseFileUpload2 setImageURL={setImage} picture={values.Picture}/>
+                                {/* <ReactFirebaseFileUpload2 setImageURL={setImage} picture={values.Picture}/> */}
+                                <ImageDrawerUpdater trigger={<img src={values.Picture ? values.Picture : default_combo} width={`300px`} alt={`Food image`}/>}
+                                    img_uri_callback={(img) => {
+                                        setImage(img);
+                                    }}
+                                />
                             </Box>
-                            <Box maxWidth="100ch" >
+                            <Box maxWidth="100ch">
                                 <form autoComplete="off">
                                     <Card >
                                         <CardContent sx={{bgcolor:"elevation.layer1.main"}}>
@@ -140,7 +147,7 @@ function EditComboItem(){
                                                 <Grid item xs={10}>
                                                     <TextField
                                                         fullWidth
-                                                        label="Tên món ăn"
+                                                        label="Tên combo"
                                                         name="foodname"
                                                         required
                                                         value={values.ComboName}
@@ -219,12 +226,12 @@ function EditComboItem(){
                             </Dialog>
                             </Grid>
                         </Grid>)}
+                        <Box sx={{display:`flex`, flexDirection:"row", alignSelf:"flex-end"}}>
+                            <Button sx={{width:"fit-content", mt:"20px", mr:"10px"}} variant="contained" onClick={()=>history.push(ROUTING_CONSTANTS.MANAGE_ITEM_LIST)}>HỦY BỎ</Button>
+                            <Button sx={{width:"fit-content", mt:"20px"}} variant="contained" onClick={()=>handleCreatFood()}>HOÀN TẤT</Button>
+                        </Box>
                     </Box>
                 </Grid>
-                <Box sx={{display:`flex`, flexDirection:"row", alignSelf:"flex-end"}}>
-                    <Button sx={{width:"fit-content", mt:"20px", mr:"10px"}} variant="contained" onClick={()=>history.push(ROUTING_CONSTANTS.MANAGE_ITEM_LIST)}>HỦY BỎ</Button>
-                    <Button sx={{width:"fit-content", mt:"20px"}} variant="contained" onClick={()=>handleCreatFood()}>HOÀN TẤT</Button>
-                </Box>                        
             </Grid>
         </Box>
     );
