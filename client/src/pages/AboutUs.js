@@ -5,13 +5,9 @@ import side_banner from "../assets/images/default_company_logo.jpeg"
 import ThemedButton from "../components/Buttons/ThemedButton/ThemedButton";
 import Carousel from "react-material-ui-carousel";
 import Map from "../components/Map/Map";
+import {company_selectors} from "../redux/slices/company/SettingsSlice";
+import {useSelector} from "react-redux";
 
-const our_information = {
-    company_description: 'Ceros is a fast-growing software company that keeps culture and creativity at the heart of everything we do. Our mission is to help customers unlock their creativity and build exceptional content using our uniquely powerful design platform and our tirelessly helpful support and education resources—and do it all without writing a single line of code.',
-    slogan: 'Our mission is to inspire and unlock creativity with liberating technology.',
-    mottos: ['Find A Way', 'Give A Shit', 'Care about you', 'Love eating','Respect Each Other','Are courageously honest'],
-    side_banner: `https://www.themealdb.com/images/ingredients/Chicken.png`
-}
 
 const Slide = ({content}) => {
     return (
@@ -33,6 +29,13 @@ const delay = 2500;
 const colors = ["#FF5F5B", "#EECED4", "#FFBB28","#008148","#BBFFAA"];
 
 const TextSlideShow = () => {
+    const page_settings = useSelector(company_selectors.getCompanyData);
+    const our_information = {
+        company_description: page_settings.company_description || 'Ceros is a fast-growing software company that keeps culture and creativity at the heart of everything we do. Our mission is to help customers unlock their creativity and build exceptional content using our uniquely powerful design platform and our tirelessly helpful support and education resources—and do it all without writing a single line of code.',
+        slogan: page_settings.slogan || 'Our mission is to inspire and unlock creativity with liberating technology.',
+        mottos: ['Find A Way', 'Give A Shit', 'Care about you', 'Love eating','Respect Each Other','Are courageously honest'],
+        side_banner: `https://www.themealdb.com/images/ingredients/Chicken.png`
+    }
     // Get the index state
     const [activeIndex, setActiveIndex] = useState(0);
     const timeoutRef = React.useRef(null);
