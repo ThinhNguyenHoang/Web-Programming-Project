@@ -13,6 +13,7 @@ import Collapse from "@mui/material/Collapse";
 import {array_to_chunks} from "../../utils";
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 const involved_company_init = [
     {
@@ -70,23 +71,48 @@ const involved_company_init = [
         description: 'Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica'
     },
 ]
+
+const useStyles = makeStyles({
+    root: {
+      maxWidth: 300,
+    },
+    customBox: {
+      display: "-webkit-box",
+      boxOrient: "vertical",
+      lineClamp: 2,
+      overflow: "hidden",
+    },
+    customHighLight: {
+        display: "-webkit-box",
+        boxOrient: "vertical",
+        lineClamp: 4,
+        overflow: "hidden",
+    }
+});
+
+
 export const CompanyItem = ({company, mx,sx},...props) => {
+    const classes = useStyles();
     return (
-        <Card sx={{ maxWidth: 300, minWidth: 300, height:350, bgcolor:"elevation.layer2.main"}}>
+        <Card sx={{ width: 300, height:350, bgcolor:"elevation.layer2.main"}} className={classes.root}>
             <CardActionArea>
                 <CardMedia
                     component="img"
-                    height="140"
+                    height="150"
                     image={company.Picture ? company.Picture : default_company_logo}
                     alt="green iguana"
                 />
-                <CardContent >
-                    <Typography gutterBottom variant="h5" sx={{fontWeight:"bold", color:"elevation.layer2.contrast"}} component="div">
-                        {company.Title}
-                    </Typography>
-                    <Typography variant="body2" color="elevation.layer2.contrast">
-                        {company.Highlight}
-                    </Typography>
+                <CardContent>
+                    <Box sx={{height:"80px"}}>
+                        <Typography gutterBottom component="div" classes={{root: classes.customBox}} variant="h6" sx={{fontWeight:"bold", color:"elevation.layer2.contrast"}} component="div">
+                            {company.Title}
+                        </Typography>
+                    </Box>
+                    <Box sx={{height:"100px"}}>
+                        <Typography component="div" classes={{root: classes.customHighLight}} variant="body2" color="elevation.layer2.contrast">
+                            {company.Highlight}
+                        </Typography>
+                    </Box>
                 </CardContent>
             </CardActionArea>
         </Card>

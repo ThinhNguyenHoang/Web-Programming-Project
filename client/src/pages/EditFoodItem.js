@@ -155,7 +155,7 @@ function EditFoodItem(){
                             <Box maxWidth="100ch" >
                                 <form autoComplete="off">
                                     <Card >
-                                        <CardContent sx={{bgcolor:"elevation.layer1.main"}}>
+                                        <CardContent sx={{bgcolor:"white"}}>
                                             <Grid item container spacing={3} columns={10}>
                                                 <Grid item xs={10}>
                                                     <TextField
@@ -267,10 +267,10 @@ function EditFoodItem(){
                             <IconButton onClick={handleClickOpen} aria-label="addmaterial" size="large" sx={{color:"elevation.layer0.contrast",display:`flex`,height:"fit-content", alignItems: 'stretch'}} >
                                 <AddIcon fontSize="large" />
                             </IconButton>
-                            <Dialog open={open} onClose={handleClose} PaperProps={{style: {backgroundColor: 'primary.main',boxShadow: 'none'}}}>
-                            <DialogTitle sx={{textAlign:"center", color:'elevation.layer3.contrast'}}>Chọn nguyên liệu</DialogTitle>
+                            <Dialog open={open} onClose={handleClose} PaperProps={{style: {backgroundColor: 'elevation.layer3.main',boxShadow: 'none'}}}>
+                            <DialogTitle sx={{textAlign:"center", color:'red', fontWeight:"bold"}}>CHỌN NGUYÊN LIỆU</DialogTitle>
                             <DialogContent>
-                                <Box sx={{display:`flex`, flexDirection:"row", flexWrap: "wrap",overflowY:"auto", columnGap: "40px"}}>
+                                <Box sx={{display:`flex`, flexDirection:"row", flexWrap: "wrap",overflowY:"auto", rowGap:"40px", justifyContent:"space-evenly"}}>
                                     {unchooseList.map((material)=>(
                                         <MaterialCardAdd key={material.MaterialID} material={material} setAddClick={setAddClick}/>
                                     ))}
@@ -300,6 +300,7 @@ function EditFoodItem(){
                             onChange={(e)=>setValues({...values,Instruct:e.target.value})}
                             variant="outlined"
                             required
+                            sx={{bgcolor:"white"}}
                         />
                         <Box sx={{display:`flex`, flexDirection:"row", alignSelf:"flex-end"}}>
                             <Button sx={{width:"fit-content", mt:"20px", mr:"10px"}} variant="contained" onClick={()=>history.push(ROUTING_CONSTANTS.MANAGE_ITEM_LIST)}>HỦY BỎ</Button>

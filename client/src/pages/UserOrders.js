@@ -39,6 +39,7 @@ import FoodCardView from '../components/OrderView/FoodCardView';
 import {update_cart_actions,selectors,get_cart_actions} from "../redux/slices/food/FoodSlice";
 import { useEffect } from 'react';
 import { Grid } from '@mui/material';
+import ComboCardView from '../components/OrderView/ComboCardView';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -134,7 +135,7 @@ function UserOrders(){
                                             </TableCell>
                                             <TableCell align="center">{order_list[idx-1].id}</TableCell>
                                             <TableCell align="center">{order_list[idx-1].time}</TableCell>
-                                            <TableCell align="center">{order_list[idx-1].sale_percent+" %"}</TableCell>
+                                            <TableCell align="center">{order_list[idx-1].sale_percent}</TableCell>
                                             <TableCell align="center">{order_list[idx-1].amount}</TableCell>
                                             <TableCell align="left">{order_list[idx-1].description}</TableCell>
                                             <TableCell align="left">
@@ -174,7 +175,7 @@ function UserOrders(){
                                                                 })}
                                                                 {
                                                                     order_list[tempId].combo_list.map((combo)=>{
-                                                                        return <FoodCardView food={{FoodName:combo.ComboName,Quanity:combo.Quanity,Picture:combo.Picture,Price:combo.Price}}/>;
+                                                                        return <ComboCardView food={{FoodName:combo.ComboName,Quanity:combo.Quanity,Picture:combo.Picture,Price:combo.Price}}/>;
                                                                     })
                                                                 }
                                                             </Grid>

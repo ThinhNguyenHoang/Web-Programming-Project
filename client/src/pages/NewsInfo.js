@@ -9,6 +9,7 @@ import { useHistory, useParams } from 'react-router';
 import Typography from '@mui/material/Typography';
 import Comments from '../components/Comments/Comments';
 import { selectors, delete_news_comment_action, update_news_comment_action, add_news_comment_action, get_news_detail_action } from '../redux/slices/news/NewsSlice';
+import default_news_image from '../../src/assets/images/default_news_image.jpg'
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -46,10 +47,7 @@ function NewsInfo(){
                             {/* This is title */}
                             {news_detail.Title}
                         </Typography>
-                        <CardMedia>
-                            {/* This is picture */}
-                        </CardMedia>
-                        <Typography variant="body1" gutterBottom component="div" sx={{flexGrow:1, color:"elevation.layer0.contrast", mx:"20px", mt:"10px", fontWeight:"bold"}} align="justify">
+                        <Typography variant="h6" gutterBottom component="div" sx={{flexGrow:1, color:"elevation.layer0.contrast", mx:"20px", mt:"10px", fontWeight:"bold"}} align="center">
                             {/* This is description */}
                             {news_detail.Highlight}
                         </Typography>

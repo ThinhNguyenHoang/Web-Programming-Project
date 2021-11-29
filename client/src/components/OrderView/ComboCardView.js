@@ -15,29 +15,25 @@ import { Card } from "@mui/material";
 import CardContent from '@mui/material/CardContent';
 import { ROUTING_CONSTANTS } from './../../routes/RouterConfig';
 import { useHistory } from 'react-router-dom';
+import default_combo from '../../assets/images/default_combo.jpg';
 
 
 
 
-function FoodCardView(props) {
+function ComboCardView(props) {
     const history = useHistory();
 	const food=props.food;
 	const {t, i18n} = useTranslation();
-    const handleDetail=()=>{
-        if (food.FoodID){
-            history.push(ROUTING_CONSTANTS.FOODDETAIL+"/"+food.FoodID);
-        }
-    }
 	return (
         <Card sx={{ display: 'flex', borderRadius: 3, my:"15px", bgcolor:"elevation.layer2.main"}}>
             <CardMedia
                 component="img"
                 sx={{ width: 151 }}
-                image={food.Picture}
+                image={food.Picture ? food.Picture : default_combo}
                 title="food"
             />
             <Box>
-                <CardContent sx={{ flex: '1 0 auto', width:"185px" }}>
+                <CardContent sx={{ flex: '1 0 auto', width:"185px"}}>
                     <Typography component="div" variant="h5" sx={{fontWeight:"bold", color:"elevation.layer2.contrast"}}>
                         {food.FoodName}
                     </Typography>
@@ -53,12 +49,12 @@ function FoodCardView(props) {
                     </Typography>
                 </CardContent>
             </Box>
-            <Box alignSelf="center">
+            {/* <Box alignSelf="center">
                 <IconButton onClick={handleDetail}>
                     <InfoIcon sx={{color:"elevation.layer0.contrast"}}/>
                 </IconButton>
-            </Box>
+            </Box> */}
         </Card>
 	);
 }
-export default FoodCardView;
+export default ComboCardView;
