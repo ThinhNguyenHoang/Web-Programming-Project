@@ -440,20 +440,24 @@ BANK ACCOUNT:
                 "time": "",
                 "description": "",
                 "amount":"",
-                "order_id":"",
+                "sale_percent":"",
+                "food_list": [],
+                "combo_list": [],
                 Nếu là manager thì trả thêm: 
                 "user_id":"",
-                "userName":""
+                "username":""
                 },
                 {
                 "id": "",
                 "time": "",
                 "description": "",
                 "amount":"",
-                "order_id":"",
+                "sale_percent":"",
+                "food_list": [],
+                "combo_list": [],
                 Nếu là manager thì trả thêm: 
                 "user_id":"",
-                "userName":""
+                "username":""
                 }
             ]
         }
@@ -464,10 +468,18 @@ BANK ACCOUNT:
         body: {
                 "bank_account_number": "",
                 "user_id": "",
-                "order_id":"",
                 "amount":"",
                 "description":"",
-                }
+                "voucher_id": ,
+                "food_list": [
+                    {FoodID: ""},
+                    {FoodID: ""}
+                ],
+                "combo_list": [
+                    {ComboID: ""},
+                    {ComboID: ""}
+                ],
+        }
 ```
 
 #CART

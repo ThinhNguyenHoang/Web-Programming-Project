@@ -36,223 +36,11 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import FoodCardView from '../components/OrderView/FoodCardView';
-import {update_cart_actions,selectors,get_cart_actions} from "../redux/slices/food/FoodSlice";
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import { Grid } from '@mui/material';
+import { get_order_actions } from './../redux/slices/Manage/ManageSlice';
 
-const MCList={order_list:[
-    {
-        name:'Taylor Swift',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'???????',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    {
-        name:'John Doe',
-        id:'123',
-        delivery_date:'12/6/2021',
-        price:145000,
-        address:'375 Nguyễn Trãi',
-        status:0,
-        payment_method:'Momo',
-        discount:"10%",
-    },
-    
-]};
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -295,21 +83,21 @@ function OrderMangament(props){
     let history = useHistory();
     const {t, i18n} = useTranslation();
     const dispatch = useDispatch();
-    const cart=useSelector(selectors.getCart);
     useEffect(() => {
-        dispatch({type:get_cart_actions.loading,payload:''});
+        dispatch({type:get_order_actions.loading,payload:''});
     }, []);
-    //const order = useSelector(Mselectors.getOrder);
-    const order = MCList;
-    const maxPage=order.order_list.length % 10 ===0 ? order.order_list.length/10: Math.floor(order.order_list.length/10)+1;
+    const [tempId,setIdx]=useState(0);
+    const order_list = useSelector(Mselectors.getOrder);
+    const maxPage=order_list.length % 10 ===0 ? order_list.length/10: Math.floor(order_list.length/10)+1;
     const [currPage,setPage]= React.useState(1);
     const RenderList=[...Array(10).keys()].map(i=>i+1+(currPage-1)*10);
     const handleChangePage=(event, NewPage)=>{
         setPage(NewPage);
     }
     const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {
+    const handleClickOpen = (idx) => {
         setOpen(true);
+        setIdx(idx);
     };
     const handleClose = () => {
         setOpen(false);
@@ -325,7 +113,7 @@ function OrderMangament(props){
                             <SearchIcon/>
                         </IconButton>
                     </Box>
-                    <Button variant="text" startIcon={<ArchiveIcon/> } onClick={()=>exportData(order.order_list)}>Export</Button>
+                    <Button variant="text" startIcon={<ArchiveIcon/> } onClick={()=>exportData(order_list)}>Export</Button>
                 </Box>
                 <TableContainer component={Paper} sx={{mt:4, mb:4}}>
                     <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -334,16 +122,16 @@ function OrderMangament(props){
                                 <TableCell align="center" sx={{fontWeight:"bold"}}>STT</TableCell>
                                 <TableCell align="center" sx={{fontWeight:"bold"}}>Mã đơn hàng</TableCell>
                                 <TableCell align="center" sx={{fontWeight:"bold"}}>Tên khách hàng</TableCell>
-                                <TableCell align="center" sx={{fontWeight:"bold"}}>Ngày giao</TableCell>
-                                <TableCell align="center" sx={{fontWeight:"bold"}}>Đã giảm giá</TableCell>
+                                <TableCell align="center" sx={{fontWeight:"bold"}}>Ngày đặt</TableCell>
+                                <TableCell align="center" sx={{fontWeight:"bold"}}>Đã giảm giá (%)</TableCell>
                                 <TableCell align="center" sx={{fontWeight:"bold"}}>Giá</TableCell>
-                                <TableCell align="center" sx={{fontWeight:"bold"}}>Địa chỉ giao hàng</TableCell>
+                                <TableCell align="center" sx={{fontWeight:"bold"}}>Ghi chú</TableCell>
                                 <TableCell align="left"></TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {RenderList.map((idx)=>{
-                                if (idx> order.order_list.length){
+                                if (idx> order_list.length){
                                     return (
                                     <TableRow style={{ height: 53 }}>
                                         <TableCell colSpan={8} />
@@ -354,14 +142,14 @@ function OrderMangament(props){
                                             <TableCell align="center" component="th" scope="row">
                                                 {idx}
                                             </TableCell>
-                                            <TableCell align="center">{order.order_list[idx-1].id}</TableCell>
-                                            <TableCell align="center">{order.order_list[idx-1].name}</TableCell>
-                                            <TableCell align="center">{order.order_list[idx-1].delivery_date}</TableCell>
-                                            <TableCell align="center">{order.order_list[idx-1].discount}</TableCell>
-                                            <TableCell align="center">{order.order_list[idx-1].price}</TableCell>
-                                            <TableCell align="center">{order.order_list[idx-1].address}</TableCell>
+                                            <TableCell align="center">{order_list[idx-1].id}</TableCell>
+                                            <TableCell align="center">{order_list[idx-1].userName}</TableCell>
+                                            <TableCell align="center">{order_list[idx-1].time}</TableCell>
+                                            <TableCell align="center">{order_list[idx-1].sale_percent}</TableCell>
+                                            <TableCell align="center">{order_list[idx-1].amount}</TableCell>
+                                            <TableCell align="center">{order_list[idx-1].desciption}</TableCell>
                                             <TableCell align="center">
-                                                <Button style={{textTransform:"none"}} onClick={handleClickOpen}>
+                                                <Button style={{textTransform:"none"}} onClick={()=>handleClickOpen(idx-1)}>
                                                     Chi tiết
                                                 </Button>
                                                 <Dialog
@@ -376,7 +164,7 @@ function OrderMangament(props){
                                                             Mã đơn hàng: 
                                                             </Typography>
                                                             <Typography sx={{flex: 1, fontWeight:"bold" }} variant="h6" component="div">
-                                                            {order.order_list[idx-1].id}
+                                                            {order_list[tempId].id}
                                                             </Typography>
                                                             <IconButton
                                                             edge="start"
@@ -395,7 +183,7 @@ function OrderMangament(props){
                                                                 <Typography variant="h5" sx={{color:"red", textAlign: 'center', fontWeight:"bold"}}>
                                                                         Danh sách món ăn
                                                                 </Typography>
-                                                                {cart.food_list.map((food)=>{
+                                                                {order_list[tempId].food_list.map((food)=>{
                                                                     return <FoodCardView food={food}/>;
                                                                 })}
                                                             </Grid>
@@ -411,15 +199,23 @@ function OrderMangament(props){
                                                                             Tên khách hàng: 
                                                                         </Typography>
                                                                         <Typography variant="h6" sx={{display:"inline", color:"elevation.layer0.contrast", fontWeight:"bold", mx:"5px"}}>
-                                                                            {order.order_list[idx-1].name}
+                                                                            {order_list[tempId].userName}
                                                                         </Typography>
                                                                     </Box>
                                                                     <Box>
                                                                         <Typography variant="h6" sx={{display:"inline", color:"elevation.layer0.contrast"}}>
-                                                                            Ngày giao hàng: 
+                                                                            Mã khách hàng: 
                                                                         </Typography>
                                                                         <Typography variant="h6" sx={{display:"inline", color:"elevation.layer0.contrast", fontWeight:"bold", mx:"5px"}}>
-                                                                            {order.order_list[idx-1].delivery_date}
+                                                                            {order_list[tempId].user_id}
+                                                                        </Typography>
+                                                                    </Box>
+                                                                    <Box>
+                                                                        <Typography variant="h6" sx={{display:"inline", color:"elevation.layer0.contrast"}}>
+                                                                            Ngày đặt: 
+                                                                        </Typography>
+                                                                        <Typography variant="h6" sx={{display:"inline", color:"elevation.layer0.contrast", fontWeight:"bold", mx:"5px"}}>
+                                                                            {order_list[tempId].time}
                                                                         </Typography>
                                                                     </Box>
                                                                     <Box>
@@ -427,7 +223,7 @@ function OrderMangament(props){
                                                                             Giảm giá:
                                                                         </Typography>
                                                                         <Typography variant="h6" sx={{display:"inline", color:"elevation.layer0.contrast", fontWeight:"bold", mx:"5px"}}>
-                                                                            {order.order_list[idx-1].discount}
+                                                                            {order_list[tempId].sale_percent}
                                                                         </Typography>
                                                                     </Box>
                                                                     <Box>
@@ -435,7 +231,7 @@ function OrderMangament(props){
                                                                             Tổng tiền (sau khi giảm giá):
                                                                         </Typography>
                                                                         <Typography variant="h6" sx={{display:"inline",color:"red", fontWeight:"bold", mx:"5px"}}>
-                                                                            {order.order_list[idx-1].price}
+                                                                            {order_list[tempId].amount}
                                                                         </Typography>
                                                                         <Typography variant="h6" sx={{display:"inline",color:"red"}}>
                                                                             VND
@@ -443,10 +239,10 @@ function OrderMangament(props){
                                                                     </Box>
                                                                     <Box>
                                                                         <Typography variant="h6" sx={{display:"inline",color:"elevation.layer0.contrast"}}>
-                                                                            Địa chỉ giao hàng:
+                                                                            Ghi chú:
                                                                         </Typography>
                                                                         <Typography variant="h6" sx={{display:"inline",color:"elevation.layer0.contrast", fontWeight:"bold", mx:"5px"}}>
-                                                                            {order.order_list[idx-1].address}
+                                                                            {order_list[idx-1].address}
                                                                         </Typography>
                                                                     </Box>
                                                                 </Box>
@@ -463,7 +259,7 @@ function OrderMangament(props){
                         </TableBody>
                     </Table>
                     <Box sx={{display:"flex",flexDirection:"row",justifyContent:"flex-end"}}>
-                        <Typography sx={{alignSelf:"center",mr:4}}>{(currPage-1)*10+1}-{currPage*10}/{order.order_list.length}</Typography>
+                        <Typography sx={{alignSelf:"center",mr:4}}>{(currPage-1)*10+1}-{currPage*10}/{order_list.length}</Typography>
                         <IconButton onClick={()=>{
                             if (currPage<2){
                                 return;

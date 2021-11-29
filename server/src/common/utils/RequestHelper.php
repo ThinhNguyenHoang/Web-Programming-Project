@@ -194,6 +194,7 @@ class RequestHelper
     public static function isAdminPrivilege(): bool
     {
         $token = self::isLogin();
+        error_log("USER ROLE IS:::AAAAAAAAAAAAAAAAAAAAAAAAAA:" . $token->data->role);
         return $token->data->role == "ADMIN";
     }
     public static function getTokenPayload(): object

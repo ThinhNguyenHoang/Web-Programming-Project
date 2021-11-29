@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {AppBar, Avatar, Box, Button, Tab, Tabs, ToggleButton, Toolbar} from "@mui/material";
+import {AppBar, Avatar, Box, Button, Popover, Switch, Tab, Tabs, ToggleButton, Toolbar} from "@mui/material";
 import logo from "../../assets/images/logo_64.png";
 import {ROUTING_CONSTANTS, ROUTING_TAB_ITEMS} from "../../routes/RouterConfig";
 import {Link} from "react-router-dom";
@@ -13,6 +13,9 @@ import Footer from "../Footer/Footer";
 import * as React from "react";
 import {read_user_profile_actions} from "../../redux/slices/auth/AuthSlice";
 import {USER_CONSTANTS} from "../../redux/slices/auth/AuthConstants";
+import FoodSearchBar from "../SearchFood/SearchBar";
+import {food_management_action} from "../../redux/slices/food/FoodSlice";
+import {executeInTheNextEventLoopTick} from "@mui/lab/internal/pickers/utils";
 
 const LogoAndName = ({navTo}) =>{
     return (
@@ -22,6 +25,8 @@ const LogoAndName = ({navTo}) =>{
         </Box>
     );
 }
+
+
 
 const UserAvatarBox = () =>{
     const isLoggedIn = useSelector(selectors.getLoginSuccess)
@@ -71,6 +76,8 @@ const Header = (props) => {
 
     const dispatch = useDispatch();
     const [activeTab, setActiveTab] = useState(0);
+    const [checked,setChecked] = useState(false);
+
     const components = props.components;
     const isLoggedIn = useSelector(selectors.getLoginSuccess);
     const userRole = useSelector(selectors.getUserRole);
@@ -78,6 +85,16 @@ const Header = (props) => {
         setActiveTab(value);
     }
 
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const closePopOver = () => {
+        setAnchorEl(null);
+    };
     const tabs_item_to_render = (list_tab) => {
 
     }
@@ -86,6 +103,13 @@ const Header = (props) => {
         console.log("SIGN OUT USER");
         dispatch({type:logout_actions.success});
     }
+
+    useEffect(() => {
+        dispatch({type:food_management_action.loading})
+        return () => {
+
+        };
+    }, []);
 
     const userProfile = useSelector(selectors.getUserProfile);
     useEffect(() => {
@@ -144,9 +168,26 @@ const Header = (props) => {
                             Sign Out
                         </Button>}
                         <ThemeToggleButton/>
+                        <Box>
+                            <Button variant={`contained`} onClick={handleClick}>Search</Button>
+                        </Box>
+                        <Popover
+                            id={id}
+                            open={open}
+                            anchorEl={anchorEl}
+                            onClose={closePopOver}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                        >
+                            <FoodSearchBar />
+                        </Popover>
                         <UserAvatarBox/>
                     </Toolbar>
+
                 </AppBar>
+
             </Box>
         </Box>
     );

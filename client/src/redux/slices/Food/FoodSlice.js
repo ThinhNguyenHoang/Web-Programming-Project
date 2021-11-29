@@ -198,6 +198,10 @@ export const selectors = {
     getFoodList: state => state.food.news.food_list,
     getComboList: state => state.food.news.combo_list,
     getNofiList: state => state.food.news.nofi_list,
+    // * Payment
+    getFoodListInCard: state => state.food.cart.food_list,
+    getComboListInCard: state => state.food.cart.combo_list,
+
     // * food mangement
     getFoodManagement:state=>state.food.food_manage,
 

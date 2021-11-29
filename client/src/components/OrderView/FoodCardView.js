@@ -13,27 +13,21 @@ import img from '../../assets/images/foodimg.png';
 import InfoIcon from '@mui/icons-material/Info';
 import { Card } from "@mui/material";
 import CardContent from '@mui/material/CardContent';
+import { ROUTING_CONSTANTS } from './../../routes/RouterConfig';
+import { useHistory } from 'react-router-dom';
 
-const QuanlityButton = styled(Button)({
-	border: '1px solid ',
-	backgroundColor: '#c2c2c2',
-	borderColor: '#ababab',
-	padding: '0px 0px',
-	height: '30px',
-	width: '30px',
-	fontSize: 16,
-	'&:hover': {
-		backgroundColor: '#7a7a7a',
-	},
-	'&:active': {
-		backgroundColor: '#4d4d4d',
-	},
-});
+
+
 
 function FoodCardView(props) {
+    const history = useHistory();
 	const food=props.food;
 	const {t, i18n} = useTranslation();
-	const dispatch = useDispatch();
+    const handleDetail=()=>{
+        if (food.FoodID){
+            history.push(ROUTING_CONSTANTS.FOODDETAIL+"/"+food.FoodID);
+        }
+    }
 	return (
         <Card sx={{ display: 'flex', borderRadius: 3, my:"15px", bgcolor:"elevation.layer2.main"}}>
             <CardMedia
@@ -60,7 +54,7 @@ function FoodCardView(props) {
                 </CardContent>
             </Box>
             <Box alignSelf="center">
-                <IconButton>
+                <IconButton onClick={handleDetail}>
                     <InfoIcon sx={{color:"elevation.layer0.contrast"}}/>
                 </IconButton>
             </Box>

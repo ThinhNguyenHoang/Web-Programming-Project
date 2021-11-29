@@ -11,14 +11,13 @@ const user_init={
     lastModified:'',
 }
 const order_init={
-    OrderID:0,
-    name:'',
-    product:'',
-    delivery_date:'',
-    price:0,
-    address:'',
-    status:0,
-    payment_method:'',
+    id:"",
+    time:"",
+    description:"",
+    amount:"",
+    sale_percent:"",
+    food_list:[],
+    combo_list:[]
 }
 const inital_state={
     client:{
@@ -36,7 +35,7 @@ const inital_state={
 
 export const Mselectors={
     getClient: state=> state.manage.client,
-    getOrder: state=>state.manage.order,
+    getOrder: state=>state.manage.order.order_list,
 }
 
 export const get_client_actions = generateSagaLifecycleNames("get_client");
@@ -62,11 +61,13 @@ const ManageSlice = createSlice({
             state.order.get_order_status=loading();
         },
         [get_order_actions.success]: (state,action)=>{
+            state.order.order_list=action.payload;
             state.order.get_order_status=success();
-            state.order.order_list=action.payload.order_list;
+            
         },
         [get_order_actions.error]: (state,action)=>{
             state.order.get_order_status=error();
         }
     }
 });
+export default ManageSlice;

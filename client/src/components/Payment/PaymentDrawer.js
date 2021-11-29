@@ -14,7 +14,7 @@ import FoodItemCard from "../Food/FoodItemCard";
 import { Field, Form, Formik } from "formik";
 import * as yup from "yup";
 import { TextField } from "formik-material-ui";
-import { useHistor } from 'react-router';
+import { useHistory} from 'react-router';
 import { useTranslation } from 'react-i18next';
 import {
     add_bank_account_detail_actions,
@@ -26,6 +26,8 @@ import {
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import {getYearMonthDateFromJsDate} from "../../utils";
 import {selectors} from "../../redux/slices/auth/AuthSlice";
+import {selectors as foodSelectors, update_cart_actions} from "../../redux/slices/food/FoodSlice";
+import { ROUTING_CONSTANTS } from './../../routes/RouterConfig';
 
 const getAccountImageFromAccountType = (type) => {
     return undefined;
@@ -139,11 +141,6 @@ export const BankAccountItem = ({ account_item, additionalStyle }) => {
                             })}
                             // * TODO: Change onSubmit handler to post to authorize api
                             onSubmit={(values, { setSubmitting }) => {
-                                // setTimeout(() => {
-                                //     setSubmitting(false);
-                                //     alert(JSON.stringify(values, null, 2));
-                                // }, 500);
-                                // onUpdateUser(values, setSubmitting);
                                 const payload = {
                                     ...account_item,
                                     ...values,
@@ -309,11 +306,6 @@ export const AddAccountForm = ({callback}) => {
                         )
                 })}
                 onSubmit={(values, { setSubmitting }) => {
-                    // setTimeout(() => {
-                    //     setSubmitting(false);
-                    //     alert(JSON.stringify(values, null, 2));
-                    // }, 500);
-                    // onUpdateUser(values, setSubmitting);
 
                     const modified_values = {
                         ...values,
@@ -403,7 +395,6 @@ export const AddAccountForm = ({callback}) => {
                 )}
             </Formik>
         </Box>
-
     );
 }
 
@@ -415,6 +406,7 @@ export const PaymentDrawer = (
     }
 ) => {
     const dispatch = useDispatch();
+    const history= useHistory();
     const [show, setShow] = useState(false);
     const [indexChosen, setIndexChosen] = useState(0);
     const userProfile = useSelector(selectors.getUserProfile);
@@ -431,6 +423,11 @@ export const PaymentDrawer = (
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
+
+    const food_list_in_card = useSelector(foodSelectors.getFoodListInCard);
+    const combo_list_in_card = useSelector(foodSelectors.getComboListInCard);
+
+
     const handleAddBankAccount = (values,setSubmitting) => {
         console.log("Add bank account with values:", values);
         dispatch({
@@ -439,15 +436,6 @@ export const PaymentDrawer = (
         });
     }
 
-        // account_detail:{
-        //     id:"",
-        //         bank_account_number: "",
-        //         bank_account_owner: "",
-        //         bank_account_type: "",
-        //         balance: "",
-        //         valid_start:"",
-        //         valid_end:"",
-        // },
     const makePayment = () => {
         const account_chosen = bank_account_list[indexChosen];
         const payload = {
@@ -455,8 +443,25 @@ export const PaymentDrawer = (
             user_id: userProfile.account_id,
             amount: amount_to_pay,
             description: "No description",
+            voucher_id: "1",
+            food_list: food_list_in_card.map(item => {
+                return {
+                    FoodID: item.FoodID,
+                    Quanity:item.Quantity
+                }
+            }),
+            combo_list:
+                combo_list_in_card.map(item => {
+                    return {
+                        ComboID: item.ComboID,
+                        Quantity:item.Quantity
+                    }
+                })
         }
         dispatch({type: make_payment_actions.loading, payload});
+        dispatch({type:update_cart_actions.loading,payload:{FoodList:[],ComboList:[]}});
+        setShow(false);
+        history.push(ROUTING_CONSTANTS.ORDERUSER);
     }
 
     return (
@@ -507,7 +512,6 @@ export const PaymentDrawer = (
                                 </Box>
                                 CLOSE
                             </Button>
-                            {/* Popover to add new bank account */}
                             <Popover
                                 id={id}
                                 open={open}

@@ -3,6 +3,7 @@
 namespace src\user\controller;
 
 use http\Client\Curl\User;
+use http\Env\Request;
 use src\common\base\BaseController;
 use src\common\base\RequestHandler;
 use src\common\utils\RequestHelper;
@@ -75,7 +76,21 @@ class UserController extends BaseController implements RequestHandler
                         UserService::setNewPassword();
                         break;
                     case "profile":
-                        UserService::updateUserProfile();
+                        $second_path_param = RequestHelper::get_ith_path_item(2);
+                        error_log("XXXXXXXXXXXXXXXXXXXXXXXXXXXX::RENEW TOKEN " . $second_path_param,0);
+
+                        if(!$second_path_param){
+                            UserService::updateUserProfile();
+                        }
+                        else if(is_numeric($second_path_param)){
+                            if(RequestHelper::isAdminPrivilege()){
+                                UserService::updateUserProfile();
+                            }
+                            else {
+                                ResponseHelper::error_client("Unauthorized");
+                                error_log("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ" . $second_path_param,0);
+                            }
+                        }
                         break;
                     default:
                         ResponseHelper::error_client("Invalid parameter");
