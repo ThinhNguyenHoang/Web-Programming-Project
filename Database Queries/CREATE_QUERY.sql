@@ -267,20 +267,21 @@ CREATE TABLE CONTAINS (
 	TransactionID BIGINT(8) NOT NULL,
 	ComboID BIGINT(8),
 	FoodID BIGINT (8),
+	Quantity BIGINT,
 	PRIMARY KEY (TransactionID, FoodID, ComboID)
 );
-INSERT INTO CONTAINS (TransactionID, FoodID, ComboID) VALUES ( 1, 1, 0);
-INSERT INTO CONTAINS (TransactionID, FoodID, ComboID) VALUES ( 2, 2, 0);
-INSERT INTO CONTAINS (TransactionID, FoodID, ComboID) VALUES ( 3, 3, 0);
-INSERT INTO CONTAINS (TransactionID, FoodID, ComboID) VALUES ( 4, 4, 0);
-INSERT INTO CONTAINS (TransactionID, FoodID, ComboID) VALUES ( 5, 5, 0);
-INSERT INTO CONTAINS (TransactionID, FoodID, ComboID) VALUES ( 6, 0, 2);
-INSERT INTO CONTAINS (TransactionID, FoodID, ComboID) VALUES ( 1, 0, 1);
-INSERT INTO CONTAINS (TransactionID, FoodID, ComboID) VALUES ( 2, 0, 2);
-INSERT INTO CONTAINS (TransactionID, FoodID, ComboID) VALUES ( 3, 0, 3);
-INSERT INTO CONTAINS (TransactionID, FoodID, ComboID) VALUES ( 4, 0, 4);
-INSERT INTO CONTAINS (TransactionID, FoodID, ComboID) VALUES ( 5, 0, 5);
-INSERT INTO CONTAINS (TransactionID, FoodID, ComboID) VALUES ( 6, 4, 0);
+INSERT INTO CONTAINS (TransactionID, FoodID, ComboID, Quantity) VALUES ( 1, 1, 0, 1);
+INSERT INTO CONTAINS (TransactionID, FoodID, ComboID, Quantity) VALUES ( 2, 2, 0, 2);
+INSERT INTO CONTAINS (TransactionID, FoodID, ComboID, Quantity) VALUES ( 3, 3, 0, 3);
+INSERT INTO CONTAINS (TransactionID, FoodID, ComboID, Quantity) VALUES ( 4, 4, 0, 1);
+INSERT INTO CONTAINS (TransactionID, FoodID, ComboID, Quantity) VALUES ( 5, 5, 0, 1);
+INSERT INTO CONTAINS (TransactionID, FoodID, ComboID, Quantity) VALUES ( 6, 0, 2, 1);
+INSERT INTO CONTAINS (TransactionID, FoodID, ComboID, Quantity) VALUES ( 1, 0, 1, 2);
+INSERT INTO CONTAINS (TransactionID, FoodID, ComboID, Quantity) VALUES ( 2, 0, 2, 2);
+INSERT INTO CONTAINS (TransactionID, FoodID, ComboID, Quantity) VALUES ( 3, 0, 3, 2);
+INSERT INTO CONTAINS (TransactionID, FoodID, ComboID, Quantity) VALUES ( 4, 0, 4, 2);
+INSERT INTO CONTAINS (TransactionID, FoodID, ComboID, Quantity) VALUES ( 5, 0, 5, 2);
+INSERT INTO CONTAINS (TransactionID, FoodID, ComboID, Quantity) VALUES ( 6, 4, 0, 2);
 
 
 DROP TABLE IF EXISTS tag;
