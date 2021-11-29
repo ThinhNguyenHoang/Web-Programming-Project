@@ -93,7 +93,7 @@ class CartService
         // error_log("Adding cart: get request body", 0);
     }
 
-    public static function updateCart($CartID)
+    public static function updateCart()
     {
         $request = RequestHelper::getRequestBody();
 

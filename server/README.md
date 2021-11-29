@@ -880,3 +880,45 @@ BANK ACCOUNT:
 
     DELETE: /voucher/:id (admin only)
 ```
+
+#PAGE SETTING
+```
+    GET:/page_setting
+    {
+        "message": "Read page_setting:result in success",
+        "data": [
+            {
+                "banner": "ádkasjdkasjdasdasdasdasd",
+                "logo": "test",
+                "name": "đasadasdasd",
+                "phone": "111111111111111111111111",
+                "slogan": "qqqqqqqqqqqqqqqqqqqqq",
+                "address": "àasfsafasfs",
+                "description": "adsfasdasdfsaf",
+                "color": "test",
+                "length": "test",
+                "lat": "test",
+                "facebook": "test",
+                "mail": "test",
+                "twitter": "tets"
+            }
+        ]
+    }
+
+    PUT: /page_setting
+        body: {
+            "banner": "ádkasjdkasjdasdasdasdasd",
+            "logo": "test",
+            "name": "đasadasdasd",
+            "phone": "111111111111111111111111",
+            "slogan": "qqqqqqqqqqqqqqqqqqqqq",
+            "address": "àasfsafasfs",
+            "description": "adsfasdasdfsaf",
+            "color": "test",
+            "length": "test",
+            "lat": "test",
+            "facebook": "test",
+            "mail": "test",
+            "twitter": "tets"
+        }
+```

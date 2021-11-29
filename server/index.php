@@ -24,6 +24,7 @@ use src\bank_account\controller\BankAccountController;
 use src\transaction\controller\TransactionController;
 use src\cart\controller\CartController;
 use src\news\controller\NewsController;
+use src\page_setting\controller\PageSettingController;
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -90,6 +91,10 @@ switch ($endpoint) {
     case "news":
         $newsController = new NewsController();
         $newsController->handleRequest();
+        break;
+    case "page_setting":
+        $pageSettingController = new PageSettingController();
+        $pageSettingController->handleRequest();
         break;
     default:
         header("HTTP/1.1 404 Not Found");

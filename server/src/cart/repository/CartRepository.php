@@ -37,6 +37,8 @@ class CartRepository implements Repository
             $UserID = RequestHelper::getUserIDFromToken();
             $query = "SELECT * FROM cart WHERE UserID=$UserID;";
         }
+
+        $result = null;
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
@@ -44,31 +46,17 @@ class CartRepository implements Repository
         }
         //        $num_row = $result->num_rows;
         $list_cart = array();
-        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            error_log(json_encode($row), 0);
-            array_push($list_cart, $row);
+        if ($result){
+            while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+                error_log(json_encode($row), 0);
+                array_push($list_cart, $row);
+            }
         }
 
         error_log("CART_REPOSITORY::FETCH_LIST::", 0);
         return $list_cart;
     }
 
-    public static function findMaterialByID($MaterialID)
-    {
-        $query = "SELECT * FROM cart WHERE MaterialID = $MaterialID;";
-
-        try {
-            $result = QueryExecutor::executeQuery($query);
-        } catch (Exception $e) {
-            error_log($e->getMessage());
-        }
-        $cart = mysqli_fetch_array($result, MYSQLI_ASSOC);
-
-        error_log(json_encode($cart), 0);
-
-        error_log("CART_REPOSITORY::FETCH_LIST::", 0);
-        return $cart;
-    }
 
     /**
      */

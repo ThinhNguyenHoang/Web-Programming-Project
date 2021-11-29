@@ -34,7 +34,7 @@ class CartController extends BaseController implements RequestHandler
                 $token = RequestHelper::validate_jwt_token();
                 if ($relative_path == null) {
                     error_log("CART_CONTROLLER::UPDATE CART ENDPOINT::" . $relative_path);
-                    CartService::updateCart($relative_path);
+                    CartService::updateCart();
                 } else {
                     ResponseHelper::error_client("Invalid path in cart endpoint");
                 }
