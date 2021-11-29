@@ -24,7 +24,7 @@ export const removeUserService = (payload) => {
 }
 
 export const editUserService = (payload) => {
-    return request.putAsync(`${api_endpoints.user_list}/${payload.id}` ,payload);
+    return request.putAsync(`${api_endpoints.user_list}/profile/${payload.account_id}` ,payload);
 }
 
 export const getUserDetail = (payload) => {
