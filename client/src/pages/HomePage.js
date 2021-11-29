@@ -12,6 +12,8 @@ import InvolvedCompanyCarousel, {
     CompanyItem,
     InvolvedCompaniesSlice
 } from "../components/InvolvedCompany/InvolvedCompanyCarousel";
+import {useSelector} from "react-redux";
+import {company_selectors} from "../redux/slices/company/SettingsSlice";
 
 const BANNER_ENDPOINT = "/banner_image";
 
@@ -50,20 +52,11 @@ const food_item = {
     material: []
 }
 const HomePage = (props) => {
-    const [banner, setBanner] = useState(default_banner);
-    useEffect(() => {
-        // * API to get banner image
-        axios.get(BANNER_ENDPOINT)
-            .then((res) => {
-                setBanner(res.data);
-            })
-            .catch((e) => console.log(`Failed to get banner`))
-    }, []);
-    
+    const pageSettings = useSelector(company_selectors.getCompanyData);
     return (
         <Box sx={{display:`flex`,flexDirection:`column`,bgcolor:'elevation.layer0.main'}}>
             <Box sx={{width:`100%`}}>
-                <img src={banner} alt={'Banner Image'} style={{width: `100%`}}/>
+                <img src={pageSettings.banner || default_banner} alt={'Banner Image'} style={{width: `100%`}}/>
             </Box>
             {/*<Box sx={{display:`flex`,flexDirection:`row`,justifyContent:'center', alignItems:`center`}}>*/}
             {/*    <FoodItemCard food_item={food_item}/>*/}

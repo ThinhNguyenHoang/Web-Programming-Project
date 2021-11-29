@@ -7,32 +7,32 @@ import twitter_icon from '../../assets/icons/twitter.jpg';
 import youtube_icon from '../../assets/icons/youtube.png';
 import google_icon from '../../assets/icons/g_plus.png';
 import Box from "@mui/material/Box";
+import {company_selectors} from "../../redux/slices/company/SettingsSlice";
+import {useSelector} from "react-redux";
 
-const icons = [
-    {
-        name: "facebook",
-        link: "",
-        icon: facebook_icon
-    },    {
-        name: "twitter",
-        link: "",
-        icon: twitter_icon
-    },    {
-        name: "youtube",
-        link: "",
-        icon: youtube_icon
-    },    {
-        name: "google",
-        link: "",
-        icon: google_icon
-    },
-]
+
 const branch_name = {
     name: "BK FOOD SALE",
     address: "286, Ly Thường Kiệt, Quận 10, TP HCM",
 }
 
 const Footer = ({additionalStyle}) => {
+    const page_setting = useSelector(company_selectors.getCompanyData);
+    const icons = [
+        {
+            name: "facebook",
+            link: page_setting.facebook || `https://www.facebook.com/FoodyVietnam/`,
+            icon: facebook_icon
+        },    {
+            name: "twitter",
+            link: page_setting.twitter || `https://twitter.com/?lang=vi`,
+            icon: twitter_icon
+        },  {
+            name: "google",
+            link: page_setting || "thinh.nguyenbk2018@hcmut.edu.vn",
+            icon: google_icon
+        },
+    ]
     return (
         <Grid sx={{position:'static',boxShadow:3,left:0,bottom:0,right:0,bgcolor:'elevation.layer1.main',marginTop:`50px`,justifyContent:'center',display:{sm:"none", md: 'flex' },...additionalStyle,mt:6}} container spacing={{ xs: 2, md: 3}}>
             <Grid item xs={12} sm={8} md={3} mx={3}>
@@ -40,7 +40,7 @@ const Footer = ({additionalStyle}) => {
                     Order Now
                 </Typography>
                 <Typography sx={{mb:1}} variant={`h3`} color={`primary.main`}>
-                    0866457235
+                    {  page_setting.phone_number || `0866457235`}
                 </Typography>
                 <Button variant={`contained`} color={`primary`}>
                     Contacts Us Now
@@ -60,7 +60,7 @@ const Footer = ({additionalStyle}) => {
             </Grid>
             <Grid item xs={12} sm={12} md={12} mt={5} mx={3} sx={{display:{xs:'none',md:'flex'},justifyContent:'space-evenly'}} >
                 <Typography variant={`h6`} color={`elevation.layer2.contrast`}>
-                    {branch_name.address}
+                    {  page_setting.address ||branch_name.address}
                 </Typography>
                 <Typography variant={`h6`} color={`elevation.layer2.contrast`}>
                     {`© Copyright 2021, ${branch_name.name}.`}

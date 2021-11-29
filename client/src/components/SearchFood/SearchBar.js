@@ -100,13 +100,7 @@ export default function FoodSearchBar( {callback}) {
                     </Table>
                 </TableContainer>
             </Paper>
-            {/*<br />*/}
-            {/*<a*/}
-            {/*    target="_blank"*/}
-            {/*    href="https://smartdevpreneur.com/the-easiest-way-to-implement-material-ui-table-search/"*/}
-            {/*>*/}
-            {/*    Learn how to add search and filter to Material-UI Table here.*/}
-            {/*</a>*/}
+
         </>
     );
 }
