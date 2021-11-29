@@ -11,6 +11,8 @@ import { useTranslation } from "react-i18next";
 import { increase_quantity_cart,decrease_quantity_cart,delete_food_cart,update_cart_actions,delete_cart_actions } from "../../redux/slices/food/FoodSlice";
 import img from '../../assets/images/foodimg.png';
 import InfoIcon from '@mui/icons-material/Info';
+import { useHistory } from 'react-router-dom';
+import { ROUTING_CONSTANTS } from './../../routes/RouterConfig';
 
 const QuanlityButton = styled(Button)({
 	border: '1px solid ',
@@ -30,6 +32,7 @@ const QuanlityButton = styled(Button)({
 });
 
 function FoodCard(props) {
+	const history=useHistory();
 	const food=props.food;
 	const deleteFood=props.deleteFood;
 	const updateFood=props.updateFood;
@@ -42,7 +45,7 @@ function FoodCard(props) {
 					<CardMedia component="img" title="food" image={food.Picture} sx={{ maxHeight: 190, maxWidth: 190 }} />
 				</Grid>
 				<Grid item pl={2}>
-					<Button style={{textTransform: 'none'}}>
+					<Button style={{textTransform: 'none'}} onClick={()=>history.push(ROUTING_CONSTANTS.FOODDETAIL+"/"+food.FoodID)}>
 						<Typography variant="h5" sx={{color:"elevation.layer1.contrast", fontWeight:"bold" }}>{food.FoodName}</Typography><br />
 					</Button>
 					<br/>

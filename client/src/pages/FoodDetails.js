@@ -20,7 +20,7 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import Typography from '@mui/material/Typography';
 import MaterialCardAdd from '../components/FoodItemManagement/MaterialCardAdd';
 import MaterialCardDelete from '../components/FoodItemManagement/MaterialCardDelete';
@@ -46,15 +46,6 @@ import { delete_food_comment_action,update_food_comment_action,add_food_comment_
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const taglist = [
-    { title: 'Món chay'},
-    { title: 'Món mặn'},
-    { title: 'Món nước'},
-    { title: 'Món Hàn Quốc'},
-    { title: 'Ngày Rằm'},
-    { title: "Món Nhật"},
-    { title: 'Đồ ăn nội địa'},
-];
 const compareTag=(tagA,tagB)=>{
     if(tagA.TagName===tagB.TagName && tagB.TagID===tagA.TagID){
         return true;
@@ -76,16 +67,16 @@ function FoodDetails(){
     let history= useHistory();
     const dispatch=useDispatch();
     
-    const foodid=useSelector(selectors.getFoodDetailID);
+    const {id}=useParams();
     
     React.useEffect(()=>{
         dispatch({type:get_cart_actions.loading,payload:""});
-        dispatch({type:food_detail_action.loading,payload:foodid});
+        dispatch({type:food_detail_action.loading,payload:id});
         
     },[]);
     
     const food_detail= useSelector(selectors.getFoodDetail);
-    console.log("food detailt",food_detail);
+    console.log("food detailt",food_detail,id);
     const tag_list=food_detail.Tags;
     
     const material_list=food_detail.Material;

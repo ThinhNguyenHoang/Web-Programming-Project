@@ -446,13 +446,15 @@ export const PaymentDrawer = (
             voucher_id: "1",
             food_list: food_list_in_card.map(item => {
                 return {
-                    FoodID: item.FoodID
+                    FoodID: item.FoodID,
+                    Quanity:item.Quantity
                 }
             }),
             combo_list:
                 combo_list_in_card.map(item => {
                     return {
                         ComboID: item.ComboID,
+                        Quantity:item.Quantity
                     }
                 })
         }

@@ -79,8 +79,8 @@ export default function FoodItemCard({food_item, mx, allow_expansion = true}, ..
         dispatch({type: update_cart_actions.loading, payload: newCart})
     }
     const handleDetail = () => {
-        dispatch({type: set_food_detail_id, payload: food_item.id});
-        history.push(ROUTING_CONSTANTS.FOODDETAIL);
+        // dispatch({type: set_food_detail_id, payload: food_item.id});
+        history.push(ROUTING_CONSTANTS.FOODDETAIL+"/"+food_item.id);
     }
 
 

@@ -3,6 +3,7 @@ import watchers from "../slices/auth/AuthSaga";
 import watchersFood from '../slices/food/FoodSaga';
 import watcherPayment from '../slices/payment/PaymentSaga'
 import watchersNews from '../slices/news/NewsSaga';
+import watchersManage from '../slices/Manage/ManageSaga';
 import { fork } from 'redux-saga/effects';
 
 export default function* rootSaga() {
@@ -15,7 +16,8 @@ export default function* rootSaga() {
         watchers,
         watchersFood,
         watcherPayment,
-        watchersNews
+        watchersNews,
+        watchersManage
     ]
     yield all(sagas.map(saga =>
         spawn(function*() {

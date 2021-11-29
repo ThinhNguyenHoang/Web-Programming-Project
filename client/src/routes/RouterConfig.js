@@ -153,7 +153,7 @@ export const RouterConfig = () => {
                 <Route exact path={ROUTING_CONSTANTS.NEWSINFO+"/:id"}>
                     <NewsInfo/>
                 </Route>
-                <Route exact path={ROUTING_CONSTANTS.FOODDETAIL}>
+                <Route exact path={ROUTING_CONSTANTS.FOODDETAIL+"/:id"}>
                     <FoodDetails/>
                 </Route>
                 <Route exact path={ROUTING_CONSTANTS.EDITCOMBO}>

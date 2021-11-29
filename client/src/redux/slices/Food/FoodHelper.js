@@ -1,6 +1,6 @@
 export const UpdateSubtotal=(cart)=>{
     cart.subtotal=cart.food_list.reduce((sum,food)=>{
-        return sum+food.Quantity*food.Price;
+        return sum+food.Quantity*food.Price*(1-food.Sale/100);
     },0)+cart.combo_list.reduce((sum,combo)=> sum+combo.Quantity*combo.Price,0)
 }
 export const UpdateDiscount=(cart)=>{
