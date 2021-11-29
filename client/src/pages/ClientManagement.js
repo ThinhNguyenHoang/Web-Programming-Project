@@ -5,7 +5,7 @@ import {useTranslation} from "react-i18next";
 import { useDispatch, useSelector } from 'react-redux';
 import { Box } from '@mui/system';
 import Typography from '@mui/material/Typography'
-import {Button, Dialog, LinearProgress} from '@mui/material';
+import {Button, Dialog, LinearProgress, Popover} from '@mui/material';
 import { ButtonGroup } from '@mui/material';
 import { TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
@@ -44,6 +44,7 @@ import {Field, Form, Formik} from "formik";
 import * as yup from "yup";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import {faUserEdit} from "@fortawesome/free-solid-svg-icons/faUserEdit";
+import {AddAccountForm} from "../components/Payment/PaymentDrawer";
 
 const exportData= (client_list)=>{
     const head=["STT","Họ và tên","Tên tài khoản","Số điện thoại","Email","Địa chỉ ","Ngày sinh"];
@@ -71,11 +72,22 @@ const exportData= (client_list)=>{
 }
 
 export const UpdateUserInfoFormDialog =  ({trigger, user_profile}) => {
-    const [open, setOpen] = React.useState(false);
     let history = useHistory();
     const {t, i18n} = useTranslation();
     const dispatch = useDispatch();
+    const [show, setShow] = useState(false);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+    const showPopOver = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
 
+    const closePopOver = () => {
+        setAnchorEl(null);
+    };
+
+    console.log("USER PROFILE IS: ",user_profile);
     const onUpdateUser = (values, setSubmitting) => {
         console.log("Update profile with values:", values);
         const avatar = user_profile.avatar;
@@ -88,10 +100,19 @@ export const UpdateUserInfoFormDialog =  ({trigger, user_profile}) => {
     }
     return (
         <Box>
-            <Box onClick={() => setOpen(true)}>
+            <Box onClick={showPopOver}>
                 {trigger}
             </Box>
-            <Dialog open={open} onClose={() => setOpen(false)}>
+            <Popover
+                id={id}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={closePopOver}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+            >
                 <Box sx={{
                     bgcolor: `white`,
                     borderRadius: 2,
@@ -106,8 +127,8 @@ export const UpdateUserInfoFormDialog =  ({trigger, user_profile}) => {
                 }}>
                     <Formik
                         initialValues={{
-                            ...user_profile
                         }}
+                        enableReinitialize
                         validationSchema={yup.object({
                             address: yup
                                 .string("Enter Your Address")
@@ -145,7 +166,8 @@ export const UpdateUserInfoFormDialog =  ({trigger, user_profile}) => {
                         })}
                         // * TODO: Change onSubmit handler to post to authorize api
                         onSubmit={(values, {setSubmitting}) => {
-                            onUpdateUser(values, setSubmitting);
+                            console.log("VALUES IS: ",values);
+                            // onUpdateUser(values, setSubmitting);
                         }}
                     >
                         {({submitForm, isSubmitting, isValid,values,setFieldValue}) => (
@@ -156,6 +178,10 @@ export const UpdateUserInfoFormDialog =  ({trigger, user_profile}) => {
                                     justifyContent={`center`}
                                     alignItems={`center`}
                                 >
+                                    {/*<Box sx={{my: 1, px: 3,}}>*/}
+                                    {/*    <Field component={TextField} type="password" label="Password" name="password"*/}
+                                    {/*           variant={`outlined`}/>*/}
+                                    {/*</Box>*/}
                                     <Box sx={{my: 1, px: 3,}}>
                                         <Field component={TextField} type="text" label="Phone Number:"
                                                name="phone_number"
@@ -207,7 +233,7 @@ export const UpdateUserInfoFormDialog =  ({trigger, user_profile}) => {
                                             disabled={isSubmitting || !isValid}
                                             onClick={submitForm}
                                         >
-                                            {"Update User Information"}
+                                            {"Update Information"}
                                         </Button>
                                     </Box>
                                 </Box>
@@ -215,7 +241,7 @@ export const UpdateUserInfoFormDialog =  ({trigger, user_profile}) => {
                         )}
                     </Formik>
                 </Box>
-            </Dialog>
+            </Popover>
         </Box>
 
     );
@@ -263,7 +289,7 @@ function ClientManagement(){
                     </IconButton>
                 </Box>
                 <Button variant="text" startIcon={<ArchiveIcon/>} onClick={()=>exportData(client_list)}>{t(base_keys.manage.export)}</Button>
-                
+
             </Box>
             <TableContainer component={Paper} sx={{mt:4}}>
                 <Table sx={{ minWidth: 650 }} size= "small" aria-label="a dense table">
@@ -310,9 +336,9 @@ function ClientManagement(){
                                     <TableCell align="left"><a href="#">Chi tiết</a></TableCell>
                                 </TableRow>
                                 );
-                            
+
                             })}
-                    
+
                     </TableBody>
                 </Table>
                 <Box sx={{display:"flex",flexDirection:"row",justifyContent:"flex-end"}}>
@@ -323,7 +349,7 @@ function ClientManagement(){
                         }else{
                             setPage(currPage-1);
                         }
-                    }}>    
+                    }}>
                         <ArrowBackIosNew/>
                     </IconButton>
                     <IconButton onClick={()=>{

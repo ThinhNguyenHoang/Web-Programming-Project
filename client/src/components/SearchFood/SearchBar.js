@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -7,15 +7,16 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import SearchBar from "material-ui-search-bar";
+import {food_management_action, selectors, set_food_detail_id} from "../../redux/slices/food/FoodSlice";
+import {useDispatch, useSelector} from "react-redux";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import {ROUTING_CONSTANTS} from "../../routes/RouterConfig";
+import {useHistory} from "react-router-dom";
+import {Button} from "@mui/material";
 
-
-const useStyles = makeStyles({
-    table: {
-        minWidth: 650
-    }
-});
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faMoneyBillAlt, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
 const originalRows = [
     { name: "Pizza", calories: 200, fat: 6.0, carbs: 24, protein: 4.0 },
     { name: "Hot Dog", calories: 300, fat: 6.0, carbs: 24, protein: 4.0 },
@@ -25,65 +26,87 @@ const originalRows = [
     { name: "Ice Cream", calories: 700, fat: 6.0, carbs: 24, protein: 4.0 }
 ];
 
-export default function BasicTable() {
-    const [rows, setRows] = useState(originalRows);
+export default function FoodSearchBar( {callback}) {
+    const food_list = useSelector(selectors.getAllFoodListMapped);
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const [filtered_food, setFiltedFood] = useState(food_list);
     const [searched, setSearched] = useState("");
-    const classes = useStyles();
+
+
 
     const requestSearch = (searchedVal) => {
-        const filteredRows = originalRows.filter((row) => {
-            return row.name.toLowerCase().includes(searchedVal.toLowerCase());
-        });
-        setRows(filteredRows);
+        const filtered_food = food_list.filter((item) => {
+            return item.name.toLowerCase().includes(searchedVal.toLowerCase());
+        })
+        console.log("Filted food is: ",filtered_food);
+        setFiltedFood(filtered_food);
     };
 
     const cancelSearch = () => {
         setSearched("");
-        requestSearch(searched);
+        setFiltedFood([]);
+        if(callback){
+            callback();
+        }
     };
 
     return (
         <>
-            <Paper>
-                <SearchBar
-                    value={searched}
-                    onChange={(searchVal) => requestSearch(searchVal)}
-                    onCancelSearch={() => cancelSearch()}
-                />
+            <Paper sx={{display:`absolute`,zIndex:88}}>
+                <Box
+                    component="form"
+                    sx={{
+                        '& > :not(style)': { m: 1, width: '25ch' },
+                       }}
+                    noValidate
+                    autoComplete="off"
+                >
+                    <TextField id="outlined-basic" label="Search" variant="outlined" value={searched} onChange={(e)=> {
+                        const value = e.target.value;
+                        console.log("searching ", value);
+                        setSearched(value);
+                        requestSearch(searched);
+                        if(!value) cancelSearch();
+                    }}/>
+                    <Button variant={`contained`} onClick={cancelSearch}>
+                        <Box sx={{ mr: 1 }}>
+                            <FontAwesomeIcon style={{ color: '#fff' }} icon={faTimesCircle} />
+                        </Box>
+                        Clear
+                    </Button>
+                </Box>
+                {/*<SearchBar*/}
+                {/*    value={searched}*/}
+                {/*    onChange={(searchVal) => requestSearch(searchVal)}*/}
+                {/*    onCancelSearch={() => cancelSearch()}*/}
+                {/*/>*/}
                 <TableContainer>
-                    <Table className={classes.table} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Food (100g serving)</TableCell>
-                                <TableCell align="right">Calories</TableCell>
-                                <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                                <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                                <TableCell align="right">Protein&nbsp;(g)</TableCell>
-                            </TableRow>
-                        </TableHead>
+                    <Table  aria-label="simple table">
                         <TableBody>
-                            {rows.map((row) => (
+                            {filtered_food.map((row) => (
                                 <TableRow key={row.name}>
-                                    <TableCell component="th" scope="row">
+                                    <TableCell component="th" scope="row" onClick={() => {
+                                        setSearched(row.name);
+                                        dispatch({type: set_food_detail_id, payload: row.id});
+                                        history.push(ROUTING_CONSTANTS.FOODDETAIL);
+                                    }}>
                                         {row.name}
                                     </TableCell>
-                                    <TableCell align="right">{row.calories}</TableCell>
-                                    <TableCell align="right">{row.fat}</TableCell>
-                                    <TableCell align="right">{row.carbs}</TableCell>
-                                    <TableCell align="right">{row.protein}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
             </Paper>
-            <br />
-            <a
-                target="_blank"
-                href="https://smartdevpreneur.com/the-easiest-way-to-implement-material-ui-table-search/"
-            >
-                Learn how to add search and filter to Material-UI Table here.
-            </a>
+            {/*<br />*/}
+            {/*<a*/}
+            {/*    target="_blank"*/}
+            {/*    href="https://smartdevpreneur.com/the-easiest-way-to-implement-material-ui-table-search/"*/}
+            {/*>*/}
+            {/*    Learn how to add search and filter to Material-UI Table here.*/}
+            {/*</a>*/}
         </>
     );
 }

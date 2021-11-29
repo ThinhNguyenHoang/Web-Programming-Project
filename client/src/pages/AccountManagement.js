@@ -164,7 +164,7 @@ const AccountManagement = () => {
                                             component={TextField}
                                             type="password"
                                             label="Password"
-                                            name="passwoDrd"
+                                            name="password"
                                             variant={`outlined`}
                                         />
                                         <Field

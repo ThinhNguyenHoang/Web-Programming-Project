@@ -284,24 +284,6 @@ function EditFoodItem(){
                         </Grid>)}
                     </Box>
                 </Grid>
-                {/* <Grid item xs={12} sx={{justifyContent:"space-evenly", paddingTop: 5,mx:4}}>
-                    <Box sx={{display:"flex", flexDirection:"row",flexWrap:"wrap"}}>
-                        <Typography variant="h4" gutterBottom component="div" sx={{flexGrow:1}}>
-                            Qui trình chế biến
-                        </Typography>
-                        <TextField
-                            width="auto"
-                            fullWidth
-                            label="Hướng dẫn"
-                            name="instruction"
-                            multiline
-                            rows={10}
-                            value={values.Instruct}
-                            onChange={(e)=>setValues({...values,Instruct:e.target.value})}
-                            variant="outlined"
-                        />
-                    </Box>
-                </Grid> */}
                 <Grid item container xs={12} sx={{justifyContent:"center", py: 5, width:"100%"}}>
                     <Box sx={{display:`flex`, flexDirection:"column"}} width={1180}>
                         <Typography variant="h4" gutterBottom component="div" sx={{flexGrow:1, color:"elevation.layer0.contrast", mb:5}}>

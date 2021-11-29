@@ -21,6 +21,7 @@ import {selectors} from "./redux/slices/food/FoodSlice";
 import {useSelector} from "react-redux";
 import ComboItemCard from "./components/Food/ComboItemCard";
 import moment from "moment";
+import FoodSearchBar from "./components/SearchFood/SearchBar";
 require('dotenv').config();
 // function TestComponent(){}
 
@@ -225,6 +226,7 @@ function App() {
             {/*<AccountGrid bank_account_list={bank_account_init_list}/>*/}
             {/*<PaymentDrawer trigger={<Button variant={`contained`} color={`primary`}> PAY NOW</Button>} />*/}
             <ComboItemCard combo_item={combo}/>
+            <FoodSearchBar/>
     </div>
     );
 }

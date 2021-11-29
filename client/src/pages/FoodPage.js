@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import FoodItemCard from "../components/Food/FoodItemCard";
 import ComboItemCard from "../components/Food/ComboItemCard";
+import FoodSearchBar from "../components/SearchFood/SearchBar";
 
 
 export const AllFoodGrid = (pagination = 4) => {
@@ -22,6 +23,8 @@ export const AllFoodGrid = (pagination = 4) => {
     return (
         <Box sx={{p:2,m:2,display:'flex',justifyContent:`center`,flexDirection:`column`,alignItems:`center`,bgcolor:`elevation.layer0.main`}}>
             {/* WISH LIST FOOD ITEMS */}
+            <FoodSearchBar/>
+
             <Box sx={{display:`flex`, flexGrow: 1,justifyContent:`center`,flexDirection:`column`,alignItems:`center`}}>
                 <Typography variant={`h4`} color={`primary.main`}  sx={{m:2}}> Food Items</Typography>
                 <Grid

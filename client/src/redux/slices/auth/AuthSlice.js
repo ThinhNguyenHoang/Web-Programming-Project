@@ -143,7 +143,14 @@ const authSlice = createSlice({
         },
         // TODO: Put the list in to the store
         [edit_user_actions.success]: (state, action) => {
-            state.user_list.data = action.payload.data;
+            const updated_user = action.payload.data;
+            state.user_list.data = state.user_list.data.map((item) => {
+                if(item.username === updated_user.username){
+                    return updated_user;
+                }
+                return item;
+            });
+
             state.user_list.status = success();
         },
         [edit_user_actions.error]: (state, action) => {
