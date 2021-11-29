@@ -41,8 +41,8 @@ class CartService
 
     public static function getCartListFromUser($cart_result)
     {
+        $cart_list = array();
         if (!empty($cart_result)) {
-            $cart_list = array();
             $cart_list["UserID"] = RequestHelper::getUserIDFromToken();
             $cart_list["FoodList"] = array();
             $cart_list["ComboList"] = array();
@@ -80,12 +80,10 @@ class CartService
                     array_push($cart_list["ComboList"], $combo_found);
                 }
             }
-
-            ResponseHelper::success(CartMessage::getMessages()->readSuccess, $cart_list);
-            return;
         }
 
-        ResponseHelper::error_server(CartMessage::getMessages()->readError);
+        ResponseHelper::success(CartMessage::getMessages()->readSuccess, $cart_list);
+        return;
     }
 
     public static function addCart()
