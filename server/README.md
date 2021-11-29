@@ -784,3 +784,50 @@ BANK ACCOUNT:
 
     DELETE: /news/comment/:id
 ```
+
+#VOUCHER
+```
+    GET: /voucher
+        {
+            "message": "Read voucher:result in success",
+            "data": [
+                {
+                    "VoucherID": "",
+                    "ExpirationDate": "",
+                    "Description": "",
+                    "VoucherName": "",
+                    "UserID": "",
+                    "SalePercent": ""
+                },
+                {
+                    "VoucherID": "",
+                    "ExpirationDate": "",
+                    "Description": "",
+                    "VoucherName": "",
+                    "UserID": "",
+                    "SalePercent": ""
+                }
+            ]
+        }
+        /voucher/:id
+
+    POST: /voucher (admin only)
+        body: {
+            "ExpirationDate": "2021-01-01",
+            "Description": "Voucher description ID 1",
+            "VoucherName": "Weeken Voucher",
+            "UserID": "2",
+            "SalePercent": "10"
+        }
+
+    PUT: /voucher/:id (admin only)
+        body: {
+            "ExpirationDate": "2021-01-01",
+            "Description": "Voucher description ID 1",
+            "VoucherName": "Weeken Voucher",
+            "UserID": "2",
+            "SalePercent": "10"
+        }
+
+    DELETE: /voucher/:id (admin only)
+```
