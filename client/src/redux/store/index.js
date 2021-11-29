@@ -2,6 +2,7 @@ import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 import authSlice from '../slices/auth/AuthSlice';
 import FoodSlice from '../slices/food/FoodSlice';
 import paymentSlice from "../slices/payment/PaymentSlice";
+import ManageSlice from '../slices/Manage/ManageSlice';
 import newsSlice from "../slices/news/NewsSlice";
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -18,6 +19,7 @@ const reducer = {
     food: FoodSlice.reducer,
     payment: paymentSlice.reducer,
     news: newsSlice.reducer,
+    manage: ManageSlice.reducer,
 }
 
 const store = configureStore({

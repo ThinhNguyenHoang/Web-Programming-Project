@@ -31,3 +31,4 @@ const watchersManage = function* (){
     yield takeLatest(get_order_actions.loading,GetOrderSaga);
     yield takeLatest(get_client_actions.loading,GetClientSaga);
 }
+export default watchersManage;
