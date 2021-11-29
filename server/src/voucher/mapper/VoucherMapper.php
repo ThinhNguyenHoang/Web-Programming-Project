@@ -23,6 +23,8 @@ class VoucherMapper
         $voucher->ExpirationDate  = VoucherMapper::validateDate($request->ExpirationDate);
         $voucher->VoucherName = $request->VoucherName;
         $voucher->Description = $request->Description;
+        $voucher->UserID = $request->UserID;
+        $voucher->SalePercent = $request->SalePercent;
         return $voucher;
     }
 

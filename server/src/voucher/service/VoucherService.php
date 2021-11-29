@@ -103,15 +103,15 @@ class VoucherService
             $voucher->Description = $voucher_found["Description"];
         }
 
-        if (property_exists($request, "Description")) {
-            if ($request->Description != "") {
-                $voucher->Description = $request->Description;
+        if (property_exists($request, "UserID")) {
+            if ($request->UserID != "") {
+                $voucher->UserID = $request->UserID;
                 $is_update_voucher = true;
             } else {
-                $voucher->Description = $voucher_found["Description"];
+                $voucher->UserID = $voucher_found["UserID"];
             }
         } else {
-            $voucher->Description = $voucher_found["Description"];
+            $voucher->UserID = $voucher_found["UserID"];
         }
 
         if (property_exists($request, "ExpirationDate")) {
@@ -123,6 +123,17 @@ class VoucherService
             }
         } else {
             $voucher->ExpirationDate = $voucher_found["ExpirationDate"];
+        }
+
+        if (property_exists($request, "SalePercent")) {
+            if ($request->SalePercent != "") {
+                $voucher->SalePercent = $request->SalePercent;
+                $is_update_voucher = true;
+            } else {
+                $voucher->SalePercent = $voucher_found["SalePercent"];
+            }
+        } else {
+            $voucher->SalePercent = $voucher_found["SalePercent"];
         }
 
         $voucher->VoucherID = $VoucherID;

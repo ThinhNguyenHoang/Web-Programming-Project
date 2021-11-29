@@ -9,6 +9,7 @@ use src\transaction\entity\Transaction;
 use src\transaction\mapper\TransactionMapper;
 use src\transaction\message\TransactionMessage;
 use src\transaction\repository\TransactionRepository;
+use src\voucher\repository\VoucherRepository;
 use src\bank_account\service\BankAccountService;
 
 require_once  __DIR__ . '/../../../vendor/autoload.php';
@@ -51,12 +52,20 @@ class TransactionService
 
         if (BankAccountService::checkBankAccountBallance($transaction->bank_account_number, $transaction->amount)) {
             $result = TransactionRepository::create($transaction);
-    
+
             error_log("Adding transaction: Insert to database", 0);
     
             if ($result) {
                 $transaction->id = QueryExecutor::getLastInsertID();
                 error_log("Adding transaction: " . json_encode($transaction), 0);
+
+                if ($transaction->voucher_id != 0) {
+                    $result = VoucherRepository::delete($transaction->voucher_id);
+                    if (!$result) {
+                        error_log("khong xoa duoc voucher");
+                        die("invalid voucher");
+                    }
+                }
 
                 $food_result = TransactionRepository::insertFoodTransactionContain($transaction->id, $transaction->food_list);
                 $combo_result = TransactionRepository::insertComboTransactionContain($transaction->id, $transaction->combo_list);

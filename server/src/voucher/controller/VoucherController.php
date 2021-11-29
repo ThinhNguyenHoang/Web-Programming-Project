@@ -36,6 +36,10 @@ class VoucherController extends BaseController implements RequestHandler
             case "post":
                 $token = RequestHelper::validate_jwt_token();
                 if ($relative_path == null) {
+                    if (!RequestHelper::isAdminPrivilege()) {
+                        ResponseHelper::error_client("Khong co quyen truy cap");
+                        return;
+                    }
                     error_log("VOUCHER_CONTROLLER::ADD VOUCHER ENDPOINT::" . $relative_path);
                     VoucherService::addVoucher();
                 } else {
@@ -45,6 +49,10 @@ class VoucherController extends BaseController implements RequestHandler
             case "put":
                 $token = RequestHelper::validate_jwt_token();
                 if (is_numeric($relative_path)) {
+                    if (!RequestHelper::isAdminPrivilege()) {
+                        ResponseHelper::error_client("Khong co quyen truy cap");
+                        return;
+                    }
                     error_log("VOUCHER_CONTROLLER::UPDATE VOUCHER ENDPOINT::" . $relative_path);
                     VoucherService::updateVoucher($relative_path);
                 } else {
@@ -54,6 +62,10 @@ class VoucherController extends BaseController implements RequestHandler
             case "delete":
                 $token = RequestHelper::validate_jwt_token();
                 if (is_numeric($relative_path)) {
+                    if (!RequestHelper::isAdminPrivilege()) {
+                        ResponseHelper::error_client("Khong co quyen truy cap");
+                        return;
+                    }
                     error_log("VOUCHER_CONTROLLER::DELETE VOUCHER ENDPOINT::" . $relative_path);
                     VoucherService::deleteVoucher($relative_path);
                 } else {

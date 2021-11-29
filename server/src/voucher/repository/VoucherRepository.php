@@ -34,11 +34,14 @@ class VoucherRepository implements Repository
      */
     public static function listVoucher(): array
     {
-        $UserID = RequestHelper::getUserIDFromToken();
-        $query = "SELECT * FROM voucher AS voucher
-                    INNER JOIN apply_for AS apply_for
-                    ON voucher.VoucherID=apply_for.VoucherID
-                     WHERE UserID='$UserID' ORDER BY voucher.VoucherID;";
+        if (RequestHelper::isAdminPrivilege()) {
+            $query = "SELECT * FROM voucher ORDER BY VoucherID;";
+        } else {
+            $UserID = RequestHelper::getUserIDFromToken();
+            $query = "SELECT * FROM voucher WHERE UserID='$UserID' ORDER BY VoucherID;";
+        }
+
+        $result = null;
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
@@ -46,9 +49,11 @@ class VoucherRepository implements Repository
         }
 
         $list_voucher = array();
-        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            error_log(json_encode($row), 0);
-            array_push($list_voucher, $row);
+        if ($result) {
+            while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+                error_log(json_encode($row), 0);
+                array_push($list_voucher, $row);
+            }
         }
 
         error_log("VOUCHER_REPOSITORY::FETCH_LIST::", 0);
@@ -57,11 +62,12 @@ class VoucherRepository implements Repository
 
     public static function findVoucherByID(int $VoucherID)
     {
-        $UserID = RequestHelper::getUserIDFromToken();
-        $query = "SELECT * FROM voucher AS voucher
-                    INNER JOIN apply_for AS apply_for
-                    ON voucher.VoucherID=apply_for.VoucherID
-                    WHERE voucher.VoucherID=$VoucherID AND voucher.UserID=$UserID;";
+        if (RequestHelper::isAdminPrivilege()) {
+            $query = "SELECT * FROM voucher WHERE VoucherID=$VoucherID ORDER BY VoucherID;";
+        } else {
+            $UserID = RequestHelper::getUserIDFromToken();
+            $query = "SELECT * FROM voucher WHERE UserID='$UserID' AND VoucherID=$VoucherID ORDER BY VoucherID;";
+        }
         try {
             $result = QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
@@ -77,9 +83,7 @@ class VoucherRepository implements Repository
 
     public static function create($entity = null): \mysqli_result|bool|null
     {
-        $UserID = RequestHelper::getUserIDFromToken();
-        $query = "INSERT INTO voucher (ExpirationDate, Description, VoucherName, UserID)
-         VALUES ('$entity->ExpirationDate', '$entity->Description', '$entity->VoucherName', '$UserID');";
+        $query = "INSERT INTO VOUCHER(ExpirationDate, Description, VoucherName, UserID, SalePercent) VALUES ('$entity->ExpirationDate', '$entity->Description', '$entity->VoucherName', '$entity->UserID', '$entity->SalePercent');";
 
         try {
             return QueryExecutor::executeQuery($query);
@@ -96,10 +100,9 @@ class VoucherRepository implements Repository
 
     public static function update(int $entityID = null, object $entity = null)
     {
-        $UserID = RequestHelper::getUserIDFromToken();
         $query = "UPDATE voucher SET 
                     ExpirationDate='$entity->ExpirationDate', VoucherName='$entity->VoucherName',
-                    Description='$entity->Description'  WHERE VoucherID=$entityID AND UserID=$UserID;";
+                    Description='$entity->Description', UserID='$entity->UserID', SalePercent='$entity->SalePercent' WHERE VoucherID=$entityID";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $exception) {
@@ -110,8 +113,7 @@ class VoucherRepository implements Repository
 
     public static function delete(int $entityID = null)
     {
-        $UserID = RequestHelper::getUserIDFromToken();
-        $query = "DELETE FROM voucher WHERE VoucherID=$entityID AND UserID=$UserID;";
+        $query = "DELETE FROM voucher WHERE VoucherID=$entityID";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $exception) {
