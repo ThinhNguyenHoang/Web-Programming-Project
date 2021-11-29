@@ -89,6 +89,7 @@ class TransactionRepository implements Repository
             while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
                 error_log(json_encode($row), 0);
                 $combo = ComboRepository::findComboByID($row["ComboID"]);
+                $combo["Quantity"] = $row["Quantity"];
                 array_push($list_combo, $combo);
             }
         }
@@ -111,6 +112,8 @@ class TransactionRepository implements Repository
             while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
                 error_log(json_encode($row), 0);
                 $food = FoodRepository::findFoodByID($row["FoodID"]);
+                $food["Quantity"] = $row["Quantity"];
+                unset($food["Comment"]);
                 array_push($list_food, $food);
             }
         }
@@ -168,7 +171,7 @@ class TransactionRepository implements Repository
     public static function insertFoodTransactionContain($transaction_id, $food_list)
     {
         foreach ($food_list as $food) {
-            $query = "INSERT INTO contains (TransactionID, FoodID, ComboID) VALUES ($transaction_id, $food->FoodID, 0)";
+            $query = "INSERT INTO contains (TransactionID, FoodID, ComboID, Quantity) VALUES ($transaction_id, $food->FoodID, 0, $food->Quantity);";
 
             $result = null;
             try {
@@ -189,7 +192,7 @@ class TransactionRepository implements Repository
     public static function insertComboTransactionContain($transaction_id, $combo_list)
     {
         foreach ($combo_list as $combo) {
-            $query = "INSERT INTO contains (TransactionID, FoodID, ComboID) VALUES ($transaction_id, 0, $combo->ComboID)";
+            $query = "INSERT INTO contains (TransactionID, FoodID, ComboID, Quantity) VALUES ($transaction_id, 0, $combo->ComboID, $combo->Quantity);";
 
             $result = null;
             try {
