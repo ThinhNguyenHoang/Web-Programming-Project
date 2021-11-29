@@ -71,7 +71,7 @@ function ComboCard(props) {
 			</Grid>
 			<Box textAlign='center'>
 				<IconButton size="large" square="true" onClick={()=>{
-					deleteCombo(combo.FoodID);
+					deleteCombo(combo.ComboID);
 				}}>
 					<DeleteIcon fontSize="inherit" sx={{ color:"red" }} />
 				</IconButton>
