@@ -164,7 +164,7 @@ function BigComment(props){
                                 />
                                 <Box sx={{display:`flex`, flexDirection:"row"}}>
                                     <Button sx={{width:"fit-content"}} style={{textTransform: 'none'}} onClick={addReply}>Trả lời</Button>
-                                    <Button sx={{width:"fit-content"}} style={{textTransform: 'none'}} >Hủy</Button>
+                                    <Button sx={{width:"fit-content"}} style={{textTransform: 'none'}} onClick={()=>setAnswer(false)} >Hủy</Button>
                                 </Box>
                             </Box>
                         </Box>
