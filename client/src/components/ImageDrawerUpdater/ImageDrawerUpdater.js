@@ -150,7 +150,7 @@ const ImageDrawerUpdater = ({trigger,additionalStyle={},img_uri_callback}) => {
                             <ImageList variant="masonry" cols={3} gap={8}>
                                 {listImage.map((item) => (
                                     <ImageListItem key={item.img} onClick={() => {
-                                        Toaster.toastSuccessful("Updated your avatar");
+                                        Toaster.toastSuccessful("Updated your image");
                                         if(img_uri_callback){
                                             img_uri_callback(item.img);
                                         }

@@ -4,6 +4,8 @@ import FoodSlice from '../slices/food/FoodSlice';
 import paymentSlice from "../slices/payment/PaymentSlice";
 import ManageSlice from '../slices/Manage/ManageSlice';
 import newsSlice from "../slices/news/NewsSlice";
+import settingsSlice from "../slices/company/SettingsSlice";
+
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootSaga from "./sagas";
@@ -20,6 +22,7 @@ const reducer = {
     payment: paymentSlice.reducer,
     news: newsSlice.reducer,
     manage: ManageSlice.reducer,
+    settings: settingsSlice.reducer,
 }
 
 const store = configureStore({

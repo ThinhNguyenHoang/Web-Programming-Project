@@ -17,6 +17,8 @@ import FoodCard from '../components/FoodCart/FoodCard';
 import {update_cart_actions,selectors,get_cart_actions} from "../redux/slices/food/FoodSlice";
 import ComboCard from './../components/FoodCart/ComboCard';
 import PaymentDrawer from "../components/Payment/PaymentDrawer";
+import { CardContent, TextField } from '@mui/material';
+
 
 function FoodCart() {
   const cart=useSelector(selectors.getCart);
@@ -92,6 +94,21 @@ function FoodCart() {
         <Grid item container md={4} xs={12} display="flex" flexDirection="column" spacing={2}  >
           <VoucherBox voucherList={cart.voucher_list} voucher_id={cart.voucher_id} />
           <TotalBox subtotal={cart.subtotal} discount={cart.discount} />
+          <Grid item>
+            <Card sx={{boxShadow:3, bgcolor:'elevation.layer1.main'}}>
+                <CardContent>
+                    <Typography sx={{display:"inline",fontWeight:"bold", color:"elevation.layer1.contrast"}} variant="body1" color="initial" pb={2}>{t(base_keys.food.note)}</Typography>
+                    <br/>
+                    <TextField
+                        multiline
+                        rows={4}
+                        defaultValue={t(base_keys.food.note)}
+                        sx={{bgcolor:'white',width:"100%"}}
+                        
+                        />
+                </CardContent>
+            </Card>
+          </Grid>
           <Box textAlign="center" pt={8} >
             <PaymentDrawer trigger={
               <Button onClick={()=>{

@@ -14,7 +14,6 @@ import { get_news_detail_action } from '../../redux/slices/news/NewsSlice';
 import { ROUTING_CONSTANTS } from './../../routes/RouterConfig';
 import default_new_image from '../../assets/images/default_news_image.jpg';
 
-
 function NewsCard (props){
     const news=props.news;
     const isAdmin=props.isAdmin;

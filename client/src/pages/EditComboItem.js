@@ -142,7 +142,7 @@ function EditComboItem(){
                             <Box maxWidth="100ch">
                                 <form autoComplete="off">
                                     <Card >
-                                        <CardContent sx={{bgcolor:"elevation.layer1.main"}}>
+                                        <CardContent sx={{bgcolor:"white"}}>
                                             <Grid item container spacing={3} columns={10}>
                                                 <Grid item xs={10}>
                                                     <TextField
@@ -182,7 +182,6 @@ function EditComboItem(){
                                                         />
                                                     </FormControl>
                                                 </Grid>
-                                                
                                             </Grid>
                                         </CardContent>
                                     </Card>
@@ -212,9 +211,9 @@ function EditComboItem(){
                                 <AddIcon fontSize="large" />
                             </IconButton>
                             <Dialog open={open} onClose={handleClose} PaperProps={{style: {backgroundColor: 'primary.main',boxShadow: 'none'}}}>
-                            <DialogTitle sx={{textAlign:"center", color:'elevation.layer3.contrast'}}>Chọn thức ăn</DialogTitle>
+                            <DialogTitle sx={{textAlign:"center", color:'red', fontWeight:"bold"}}>CHỌN THỨC ĂN</DialogTitle>
                             <DialogContent>
-                                <Box sx={{display:`flex`, flexDirection:"row", flexWrap: "wrap",overflowY:"auto", columnGap: "40px"}}>
+                                <Box sx={{display:`flex`, flexDirection:"row", flexWrap: "wrap",overflowY:"auto", rowGap:"40px", justifyContent:"space-evenly"}}>
                                     {unchooseList.map((food)=>(
                                         <MaterialCardAdd key={food.FoodID} material={{FoodID:food.FoodID,MaterialName:food.FoodName,Picture:food.Picture}} setAddClick={setAddClick}/>
                                     ))}

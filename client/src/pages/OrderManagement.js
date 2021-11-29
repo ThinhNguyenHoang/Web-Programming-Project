@@ -39,7 +39,7 @@ import FoodCardView from '../components/OrderView/FoodCardView';
 import { useEffect,useState } from 'react';
 import { Grid } from '@mui/material';
 import { get_order_actions } from './../redux/slices/Manage/ManageSlice';
-
+import ComboCardView from '../components/OrderView/ComboCardView';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
