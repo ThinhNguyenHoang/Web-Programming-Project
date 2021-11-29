@@ -141,11 +141,6 @@ export const BankAccountItem = ({ account_item, additionalStyle }) => {
                             })}
                             // * TODO: Change onSubmit handler to post to authorize api
                             onSubmit={(values, { setSubmitting }) => {
-                                // setTimeout(() => {
-                                //     setSubmitting(false);
-                                //     alert(JSON.stringify(values, null, 2));
-                                // }, 500);
-                                // onUpdateUser(values, setSubmitting);
                                 const payload = {
                                     ...account_item,
                                     ...values,
@@ -311,11 +306,6 @@ export const AddAccountForm = ({callback}) => {
                         )
                 })}
                 onSubmit={(values, { setSubmitting }) => {
-                    // setTimeout(() => {
-                    //     setSubmitting(false);
-                    //     alert(JSON.stringify(values, null, 2));
-                    // }, 500);
-                    // onUpdateUser(values, setSubmitting);
 
                     const modified_values = {
                         ...values,
@@ -405,7 +395,6 @@ export const AddAccountForm = ({callback}) => {
                 )}
             </Formik>
         </Box>
-
     );
 }
 
@@ -466,7 +455,6 @@ export const PaymentDrawer = (
                         ComboID: item.ComboID,
                     }
                 })
-            ,
         }
         dispatch({type: make_payment_actions.loading, payload});
         dispatch({type:update_cart_actions.loading,payload:{FoodList:[],ComboList:[]}});
@@ -522,7 +510,6 @@ export const PaymentDrawer = (
                                 </Box>
                                 CLOSE
                             </Button>
-                            {/* Popover to add new bank account */}
                             <Popover
                                 id={id}
                                 open={open}
