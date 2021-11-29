@@ -756,7 +756,14 @@ BANK ACCOUNT:
         body: {
             NewsID: ,
             Content:"",
-            ImageList:[]
+            ImageList:[
+                {
+                    "Image":
+                },
+                {
+                    "Image":
+                }
+            ]
         }
     
     PUT: /news/comment/:id
@@ -783,6 +790,48 @@ BANK ACCOUNT:
         }
 
     DELETE: /news/comment/:id
+```
+
+#FOOD COMMENT
+```
+    POST: /food/comment
+        body: {
+            FoodID: ,
+            Content:"",
+            ImageList:[
+                {
+                    "Image":
+                },
+                {
+                    "Image":
+                }
+            ]
+        }
+    
+    PUT: /food/comment/:id
+        body: {
+            Content:"",
+            ImageList:[
+                {
+                    "Image":
+                },
+                {
+                    "Image":
+                }
+            ],
+            Reply: [
+                {
+                    "UserID":,
+                    "Content":
+                },
+                {
+                    "UserID":,
+                    "Content":
+                }
+            ]
+        }
+
+    DELETE: /food/comment/:id
 ```
 
 #VOUCHER

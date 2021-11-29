@@ -7,6 +7,7 @@ use src\common\base\RequestHandler;
 use src\common\utils\RequestHelper;
 use src\common\utils\ResponseHelper;
 use src\food\service\FoodService;
+use src\food_comment\controller\FoodCommentController;
 use src\tag\repository\TagRepository;
 
 require_once  __DIR__ . '/../../../vendor/autoload.php';
@@ -21,6 +22,15 @@ class FoodController extends BaseController implements RequestHandler
         $method = strtolower(RequestHelper::getRequestMethod());
         error_log("Food controller::METHOD::" . $method);
         $relative_path = RequestHelper::get_ith_path_item(1);
+        if ($relative_path  != "comment") {
+            self::foodEndpoint($method, $relative_path);
+        } else {
+            $foodCommentController = new FoodCommentController();
+            $foodCommentController->handleRequest();
+        }
+    }
+
+    public static function foodEndpoint($method, $relative_path = null){
         switch ($method) {
             case "get":
                 if ($relative_path == null) {
