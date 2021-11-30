@@ -14,6 +14,8 @@ import {array_to_chunks} from "../../utils";
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { useHistory } from 'react-router';
+import { ROUTING_CONSTANTS } from './../../routes/RouterConfig';
 
 const involved_company_init = [
     {
@@ -92,10 +94,11 @@ const useStyles = makeStyles({
 
 
 export const CompanyItem = ({company, mx,sx},...props) => {
+    const history=useHistory();
     const classes = useStyles();
     return (
         <Card sx={{ width: 300, height:350, bgcolor:"elevation.layer2.main"}} className={classes.root}>
-            <CardActionArea>
+            <CardActionArea onClick={()=>history.push(ROUTING_CONSTANTS.NEWSINFO+"/"+company.NewsID)}>
                 <CardMedia
                     component="img"
                     height="150"

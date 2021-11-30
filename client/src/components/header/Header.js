@@ -100,6 +100,7 @@ const Header = (props) => {
         ROUTING_CONSTANTS.LOGIN,
         ROUTING_CONSTANTS.REGISTER,
         ROUTING_CONSTANTS.FOOD,
+        ROUTING_CONSTANTS.ORDERUSER
     ]
     const LoggedInTabs = [
         ROUTING_CONSTANTS.WISH_LIST,
@@ -110,6 +111,7 @@ const Header = (props) => {
         ROUTING_CONSTANTS.MANAGE_BILL,
         ROUTING_CONSTANTS.MANAGE_USERS,
         ROUTING_CONSTANTS.MANAGE_ITEM_LIST,
+        ROUTING_CONSTANTS.ORDER
     ];
 
     const dispatch = useDispatch();

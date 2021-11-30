@@ -19,12 +19,12 @@ function TotalBox(props) {
 					<Typography sx={{display:"inline",float:"right",fontWeight:"bold", color:"elevation.layer0.contrast"}}  variant="body1" color="initial"   >{props.subtotal}đ</Typography>
 					<br/>
 					
-					<Typography sx={{display:"inline",fontWeight:"bold", color:"elevation.layer0.contrast"}} variant="body1" color="initial" >{t(base_keys.food.discount)}</Typography>
-					<Typography sx={{display:"inline",float:"right",fontWeight:"bold", color:"elevation.layer0.contrast"}} variant="body1" color="initial" >{props.discount}đ</Typography>
+					<Typography sx={{display:"inline",fontWeight:"bold", color:"elevation.layer0.contrast"}} variant="body1" color="initial" >{t(base_keys.food.discount)}-{props.discount}%</Typography>
+					<Typography sx={{display:"inline",float:"right",fontWeight:"bold", color:"elevation.layer0.contrast"}} variant="body1" color="initial" >{props.subtotal*(props.discount/100)}đ</Typography>
 					<br/><hr/>
 				
 					<Typography sx={{display:"inline",fontWeight:"bold",fontSize:20, color:"primary.main"}} variant="body1" color="initial" >{t(base_keys.food.total)}</Typography>
-					<Typography sx={{display:"inline",float:"right",fontWeight:"bold",fontSize:20, color:"primary.main"}} variant="body1" color="initial" >{props.subtotal-props.discount}đ</Typography>
+					<Typography sx={{display:"inline",float:"right",fontWeight:"bold",fontSize:20, color:"primary.main"}} variant="body1" color="initial" >{props.subtotal*(1-props.discount/100)}đ</Typography>
 					
 				</CardContent>
 			</Card>

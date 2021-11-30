@@ -13,11 +13,11 @@ import { useTranslation } from "react-i18next";
 
 export const VoucherButton= (props)=>{
 	const choose=()=>{
-		props.dispatch({type:change_voucher_cart,payload:props.voucher.id})
+		props.dispatch({type:change_voucher_cart,payload:props.voucher.VoucherID})
 		
 	};
 	let bg="#fffad1";
-	if (props.voucher.id===props.voucher_id){
+	if (props.voucher.VoucherID===props.voucher_id){
 		bg="#ccc8a7";
 	}
 	return (
@@ -46,7 +46,7 @@ export const VoucherButton= (props)=>{
 
 
 			
-		}}onClick={()=>{choose()}}  variant="contained" startIcon={<LoyaltyIcon sx={{color:"#ff0000",fontSize:10}} />}  square="true">  {props.voucher.name}</Button>
+		}}onClick={()=>{choose()}}  variant="contained" startIcon={<LoyaltyIcon sx={{color:"#ff0000",fontSize:10}} />}  square="true">  {props.voucher.VoucherName}</Button>
 	</Box>
 	);
 };

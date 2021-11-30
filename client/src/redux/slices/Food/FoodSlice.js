@@ -136,6 +136,7 @@ const initialValue = {
         discount: 0,
         quantity: 0,
         voucher_id: 0,
+        note:"",
         get_status: generateStatus(),
         update_status: generateStatus(),
         delete_status: generateStatus(),
@@ -201,6 +202,9 @@ export const selectors = {
     // * Payment
     getFoodListInCard: state => state.food.cart.food_list,
     getComboListInCard: state => state.food.cart.combo_list,
+    getNote:state=>state.food.cart.note,
+    getVoucher:  state=>state.food.cart.voucher_id,
+    getDiscount: state=>state.food.cart.discount,
 
     // * food mangement
     getFoodManagement:state=>state.food.food_manage,
@@ -246,6 +250,7 @@ export const change_voucher_cart = "change_voucher";
 export const increase_quantity_cart = "increase_quantity";
 export const decrease_quantity_cart = "decrease_quantity";
 export const delete_food_cart = "delete_food";
+export const set_note_cart="set_note_cart";
 
 
 
@@ -289,13 +294,16 @@ const FoodSlice = createSlice({
     initialState: initialValue,
     reducers: {},
     extraReducers: {
+        [set_note_cart]:(state,action)=>{
+            state.cart.note=action.payload;
+        },
         [change_voucher_cart]: (state, action) => {
             console.log("change voucher");
             state.cart.voucher_id = action.payload;
             UpdateDiscount(state.cart);
         },
         [delete_food_cart]: (state, action) => {
-            var deleteFood = state.cart.food_list.filter(food => food.id == action.payload);
+            var deleteFood = state.cart.food_list.filter(food => food.id === action.payload);
             var idx = state.cart.food_list.indexOf(deleteFood[0]);
             if (idx !== -1) {
                 state.cart.food_list.splice(idx, 1);
