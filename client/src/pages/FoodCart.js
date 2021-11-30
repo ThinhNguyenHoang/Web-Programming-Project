@@ -18,6 +18,7 @@ import {update_cart_actions,selectors,get_cart_actions} from "../redux/slices/fo
 import ComboCard from './../components/FoodCart/ComboCard';
 import PaymentDrawer from "../components/Payment/PaymentDrawer";
 import { CardContent, TextField } from '@mui/material';
+import { set_note_cart } from './../redux/slices/food/FoodSlice';
 
 
 function FoodCart() {
@@ -28,7 +29,7 @@ function FoodCart() {
   useEffect(() => {
     dispatch({type:get_cart_actions.loading,payload:''});
   }, []);
-
+  const [note,setNote]=useState("");
   const updateFood=(food)=>{
     const newCart={
       ComboList:cart.combo_list,
@@ -102,7 +103,8 @@ function FoodCart() {
                     <TextField
                         multiline
                         rows={4}
-                        defaultValue={t(base_keys.food.note)}
+                        value={note}
+                        onChange={(e)=>setNote(e.target.value)}
                         sx={{bgcolor:'white',width:"100%"}}
                         
                         />
@@ -112,7 +114,7 @@ function FoodCart() {
           <Box textAlign="center" pt={8} >
             <PaymentDrawer trigger={
               <Button onClick={()=>{
-                //TODO dispatch({type:update_cart_actions.loading,})
+                dispatch({type:set_note_cart,payload:note});
               }}
                       variant="text" px="auto" sx={{
                 color:"#fff",

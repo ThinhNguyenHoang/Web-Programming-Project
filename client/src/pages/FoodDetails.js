@@ -84,15 +84,18 @@ function FoodDetails(){
     const instruct=food_detail.Instruct ? food_detail.Instruct :"";
     const cart=useSelector(selectors.getCart);
 
-    const deleteComment=(id)=>{
-        dispatch({type:delete_food_comment_action,payload:id});
+    const deleteComment=(commentid)=>{
+        dispatch({type:delete_food_comment_action,payload:commentid});
+        dispatch({type:food_detail_action.loading,payload:id});
         
     }
     const updateComment=(comment)=>{
-        dispatch({type:update_food_comment_action.loading,payload:comment});
+        dispatch({type:update_food_comment_action.loading,payload:{...comment,FoodID:id}});
+        dispatch({type:food_detail_action.loading,payload:id});
     }
     const addComment=(comment)=>{
-        dispatch({type:add_food_comment_action.loading,payload:comment});
+        dispatch({type:add_food_comment_action.loading,payload:{...comment,FoodID:id}});
+        dispatch({type:food_detail_action.loading,payload:id});
     }
     const handleAddCart=()=>{
         if( typeof cart ==="undefined"){
@@ -196,7 +199,7 @@ function FoodDetails(){
                         <Typography variant="h4" gutterBottom component="div" sx={{flexGrow:1, color:"red", ml:"10px", mt:"10px"}}>
                             Bình luận
                         </Typography>
-                        {/* <Comments comments={comments} deleteComment={deleteComment} updateComment={updateComment} addComment={addComment}/> */}
+                        <Comments comments={comments} deleteComment={deleteComment} updateComment={updateComment} addComment={addComment}/>
                     </Box>
                 </Grid>
             </Grid>

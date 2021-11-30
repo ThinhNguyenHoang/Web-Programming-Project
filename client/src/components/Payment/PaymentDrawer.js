@@ -412,7 +412,7 @@ export const PaymentDrawer = (
     const userProfile = useSelector(selectors.getUserProfile);
     const bank_account_list = useSelector(payment_selectors.getBankAccountsList);
     const [anchorEl, setAnchorEl] = React.useState(null);
-
+    
     const showPopOver = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -426,6 +426,9 @@ export const PaymentDrawer = (
 
     const food_list_in_card = useSelector(foodSelectors.getFoodListInCard);
     const combo_list_in_card = useSelector(foodSelectors.getComboListInCard);
+    const note=useSelector(foodSelectors.getNote);
+    const voucherID= useSelector(foodSelectors.getVoucher);
+    const discount=useSelector(foodSelectors.getDiscount);
 
 
     const handleAddBankAccount = (values,setSubmitting) => {
@@ -441,9 +444,9 @@ export const PaymentDrawer = (
         const payload = {
             bank_account_number: account_chosen.bank_account_number,
             user_id: userProfile.account_id,
-            amount: amount_to_pay,
-            description: "No description",
-            voucher_id: "1",
+            amount: amount_to_pay*(1-discount/100),
+            description: note,
+            voucher_id: voucherID,
             food_list: food_list_in_card.map(item => {
                 return {
                     FoodID: item.FoodID,

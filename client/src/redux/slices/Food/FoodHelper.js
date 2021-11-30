@@ -5,7 +5,7 @@ export const UpdateSubtotal=(cart)=>{
 }
 export const UpdateDiscount=(cart)=>{
     //TODO
-    cart.discount=cart.voucher_list.filter(voucher=>voucher.id===cart.voucher_id)[0].discount;
+    cart.discount=cart.voucher_list.filter(voucher=>voucher.VoucherID===cart.voucher_id)[0].SalePercent;
 }
 export const UpdateQuantity=(cart)=>{
     cart.quantity=cart.food_list.reduce((sum,food)=>{
