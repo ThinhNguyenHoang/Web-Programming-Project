@@ -21,7 +21,6 @@ import {
     set_food_detail_id,
     update_cart_actions
 } from "../../redux/slices/food/FoodSlice";
-import {get_cart_actions} from './../../redux/slices/food/FoodSlice';
 import {ROUTING_CONSTANTS} from './../../routes/RouterConfig';
 import {useHistory} from "react-router";
 

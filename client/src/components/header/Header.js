@@ -42,7 +42,7 @@ import {
     make_payment_actions,
     payment_selectors
 } from "../../redux/slices/payment/PaymentSlice";
-import {company_selectors, update_company_info_actions} from "../../redux/slices/company/SettingsSlice";
+import {company_selectors, get_company_info_actions, update_company_info_actions} from "../../redux/slices/company/SettingsSlice";
 import {Field, Form, Formik} from "formik";
 import * as yup from "yup";
 import {TextField} from "formik-material-ui";
@@ -239,6 +239,13 @@ const Header = (props) => {
 }
 
 export const WithHeader = (props) => {
+    const dispatch = useDispatch(); 
+    useEffect(() => {
+        dispatch({type:get_company_info_actions.loading}); 
+        return () => {
+            
+        }
+    }, [])
     return (
         <Box sx={{display: `flex`, flexDirection: `column`}}>
             <Header/>
@@ -326,7 +333,8 @@ export const PageSettingDrawer = (
                     </Box>
                     <PageSettingsForm callback={(values,setSubmitting) => {
                         // TODO: Do something to update page settings
-                        console.log("CALLING PAGE SETTING UPDATE IN HEADER: ",values);
+                        console.log("Changing page info with values",values); 
+                        dispatch({type:update_company_info_actions.loading,payload:values});
                     }}/>
                 </Drawer>
             </Box>

@@ -39,42 +39,42 @@ const PageSettingsForm = ({callback}) => {
                         .string("Company Name")
                         .min(
                             8,
-                            "Valid Bank Number should be a bit longer"
+                            "Company name should be a bit longer"
                         )
                     ,
                     slogan: yup
                         .string("Company Slogan")
                         .min(
                             2,
-                            "Valid Bank Owner should be a bit longer"
+                            "Company slogan should be a bit longer"
                         )
                     ,
                     address: yup
                         .string("Company Address")
                         .min(
                             2,
-                            "Valid account type should be a bit longer"
+                            "Address should be a bit longer"
                         )
                     ,
                     facebook: yup
                         .string("Facebook link")
                         .min(
                             2,
-                            "Valid account type should be a bit longer"
+                            "Facebook link type should be a bit longer"
                         )
                     ,
                     email: yup
                         .string("Contact gmail")
                         .min(
                             2,
-                            "Valid account type should be a bit longer"
+                            "Email links  should be a bit longer"
                         )
                     ,
                     twitter: yup
                         .string("Twitter Link")
                         .min(
                             2,
-                            "Valid account type should be a bit longer"
+                            "Twitter type should be a bit longer"
                         )
                     ,
                 })}

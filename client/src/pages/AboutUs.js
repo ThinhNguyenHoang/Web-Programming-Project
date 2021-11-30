@@ -84,7 +84,7 @@ const TextSlideShow = () => {
 const AboutUs = () => {
     const page_settings = useSelector(company_selectors.getCompanyData);
     const our_information = {
-        company_description: page_settings.company_description || 'Ceros is a fast-growing software company that keeps culture and creativity at the heart of everything we do. Our mission is to help customers unlock their creativity and build exceptional content using our uniquely powerful design platform and our tirelessly helpful support and education resources—and do it all without writing a single line of code.',
+        company_description: page_settings.description|| 'Ceros is a fast-growing software company that keeps culture and creativity at the heart of everything we do. Our mission is to help customers unlock their creativity and build exceptional content using our uniquely powerful design platform and our tirelessly helpful support and education resources—and do it all without writing a single line of code.',
         slogan: page_settings.slogan || 'Our mission is to inspire and unlock creativity with liberating technology.',
         mottos: ['Find A Way', 'Give A Shit', 'Care about you', 'Love eating','Respect Each Other','Are courageously honest'],
         side_banner: `https://www.themealdb.com/images/ingredients/Chicken.png`
