@@ -115,7 +115,7 @@ function FoodItemManagement(){
 
     
     return(
-        <Box sx={{display:`flex`,flexDirection:`column`,justifyContent:"center",bgcolor:'elevation.layer0.main', flexGrow: 1, overflow: 'hidden', px: 10}}>
+        <Box sx={{display:`flex`,flexDirection:`column`,justifyContent:"center",bgcolor:'elevation.layer0.main', flexGrow: 1, overflow: 'hidden', px: 50, mt:"30px"}}>
             <Box sx={{display:`flex`, flexDirection:"column", paddingBottom:5, width:"1000" }}>
                 <Divider>
                     <Typography sx={{ fontSize: { lg: 50, md: 40, sm: 30, xs: 20 }, color: `red`}} p={2} variant={`h2`}>Danh sách món ăn</Typography>
