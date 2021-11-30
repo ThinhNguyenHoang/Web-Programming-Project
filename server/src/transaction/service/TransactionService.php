@@ -54,7 +54,11 @@ class TransactionService
         if ($voucher_result) {
             $transaction->sale_percent = $voucher_result["SalePercent"];
         } else {
-            $transaction->sale_percent = null;
+            if ($transaction->voucher_id != 0) {
+                ResponseHelper::error_client("Voucher invalid");
+                die();
+            }
+            $transaction->sale_percent = 0;
         }
 
         if (BankAccountService::checkBankAccountBallance($transaction->bank_account_number, $transaction->amount)) {
