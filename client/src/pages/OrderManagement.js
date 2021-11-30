@@ -47,17 +47,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const exportData = (order_list)=>{
-    const head=["Order ID","Tên khách hàng","Sản phẩm","Ngày giao","Giá","Địa chỉ ","Status","Hình thức thanh toán"];
-    var idx=0;
+    const head=["STT","Mã đơn hàng","Tên khách hàng","Ngày đặt","Giảm giá(%)","Tổng tiền","Ghi chú"];
     
-    const body=order_list.map((order)=>{
-        idx+=1;
-        const status=order.status===0 
-        ? "Đã hoàn thanh"
-        :(order.status===1
-        ? "Đang giao"
-        :"Đã huy")
-        return [`${idx}`,`${order.name}`,`${order.product}`,`${order.delivery_date}`,`${order.price}`,`${order.address}`,`${status}`,`${order.payment_method}`];
+    const body=order_list.map((order,idx)=>{
+        return [`${idx}`,`${order.id}`,`${order.userName}`,`${order.time}`,`${order.sale_percent}`,`${order.amount}`,`${order.description}`];
     })
     const docDef={
         content:[
@@ -147,7 +140,7 @@ function OrderMangament(props){
                                             <TableCell align="center">{order_list[idx-1].time}</TableCell>
                                             <TableCell align="center">{order_list[idx-1].sale_percent}</TableCell>
                                             <TableCell align="center">{order_list[idx-1].amount}</TableCell>
-                                            <TableCell align="center">{order_list[idx-1].desciption}</TableCell>
+                                            <TableCell align="center">{order_list[idx-1].description}</TableCell>
                                             <TableCell align="center">
                                                 <Button style={{textTransform:"none"}} onClick={()=>handleClickOpen(idx-1)}>
                                                     Chi tiết
@@ -186,6 +179,11 @@ function OrderMangament(props){
                                                                 {order_list[tempId].food_list.map((food)=>{
                                                                     return <FoodCardView food={food}/>;
                                                                 })}
+                                                                {
+                                                                    order_list[tempId].combo_list.map((combo)=>{
+                                                                        return <ComboCardView food={{FoodName:combo.ComboName,Quantity:combo.Quantity,Picture:combo.Picture,Price:combo.Price}}/>;
+                                                                    })
+                                                                }
                                                             </Grid>
                                                         </Grid>
                                                         <Grid item container xs={12} md={6} alignContent="center">
