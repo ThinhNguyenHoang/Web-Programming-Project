@@ -49,6 +49,13 @@ class TransactionService
         //Map Transaction from request
         error_log("Adding transaction: Map Transaction entity from request", 0);
         $transaction = TransactionMapper::mapTransactionFromRequest($request);
+        $voucher_result = VoucherRepository::findVoucherByID($transaction->voucher_id);
+        
+        if ($voucher_result) {
+            $transaction->sale_percent = $voucher_result["SalePercent"];
+        } else {
+            $transaction->sale_percent = null;
+        }
 
         if (BankAccountService::checkBankAccountBallance($transaction->bank_account_number, $transaction->amount)) {
             $result = TransactionRepository::create($transaction);

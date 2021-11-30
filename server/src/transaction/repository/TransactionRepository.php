@@ -39,16 +39,13 @@ class TransactionRepository implements Repository
     {
         if (RequestHelper::isAdminPrivilege()) {
             $query = "SELECT transaction.id, transaction.time, transaction.description, transaction.amount, 
-                        transaction.user_id, user_account.Username AS userName, voucher.SalePercent AS sale_percent
+                        transaction.user_id, user_account.Username AS userName, transaction.sale_percent
                         FROM transaction AS transaction INNER JOIN user_account AS user_account
-                        ON user_account.Id=transaction.user_id LEFT JOIN voucher AS voucher
-                        ON transaction.voucher_id=voucher.VoucherID
-                        ORDER BY transaction.id;";
+                        ON user_account.Id=transaction.user_id ORDER BY transaction.id;";
         } else {
             $UserID = RequestHelper::getUserIDFromToken();
-            $query = "SELECT transaction.id, transaction.time, transaction.description, transaction.amount, voucher.SalePercent AS sale_percent
-                        FROM transaction AS transaction LEFT JOIN voucher AS voucher
-                        ON transaction.voucher_id=voucher.VoucherID WHERE user_id=$UserID ORDER BY id;";
+            $query = "SELECT transaction.id, transaction.time, transaction.description, transaction.amount, transaction.sale_percent
+                        FROM transaction AS transaction WHERE user_id=$UserID ORDER BY id;";
         }
         $result = null;
         try {
@@ -125,15 +122,13 @@ class TransactionRepository implements Repository
     {
         if (RequestHelper::isAdminPrivilege()) {
             $query = "SELECT transaction.id, transaction.time, transaction.description, transaction.amount, 
-            transaction.user_id, user_account.Username AS username, voucher.SalePercent AS sale_percent
+            transaction.user_id, user_account.Username AS username, transaction.sale_percent
             FROM transaction AS transaction INNER JOIN user_account AS user_account
-            ON user_account.Id=transaction.user_id LEFT JOIN voucher AS voucher
-            ON transaction.voucher_id=voucher.VoucherID WHERE transaction.id=$id;";
+            ON user_account.Id=transaction.user_id WHERE transaction.id=$id;";
         } else {
             $UserID = RequestHelper::getUserIDFromToken();
-            $query = "SELECT transaction.id, transaction.time, transaction.description, transaction.amount, voucher.SalePercent AS sale_percent
-            FROM transaction AS transaction LEFT JOIN voucher AS voucher
-            ON transaction.voucher_id=voucher.VoucherID WHERE id=$id AND UserID=$UserID;";
+            $query = "SELECT transaction.id, transaction.time, transaction.description, transaction.amount, transaction.sale_percent
+            FROM transaction AS transaction WHERE id=$id AND user_id=$UserID;";
         }
 
         $result = null;
@@ -158,8 +153,8 @@ class TransactionRepository implements Repository
 
     public static function create($entity = null): \mysqli_result|bool|null
     {
-        $query = "INSERT INTO transaction (time, description, amount, user_id, voucher_id)
-         VALUES ('$entity->time', '$entity->description', '$entity->amount', '$entity->user_id', '$entity->voucher_id');";
+        $query = "INSERT INTO transaction (time, description, amount, user_id, sale_percent)
+         VALUES ('$entity->time', '$entity->description', '$entity->amount', '$entity->user_id', '$entity->sale_percent');";
         try {
             return QueryExecutor::executeQuery($query);
         } catch (Exception $e) {
