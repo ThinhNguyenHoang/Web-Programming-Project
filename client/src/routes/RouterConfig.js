@@ -74,9 +74,11 @@ export const ROUTING_TAB_ITEMS = [
     generateTabLinkItem("My Cart", ROUTING_CONSTANTS.ITEM_CART),
     generateTabLinkItem("Recommendations", ROUTING_CONSTANTS.RECOMMENDATION),
     generateTabLinkItem("My Account", ROUTING_CONSTANTS.ACCOUNT),
+    generateTabLinkItem("Order",ROUTING_CONSTANTS.ORDERUSER),
     // ! EDIT THE FOLLOWING LAST PROPS TO THE USER ROLE STRING CONSTANT
     generateTabLinkItem("Manage User", ROUTING_CONSTANTS.CLIENT, "Manager"),
     generateTabLinkItem("Manage Item Info",ROUTING_CONSTANTS.MANAGE_ITEM_LIST, "Manager"),
+    generateTabLinkItem("Manage Order",ROUTING_CONSTANTS.ORDER,"Manager"),
     generateTabLinkItem("Bill Management", ROUTING_CONSTANTS.MANAGE_BILL, "Manager"),
     generateTabLinkItem("Login", ROUTING_CONSTANTS.LOGIN),
     generateTabLinkItem("Register", ROUTING_CONSTANTS.REGISTER),
