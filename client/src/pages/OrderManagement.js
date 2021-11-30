@@ -96,7 +96,7 @@ function OrderMangament(props){
         setOpen(false);
     };
     return (
-        <Box sx={{bgcolor:"elevation.layer0.main"}}>
+        <Box sx={{bgcolor:"elevation.layer0.main", mt:"60px"}}>
             <Box sx={{display:"flex", flexDirection:"column", mx:"200px"}}>
                 <Typography alignContent="center" variant="h4" color="elevation.layer0.contrast" my={2}>Quản lý đơn hàng</Typography>
                 <Box sx={{display:"flex",flexDirection:"row",justifyContent:"space-between",my:2}}>

@@ -279,7 +279,7 @@ function ClientManagement(){
         dispatch({type:get_user_list_actions.loading,payload:''});
     }, []);
     return (
-        <Box sx={{display:"flex", flexDirection:"column",mx:4}}>
+        <Box sx={{display:"flex", flexDirection:"column",mx:30, mt:"50px"}}>
             <Typography variant="h4" color="initial" my={2}>Quản lý khách hàng</Typography>
             <Box sx={{display:"flex",flexDirection:"row",justifyContent:"space-between",my:2}}>
                 <Box sx={{display:"inline-flex",flexDirection:"row",alignItems:"end"}}>

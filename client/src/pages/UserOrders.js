@@ -104,7 +104,7 @@ function UserOrders(){
         setOpen(false);
     };
     return (
-        <Box sx={{bgcolor:"elevation.layer0.main"}}>
+        <Box sx={{bgcolor:"elevation.layer0.main", mt:"50px"}}>
             <Box sx={{display:"flex", flexDirection:"column", mx:"200px"}}>
                 <Typography variant="h3" color="red" sx={{fontWeight:"bold", textAlign:"center"}} my={2}>Lịch sử đơn hàng</Typography>
                 <TableContainer component={Paper} sx={{mt:4, mb:4}}>
