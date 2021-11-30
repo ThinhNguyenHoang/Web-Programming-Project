@@ -175,7 +175,7 @@ function UserOrders(){
                                                                 })}
                                                                 {
                                                                     order_list[tempId].combo_list.map((combo)=>{
-                                                                        return <ComboCardView food={{FoodName:combo.ComboName,Quanity:combo.Quanity,Picture:combo.Picture,Price:combo.Price}}/>;
+                                                                        return <ComboCardView food={{FoodName:combo.ComboName,Quantity:combo.Quantity,Picture:combo.Picture,Price:combo.Price}}/>;
                                                                     })
                                                                 }
                                                             </Grid>

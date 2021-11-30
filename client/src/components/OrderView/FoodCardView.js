@@ -46,13 +46,13 @@ function FoodCardView(props) {
                     </Typography>
                 </CardContent>
             </Box>
-            {/* <Box sx={{px:"100px"}} alignSelf="center">
+            <Box sx={{px:"100px"}} alignSelf="center">
                 <CardContent>
                     <Typography variant="subtitle1" component="div" sx={{color:"elevation.layer2.contrast"}}>
                         Số lượng: {food.Quantity}
                     </Typography>
                 </CardContent>
-            </Box> */}
+            </Box>
             <Box alignSelf="center">
                 <IconButton onClick={handleDetail}>
                     <InfoIcon sx={{color:"elevation.layer0.contrast"}}/>

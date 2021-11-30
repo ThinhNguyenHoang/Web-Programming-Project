@@ -13,9 +13,15 @@ import { useTranslation } from "react-i18next";
 
 export const VoucherButton= (props)=>{
 	const choose=()=>{
-		props.dispatch({type:change_voucher_cart,payload:props.voucher.VoucherID})
+		if(props.voucher.VoucherID===props.voucher_id){
+			props.dispatch({type:change_voucher_cart,payload:0})
+		}else{
+			props.dispatch({type:change_voucher_cart,payload:props.voucher.VoucherID})
+		}
+		
 		
 	};
+	
 	let bg="#fffad1";
 	if (props.voucher.VoucherID===props.voucher_id){
 		bg="#ccc8a7";
