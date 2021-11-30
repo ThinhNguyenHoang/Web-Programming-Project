@@ -251,15 +251,15 @@ CREATE TABLE TRANSACTION (
     description TEXT, 
     amount BIGINT(8), 
     user_id BIGINT(8), 
-    voucher_id BIGINT(8),
+    sale_percent BIGINT(8),
     PRIMARY KEY (id)
 ); 
-INSERT INTO TRANSACTION (time, description, amount, user_id, voucher_id) VALUES ('2021-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000, 2, 1); 
-INSERT INTO TRANSACTION (time, description, amount, user_id, voucher_id) VALUES ('2018-05-03 00:00:01', 'Tra tien cho nguoi choi', 6000000, 2, 2); 
-INSERT INTO TRANSACTION (time, description, amount, user_id, voucher_id) VALUES ('2019-11-01 00:00:01', 'Tra tien cho nguoi choi', 5000000, 2, 0); 
-INSERT INTO TRANSACTION (time, description, amount, user_id, voucher_id) VALUES ('2019-11-01 00:00:01', 'Tra tien cho nguoi choi', 5000000, 4, 1); 
-INSERT INTO TRANSACTION (time, description, amount, user_id, voucher_id) VALUES ('2020-11-01 00:00:01', 'Tra tien cho nguoi choi', 4000000, 4, 0); 
-INSERT INTO TRANSACTION (time, description, amount, user_id, voucher_id) VALUES ('2022-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000, 4, 4); 
+INSERT INTO TRANSACTION (time, description, amount, user_id, sale_percent) VALUES ('2021-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000, 2, 10); 
+INSERT INTO TRANSACTION (time, description, amount, user_id, sale_percent) VALUES ('2018-05-03 00:00:01', 'Tra tien cho nguoi choi', 6000000, 2, 20); 
+INSERT INTO TRANSACTION (time, description, amount, user_id, sale_percent) VALUES ('2019-11-01 00:00:01', 'Tra tien cho nguoi choi', 5000000, 2, 30); 
+INSERT INTO TRANSACTION (time, description, amount, user_id, sale_percent) VALUES ('2019-11-01 00:00:01', 'Tra tien cho nguoi choi', 5000000, 4, 15); 
+INSERT INTO TRANSACTION (time, description, amount, user_id, sale_percent) VALUES ('2020-11-01 00:00:01', 'Tra tien cho nguoi choi', 4000000, 4, 50); 
+INSERT INTO TRANSACTION (time, description, amount, user_id, sale_percent) VALUES ('2022-01-01 00:00:01', 'Tra tien cho nguoi choi', 3000000, 4, 45); 
 
 
 DROP TABLE IF EXISTS contains; 
