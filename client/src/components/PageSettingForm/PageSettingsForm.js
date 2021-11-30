@@ -63,7 +63,7 @@ const PageSettingsForm = ({callback}) => {
                             "Facebook link type should be a bit longer"
                         )
                     ,
-                    email: yup
+                    mail: yup
                         .string("Contact gmail")
                         .min(
                             2,
@@ -124,7 +124,7 @@ const PageSettingsForm = ({callback}) => {
                                        variant={`outlined`} />
                             </Box>
                             <Box sx={{ my: 1, px: 3, }}>
-                                <Field component={TextField} type="text" label="EMail" name="email"
+                                <Field component={TextField} type="text" label="Mail" name="mail"
                                        variant={`outlined`} />
                             </Box>
                             <Box sx={{ my: 1, px: 3, }}>

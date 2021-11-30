@@ -13,7 +13,7 @@ const initialValue = {
         address: "",
         description: "",
         color: "",
-        long: "",
+        length: "",
         lat: "",
         facebook: "",
         mail:"",

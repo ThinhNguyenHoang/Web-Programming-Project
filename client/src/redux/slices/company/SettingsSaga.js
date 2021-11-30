@@ -25,7 +25,7 @@ function* getPageSettingsSaga({ payload }) {
 
 const watchersSettings = function* (){
     yield takeLatest(update_company_info_actions.loading, updatePageSettingsSaga);
-    yield takeLatest(get_company_info_actions.loading, getPageSettingService);
+    yield takeLatest(get_company_info_actions.loading, getPageSettingsSaga);
 }
 
 export default watchersSettings;

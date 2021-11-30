@@ -334,7 +334,7 @@ export const PageSettingDrawer = (
                     <PageSettingsForm callback={(values,setSubmitting) => {
                         // TODO: Do something to update page settings
                         console.log("Changing page info with values",values); 
-                        dispatch({type:update_company_info_actions.loading,payload:values});
+                        dispatch({type:update_company_info_actions.loading,payload: {...company_data,...values}});
                     }}/>
                 </Drawer>
             </Box>

@@ -14,6 +14,6 @@ export const updatePageSettingService = (payload) => {
 }
 // Provide the user name and password
 export const getPageSettingService = (payload) => {
-    return request.getAsync(api_endpoints.settings,payload);
+    return request.getAsync(api_endpoints.settings);
 }
 
