@@ -450,7 +450,7 @@ export const PaymentDrawer = (
             food_list: food_list_in_card.map(item => {
                 return {
                     FoodID: item.FoodID,
-                    Quanity:item.Quantity
+                    Quantity:item.Quantity
                 }
             }),
             combo_list:
