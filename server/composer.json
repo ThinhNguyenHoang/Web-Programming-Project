@@ -10,5 +10,10 @@
         "psr-4": {
             "src\\": "src/"
         }
-    }
+    },
+	"scripts": {
+		"start": [
+			"php -S localhost:10001"
+		]
+	}
 }
